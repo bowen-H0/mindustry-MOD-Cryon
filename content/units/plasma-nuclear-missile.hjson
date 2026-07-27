@@ -1,0 +1,64 @@
+{
+  type: missile
+  physics: false
+  template: MissileUnitType
+  flying: true
+  useUnitCap: false
+  hidden: true
+
+  speed: 6.0
+  missileAccelTime: 12
+  lifetime: 35
+  health: 3000          
+  hitSize: 16           
+
+  rotateSpeed: 4.0
+  autoFindTarget: true
+  homingDelay: 0
+  faceTarget: true
+  circleTarget: false
+
+  lowAltitude: false
+
+  engineSize: 3.0
+  engineOffset: 5.0
+  trailColor: "6ad4ff"  
+  trailLength: 30
+
+  weapons: [
+    {
+      reload: 1
+      shootOnDeath: true
+      mirror: false
+      shootCone: 360
+      shake: 30         
+
+      bullet: {
+        type: ExplosionBulletType
+        splashDamage: 2200
+        splashDamageRadius: 140
+        
+        lightning: 16
+        lightningLength: 25
+        lightningLengthRand: 8
+        lightningDamage: 100
+        hitColor: "66ccff",
+        lightningColor: "66ccff",
+        hitEffect: scatheExplosion
+        despawnEffect: scatheExplosion
+      }
+    }
+  ]
+
+  // ========== 在这里添加尾气烟雾效果 ==========
+    "abilities": [
+    {
+      "type": "MoveEffectAbility",
+      "effect": "missileTrailSmokeSmall",
+      "rotation": 180,
+      "y": -9,
+      "color": "ffffff66",
+      "interval": 5
+    }
+  ]
+}

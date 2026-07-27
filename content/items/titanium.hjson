@@ -1,0 +1,14 @@
+research: {
+  parent: scrap
+  objectives: [
+    {
+      type: Produce
+      content: titanium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }]
+}
+shownPlanets: [serpulo,cryon]

@@ -1,0 +1,43 @@
+type: GenericCrafter
+
+name: "同位素分离器"
+description: "从氢气中浓缩提炼出氘。"
+
+size: 3
+health: 280
+category: crafting
+
+// 核心机制设定
+hasPower: true
+hasLiquids: true
+hasItems: false // 纯流体互转
+
+craftTime: 60.0
+liquidCapacity: 40.0
+
+consumes: {
+  power: 1.0
+  liquid: hydrogen/1.5
+}
+
+outputLiquid: deuterium/0.5
+
+
+
+requirements: [
+  aluminum/80
+  silicon/50
+  graphite/50
+]
+
+research: {
+  parent: cryo-electrolyzer
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-shattered-abyss
+    }
+  ]
+}
+
+shownPlanets: [cryon]

@@ -1,0 +1,44 @@
+type: PowerTurret
+name: "刺针胞（弃用）"
+description: "保卫噬孢中枢。"
+size: 1
+health: 120
+range: 160
+reload: 18
+inaccuracy: 2
+targetAir: true
+targetGround: true
+
+# 无需弹药，且无需任何资源与电力消耗
+shootType: {
+  type: BasicBulletType
+  damage: 5
+  speed: 6.0
+  lifetime: 27
+  width: 6
+  height: 9
+  
+  # 正确的子弹颜色属性：内芯和外壳均设为紫色
+  frontColor: a45ee5
+  backColor: a45ee5
+  hitColor: a45ee5
+  
+  # 彻底关闭子弹发光
+  lightRadius: 0
+  lightOpacity: 0
+  status:corroded
+  statusDuration:60
+  # 关闭多余的粒子闪光特效
+  shootEffect: none
+  hitEffect: none
+  despawnEffect: none
+  smokeEffect: none
+}
+drawer: {
+  type: DrawTurret
+  basePrefix: cybio-
+}
+
+buildVisibility: hidden
+alwaysUnlocked: false
+shownPlanets: []

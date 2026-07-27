@@ -1,0 +1,19 @@
+research: {
+  parent: spiral
+  objectives: [
+    {
+      type: Produce
+      content: titanium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-gravel-ice
+    }],
+  requirements: [
+    titanium/200
+    aluminum/200
+    graphite/200
+  ]
+}
+shownPlanets: [cryon]

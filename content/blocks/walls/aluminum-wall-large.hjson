@@ -1,0 +1,22 @@
+type: Wall
+name: 大型铝墙
+description: "由铝制成的防御方块。轻质但不耐打。"
+health: 800
+size: 2
+requirements: [
+  aluminum/24
+]
+category: defense
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }
+  ],
+  parent: aluminum-wall
+  requirements: [
+    aluminum/700
+  ]
+}
+shownPlanets: [cryon]

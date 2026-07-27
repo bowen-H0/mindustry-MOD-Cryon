@@ -1,0 +1,14 @@
+research: {
+  parent: dry-ice-vapor
+  objectives: [
+    {
+      type: Produce
+      content: nitrogen
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }]
+}
+shownPlanets: [cryon, erekir]

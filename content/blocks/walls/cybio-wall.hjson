@@ -1,0 +1,8 @@
+type: Wall
+name: 噬孢块
+description: "由噬孢制成的生物质块"
+health: 50
+size: 1
+buildVisibility: hidden
+alwaysUnlocked: false
+shownPlanets: []

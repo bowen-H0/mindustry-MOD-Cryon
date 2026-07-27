@@ -1,0 +1,29 @@
+type: LiquidRouter
+
+name: "凝化流体储罐"
+description: "可以储存流体。"
+
+size: 3
+health: 160
+category: liquid
+
+hasLiquids: true
+liquidCapacity: 1800.0
+
+
+requirements: [
+  aluminum/80
+  silicon/40
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-gravel-ice
+    }
+  ],
+  parent: cryo-liquid-container
+}
+
+shownPlanets: [cryon]

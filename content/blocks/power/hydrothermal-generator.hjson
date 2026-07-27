@@ -1,0 +1,35 @@
+type: ThermalGenerator
+name: "热液发电机"
+description: "建造在地热喷口上，利用克莱恩冰层下的地热能发电。"
+size: 3
+health: 80
+category: power
+
+powerProduction: 0.3
+attribute: cryothermal
+minEfficiency: 0.0
+
+requirements: [
+  aluminum/30
+  magnesium/10
+]
+
+research: {
+  parent: shattering-drill
+  requirements: [
+    aluminum/60
+    magnesium/20
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: magnesium
+    }
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ]
+}
+
+shownPlanets: [cryon]

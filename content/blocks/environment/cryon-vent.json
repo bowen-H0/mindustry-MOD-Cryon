@@ -1,0 +1,13 @@
+{
+  "type": "SteamVent",
+  "name": "地热喷口",
+  "variants": 1,
+  "blendGroup": "cryon-ice", 
+  "parent": "cryon-ice",
+  
+  "effect": "ventSteam", 
+  "effectColor": "c0d8e8", 
+  "attributes": {
+    "cryothermal": 1.0
+  }
+}

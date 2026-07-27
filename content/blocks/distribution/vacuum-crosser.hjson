@@ -1,0 +1,32 @@
+type: Junction
+name: "真空交叉器"
+description: "允许两条交叉的真空管道互不干扰地传输物品。"
+size: 1
+health: 25
+speed: 5.0
+capacity: 6
+hasPower: false
+category: distribution
+requirements: [
+  aluminum/4
+  magnesium/2
+]
+research: {
+  parent: vacuum-conduit
+  requirements: [
+    aluminum/14
+    magnesium/6
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: magnesium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }]
+}
+
+shownPlanets: [cryon]

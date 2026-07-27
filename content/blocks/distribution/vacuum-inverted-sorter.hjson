@@ -1,0 +1,29 @@
+type: Sorter
+name: "真空反向分类器"
+description: "分类物品。"
+size: 1
+health: 30
+category: distribution
+invert: true
+requirements: [
+  aluminum/4
+  magnesium/1
+  silicon/2
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }
+  ],
+  parent: vacuum-sorter
+  requirements: [
+    aluminum/35
+    magnesium/15
+    silicon/20
+  ]
+}
+
+shownPlanets: [cryon]

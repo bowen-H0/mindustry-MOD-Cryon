@@ -1,0 +1,64 @@
+type: LaserTurret
+name: "长戟"
+description: "消耗石墨与电力，发射一道具有毁灭性穿透力的长程激光。"
+
+size: 4
+health: 1000
+range: 280
+reload: 300
+targetAir: false
+targetGround: true
+maxAmmo: 20
+
+// ===== 消耗设置 (同时需要电力和石墨) =====
+consumes: {
+  power: 3.33
+  item: graphite
+}
+
+// ===== 前摇动画参数 =====
+shootWarmupSpeed: 0.0033
+minWarmup: 1.0
+linearWarmup: false
+warmupMaintainTime: 0
+
+// ===== 音效参数 =====
+chargeSound: chargeCorvus
+shootSound: shootLancer
+shootSoundVolume: 1.0
+
+// ===== 视觉效果 =====
+smokeEffect: shootSmallSmoke
+
+shootType: {
+  type: LaserBulletType
+  damage: 230
+  width: 24
+  length: 290
+  colors: [95abd9, b0cdfe, ffffff]
+  hitEffect: hitLaser
+}
+
+category: turret
+requirements: [
+  silicon/150
+  graphite/120
+  magnesium/90
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-shattered-abyss
+    }
+  ],
+  parent: "spiral"
+  requirements: [
+    silicon/1500
+    graphite/1200
+    magnesium/900
+  ]
+}
+
+shownPlanets: [cryon]

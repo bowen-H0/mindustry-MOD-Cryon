@@ -1,0 +1,113 @@
+type: legs
+name: Benignitas
+
+# 基础属性
+speed: 0.55
+health: 600
+armor: 4
+hitSize: 26
+
+# 腿部核心参数
+legCount: 6
+legLength: 22
+legBaseOffset: 6
+legMoveSpace: 1.8
+legExtension: -2
+legStraightness: 0.5
+legGroupSize: 2
+legSpeed: 0.6
+legContinuousMove: true
+
+outlineColor: 38404B
+mechLegColor: 606bb9
+abilities: [
+  {
+    type: RepairFieldAbility
+    range: 100
+    amount: 4
+    reload: 120
+  }
+]
+weapons: [
+  {
+    name: benignitas-weapen
+    type: Weapon
+    x: 0              
+    y: 0
+    
+    rotate: false
+    mirror: false
+    reload: 35
+    alternate: true
+    ejectEffect: casing1
+    shootSound: shootFuse
+  
+    shoot: {
+      type: ShootSpread
+      shots: 3
+      spread: 20
+    }
+    
+    bullet: {
+      type: ShrapnelBulletType
+      length: 100
+      damage: 80
+      width: 15
+      toColor: ffffff
+      serrations: 3
+    }
+
+
+  },
+ {
+  type: PointDefenseWeapon
+  name: cryon-point-defense
+  rotate: true
+  x: 5
+  y: -6
+  reload: 9
+  targetInterval: 9
+  targetSwitchInterval: 12
+  recoil: 0.5
+  bullet: {
+    shootSound: shootLaser
+    shootEffect: sparkShoot
+    hitEffect: pointHit
+    maxRange: 100
+    damage: 38
+    hitColor: F47B76
+  },
+ },
+ {
+  type: PointDefenseWeapon
+  name: cryon-point-defense
+  rotate: true
+  x: 10
+  y: -6
+  reload: 9
+  targetInterval: 9
+  targetSwitchInterval: 12
+  recoil: 0.5
+  bullet: {
+    shootSound: shootLaser
+    shootEffect: sparkShoot
+    hitEffect: pointHit
+    maxRange: 100
+    damage: 38
+    hitColor: F47B76
+  }
+}
+]
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }
+  ],
+    parent: mechanical-factory
+    requirements: [
+      titanium/40
+      silicon/50
+    ]
+  }

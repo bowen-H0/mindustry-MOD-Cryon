@@ -1,0 +1,182 @@
+type: legs
+name: 卫戍
+
+# 基础属性
+speed: 0.75
+health: 2000
+armor: 8
+hitSize: 32
+
+# 腿部核心参数
+legCount: 6
+legLength: 38
+legBaseOffset: 10
+legMoveSpace: 1.8
+legSpeed: 0.85
+legExtension: -2
+legStraightness: 0.5
+legGroupSize: 2
+legContinuousMove: true
+
+outlineColor: 38404B
+mechLegColor: 606bb9
+
+abilities: [
+  {
+    type: ShieldRegenFieldAbility
+    amount: 25
+    max: 120
+    reload: 45
+    range: 150
+  },
+  {
+  type: StatusFieldAbility
+  effect: fast
+  duration: 360
+  reload: 360
+  range: 60
+}
+]
+
+weapons: [
+  {
+    name: salus-weapon
+    type: Weapon
+    x: 0              
+    y: 11
+    
+    rotate: false
+    mirror: false
+    reload: 20
+    alternate: true
+    ejectEffect: casing1
+    shootSound: shootFuse
+
+    shoot: {
+      type: ShootSpread
+      shots: 6
+      spread: 20
+    }
+    
+    bullet: {
+      type: ShrapnelBulletType
+      length: 160
+      damage: 140
+      width: 18
+      toColor: ffffff
+      serrations: 4
+    }
+  }
+  {
+    type: PointDefenseWeapon
+    name: cryon-point-defense
+    rotate: true
+    x: 5
+    y: -9
+    reload: 6
+    targetInterval: 6
+    targetSwitchInterval: 9
+    recoil: 0.8
+    bullet: {
+      shootSound: shootLaser
+      shootEffect: sparkShoot
+      hitEffect: pointHit
+      maxRange: 150
+      damage: 65
+      hitColor: F47B76
+    }
+  }
+  {
+    type: PointDefenseWeapon
+    name: cryon-point-defense
+    rotate: true
+    x: 10
+    y: -9
+    reload: 6
+    targetInterval: 6
+    targetSwitchInterval: 9
+    recoil: 0.8
+    bullet: {
+      shootSound: shootLaser
+      shootEffect: sparkShoot
+      hitEffect: pointHit
+      maxRange: 150
+      damage: 65
+      hitColor: F47B76
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 14
+    y: -4
+    reload: 12
+    rotate: true
+    mirror: true
+
+    bullet: {
+      type: SapBulletType
+      sapStrength: 1.2
+      length: 70
+      width: 0.6
+      knockback: -1.0
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  },
+  {
+    name: salus-meltdown-weapon
+    type: Weapon
+    x: 8    
+    y: 5
+    reload: 0
+    rotate: false
+    mirror: true       
+    alternate: false
+    continuous: true   
+    shootSound: beamMeltdown
+
+    shoot: {
+      firstShotDelay: 0
+    }
+    
+    bullet: {
+      type: ContinuousLaserBulletType
+      damage: 18
+      length: 160      
+      width: 5         
+      lifetime: 10
+      
+      incendChance: 0
+      incendSpread: 0
+      incendAmount: 0
+      
+      colors: [8ca9f4, 5c7cf2, ffffff]
+    }
+  }
+]
+
+research: {
+  parent: salus
+  requirements: [
+    titanium/400
+    silicon/600
+    graphite/300
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: titanium
+    }
+    {
+      type: Produce
+      content: graphite
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-gravel-ice
+    }]
+}

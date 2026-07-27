@@ -1,0 +1,17 @@
+name: 镁
+description: "一种轻质的银白色金属，易于开采。"
+hardness: 1
+explosiveness:0.85
+flammability:2.2
+charge:0.8
+color: e3e3e3
+research: {
+  parent: aluminum
+  objectives: [
+    {
+      type: Produce
+      content: magnesium
+    }
+  ]
+}
+shownPlanets: [cryon]

@@ -1,0 +1,15 @@
+name: "cryon"
+
+displayName: "Cryon"
+
+author: "Bowen-H0"
+
+description: "Added a new planet.\nSupported languages: English, Chinese."
+
+version: "1.26.0"
+
+minGameVersion: "146"
+
+dependencies: []
+
+hidden: false

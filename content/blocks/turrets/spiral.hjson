@@ -1,0 +1,63 @@
+type: ItemTurret
+name: "螺旋"
+description: "单管高射速炮塔。"
+size: 2
+health: 250
+range: 160
+reload: 18
+inaccuracy: 2
+targetAir: true
+targetGround: true
+maxAmmo: 40
+
+ammoTypes: {
+  magnesium: {
+    type: BasicBulletType
+    damage: 10
+    speed: 5.33
+    lifetime: 30
+    width: 6
+    height: 9
+  }
+  silicon: {
+    type: MissileBulletType
+    damage: 12
+    speed: 6.67
+    reloadMultiplier: 1.5    // +50% 开火速率
+    lifetime: 24
+    width: 6
+    height: 9
+    homingPower: 0.1
+    homingRange: 160
+  }
+  graphite: {
+    type: BasicBulletType
+    damage: 22
+    speed: 7
+    reloadMultiplier: 0.8    // -20% 开火速率
+    lifetime: 40
+    width: 7
+    height: 11
+  }
+}
+
+category: turret
+requirements: [
+  aluminum/35
+  magnesium/15
+]
+
+research: {
+  parent: core-pioneer
+  requirements: [
+    aluminum/35
+    magnesium/15
+  ]
+  "objectives": [
+    {
+      "type": "Produce",
+      "content": "magnesium"
+    }
+  ]
+}
+shownPlanets: [cryon]

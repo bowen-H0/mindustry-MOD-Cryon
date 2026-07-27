@@ -1,0 +1,71 @@
+type: tank
+
+health: 120
+armor: 1
+speed: 0.44
+hitSize: 12
+omniMovement: false
+faceTarget: false
+targetAir: true
+targetGround: true
+itemCapacity: 10
+
+rotateSpeed: 3.5
+treadPullOffset: 2
+treadRects: [
+  {
+    x: -25
+    y: -25
+    width: 14
+    height: 50
+  }
+  {
+    x: 11
+    y: -25
+    width: 14
+    height: 50
+  }
+]
+
+weapons: [
+  {
+    name: cryon-buffer-weapon
+    x: 0
+    y: 1
+    rotate: true
+    mirror: false
+    reload: 18
+    shootSound: shoot
+    
+    bullet: {
+      type: BasicBulletType
+      damage: 13
+      speed: 8
+      lifetime: 20
+      collidesAir: true
+      collidesGround: true
+      pierce: false
+      pierceBuilding: false
+      splashDamage: 0
+      splashDamageRadius: 0
+      width: 5
+      height: 8
+      backColor: ffdc99
+      frontColor: ffffff
+    }
+  }
+]
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ],
+    parent: unit-projector
+    requirements: [
+      magnesium/200
+      silicon/50
+    ]
+    
+  }

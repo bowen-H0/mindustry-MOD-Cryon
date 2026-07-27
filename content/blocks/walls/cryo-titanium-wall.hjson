@@ -1,0 +1,26 @@
+type: Wall
+name: 凝化钛墙
+description: "钛墙的升级版，具有更高的耐久性和防御能力。"
+health: 800
+size: 1
+requirements: [
+  titanium/6
+]
+category: defense
+research: {
+  parent: aluminum-wall-large
+  objectives: [
+    {
+      type: Produce
+      content: titanium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }],
+  requirements: [
+    titanium/2000
+  ]
+}
+shownPlanets: [serpulo]

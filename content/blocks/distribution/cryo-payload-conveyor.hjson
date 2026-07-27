@@ -1,0 +1,39 @@
+type: PayloadConveyor
+name: "凝化载荷传送带"
+description: "传输载荷。"
+size: 3
+health: 20
+category: units
+requirements: [
+  aluminum/4
+  magnesium/1
+  silicon/5
+]
+research: {
+  parent: vacuum-conduit
+  requirements: [
+    aluminum/35
+    magnesium/15
+    silicon/50
+
+  ]
+  objectives: [
+    {
+      "type": "Research",
+      "content": "unit-projector"
+    },
+    {
+      type: Produce
+      content: magnesium
+    },
+    {
+      type: Produce
+      content: silicon
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-gravel-ice
+    }]
+}
+shownPlanets: [cryon]

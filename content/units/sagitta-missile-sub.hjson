@@ -1,0 +1,77 @@
+type: missile
+  physics: false
+  template: MissileUnitType
+  flying: true
+  useUnitCap: false
+  hidden: true
+
+  "speed": 4.8,
+  "maxRange": 6,
+  "lifetime": 33,
+  "outlineColor": "404049",
+
+  "engineColor": "ffd37f",
+  "trailColor": "ffd37f",
+  "engineSize": 2.2,
+  "engineOffset": 8,
+
+  "rotateSpeed": 1.4,
+  "trailLength": 12,
+  "lowAltitude": true,
+
+  "loopSound": "loopMissileTrail",
+  "loopSoundVolume": 0.6,
+  "deathSound": "explosionMissile",
+
+  "targetAir": true,
+  "targetUnderBlocks": false,
+  "fogRadius": 6,
+
+  "health": 45,
+
+  "weapons": [
+    {
+      "shootCone": 360,
+      "mirror": false,
+      "reload": 1,
+      "shootOnDeath": true,
+      "shake": 10,
+
+      "bullet": {
+        "type": "ExplosionBulletType",
+        "damage": 110,
+        "splashDamageRadius": 32,
+        "splashDamage": 110,
+
+
+        "hitColor": "ffd37f",
+        "shootEffect": {
+          "type": "MultiEffect",
+          "effects": [
+            "massiveExplosion",
+            "scatheExplosionSmall",
+            "scatheLightSmall",
+            {
+              "type": "WaveEffect",
+              "lifetime": 10,
+              "strokeFrom": 4,
+              "sizeTo": 100
+            }
+          ]
+        },
+
+        "collidesAir": true,
+      }
+    }
+  ],
+
+  "abilities": [
+    {
+      "type": "MoveEffectAbility",
+      "effect": "missileTrailSmokeSmall",
+      "rotation": 180,
+      "y": -9,
+      "color": "998f6b66",
+      "interval": 5
+    }
+  ]

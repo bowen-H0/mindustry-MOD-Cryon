@@ -1,0 +1,64 @@
+type: GenericCrafter
+
+name: "凝化电解机"
+description: "消耗水生产氢气和臭氧。"
+
+size: 3
+health: 240
+category: crafting
+rotate: false
+
+// 核心机制设定
+hasPower: true
+hasLiquids: true
+hasItems: false
+
+// 工艺周期设定：60帧等于1秒
+craftTime: 60.0
+liquidCapacity: 30.0
+
+consumes: {
+  power: 1.5
+  liquid: water/2.0
+}
+
+// 输出多个液体（两个输出口）
+outputLiquids: [
+  hydrogen/2.0
+  ozone/1.2
+]
+
+// 液体输出方向（1=右, 3=上）
+liquidOutputDirections: [1, 3]
+
+// 环境音效
+ambientSound: loopElectricHum
+ambientSoundVolume: 0.08
+
+
+requirements: [
+  aluminum/60
+  silicon/40
+  graphite/40
+]
+
+research: {
+  parent: cryon-water-extractor
+  requirements: [
+  aluminum/60
+  silicon/40
+  graphite/40
+  ]
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-glacial-basin
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }]
+}
+
+shownPlanets: [cryon]

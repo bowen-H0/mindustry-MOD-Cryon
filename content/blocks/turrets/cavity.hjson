@@ -1,0 +1,78 @@
+type: LaserTurret
+name: "束腔"
+description: "发射高能持续激光束。"
+size: 2
+health: 250
+range: 112
+category: turret
+
+// 核心参数
+shootDuration: 60
+hasPower: true
+
+// 耗电量：1.5 * 60 = 90 EU/秒
+consumes: {
+  power: 1.5
+}
+heatRequirement: 4.0
+maxHeatEfficiency: 1.0
+shootSound: shootMeltdown
+
+loopSound: beamMeltdown
+loopSoundVolume: 0.6
+
+shootType: {
+  type: ContinuousLaserBulletType
+  damage: 12
+  length: 112
+  width: 1
+  
+  incendChance: 0
+  incendAmount: 0
+  incendSpread: 0
+  
+  status: none
+  
+  colors: [98d5ff, ffffff]
+}
+
+requirements: [
+  aluminum/55
+  magnesium/25
+  silicon/40
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-glacial-basin
+    }
+  ],
+  parent: spiral
+  requirements: [
+    aluminum/140
+    magnesium/60
+    silicon/100
+  ],
+  "objectives": [
+    {
+      "type": "Produce",
+      "content": "silicon"
+    },
+    {
+      "type": "Produce",
+      "content": "magnesium"
+    },
+    {
+      "type": "Research",
+      "content": "magnesium-generator"
+    },
+    {
+      "type": "SectorComplete",
+      "preset": "cryon-sector-1"
+    }
+  ]
+}
+
+shownPlanets: [cryon]

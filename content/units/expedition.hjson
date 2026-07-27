@@ -1,0 +1,74 @@
+type: flying
+flying: true
+name:"远征"
+
+health: 160
+armor: 0
+speed: 3.0
+rotateSpeed: 8
+hitSize: 12
+itemCapacity: 30
+buildSpeed: 1.5
+buildBeamOffset: 3
+targetAir: true
+targetGround: true
+circleTarget: false
+faceTarget: false
+lowAltitude: false
+abilities: [
+  {
+    type: StatusFieldAbility
+    effect: overclock
+    duration: 360
+    reload: 360
+    range: 60
+  }
+]
+
+# 挖矿能力
+mineTier: 2
+mineSpeed: 3.5
+
+# 防护属性（不能被攻击）
+targetable: false
+hittable: false
+
+controller: flyingAI
+
+engineSize: 0
+engines: [
+  {
+    x: 0
+    y: -8
+    radius: 3.0
+    rotation: -90
+  }
+]
+
+weapons: [
+  {
+    type: RepairBeamWeapon
+    widthSinMag: 0.11
+    reload: 20
+    x: 0
+    y: 6.5
+    rotate: true
+    shootY: 0
+    beamWidth: 0.7
+    repairSpeed: 3.1
+    fractionRepairSpeed: 0.06
+    shootCone: 15
+    mirror: false
+    targetUnits: false
+    targetBuildings: true
+    autoTarget: false
+    controllable: true
+    
+    bullet: {
+      type: BulletType
+      maxRange: 60
+    }
+  }
+]
+
+shownPlanets: [cryon]

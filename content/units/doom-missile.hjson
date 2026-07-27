@@ -1,0 +1,73 @@
+{
+  type: missile
+  physics: false
+  template: MissileUnitType
+  flying: true
+  useUnitCap: false
+  hidden: true
+
+  speed: 7.0
+  missileAccelTime: 10
+  lifetime: 55
+  health: 1500
+  hitSize: 12
+
+  rotateSpeed: 5.0
+  autoFindTarget: true
+  homingDelay: 0
+  faceTarget: true
+  circleTarget: false
+
+  lowAltitude: false
+
+  engineSize: 2.2
+  engineOffset: 5.0
+  trailColor: "ff6600"
+  trailLength: 35
+
+  weapons: [
+    {
+      reload: 1
+      shootOnDeath: true
+      mirror: false
+      shootCone: 360
+      shake: 20
+
+      shoot: {
+        type: ShootSpread
+        shots: 16       // 16道全向真激光，完美覆盖360度
+        spread: 22.5    // 360 / 16 = 22.5度均匀散布
+      }
+      
+        
+      bullet: {
+        type: LaserBulletType
+        damage: 180     // 每道真激光的高额伤害
+        length: 30
+        width: 16       // 激光粗细
+        lifetime: 30    // 激光持续时间
+        buildingDamageMultiplier: 1.5
+        hitEffect: massiveExplosion
+        
+        // 熔岩配色（深红 -> 橙色 -> 亮白核心）
+        colors: [
+          "ff330066"
+          "ff6600"
+          "ffdd99"
+          "ffffff"
+        ]
+      }
+    }
+  ],
+  "abilities": [
+    {
+      "type": "MoveEffectAbility",
+      "effect": "missileTrailSmokeSmall",
+      "rotation": 180,
+      "y": -9,
+      "color": "ff330066",  // 红橙色半透明烟雾（与激光配色一致）
+      "interval": 4
+    }
+  ]
+
+}

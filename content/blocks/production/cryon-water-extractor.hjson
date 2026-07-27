@@ -1,0 +1,46 @@
+type: SolidPump
+
+name: "水提取器"
+description: "消耗电力加热并融化冰面，从而提取出水。"
+
+size: 2
+health: 160
+category: production
+
+attribute: cryon-ice
+
+pumpAmount: 0.1
+
+// 资源产出设定
+hasPower: true
+hasLiquids: true
+hasItems: false
+
+// 最终产出的流体：水
+result: water
+
+consumes: {
+  power: 0.5
+}
+
+
+requirements: [
+  aluminum/30
+  silicon/20
+]
+
+research: {
+  parent: magnesium-converter
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-sector-glacial-basin
+    }]
+}
+
+shownPlanets: [cryon]

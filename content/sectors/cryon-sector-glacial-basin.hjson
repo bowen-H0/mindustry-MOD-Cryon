@@ -1,0 +1,18 @@
+planet: cryon
+sector: 16
+alwaysUnlocked: false
+difficulty: 4
+
+research: {
+  parent: cryon-ice-shoal
+  objectives: [
+    {
+      type: Research
+      content: unit-projector
+    }
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ]
+}

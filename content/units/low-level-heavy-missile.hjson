@@ -1,0 +1,46 @@
+type: missile
+physics: false
+template: MissileUnitType
+flying: true
+useUnitCap: false
+hidden: true            # 在沙盒和工厂列表中隐藏
+
+# 基础属性
+speed: 4                # 导弹飞行速度
+missileAccelTime: 25    # 推进器加速时间
+lifetime: 80
+health: 5
+hitSize: 4
+
+# 低级导航属性
+rotateSpeed: 1.4        # 转弯速度较慢，带有重型导弹的物理惯性，划大弧线修正
+autoFindTarget: true    # 自动锁定并飞向敌人
+homingDelay: 12         # 发射 12 帧后才开始导航，模拟初始弹道修正
+faceTarget: true
+circleTarget: false
+
+# 外观与引擎尾迹
+engineSize: 2.0
+engineOffset: 4.0
+trailColor: ffd37f
+trailLength: 12
+
+weapons: [
+  {
+    reload: 1
+    shootOnDeath: true  # 核心：撞击敌人或中途被击落时，都会触发自爆
+    mirror: false
+    shootCone: 360
+    shake: 4            # 爆炸时带有明显的屏幕震动
+    
+    bullet: {
+      type: ExplosionBulletType
+      
+      splashDamage: 40
+      splashDamageRadius: 40
+      
+      hitEffect: massiveExplosion
+    }
+    
+  } 
+]

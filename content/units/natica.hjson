@@ -1,0 +1,100 @@
+type: flying
+flying: true
+
+health: 160
+armor: 4
+speed: 2.3
+rotateSpeed: 8
+hitSize: 12
+itemCapacity: 30
+
+targetAir: true
+targetGround: true
+circleTarget: false
+faceTarget: false
+lowAltitude: true
+
+
+controller: flyingAI
+
+engineSize: 0
+engines: [
+  {
+    x: 0
+    y: -8
+    radius: 3.0
+    rotation: -90
+  }
+]
+
+weapons: [
+  {
+    name: natica-missiles-mount
+    mirror: true
+    alternate: true
+    rotate: true
+    reload: 20
+    shootSound: shootMissile
+    x: 4
+    y: 0
+    
+    bullet: {
+      type: MissileBulletType
+      damage: 15
+      speed: 4
+      lifetime: 40
+      homingPower: 0.1
+      homingRange: 120
+      collidesAir: true
+      collidesGround: true
+      keepVelocity: true
+      splashDamage: 8
+      splashDamageRadius: 16
+      width: 6
+      height: 9
+      backColor: ff795e
+      frontColor: ffffff
+      trailInterval: 4
+    }
+  }
+]
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }
+  ],
+    parent: littorina
+    requirements: [
+      titanium/500
+      silicon/1000
+      graphite/1000
+    ]
+  "objectives": [
+    {
+      "type": "Research",
+      "content": "t2factory"
+    },
+    {
+      type: Produce
+      content: magnesium
+    },
+    {
+      type: Produce
+      content: dry-ice
+    },
+    {
+      type: Produce
+      content: silicon
+    },
+    {
+      type: Produce
+      content: graphite
+    },
+    {
+      type: Produce
+      content: titanium
+    }
+  ]
+  }

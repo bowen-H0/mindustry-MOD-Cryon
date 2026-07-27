@@ -1,0 +1,23 @@
+type: StorageBlock
+
+name: "凝化物品容器"
+description: "物品储存设备。"
+
+size: 2
+health: 160
+category: distribution
+
+// 核心储存设定
+hasItems: true
+itemCapacity: 300
+
+requirements: [
+  aluminum/80
+  silicon/40
+]
+
+research: {
+  parent: cryo-conduit
+}
+
+shownPlanets: [cryon]

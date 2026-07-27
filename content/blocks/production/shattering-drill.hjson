@@ -1,0 +1,34 @@
+type: Drill
+name: "裂碎钻头"
+description: "安全的机械粉碎矿物。不过对常规矿物效率更低。"
+size: 2
+health: 80
+tier: 1
+drillTime: 280
+category: production
+
+
+consumes: {}
+
+requirements: [
+  aluminum/40
+]
+drillMultipliers: {
+  aluminum: 0.50
+  magnesium: 0.50
+  salt: 1.5
+  dry-ice: 1.5
+}
+research: {
+  parent: core-pioneer
+  requirements: [
+    aluminum/100
+  ]
+  "objectives": [
+    {
+      type: Produce
+      content: aluminum
+    }
+  ]
+}
+shownPlanets: [cryon]

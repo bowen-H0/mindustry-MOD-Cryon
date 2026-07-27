@@ -1,0 +1,138 @@
+type: tank
+name:"极峰"
+health: 2000
+armor: 12
+speed: 0.37
+hitSize: 24
+omniMovement: false
+targetAir: true
+targetGround: true
+itemCapacity: 30
+faceTarget:true
+
+rotateSpeed: 3.5
+treadPullOffset: 5
+
+treadRects: [
+  {
+    x: -44
+    y: -22
+    width: 30
+    height: 75
+  }
+  {
+    x: -16
+    y: -53
+    width: 17
+    height: 60
+  }
+]
+weapons: [
+  {
+    name: cryon-buffer-weapon
+    x: -6
+    y: -10
+    rotate: true
+    mirror: true
+    reload: 12
+    shootSound: shoot
+    
+    bullet: {
+      type: BasicBulletType
+      damage: 20
+      speed: 8
+      lifetime: 20
+      collidesAir: true
+      collidesGround: true
+      pierce: false
+      pierceBuilding: false
+      splashDamage: 0
+      splashDamageRadius: 0
+      width: 5
+      height: 8
+      backColor: ffdc99
+      frontColor: ffffff
+    }
+  },
+   {
+    name: guardian-laser-weapon
+    x: 6
+    y: 4
+    rotate: true
+    mirror: true
+    reload: 240
+    shootSound: shootLancer
+    shootCone: 15
+    shadow: 6
+
+    bullet: {
+      type: LaserBulletType
+      damage: 70
+      length: 160
+      width: 3.5
+      lifetime: 16
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceCap: 2
+
+      hitEffect: hitLancer
+      despawnEffect: none
+
+    }
+  },
+   {
+    name: peak-cannon-weapon
+    x: 0
+    y: -4
+    rotate: false
+    mirror: false
+    reload: 60                     # 原代码中已改为 1秒/发（60帧）
+    shootCone: 15
+    shadow: 6
+    
+    recoil: 5                      # 保持大后坐力
+    
+    shake: 3                       # 震动稍微降低，从钍堆炸毁感回归重炮轰鸣感
+    
+    bullet: {
+      type: ArtilleryBulletType    
+      collidesAir: false           # 绝对不打空军（只对地）
+      collidesGround: true         # 完美对地
+      collidesTiles: true          # 建筑物毁灭者
+      
+      speed: 4                     
+      lifetime: 40
+      width: 16
+      height: 22                   
+      backColor: ffa64d
+      frontColor: ffffff
+      
+      damage: 150                  
+      splashDamage: 380            # 毁灭性对地溅射伤害
+      splashDamageRadius: 80       # 保持 10 格整的大范围毁灭圈
+      
+      hitEffect: massiveExplosion  
+      despawnEffect: massiveExplosion
+      
+      trailEffect: artilleryTrail  
+      trailSize: 4
+      trailInterval: 2
+    }
+  }
+
+]
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-gravel-ice
+    }
+  ],
+  parent: guardian
+  requirements: [
+    titanium/500
+    silicon/1000
+    graphite/1000
+  ]
+}

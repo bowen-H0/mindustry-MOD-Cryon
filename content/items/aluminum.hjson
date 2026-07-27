@@ -1,0 +1,17 @@
+name: 铝
+description: "一种轻质的银灰色金属，导电性强，结构稳定，是克莱恩星球的主要建筑材料。"
+hardness: 1
+explosiveness: 0.05
+flammability: 0.1
+charge: 0.6
+color: c8d4e0
+research: {
+  parent: core-pioneer
+  objectives: [
+    {
+      type: Produce
+      content: aluminum
+    }
+  ]
+}
+shownPlanets: [cryon]

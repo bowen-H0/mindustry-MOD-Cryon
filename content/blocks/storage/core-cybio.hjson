@@ -1,0 +1,12 @@
+type: CoreBlock
+name: "噬孢中枢（弃用）"
+description: "噬孢生物的核心。"
+size: 3
+health: 500
+itemCapacity: 3500
+unitType: alpha
+unitCapModifier: 40
+alwaysUnlocked: true
+isFirstTier: false
+buildVisibility: hidden
+shownPlanets: []

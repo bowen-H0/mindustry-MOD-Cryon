@@ -1,0 +1,69 @@
+type: flying
+flying: true
+
+health: 60
+armor: 1
+speed: 2.5
+rotateSpeed: 8
+hitSize: 9
+itemCapacity: 10
+
+targetAir: true
+targetGround: true
+circleTarget: true
+faceTarget: true
+lowAltitude: false
+
+
+controller: flyingAI
+
+engineSize: 0
+engines: [
+  {
+    x: 0
+    y: -6
+    radius: 2.0
+    rotation: -90
+  }
+]
+
+weapons: [
+  {
+    mirror: true
+    alternate: true
+    rotate: true
+    reload: 20
+    shootSound: shoot
+    x: 4
+    y: 3
+    
+    bullet: {
+      type: BasicBulletType
+      damage: 10
+      speed: 6
+      lifetime: 20
+      collidesAir: true
+      collidesGround: true
+      pierce: false
+      splashDamage: 0
+      width: 4
+      height: 7
+      backColor: ffdc99
+      frontColor: ffffff
+    }
+  }
+]
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ],
+    parent: unit-projector
+    requirements: [
+      magnesium/100
+      silicon/60
+    ]
+    
+  }

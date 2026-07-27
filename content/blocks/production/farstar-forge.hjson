@@ -1,0 +1,52 @@
+type: GenericCrafter
+
+name: "远星合金制造厂"
+description: "制造出远星合金。"
+
+size: 3
+health: 320
+category: crafting
+
+// 核心机制设定：涉及多种固体、流体的混合输入与固体产出
+hasPower: true
+hasLiquids: true
+hasItems: true
+
+craftTime: 40.0
+itemCapacity: 10
+liquidCapacity: 30.0
+
+consumes: {
+  // 运行所需的维持电力
+  power: 5.0
+  
+  // 输入固体原料：每次消耗 2 个钛 和 2 个硅
+  items: [
+    titanium/2
+    silicon/2
+  ]
+  
+  // 输入流体原料：每次工艺循环消耗 6 单位氮气
+  liquid: nitrogen/0.1
+}
+
+// 输出固体：远星合金（每次产出 1 个）
+outputItem: farstar-alloy/1
+
+requirements: [
+  aluminum/100
+  silicon/80
+  graphite/60
+]
+
+research: {
+  parent: magnesium-converter
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }
+  ]
+}
+
+shownPlanets: [cryon]

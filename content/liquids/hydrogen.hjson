@@ -1,0 +1,14 @@
+research: {
+  parent: dry-ice-vapor
+  objectives: [
+    {
+      type: Produce
+      content: hydrogen
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-shattered-abyss
+    }]
+}
+shownPlanets: [cryon, erekir]

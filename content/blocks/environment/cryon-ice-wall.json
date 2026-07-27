@@ -1,0 +1,8 @@
+{
+  "type": "StaticWall",
+  "name": "Cryon Ice Wall",
+  
+  "variants": 1,
+  
+  "solid": true
+}

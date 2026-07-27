@@ -1,0 +1,62 @@
+type: PowerTurret
+name: "宝石"
+description: "宝石"
+size: 1
+health: 40
+range: 200
+reload: 18
+recoil: 1
+shake: 0
+inaccuracy: 2
+velocityRnd: 0.1
+shootCone: 10
+shootY: 3
+shootEffect: shootBigColor
+smokeEffect: shootSmokeSquareSparse
+heatRequirement: 0
+
+consumes: {
+    power: 0.6
+}
+
+shootType: {
+    type: BasicBulletType
+    damage: 10
+    speed: 4
+    lifetime: 50
+    width: 4
+    height: 6
+    hitSize: 3
+    pierce: false
+
+    backColor: "ffe2a0"
+    frontColor: "ffffff"
+    hitColor: "ffebc0"
+    trailColor: "ffe2a0"
+    trailWidth: 1.2
+    trailLength: 4
+
+    hitEffect: hitSquaresColor
+    despawnEffect: hitSquaresColor
+}
+
+category: turret
+requirements: [
+    aluminum/40
+    silicon/30
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ],
+    parent: spiral
+    requirements: [
+        aluminum/200
+        silicon/100
+    ]
+}
+shownPlanets: [cryon]

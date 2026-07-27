@@ -1,0 +1,9 @@
+{
+    "type": "Floor",
+    "name": "克莱恩冰",
+    "variants": 1,
+    "speedMultiplier": 1.2,
+    "attributes": {
+      "cryon-ice": 1.0
+    }
+}

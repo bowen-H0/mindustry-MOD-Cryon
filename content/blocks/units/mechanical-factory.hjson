@@ -1,0 +1,84 @@
+{
+  type: UnitFactory
+
+  name: "机械组装场"
+  description: "消耗资源，制造出一级爬行单位。"
+
+  size: 5
+  health: 400
+  hasPower: true
+  hasItems: true
+
+  consumes: {
+    power: 3.0
+  }
+
+  requirements: [
+    aluminum/120
+    magnesium/80
+    graphite/30
+    silicon/60
+    titanium/10
+  ]
+
+  research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }
+  ],
+    parent: unit-projector
+    requirements: [
+      aluminum/300
+      magnesium/200
+      silicon/200
+      graphite/100
+      titanium/30
+    ],
+    "objectives": [
+    {
+      "type": "Produce",
+      "content": "silicon"
+    },
+    {
+      "type": "Produce",
+      "content": "aluminum"
+    },
+    {
+      "type": "Produce",
+      "content": "magnesium"
+    },
+     {
+      "type": "Produce",
+      "content": "titanium"
+    },
+    
+    {
+      "type": "Research",
+      "content": "vacuum-router"
+    },
+    {
+      type: SectorComplete
+
+      preset: cryon-neutron-flux-zone
+    }
+  ]
+  }
+
+  category: units
+  buildVisibility: shown
+
+  plans: [
+    {
+      unit: benignitas
+      time: 3600
+      requirements: [
+        magnesium/50
+        silicon/50
+        graphite/10
+        titanium/10
+      ]
+    }
+  ]
+}

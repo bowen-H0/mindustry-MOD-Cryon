@@ -1,0 +1,14 @@
+research: {
+  parent: magnesium
+  objectives: [
+    {
+      type: Produce
+      content: scrap
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }]
+}
+shownPlanets: [serpulo,cryon]

@@ -1,0 +1,29 @@
+type: StorageBlock
+
+name: "凝化物品容器"
+description: "物品储存设备。"
+
+size: 3
+health: 490
+category: distribution
+
+// 核心储存设定
+hasItems: true
+itemCapacity: 1000
+
+requirements: [
+  aluminum/80
+  silicon/40
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }
+  ],
+  parent: cryo-container
+}
+
+shownPlanets: [cryon]

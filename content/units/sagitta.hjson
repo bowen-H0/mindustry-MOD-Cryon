@@ -1,0 +1,103 @@
+type: mech
+name: sagitta
+
+# ---- 基础属性 (T4 数值) ----
+speed: 0.55
+flying: false
+health: 8600
+armor: 9
+hitSize: 22
+faceTarget: true
+
+# ---- 外观颜色 ----
+outlineColor: 787886
+mechLegColor: 787886
+
+# ---- 辅助与建造功能 ----
+buildSpeed: 1.1
+canBoost: true
+boostMultiplier: 1.3
+buildBeamOffset: 4
+engineOffset: 9
+engineSize: 5
+
+abilities: [
+  {
+    type: RepairFieldAbility
+    range: 65
+    amount: 7
+    reload: 100
+  }
+]
+
+weapons: [
+  {
+    name: bolide-missile-mount
+    top: true
+    x: 0
+    y: 0
+    rotate: true
+    mirror: false
+    reload: 170
+    shootCone: 15
+    shootSound: shootMissile
+
+    shootWarmupSpeed: 0.05
+    minWarmup: 0.9
+
+    parts: [
+      {
+        type: RegionPart
+        suffix: "-left"
+        progress: reload
+        moveX: -6
+        moveY: 0
+      }
+      {
+        type: RegionPart
+        suffix: "-right"
+        progress: reload
+        moveX: 6
+        moveY: 0
+      }
+    ]
+
+    bullet: {
+      instantDisappear: true
+      damage: 0
+      spawnUnit: sagitta-missile
+      range: 360
+      shootEffect: {
+        type: MultiEffect
+        effects: [
+          {
+            type: ParticleEffect
+            line: false
+            particles: 8
+            lifetime: 110
+            sizeFrom: 20
+            sizeTo: 0
+            length: 50
+            cone: 360
+            colorFrom: "8a4212ff"
+            colorTo: "8a421200"
+          }
+          {
+            type: ParticleEffect
+            line: false
+            particles: 18
+            lifetime: 25
+            sizeFrom: 12
+            sizeTo: 2
+            length: 55
+            cone: 15
+            colorFrom: ffa64d
+            colorTo: ff4d00
+            rotWithParent: true
+            baseRotation: 180
+          }
+        ]
+      }
+    }
+  }
+]

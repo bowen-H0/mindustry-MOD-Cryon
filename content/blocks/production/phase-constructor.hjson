@@ -1,0 +1,47 @@
+type: GenericCrafter
+
+name: "相位构造器"
+description: "消耗大量电力，制造出相织布。"
+
+size: 3
+health: 400
+category: crafting
+
+hasPower: true
+hasLiquids: false
+hasItems: true
+craftTime: 90.0
+consumes: {
+  power: 6.0
+  items: [
+    quartz/5
+    neutronite/3
+  ]
+}
+
+requirements: [
+  farstar-alloy/50
+  silicon/30
+
+]
+outputItem: {
+  item: phase-fabric
+  amount: 2
+}
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }
+  ],
+  parent: neutron-activator
+  requirements: [
+  farstar-alloy/500
+  silicon/1000
+    neutronite/500
+    quartz/500
+    ]
+}
+
+shownPlanets: [cryon]

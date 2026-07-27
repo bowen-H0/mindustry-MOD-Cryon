@@ -1,0 +1,10 @@
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-shattered-abyss
+    }
+  ],
+  parent: penetrate
+}
+shownPlanets: [cryon]

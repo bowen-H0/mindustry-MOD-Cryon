@@ -1,0 +1,58 @@
+type: GenericCrafter
+
+name: "中子活化炉"
+description: ""
+
+size: 2
+health: 240
+category: crafting
+
+// 核心机制设定
+hasPower: true
+hasLiquids: true
+hasItems: true
+
+// 工艺周期设定：60帧等于1秒
+craftTime: 60.0
+liquidCapacity: 30.0
+
+consumes: {
+  // 运行所需的维持电力
+  power: 3.0
+  liquid: deuterium/0.01
+  items: [
+    nickel/1
+  ]
+}
+outputItem: {
+  item: neutronite
+  amount: 1
+}
+
+
+requirements: [
+  aluminum/60
+  silicon/40
+  graphite/40
+]
+
+research: {
+  parent: quartz-reactor
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-shattered-abyss
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }]
+  requirements: [
+    aluminum/60
+    silicon/40
+    graphite/40
+  ]
+}
+
+shownPlanets: [cryon]

@@ -1,0 +1,48 @@
+type: GenericCrafter
+
+name: "硅分离器"
+description: "消耗电力，从晶砂提取出硅"
+
+size: 2
+health: 400
+category: crafting
+
+hasPower: true
+hasLiquids: false
+hasItems: true
+craftTime: 20.0
+consumes: {
+  power: 1.0
+  items: [
+    crystal-sand/2
+  ]
+}
+
+requirements: [
+  aluminum/50
+  magnesium/30
+
+]
+outputItem: {
+  item: silicon
+  amount: 2
+}
+research: {
+  parent: hydrothermal-generator
+  requirements: [
+    aluminum/100
+    magnesium/50
+  ]
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-glacial-basin
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }]
+}
+
+shownPlanets: [cryon]

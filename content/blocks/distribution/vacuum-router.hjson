@@ -1,0 +1,32 @@
+type: Router
+name: "真空路由器"
+description: "通过真空管道路由物品。"
+size: 1
+health: 25
+buildTime: 0.8
+speed: 5.0
+
+category: distribution
+requirements: [
+  aluminum/6
+  magnesium/2
+]
+research: {
+  parent: vacuum-conduit
+  requirements: [
+    aluminum/22
+    magnesium/8
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: magnesium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }]
+}
+
+shownPlanets: [cryon]

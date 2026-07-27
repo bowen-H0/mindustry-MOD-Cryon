@@ -1,0 +1,31 @@
+type: DuctBridge
+name: "真空桥"
+description: "通过真空压力，跨越地形或其他结构传输物品。"
+size: 1
+health: 30
+speed: 5.0
+range: 4
+category: distribution
+requirements: [
+  aluminum/9
+  magnesium/3
+]
+research: {
+  parent: vacuum-conduit
+  requirements: [
+    aluminum/35
+    magnesium/15
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: magnesium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }]
+}
+
+shownPlanets: [cryon]

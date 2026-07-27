@@ -1,0 +1,18 @@
+planet: cryon
+sector: 37
+alwaysUnlocked: false
+difficulty: 5
+
+research: {
+  parent: cryon-sector-shattered-shoal
+  objectives: [
+    {
+      type: Research
+      content: unit-projector
+    }
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }
+  ]
+}

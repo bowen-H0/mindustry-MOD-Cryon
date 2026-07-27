@@ -27,13 +27,13 @@ filter: [
   "penetrate",
   "spark",
   "spiral",
-  "torrent"
+  "torrent",
+  "cryon-java-dependency-flux-barrier"
 ]
 
 category: units
 
 research: {
-  parent: silicon-separator
   objectives: [
     {
       type: SectorComplete

@@ -1,7 +1,7 @@
 type: Wall
 name: 聚合墙
 description: "将各种废弃金属与残骸聚合在一起的防御方块。"
-health: 600
+health: 900
 size: 1
 requirements: [
   scrap/8

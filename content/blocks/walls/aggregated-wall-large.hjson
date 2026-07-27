@@ -1,7 +1,7 @@
 type: Wall
 name: 大型聚合墙
 description: "由大量废弃金属与残骸聚合而成的防御方块。"
-health: 1600
+health: 3600
 size: 2
 requirements: [
   scrap/32

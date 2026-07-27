@@ -22,15 +22,19 @@
     "silicon/30"
   ],
   
-  
-  "shownPlanets": ["cryon"]
-  research: {
+  "research": {
     "parent": "silicon-separator",
     "requirements": [
       "aluminum/700",
       "magnesium/300",
       "silicon/500"
     ]
+  },
+  
+  "shownPlanets": ["cryon"]
+}
+
+research: {
   objectives: [
     {
       type: SectorComplete
@@ -38,6 +42,3 @@
     }
   ]
 }
-
-}
-

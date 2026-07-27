@@ -126,7 +126,7 @@ research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-gravel-ice
+      preset: cryon-neutron-flux-zone
     }
   ],
   parent: guardian

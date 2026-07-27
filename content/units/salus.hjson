@@ -154,7 +154,7 @@ weapons: [
 ]
 
 research: {
-  parent: mechanical-assembler
+  parent: benignitas
   requirements: [
     titanium/400
     silicon/600

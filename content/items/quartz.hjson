@@ -7,7 +7,7 @@ charge: 0.1
 radioactivity: 0.0
 color: f5f5f5ff
 research: {
-  parent: magnesium
+  parent: salt
   objectives: [
     {
       type: Produce

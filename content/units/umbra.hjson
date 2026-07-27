@@ -133,6 +133,6 @@ research: {
   
     {
       type: SectorComplete
-      preset: cryon-sector-frost-outpost
+      preset: cryon-neutron-flux-zone
     }]
 }

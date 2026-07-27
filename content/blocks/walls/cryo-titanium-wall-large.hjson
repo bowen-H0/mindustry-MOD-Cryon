@@ -1,7 +1,7 @@
 type: Wall
 name: 大型凝化钛墙
 description: "大型钛墙的升级版，具有更高的耐久性和防御能力。"
-health: 3800
+health: 4800
 size: 2
 requirements: [
   titanium/24
@@ -23,4 +23,4 @@ research: {
     titanium/4000
   ]
 }
-shownPlanets: [serpulo]
+shownPlanets: [serpulo, cryon]

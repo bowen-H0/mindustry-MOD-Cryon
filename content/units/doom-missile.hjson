@@ -35,21 +35,21 @@
 
       shoot: {
         type: ShootSpread
-        shots: 16       // 16道全向真激光，完美覆盖360度
-        spread: 22.5    // 360 / 16 = 22.5度均匀散布
+        shots: 16       
+        spread: 22.5    
       }
       
         
       bullet: {
         type: LaserBulletType
-        damage: 180     // 每道真激光的高额伤害
+        damage: 180     
         length: 30
-        width: 16       // 激光粗细
-        lifetime: 30    // 激光持续时间
+        width: 16       
+        lifetime: 30    
         buildingDamageMultiplier: 1.5
         hitEffect: massiveExplosion
         
-        // 熔岩配色（深红 -> 橙色 -> 亮白核心）
+        
         colors: [
           "ff330066"
           "ff6600"
@@ -65,7 +65,7 @@
       "effect": "missileTrailSmokeSmall",
       "rotation": 180,
       "y": -9,
-      "color": "ff330066",  // 红橙色半透明烟雾（与激光配色一致）
+      "color": "ff330066",  
       "interval": 4
     }
   ]

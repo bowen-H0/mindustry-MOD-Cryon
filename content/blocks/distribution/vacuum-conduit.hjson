@@ -12,13 +12,6 @@ research: {
   parent: core-pioneer
   requirements: [
     aluminum/8
-    magnesium/2
-  ]
-  objectives: [
-    {
-      type: Produce
-      content: magnesium
-    }
   ]
 }
 bridgeReplacement: vacuum-bridge

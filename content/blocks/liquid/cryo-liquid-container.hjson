@@ -20,7 +20,7 @@ research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-gravel-ice
+      preset: cryon-sector-glacial-basin
     }
   ],
   parent: cryo-conduit

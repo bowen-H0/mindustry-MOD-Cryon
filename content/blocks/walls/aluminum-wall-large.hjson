@@ -8,12 +8,6 @@ requirements: [
 ]
 category: defense
 research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ],
   parent: aluminum-wall
   requirements: [
     aluminum/700

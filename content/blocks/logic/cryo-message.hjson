@@ -1,0 +1,19 @@
+
+  type: MessageBlock
+  name: "凝化信息板"
+  size: 1
+  category: logic
+
+  requirements: [
+    aluminum/20
+    silicon/20
+  ]
+
+  research: {
+    parent: silicon-separator
+    requirements: [
+      aluminum/50
+      silicon/50
+    ]
+  }
+

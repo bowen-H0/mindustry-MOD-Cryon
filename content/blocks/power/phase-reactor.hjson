@@ -7,12 +7,12 @@ size: 5
 health: 900
 category: power
 
-// 核心发电设定
+
 hasPower: true
 hasLiquids: true
 hasItems: true
 
-// 对应底层字段：单个消耗周期的时间
+
 itemDuration: 140.0
 liquidCapacity: 80.0
 

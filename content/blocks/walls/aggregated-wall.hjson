@@ -1,7 +1,7 @@
 type: Wall
 name: 聚合墙
 description: "将各种废弃金属与残骸聚合在一起的防御方块。"
-health: 900
+health: 600
 size: 1
 requirements: [
   scrap/8
@@ -11,7 +11,7 @@ research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-sector-shattered-shoal
+      preset: cryon-sector-1
     }
   ],
   parent: aluminum-wall-large

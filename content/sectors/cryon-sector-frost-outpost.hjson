@@ -9,10 +9,14 @@ research: {
     {
       type: Research
       content: unit-projector
-    }
+    },
     {
       type: SectorComplete
       preset: cryon-sector-shattered-shoal
+    },
+    {
+      type: SectorComplete
+      preset: cryon-sector-glacial-basin
     }
   ]
 }

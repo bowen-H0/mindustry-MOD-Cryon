@@ -7,7 +7,7 @@ size: 3
 health: 120
 category: production
 
-// 逻辑设定：完美实现属性检测
+
 attribute: cryothermal
 baseEfficiency: 0.0
 minEfficiency: 9.0
@@ -27,26 +27,26 @@ drawer: {
   type: DrawMulti
   drawers: [
     {
-      // 1. 最底层：默认绘制底座（titanium-drill.png）
+      
       type: DrawDefault
     }
     {
-      // 2. 中间层：使用 DrawRegion 配合 spinSprite: true 让其旋转
+      
       type: DrawRegion
       suffix: "-rotator"
-      // 开启旋转
+      
       spinSprite: true
-      // 旋转速度（正数顺时针，负数逆时针）
+      
       rotateSpeed: 2.0
     }
     {
-      // 3. 最顶层：覆盖静态盖子（titanium-drill-top.png）
+      
       type: DrawRegion
       suffix: "-top"
     }
   ]
 }
-// =============================================================
+
 
 requirements: [
   aluminum/80

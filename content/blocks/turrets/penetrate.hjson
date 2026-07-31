@@ -1,63 +1,82 @@
 type: LaserTurret
-name: "长戟"
-description: "消耗石墨与电力，发射一道具有毁灭性穿透力的长程激光。"
+name: "烬灭"
+description: "消耗大量电力，发射一道具有毁灭性穿透力的长程激光。"
 
 size: 4
-health: 1000
+health: 1200
 range: 280
-reload: 300
+reload: 200
 targetAir: false
 targetGround: true
-maxAmmo: 20
+heatRequirement: 7.0
+maxHeatEfficiency: 1.0
 
-// ===== 消耗设置 (同时需要电力和石墨) =====
 consumes: {
-  power: 3.33
-  item: graphite
+  power: 5
 }
-
-// ===== 前摇动画参数 =====
-shootWarmupSpeed: 0.0033
-minWarmup: 1.0
-linearWarmup: false
-warmupMaintainTime: 0
-
-// ===== 音效参数 =====
-chargeSound: chargeCorvus
-shootSound: shootLancer
-shootSoundVolume: 1.0
-
-// ===== 视觉效果 =====
-smokeEffect: shootSmallSmoke
 
 shootType: {
   type: LaserBulletType
-  damage: 230
-  width: 24
-  length: 290
+  damage: 150
+  width: 32
+  length: 310
   colors: [95abd9, b0cdfe, ffffff]
   hitEffect: hitLaser
+  chargeEffect: lancerLaserCharge
+  lifetime: 12
 }
+
+shoot: {
+  firstShotDelay: 60
+}
+
+shootWarmupSpeed: 0.04
+minWarmup: 0.9
+shootDuration: 8
+
+chargeSound: chargeCorvus
+shootSound: shootCorvus
+shootSoundVolume: 1.0
+
+smokeEffect: shootSmallSmoke
 
 category: turret
 requirements: [
-  silicon/150
-  graphite/120
-  magnesium/90
+  silicon/100
+  graphite/80
+  aluminum/50
+  magnesium/20
 ]
 
 research: {
-  objectives: [
+  parent: "cavity"
+  requirements: [
+    silicon/750
+    graphite/600
+    aluminum/315
+    magnesium/135
+  ]
+  "objectives": [
+    {
+      "type": "Produce",
+      "content": "silicon"
+    },
+    {
+      "type": "Produce",
+      "content": "magnesium"
+    },
+    {
+      "type": "Produce",
+      "content": "graphite"
+    },
+    {
+      "type": "Research",
+      "content": "magnesium-converter"
+    },
     {
       type: SectorComplete
-      preset: cryon-shattered-abyss
+      preset: cryon-sector-shattered-shoal
     }
-  ],
-  parent: "spiral"
-  requirements: [
-    silicon/1500
-    graphite/1200
-    magnesium/900
   ]
 }
 

@@ -5,12 +5,12 @@ size: 2
 health: 160
 category: crafting
 
-// 生产一个石墨所需的时间（帧），120帧 = 2秒
+
 craftTime: 120
 
-// 消耗设置
+
 consumes: {
-  // 电力消耗（每秒）：0.5 * 60 = 30 单位电力
+  
   power: 0.5
   items: [
     dry-ice/1
@@ -18,7 +18,7 @@ consumes: {
   ]
 }
 
-// 产出物品
+
 outputItem: graphite/1
 
 requirements: [

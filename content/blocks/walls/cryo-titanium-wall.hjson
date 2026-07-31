@@ -1,7 +1,7 @@
 type: Wall
 name: 凝化钛墙
 description: "钛墙的升级版，具有更高的耐久性和防御能力。"
-health: 1200
+health: 900
 size: 1
 requirements: [
   titanium/6
@@ -17,7 +17,7 @@ research: {
   
     {
       type: SectorComplete
-      preset: cryon-sector-frost-outpost
+      preset: cryon-sector-glacial-basin
     }],
   requirements: [
     titanium/2000

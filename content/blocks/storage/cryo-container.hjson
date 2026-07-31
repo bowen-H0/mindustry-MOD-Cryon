@@ -5,19 +5,29 @@ description: "物品储存设备。"
 
 size: 2
 health: 160
-category: distribution
+category: effect
 
-// 核心储存设定
+
 hasItems: true
 itemCapacity: 300
 
 requirements: [
-  aluminum/80
+  titanium/80
   silicon/40
 ]
 
 research: {
-  parent: cryo-conduit
+  requirements: [
+    titanium/400
+    silicon/200
+  ]
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-glacial-basin
+    }
+  ]
+  parent: vacuum-conduit
 }
 
 shownPlanets: [cryon]

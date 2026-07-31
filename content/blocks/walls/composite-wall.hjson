@@ -11,7 +11,8 @@ requirements: [
 
 ]
 category: defense
-chanceDeflect: 100.0
+absorbLasers: true
+lightningChance: 0.15
 research: {
   parent: cryo-titanium-wall-large
   requirements: [

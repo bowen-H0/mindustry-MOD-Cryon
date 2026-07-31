@@ -7,12 +7,12 @@ size: 4
 health: 900
 category: power
 
-// 核心发电设定
+
 hasPower: true
 hasLiquids: true
 hasItems: false
 
-// 对应底层字段：单个消耗周期的时间
+
 itemDuration: 140.0
 liquidCapacity: 80.0
 
@@ -31,17 +31,26 @@ consumes: {
 
 
 requirements: [
-  aluminum/80
+  aluminum/580
+  titanium/560
+  magnesium/140
+  silicon/540
 ]
 
 research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-shattered-abyss
+      preset: cryon-sector-frost-outpost
     }
   ],
   parent: magnesium-generator
+  requirements: [
+    aluminum/1580
+    titanium/1560
+    magnesium/1540
+    silicon/1520
+  ]
 }
 
 shownPlanets: [cryon]

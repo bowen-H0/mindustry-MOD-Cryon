@@ -47,11 +47,11 @@
   category: units
   buildVisibility: shown
 
-  // 可生产的单位列表（玩家可在建筑 UI 中切换）
+  
   plans: [
     {
       unit: littorina
-      time: 1200        // 生产耗时（单位：tick，60 tick = 1 秒）
+      time: 1200        
       requirements: [
         magnesium/20
         silicon/10

@@ -1,6 +1,6 @@
 type: ItemTurret
 name: "拒止"
-description: "拒止"
+description: "散射型炮塔，对空对地。铝弹命中后分裂带电碎片，可造成麻痹状态。"
 size: 3
 health: 250
 range: 125
@@ -48,7 +48,7 @@ ammoTypes: {
     hitEffect: hitSquaresColor
     despawnEffect: hitSquaresColor
 
-    // 去掉 intervalBullet，只保留命中时爆出少量碎片
+    
     fragBullet: {
       type: BasicBulletType
       damage: 12

@@ -131,8 +131,8 @@ research: {
   ],
   parent: guardian
   requirements: [
-    titanium/500
-    silicon/1000
-    graphite/1000
+    farstar-alloy/500
+    silicon/2000
+    phase-fabric/3000
   ]
 }

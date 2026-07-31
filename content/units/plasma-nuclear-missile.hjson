@@ -50,7 +50,7 @@
     }
   ]
 
-  // ========== 在这里添加尾气烟雾效果 ==========
+  
     "abilities": [
     {
       "type": "MoveEffectAbility",

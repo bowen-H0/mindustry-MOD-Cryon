@@ -34,7 +34,7 @@ research: {
   
     {
       type: SectorComplete
-      preset: cryon-neutron-flux-zone
+      preset: cryon-gravel-ice
     }]
 }
 shownPlanets: [cryon]

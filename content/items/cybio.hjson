@@ -1,9 +1,0 @@
-name: 噬孢
-description: "噬孢生物的来源。"
-hardness: 1
-flammability: 0.2
-color: c8d4e0
-hidden: true
-alwaysUnlocked: false
-
-shownPlanets: []

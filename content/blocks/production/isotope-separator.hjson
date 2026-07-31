@@ -7,10 +7,10 @@ size: 3
 health: 280
 category: crafting
 
-// 核心机制设定
+
 hasPower: true
 hasLiquids: true
-hasItems: false // 纯流体互转
+hasItems: false 
 
 craftTime: 60.0
 liquidCapacity: 40.0
@@ -25,7 +25,7 @@ outputLiquid: deuterium/0.5
 
 
 requirements: [
-  aluminum/80
+  titanium/80
   silicon/50
   graphite/50
 ]
@@ -35,8 +35,13 @@ research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-shattered-abyss
+      preset: cryon-sector-frost-outpost
     }
+  ]
+  requirements: [
+    titanium/280
+    silicon/250
+    graphite/250
   ]
 }
 

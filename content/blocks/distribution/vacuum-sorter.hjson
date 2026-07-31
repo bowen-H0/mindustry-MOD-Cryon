@@ -15,7 +15,7 @@ research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-sector-frost-outpost
+      preset: cryon-sector-shattered-shoal
     }
   ],
   parent: vacuum-crosser

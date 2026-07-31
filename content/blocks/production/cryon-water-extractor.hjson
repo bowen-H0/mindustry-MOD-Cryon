@@ -11,12 +11,12 @@ attribute: cryon-ice
 
 pumpAmount: 0.1
 
-// 资源产出设定
+
 hasPower: true
 hasLiquids: true
 hasItems: false
 
-// 最终产出的流体：水
+
 result: water
 
 consumes: {
@@ -25,8 +25,8 @@ consumes: {
 
 
 requirements: [
-  aluminum/30
-  silicon/20
+  titanium/90
+  graphite/50
 ]
 
 research: {
@@ -34,13 +34,14 @@ research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-sector-shattered-shoal
+      preset: cryon-sector-frost-outpost
     }
   
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }]
+]
+requirements: [
+    titanium/290
+    graphite/250
+  ]
 }
 
 shownPlanets: [cryon]

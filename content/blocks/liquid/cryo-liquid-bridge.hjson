@@ -4,12 +4,11 @@ description: "跨越地形和建筑物传输流体或气体。"
 size: 1
 health: 30
 range: 4
-hasLiquids: true
-liquidCapacity: 16.0
 category: liquid
 requirements: [
   titanium/4
 ]
+hasPower:false
 research: {
   objectives: [
     {

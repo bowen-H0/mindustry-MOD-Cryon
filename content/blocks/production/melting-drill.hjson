@@ -35,10 +35,6 @@ research: {
       type: Produce
       content: magnesium
     }
-    {
-      type: SectorComplete
-      preset: cryon-ice-shoal
-    }
   ]
 }
 shownPlanets: [cryon]

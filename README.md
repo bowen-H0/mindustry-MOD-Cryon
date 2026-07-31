@@ -1,13 +1,21 @@
-#Cryon is a content expansion mod for the game Mindustry, primarily adding a brand new planet to the game and expanding its exploration and building content.
+# Cryon
 
-##Author: bowen-H0
+Cryon is a content expansion mod for the game Mindustry, primarily adding a brand new planet to the game and expanding its exploration and building content.
 
-##Current Version: 12.0.0
+## Author
+bowen-H0
 
-##Minimum Game Version Requirement: 146
+## Current Version
+12.0.0
 
-##Supported Languages: Chinese, English
+## Minimum Game Version Requirement
+146
 
-##Dependencies: Requires the Cryon Core pre-installation mod (this mod is an extension package and cannot run independently)
+## Supported Languages
+Chinese, English
 
-##Status: Currently in the Testing phase
+## Dependencies
+Requires the Cryon Core pre-installation mod (this mod is an extension package and cannot run independently)
+
+## Status
+Currently in the Testing phase

@@ -32,16 +32,11 @@ requirements: [
   graphite/4
 ]
 research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-shattered-abyss
-    }
-  ],
-  parent: cryo-electrolyzer
+
+  parent: cryo-electric-heater
   requirements: [
-  aluminum/10
-  graphite/4
+  aluminum/40
+  graphite/24
 ]
 }
 shownPlanets: [cryon]

@@ -25,12 +25,7 @@
     silicon/80
   ],
   research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }
-  ],
+
   parent: cryo-mender
   requirements: [
     aluminum/140
@@ -56,7 +51,7 @@
     },
     {
       type: SectorComplete
-      preset: cryon-fusion-bastion
+      preset: cryon-ice-shoal
     }
   ]    
 

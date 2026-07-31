@@ -59,12 +59,6 @@ weapons: [
   }
 ]
 research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ],
     parent: littorina
     requirements: [
       titanium/500
@@ -72,6 +66,10 @@ research: {
       graphite/1000
     ]
   "objectives": [
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    },
     {
       "type": "Research",
       "content": "t2factory"

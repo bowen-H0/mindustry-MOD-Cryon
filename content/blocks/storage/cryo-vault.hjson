@@ -1,26 +1,30 @@
 type: StorageBlock
 
-name: "凝化物品容器"
+name: "凝化物品仓库"
 description: "物品储存设备。"
 
 size: 3
 health: 490
-category: distribution
+category: effect
 
-// 核心储存设定
+
 hasItems: true
 itemCapacity: 1000
 
 requirements: [
-  aluminum/80
-  silicon/40
+  titanium/180
+  silicon/140
 ]
 
 research: {
+  requirements: [
+    titanium/1800
+    silicon/1400
+  ],
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-sector-shattered-shoal
+      preset: cryon-sector-glacial-basin
     }
   ],
   parent: cryo-container

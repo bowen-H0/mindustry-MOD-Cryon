@@ -1,6 +1,6 @@
 type: ItemTurret
 name: "激流"
-description: "双管交替射击炮塔。"
+description: "双管交替射击的炮塔，对空对地。装载硅时发射追踪导弹，远星合金弹药可冰冻目标并分裂出碎片。"
 size: 3
 health: 250
 range: 180
@@ -128,11 +128,7 @@ research: {
       type: SectorComplete
       preset: cryon-sector-frost-outpost
     }
-  
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }]
+    ]
   requirements: [
     graphite/60
     magnesium/80

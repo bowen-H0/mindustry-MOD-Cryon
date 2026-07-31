@@ -32,12 +32,6 @@ requirements: [
 ]
 
 research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ],
   parent: magnesium-converter
   requirements: [
     aluminum/210
@@ -52,6 +46,10 @@ research: {
      {
       type: Produce
       content: graphite
+    },
+     {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
     }
   ]
 }

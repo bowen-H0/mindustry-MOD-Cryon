@@ -60,23 +60,11 @@ research: {
   objectives: [
     {
       type: Produce
-      content: magnesium
-    }
+      content: farstar-alloy
+    },
     {
       type: Produce
-      content: dry-ice
-    }
-    {
-      type: Produce
-      content: silicon
-    }
-    {
-      type: Produce
-      content: graphite
-    }
-    {
-      type: Produce
-      content: titanium
+      content: phase-fabric
     }
   
     {
@@ -84,9 +72,9 @@ research: {
       preset: cryon-neutron-flux-zone
     }]
   requirements: [
-    titanium/500
-    silicon/1000
-    graphite/1000
+    farstar-alloy/500
+    silicon/2000
+    phase-fabric/3000
   ]
   
 }

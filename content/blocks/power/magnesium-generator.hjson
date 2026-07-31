@@ -7,7 +7,7 @@ category: power
 
 powerProduction: 2.0
 
-// 消耗设置
+
 consumes: {
   items: [
     dry-ice/1
@@ -15,7 +15,7 @@ consumes: {
   ]
 }
 
-// 每个周期的时间（帧），120帧 = 2秒消耗一次资源
+
 itemDuration: 120
 
 requirements: [

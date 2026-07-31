@@ -159,23 +159,15 @@ weapons: [
 ]
 
 research: {
-  parent: salus
+  
   requirements: [
-    titanium/400
-    silicon/600
-    graphite/300
+    farstar-alloy/1000
+    quartz/1000
+    silicon/2000
+    phase-fabric/3000
   ]
   objectives: [
-    {
-      type: Produce
-      content: titanium
-    }
-    {
-      type: Produce
-      content: graphite
-    }
-  
-    {
+    { 
       type: SectorComplete
       preset: cryon-neutron-flux-zone
     }]

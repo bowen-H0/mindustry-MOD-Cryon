@@ -1,6 +1,6 @@
 type: ItemTurret
 name: "电花"
-description: "电花"
+description: "高射速霰弹炮塔，对空对地。发射石墨高爆弹，命中后分裂激光并释放电弧，可造成等离子状态。"
 size: 4
 health: 250
 range: 200

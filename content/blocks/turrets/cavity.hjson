@@ -6,11 +6,11 @@ health: 250
 range: 112
 category: turret
 
-// 核心参数
+
 shootDuration: 60
 hasPower: true
 
-// 耗电量：1.5 * 60 = 90 EU/秒
+
 consumes: {
   power: 1.5
 }
@@ -43,12 +43,6 @@ requirements: [
 ]
 
 research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }
-  ],
   parent: spiral
   requirements: [
     aluminum/140
@@ -70,7 +64,7 @@ research: {
     },
     {
       "type": "SectorComplete",
-      "preset": "cryon-sector-1"
+      "preset": "cryon-ice-shoal"
     }
   ]
 }

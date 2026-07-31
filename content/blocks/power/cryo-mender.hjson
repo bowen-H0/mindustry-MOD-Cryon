@@ -28,17 +28,14 @@
       "aluminum/700",
       "magnesium/300",
       "silicon/500"
-    ]
+    ],
+    objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-1
+    }
+  ]
   },
   
   "shownPlanets": ["cryon"]
-}
-
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ]
 }

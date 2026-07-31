@@ -2,11 +2,11 @@ name: "cryon"
 
 displayName: "Cryon"
 
-author: "Bowen-H0"
+author: "bowen-H0"
 
-description: "Added a new planet.\nSupported languages: English, Chinese."
+description: "Please install Cryon Core first!This is a dependency package!\nAdded a new planet.\nSupported languages: English, Chinese.\nThis mod is currently in testing.\nBug feedback: github bowen-H0"
 
-version: "1.26.0"
+version: "12.0.0"
 
 minGameVersion: "146"
 

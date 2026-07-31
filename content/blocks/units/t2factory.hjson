@@ -28,7 +28,7 @@
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-sector-shattered-shoal
+      preset: cryon-sector-frost-outpost
     }
   ],
     parent: unit-projector

@@ -15,45 +15,8 @@ plans: [
     time: 1500
     requirements: [
       { item: benignitas, amount: 2 }
-      { item: titanium-wall-large, amount: 10 }
+      { item: cryo-titanium-wall-large, amount: 10 }
       { item: cavity, amount: 2 }
-    ]
-  }
-
-  {
-    unit: peak
-    time: 2400
-    requirements: [
-      { item: guardian, amount: 2 }
-      { item: phase-fabric, amount: 15 }
-      { item: cryo-titanium-wall-large, amount: 8 }
-    ]
-  }
-  {
-    unit: umbra
-    time: 2400
-    requirements: [
-      { item: bolide, amount: 2 }
-      { item: phase-fabric, amount: 15 }
-      { item: cryo-titanium-wall-large, amount: 8 }
-    ]
-  }
-  {
-    unit: propugno
-    time: 2800
-    requirements: [
-      { item: salus, amount: 2 }
-      { item: phase-fabric, amount: 20 }
-      { item: farstar-alloy, amount: 30 }
-    ]
-  }
-  {
-    unit: murex
-    time: 2400
-    requirements: [
-      { item: natica, amount: 2 }
-      { item: phase-fabric, amount: 15 }
-      { item: cryo-titanium-wall-large, amount: 8 }
     ]
   }
 ]
@@ -72,10 +35,11 @@ consumes: {
 category: units
 
 research: {
+  parent: benignitas
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-sector-frost-outpost
+      preset: cryon-gravel-ice
     }
   ]
 }

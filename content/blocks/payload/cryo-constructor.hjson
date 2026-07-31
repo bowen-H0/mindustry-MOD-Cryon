@@ -18,26 +18,33 @@ consumes: {
 filter: [
   "aluminum-wall-large",
   "aluminum-wall",
-  "scrap-wall",
-  "scrap-wall-large",
-  "titanium-wall-large",
-  "titanium-wall",
+  "composite-wall",
+  "composite-wall-large",
+  "aggregated-wall",
+  "aggregated-wall-large",
+  "cryo-titanium-wall-large",
+  "cryo-titanium-wall",
   "cavity",
   "denial",
   "penetrate",
   "spark",
   "spiral",
-  "torrent",
-  "cryon-java-dependency-flux-barrier"
+  "torrent"
 ]
 
 category: units
 
 research: {
+  parent: silicon-separator
   objectives: [
     {
       type: SectorComplete
       preset: cryon-gravel-ice
     }
+  ]
+  requirements: [
+    aluminum/700
+    magnesium/300
+    silicon/500
   ]
 }

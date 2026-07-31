@@ -7,12 +7,12 @@ size: 2
 health: 200
 category: crafting
 
-// 核心机制设定：仅需消耗电力，输出流体
+
 hasPower: true
 hasLiquids: true
 hasItems: false
 
-// 工艺周期设定：60帧等于1秒
+
 liquidCapacity: 20.0
 craftTime: 60.0
 

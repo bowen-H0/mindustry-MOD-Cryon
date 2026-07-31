@@ -154,11 +154,11 @@ weapons: [
 ]
 
 research: {
-  parent: benignitas
+  parent: mechanical-assembler
   requirements: [
-    titanium/400
-    silicon/600
-    graphite/300
+    titanium/2400
+    farstar-alloy/2600
+    silicon/2300
   ]
   objectives: [
     {
@@ -172,6 +172,6 @@ research: {
   
     {
       type: SectorComplete
-      preset: cryon-sector-frost-outpost
+      preset: cryon-cryon-gravel-ice
     }]
 }

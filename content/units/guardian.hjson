@@ -123,7 +123,7 @@ research: {
     },
     {
       type: SectorComplete
-      preset: cryon-fusion-bastion
+      preset: cryon-sector-frost-outpost
     }
   ]    
 }

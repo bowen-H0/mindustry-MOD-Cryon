@@ -4,7 +4,7 @@ description: "专为电网过载设计的储能设备。在电力产生赤字时
 size: 1
 health: 140
 
-// 蓄电核心参数
+
 consumes: {
   powerBuffered: 1000
 }
@@ -48,7 +48,7 @@ research: {
     },
     {
       type: SectorComplete
-      preset: cryon-sector-shattered-shoal
+      preset: cryon-ice-shoal
     }
   ]    
 }

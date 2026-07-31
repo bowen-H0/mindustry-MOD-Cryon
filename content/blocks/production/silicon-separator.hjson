@@ -11,6 +11,7 @@ hasPower: true
 hasLiquids: false
 hasItems: true
 craftTime: 20.0
+craftEffect: smeltsmoke
 consumes: {
   power: 1.0
   items: [
@@ -21,12 +22,25 @@ consumes: {
 requirements: [
   aluminum/50
   magnesium/30
-
 ]
 outputItem: {
   item: silicon
   amount: 2
 }
+
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawFlame
+      flameColor: "ffef99"
+    }
+  ]
+}
+
 research: {
   parent: hydrothermal-generator
   requirements: [
@@ -35,14 +49,10 @@ research: {
   ]
   objectives: [
     {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
+      type: Produce
+      content: crystal-sand
     }
-  
-    {
-      type: SectorComplete
-      preset: cryon-ice-shoal
-    }]
+  ]
 }
 
 shownPlanets: [cryon]

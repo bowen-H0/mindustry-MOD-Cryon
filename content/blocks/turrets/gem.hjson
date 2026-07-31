@@ -1,6 +1,6 @@
 type: PowerTurret
 name: "宝石"
-description: "宝石"
+description: "小型电力炮塔，消耗少量电力发射高速弹丸。"
 size: 1
 health: 40
 range: 200
@@ -50,7 +50,8 @@ research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-ice-shoal
+      preset:cryon-sector-1
+
     }
   ],
     parent: spiral

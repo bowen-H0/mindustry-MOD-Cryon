@@ -1,6 +1,6 @@
 type: ItemTurret
 name: "螺旋"
-description: "单管高射速炮塔。"
+description: "单管高射速炮塔，对空对地。"
 size: 2
 health: 250
 range: 160
@@ -23,7 +23,7 @@ ammoTypes: {
     type: MissileBulletType
     damage: 12
     speed: 6.67
-    reloadMultiplier: 1.5    // +50% 开火速率
+    reloadMultiplier: 1.5    
     lifetime: 24
     width: 6
     height: 9
@@ -34,7 +34,7 @@ ammoTypes: {
     type: BasicBulletType
     damage: 22
     speed: 7
-    reloadMultiplier: 0.8    // -20% 开火速率
+    reloadMultiplier: 0.8    
     lifetime: 40
     width: 7
     height: 11

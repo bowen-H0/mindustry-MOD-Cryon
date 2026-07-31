@@ -31,8 +31,8 @@ outputItem: {
 }
 
 requirements: [
-  aluminum/60
-  silicon/40
+  farstar-alloy/60
+  titanium/40
   graphite/40
 ]
 
@@ -43,6 +43,11 @@ research: {
       type: SectorComplete
       preset: cryon-shattered-abyss
     }
+  ]
+  requirements: [
+    farstar-alloy/160
+    titanium/140
+    graphite/120
   ]
 }
 

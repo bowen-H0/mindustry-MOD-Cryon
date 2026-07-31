@@ -26,8 +26,8 @@ outputLiquid: dry-ice-vapor/0.3
 
 requirements: [
   aluminum/40
-  silicon/30
-  graphite/20
+  magnesium/30
+  titanium/20
 ]
 
 research: {
@@ -35,13 +35,14 @@ research: {
   objectives: [
     {
       type: SectorComplete
-      preset: cryon-neutron-flux-zone
+      preset: cryon-sector-frost-outpost
     }
-  
-    {
-      type: SectorComplete
-      preset: cryon-gravel-ice
-    }]
+]
+requirements: [
+    aluminum/440
+    magnesium/430
+    titanium/420
+  ]
 }
 
 shownPlanets: [cryon]

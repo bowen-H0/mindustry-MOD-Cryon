@@ -2,7 +2,7 @@ planet: cryon
 sector: 72
 alwaysUnlocked: false
 difficulty: 8
-
+isLastSector: true
 research: {
   parent: cryon-neutron-flux-zone
   objectives: [

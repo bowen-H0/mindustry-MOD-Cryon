@@ -1,6 +1,5 @@
 type: mech
 name:暗影
-# 基础属性
 speed: 0.65
 flying: false
 health: 800
@@ -9,10 +8,10 @@ hitSize: 18
 faceTarget:true
 outlineColor: a9a9b4
 mechLegColor: a9a9b4
-buildSpeed: 0.8         # 允许协助建造、重建和维修建筑
-canBoost: true          # 允许双击或按键进行助推飞行
+buildSpeed: 0.8
+canBoost: true
 boostMultiplier: 1.2
-buildBeamOffset: 3      # 建造光束的前置偏移量
+buildBeamOffset: 3
 engineOffset: 7
 engineSize:4
 abilities: [

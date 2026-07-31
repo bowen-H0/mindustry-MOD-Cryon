@@ -14,8 +14,8 @@ bowen-H0
 ## Supported Languages
 Chinese, English
 
-## Dependencies
-Requires the Cryon Core pre-installation mod (this mod is an extension package and cannot run independently)
 
 ## Status
 Currently in the Testing phase
+
+## GPL-3.0 license

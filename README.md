@@ -1,5 +1,7 @@
 # Cryon
 
+Alpha test version: contains bugs, mechanics subject to change.
+
 Cryon is a content expansion mod for the game Mindustry, primarily adding a brand new planet to the game and expanding its exploration and building content.
 
 ## Author

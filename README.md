@@ -2,6 +2,8 @@
 
 > To play the Cryon planet, install this mod **together with** the [Cryon](https://github.com/bowen-H0/mindustry-MOD-Cryon).
 
+Alpha test version: contains bugs, mechanics subject to change.
+
 ## Overview
 
 - **Author**: [bowen-H0](https://github.com/bowen-H0)

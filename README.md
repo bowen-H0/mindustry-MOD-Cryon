@@ -1,6 +1,6 @@
 # Cryon Core
 
-> To play the Cryon planet, install this mod **together with** the main [Cryon](https://github.com/bowen-H0/mindustry-MOD-Cryon) mod.
+> To play the Cryon planet, install this mod **together with** the [Cryon](https://github.com/bowen-H0/mindustry-MOD-Cryon).
 
 ## Overview
 

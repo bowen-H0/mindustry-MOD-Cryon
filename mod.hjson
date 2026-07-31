@@ -11,8 +11,7 @@ author: "Bowen-H0"
 main: "example.ExampleJavaMod"
 
 #the mod description as seen in the mod dialog
-description: "Cryon Mod."
-
+description: "Frozen planet. New ores. New machines. New enemies.\nBuild, fight, explore.\nAdds Java-based mechanics and functionality for Cryon. This mod depends on Cryon and will not work standalone — make sure both are installed. Alpha/testing phase, bugs expected."
 #the mod version
 version: 15.0.0
 #the minimum game build required to run this mod

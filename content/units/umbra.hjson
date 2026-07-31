@@ -7,10 +7,8 @@ health: 800
 armor: 4
 hitSize: 18
 faceTarget:true
-# 外观颜色
 outlineColor: a9a9b4
 mechLegColor: a9a9b4
-# 辅助与建造功能
 buildSpeed: 0.8         # 允许协助建造、重建和维修建筑
 canBoost: true          # 允许双击或按键进行助推飞行
 boostMultiplier: 1.2

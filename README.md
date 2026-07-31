@@ -1,6 +1,15 @@
-#Cryon Core
+# Cryon Core
 
+> To play the Cryon planet, install this mod **together with** the main [Cryon](https://github.com/bowen-H0/mindustry-MOD-Cryon) mod.
 
+## Overview
+
+- **Author**: [bowen-H0](https://github.com/bowen-H0)
+- **Language**: Java
+- **Status**: In development / testing
+- **Purpose**: Modify the Cryon content to implement the functionality.
+
+# Build
 
 # Mindustry Java Mod Template
 A Java Mindustry mod template that works on Android and PC. The Kotlin version of this mod can be seen [here](https://github.com/Anuken/MindustryKotlinModTemplate).
@@ -8,7 +17,7 @@ A Java Mindustry mod template that works on Android and PC. The Kotlin version o
 ## Building for Desktop Testing
 
 1. Install JDK **17**.
-2. Run `gradlew jar` `gradlew deploy` [1].
+2. Run `gradlew jar` Android`gradlew deploy` [1].
 3. Your mod jar will be in the `build/libs` directory. **Only use this version for testing on desktop. It will not work with Android.**
 To build an Android-compatible version, you need the Android SDK. You can either let Github Actions handle this, or set it up yourself. See steps below.
 

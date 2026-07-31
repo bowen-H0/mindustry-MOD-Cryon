@@ -4,8 +4,20 @@ displayName: "Cryon"
 
 author: "bowen-H0"
 
-description: "Please install Cryon Core first!This is a dependency package!\nAdded a new planet.\nSupported languages: English, Chinese.\nThis mod is currently in testing.\nBug feedback: github bowen-H0"
+description: '''
+Cryon
 
+Added a new planet.
+Frozen planet. New ores. New machines. New enemies.
+Build, fight, explore.
+
+Please install Cryon Core first!This is a dependency package!
+
+Supported languages: English, Chinese.
+
+This mod is currently in testing.
+Bug feedback: github bowen-H0
+'''
 version: "12.0.0"
 
 minGameVersion: "146"

@@ -10,15 +10,10 @@ requirements: [
 ]
 hasPower:false
 research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }
-  ],
-  parent: cryo-conduit
+  
+  parent: cryo-conduit,
   requirements: [
-    titanium/40
+    titanium/400
   ]
 }
 shownPlanets: [cryon]

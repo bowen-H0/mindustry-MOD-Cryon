@@ -76,7 +76,7 @@ research: {
     },
     {
       type: SectorComplete
-      preset: cryon-sector-glacial-basin
+      preset: cryon-sector-shattered-shoal
     }
   ]
 }

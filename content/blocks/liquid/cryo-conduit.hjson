@@ -12,7 +12,7 @@ requirements: [
 research: {
   parent: core-pioneer
   requirements: [
-    titanium/10
+    titanium/50
   ]
   objectives: [
     {

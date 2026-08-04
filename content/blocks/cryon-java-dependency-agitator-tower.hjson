@@ -1,4 +1,10 @@
-research: {
+
+requirements: [
+    titanium/200
+    aluminum/100
+    graphite/100
+]
+  research: {
   parent: spiral
   objectives: [
     {
@@ -11,9 +17,9 @@ research: {
       preset: cryon-gravel-ice
     }],
   requirements: [
-    titanium/200
-    aluminum/200
-    graphite/200
+    titanium/2200
+    aluminum/1200
+    graphite/1200
   ]
 }
 shownPlanets: [cryon]

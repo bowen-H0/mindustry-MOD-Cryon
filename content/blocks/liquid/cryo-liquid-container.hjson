@@ -17,12 +17,10 @@ requirements: [
 ]
 
 research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }
-  ],
+  requirements: [
+  aluminum/800
+  silicon/400
+],
   parent: cryo-conduit
 }
 

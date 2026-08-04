@@ -5,18 +5,23 @@ displayName: "Cryon"
 author: "bowen-H0"
 
 description: '''
-Cryon
+[#7ec8e3]Cryon[] adds a brand new frozen planet to the game.
 
-Added a new planet.
-Frozen planet. New ores. New machines. New enemies.
-Build, fight, explore.
+You can carry resources to other sectors, just like in [accent]Serpulo[].
+
+Over [accent]100+[] new pieces of content! Including new ores, new machines, and new units.
+
+Current development progress: [accent]T1 ~ T3 tech[] is complete. The campaign is currently being tested.
+
+[accent]Thanks for playing this mod!
+Feel free to report issues or suggest ideas: [lightgray]github bowen-H0[]
+
+Supported languages: [cyan]English[] / [cyan]中文[]
+
 
 Please install Cryon Core first!This is a dependency package!
 
-Supported languages: English, Chinese.
-
 This mod is currently in testing.
-Bug feedback: github bowen-H0
 '''
 version: "12.0.0"
 

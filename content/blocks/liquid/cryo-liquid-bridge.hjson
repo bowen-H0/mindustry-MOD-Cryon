@@ -11,9 +11,9 @@ requirements: [
 hasPower:false
 research: {
   
-  parent: cryo-conduit
+  parent: cryo-conduit,
   requirements: [
-    titanium/40
+    titanium/400
   ]
 }
 shownPlanets: [cryon]

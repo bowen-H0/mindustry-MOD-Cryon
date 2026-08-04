@@ -12,18 +12,14 @@ requirements: [
 research: {
   parent: core-pioneer
   requirements: [
-    titanium/10
+    titanium/50
   ]
   objectives: [
     {
       type: Produce
       content: titanium
     }
-  
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }]
+  ]
 }
 bridgeReplacement: cryo-liquid-bridge
 junctionReplacement: cryo-liquid-junction

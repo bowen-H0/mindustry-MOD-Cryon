@@ -19,11 +19,7 @@ research: {
       type: Produce
       content: titanium
     }
-  
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }]
+  ]
 }
 bridgeReplacement: cryo-liquid-bridge
 junctionReplacement: cryo-liquid-junction

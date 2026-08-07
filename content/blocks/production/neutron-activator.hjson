@@ -13,13 +13,13 @@ hasLiquids: true
 hasItems: true
 
 
-craftTime: 60.0
+craftTime: 120.0
 liquidCapacity: 30.0
 
 consumes: {
   
   power: 3.0
-  liquid: deuterium/0.01
+  liquid: deuterium/0.03
   items: [
     nickel/1
   ]

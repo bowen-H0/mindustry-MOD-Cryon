@@ -3,7 +3,7 @@ name: "烬灭"
 description: "消耗大量电力，发射一道具有毁灭性穿透力的长程激光。"
 
 size: 4
-health: 1200
+health: 5200
 range: 280
 reload: 200
 targetAir: false

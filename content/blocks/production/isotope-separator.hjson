@@ -17,10 +17,10 @@ liquidCapacity: 40.0
 
 consumes: {
   power: 1.0
-  liquid: hydrogen/1.5
+  liquid: hydrogen/1.0
 }
 
-outputLiquid: deuterium/0.5
+outputLiquid: deuterium/0.3
 
 
 

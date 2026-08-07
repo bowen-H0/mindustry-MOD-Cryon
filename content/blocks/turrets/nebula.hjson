@@ -1,0 +1,113 @@
+type: PowerTurret
+name: "Nebula"
+description: "Massive electric turret that fires strange plasma missiles which split into homing warheads. Draws heavy power."
+size: 3
+health: 4200
+range: 250
+reload: 90
+recoil: 3
+shake: 4
+inaccuracy: 1
+velocityRnd: 0.1
+shootCone: 8
+shootY: 8
+shootEffect: shootBigColor
+smokeEffect: shootSmokeSquareSparse
+heatRequirement: 0
+
+consumes: {
+    power: 14
+}
+
+shootType: {
+    type: FlakBulletType
+    damage: 25
+    speed: 2.5
+    lifetime: 100
+    width: 12
+    height: 12
+    hitSize: 8
+    collidesGround: true
+    collidesAir: true
+    explodeRange: 45
+    shrinkY: 0
+    drag: -0.003
+    homingRange: 90
+    keepVelocity: false
+    lightRadius: 90
+    lightOpacity: 0.7
+
+    splashDamageRadius: 40
+    splashDamage: 40
+
+    backColor: "8a2be2"
+    frontColor: "e0b0ff"
+    hitColor: "b57edc"
+    trailColor: "9932cc"
+    trailWidth: 3.5
+    trailLength: 30
+    lightColor: "9932cc"
+
+    weaveScale: 8
+    weaveMag: 1
+
+    hitEffect: hitSquaresColor
+    despawnEffect: hitSquaresColor
+    despawnSound: explosion
+
+    fragBullets: 8
+    fragVelocityMin: 0.3
+    fragBullet: {
+        type: MissileBulletType
+        damage: 0
+        speed: 3.9
+        lifetime: 65
+        homingPower: 0.15
+        weaveMag: 4
+        weaveScale: 4
+        keepVelocity: false
+
+        splashDamage: 18
+        splashDamageRadius: 24
+
+        backColor: "8a2be2"
+        frontColor: "e0b0ff"
+        trailColor: "9932cc"
+        trailWidth: 2.5
+        trailLength: 22
+        trailChance: -1
+
+        lightColor: "9932cc"
+        lightRadius: 45
+        lightOpacity: 0.7
+
+        hitSound: none
+        despawnEffect: none
+        hitEffect: hitSquaresColor
+    }
+}
+
+category: turret
+requirements: [
+    nickel/120
+    silicon/140
+    quartz/110
+    phase-fabric/100
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-1
+    }
+  ],
+    parent: gem
+    requirements: [
+        nickel/540
+        silicon/1080
+        quartz/320
+        phase-fabric/300
+    ]
+}
+shownPlanets: [cryon]

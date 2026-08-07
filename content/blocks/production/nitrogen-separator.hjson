@@ -17,10 +17,10 @@ liquidCapacity: 20.0
 craftTime: 60.0
 
 consumes: {
-  power: 4.0
+  power: 8.0
 }
 
-outputLiquid: nitrogen/1.0
+outputLiquid: nitrogen/0.5
 
 requirements: [
   aluminum/50

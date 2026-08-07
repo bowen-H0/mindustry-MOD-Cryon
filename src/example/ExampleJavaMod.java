@@ -320,7 +320,7 @@ public class ExampleJavaMod extends Mod {
             range = 260;
             shootCone = 15f;
             ammoUseEffect = Fx.casing1;
-            health = 2500;
+            health = 22500;
             inaccuracy = 2f;
             rotateSpeed = 10f;
             coolant = consumeCoolant(0.1f);

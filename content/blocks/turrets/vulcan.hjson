@@ -2,7 +2,7 @@ type: ItemTurret
 name: "火神"
 description: "双管高速射炮塔，密集的穿透弹幕将敌人撕成碎片。"
 size: 4
-health: 850
+health: 10850
 range: 200
 reload: 8
 inaccuracy: 1.5

@@ -2,7 +2,7 @@ type: ItemTurret
 name: "拒止"
 description: "散射型炮塔，对空对地。铝弹命中后分裂带电碎片，可造成麻痹状态。"
 size: 3
-health: 250
+health: 7000
 range: 125
 reload: 18
 recoil: 2

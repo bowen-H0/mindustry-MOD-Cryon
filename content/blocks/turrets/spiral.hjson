@@ -2,7 +2,7 @@ type: ItemTurret
 name: "螺旋"
 description: "单管高射速炮塔，对空对地。"
 size: 2
-health: 250
+health: 850
 range: 160
 reload: 18
 inaccuracy: 2

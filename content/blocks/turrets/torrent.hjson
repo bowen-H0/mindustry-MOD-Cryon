@@ -2,7 +2,7 @@ type: ItemTurret
 name: "激流"
 description: "双管交替射击的炮塔，对空对地。装载硅时发射追踪导弹，远星合金弹药可冰冻目标并分裂出碎片。"
 size: 3
-health: 250
+health: 6250
 range: 180
 reload: 8
 inaccuracy: 2

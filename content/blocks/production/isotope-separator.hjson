@@ -16,7 +16,7 @@ craftTime: 60.0
 liquidCapacity: 40.0
 
 consumes: {
-  power: 1.0
+  power: 3.0
   liquid: hydrogen/1.0
 }
 

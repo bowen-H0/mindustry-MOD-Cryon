@@ -43,7 +43,7 @@ weapons: [
     reload: 35
     shootCone: 5
     shadow: 12
-
+    shootY: 30
     bullet: {
       type: LaserBulletType
       damage: 1250

@@ -2,10 +2,10 @@ type: mech
 name: "天冠"
 
 # ---- 基础属性 (T5 数值) ----
-speed: 0.5
+speed: 0.46
 flying: false
-health: 22000
-armor: 18
+health: 34000
+armor: 26
 hitSize: 32
 faceTarget: true
 
@@ -24,9 +24,9 @@ engineSize: 7
 abilities: [
   {
     type: RepairFieldAbility
-    range: 90
-    amount: 15
-    reload: 80
+    range: 110
+    amount: 22
+    reload: 70
   }
 ]
 
@@ -39,7 +39,7 @@ weapons: [
     y: 14
     rotate: true
     mirror: false
-    reload: 170
+    reload: 150
     shootCone: 15
     shootSound: shootMissile
 
@@ -47,20 +47,8 @@ weapons: [
     minWarmup: 0.9
 
     parts: [
-      {
-        type: RegionPart
-        suffix: "-left"
-        progress: reload
-        moveX: -6
-        moveY: 0
-      }
-      {
-        type: RegionPart
-        suffix: "-right"
-        progress: reload
-        moveX: 6
-        moveY: 0
-      }
+      { type: RegionPart, suffix: "-left", progress: reload, moveX: -6, moveY: 0 }
+      { type: RegionPart, suffix: "-right", progress: reload, moveX: 6, moveY: 0 }
     ]
 
     bullet: {
@@ -70,32 +58,8 @@ weapons: [
       shootEffect: {
         type: MultiEffect
         effects: [
-          {
-            type: ParticleEffect
-            line: false
-            particles: 8
-            lifetime: 110
-            sizeFrom: 20
-            sizeTo: 0
-            length: 50
-            cone: 360
-            colorFrom: "8a4212ff"
-            colorTo: "8a421200"
-          }
-          {
-            type: ParticleEffect
-            line: false
-            particles: 18
-            lifetime: 25
-            sizeFrom: 12
-            sizeTo: 2
-            length: 55
-            cone: 15
-            colorFrom: ffa64d
-            colorTo: ff4d00
-            rotWithParent: true
-            baseRotation: 180
-          }
+          { type: ParticleEffect, line: false, particles: 8, lifetime: 110, sizeFrom: 20, sizeTo: 0, length: 50, cone: 360, colorFrom: "8a4212ff", colorTo: "8a421200" }
+          { type: ParticleEffect, line: false, particles: 18, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 55, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
         ]
       }
     }
@@ -109,7 +73,7 @@ weapons: [
     y: 10
     rotate: true
     mirror: true
-    reload: 170
+    reload: 150
     shootCone: 15
     shootSound: shootMissile
 
@@ -117,20 +81,8 @@ weapons: [
     minWarmup: 0.9
 
     parts: [
-      {
-        type: RegionPart
-        suffix: "-left"
-        progress: reload
-        moveX: -6
-        moveY: 0
-      }
-      {
-        type: RegionPart
-        suffix: "-right"
-        progress: reload
-        moveX: 6
-        moveY: 0
-      }
+      { type: RegionPart, suffix: "-left", progress: reload, moveX: -6, moveY: 0 }
+      { type: RegionPart, suffix: "-right", progress: reload, moveX: 6, moveY: 0 }
     ]
 
     bullet: {
@@ -140,32 +92,8 @@ weapons: [
       shootEffect: {
         type: MultiEffect
         effects: [
-          {
-            type: ParticleEffect
-            line: false
-            particles: 8
-            lifetime: 110
-            sizeFrom: 20
-            sizeTo: 0
-            length: 50
-            cone: 360
-            colorFrom: "8a4212ff"
-            colorTo: "8a421200"
-          }
-          {
-            type: ParticleEffect
-            line: false
-            particles: 18
-            lifetime: 25
-            sizeFrom: 12
-            sizeTo: 2
-            length: 55
-            cone: 15
-            colorFrom: ffa64d
-            colorTo: ff4d00
-            rotWithParent: true
-            baseRotation: 180
-          }
+          { type: ParticleEffect, line: false, particles: 8, lifetime: 110, sizeFrom: 20, sizeTo: 0, length: 50, cone: 360, colorFrom: "8a4212ff", colorTo: "8a421200" }
+          { type: ParticleEffect, line: false, particles: 18, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 55, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
         ]
       }
     }
@@ -179,7 +107,7 @@ weapons: [
     y: 4
     rotate: true
     mirror: true
-    reload: 170
+    reload: 150
     shootCone: 15
     shootSound: shootMissile
 
@@ -187,20 +115,8 @@ weapons: [
     minWarmup: 0.9
 
     parts: [
-      {
-        type: RegionPart
-        suffix: "-left"
-        progress: reload
-        moveX: -6
-        moveY: 0
-      }
-      {
-        type: RegionPart
-        suffix: "-right"
-        progress: reload
-        moveX: 6
-        moveY: 0
-      }
+      { type: RegionPart, suffix: "-left", progress: reload, moveX: -6, moveY: 0 }
+      { type: RegionPart, suffix: "-right", progress: reload, moveX: 6, moveY: 0 }
     ]
 
     bullet: {
@@ -210,32 +126,8 @@ weapons: [
       shootEffect: {
         type: MultiEffect
         effects: [
-          {
-            type: ParticleEffect
-            line: false
-            particles: 8
-            lifetime: 110
-            sizeFrom: 20
-            sizeTo: 0
-            length: 50
-            cone: 360
-            colorFrom: "8a4212ff"
-            colorTo: "8a421200"
-          }
-          {
-            type: ParticleEffect
-            line: false
-            particles: 18
-            lifetime: 25
-            sizeFrom: 12
-            sizeTo: 2
-            length: 55
-            cone: 15
-            colorFrom: ffa64d
-            colorTo: ff4d00
-            rotWithParent: true
-            baseRotation: 180
-          }
+          { type: ParticleEffect, line: false, particles: 8, lifetime: 110, sizeFrom: 20, sizeTo: 0, length: 50, cone: 360, colorFrom: "8a4212ff", colorTo: "8a421200" }
+          { type: ParticleEffect, line: false, particles: 18, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 55, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
         ]
       }
     }
@@ -249,7 +141,7 @@ weapons: [
     y: -4
     rotate: true
     mirror: true
-    reload: 170
+    reload: 150
     shootCone: 15
     shootSound: shootMissile
 
@@ -257,20 +149,8 @@ weapons: [
     minWarmup: 0.9
 
     parts: [
-      {
-        type: RegionPart
-        suffix: "-left"
-        progress: reload
-        moveX: -6
-        moveY: 0
-      }
-      {
-        type: RegionPart
-        suffix: "-right"
-        progress: reload
-        moveX: 6
-        moveY: 0
-      }
+      { type: RegionPart, suffix: "-left", progress: reload, moveX: -6, moveY: 0 }
+      { type: RegionPart, suffix: "-right", progress: reload, moveX: 6, moveY: 0 }
     ]
 
     bullet: {
@@ -280,32 +160,8 @@ weapons: [
       shootEffect: {
         type: MultiEffect
         effects: [
-          {
-            type: ParticleEffect
-            line: false
-            particles: 8
-            lifetime: 110
-            sizeFrom: 20
-            sizeTo: 0
-            length: 50
-            cone: 360
-            colorFrom: "8a4212ff"
-            colorTo: "8a421200"
-          }
-          {
-            type: ParticleEffect
-            line: false
-            particles: 18
-            lifetime: 25
-            sizeFrom: 12
-            sizeTo: 2
-            length: 55
-            cone: 15
-            colorFrom: ffa64d
-            colorTo: ff4d00
-            rotWithParent: true
-            baseRotation: 180
-          }
+          { type: ParticleEffect, line: false, particles: 8, lifetime: 110, sizeFrom: 20, sizeTo: 0, length: 50, cone: 360, colorFrom: "8a4212ff", colorTo: "8a421200" }
+          { type: ParticleEffect, line: false, particles: 18, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 55, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
         ]
       }
     }

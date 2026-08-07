@@ -1,0 +1,38 @@
+type: HeatProducer
+
+name: "heating-furnace"
+description: "Burns slag to produce heat."
+
+size: 2
+health: 240
+category: crafting
+
+hasPower: false
+hasItems: false
+hasLiquids: true
+
+heatOutput: 3
+
+consumes: {
+  liquids: [
+    slag/0.25
+  ]
+}
+
+requirements: [
+  magnesium/40
+  graphite/60
+  titanium/120
+]
+
+research: {
+  parent: cryo-electric-heater
+
+  requirements: [
+    titanium/360
+    magnesium/450
+    graphite/330
+  ]
+}
+
+shownPlanets: [cryon]

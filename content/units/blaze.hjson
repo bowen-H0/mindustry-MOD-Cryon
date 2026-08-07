@@ -35,41 +35,9 @@ treadRects: [
 ]
 weapons: [
   {
-    name: blaze-mega-laser
-    x: 0
-    y: 0
-    rotate: true
-    mirror: false
-    reload: 90
-    shootSound: shootLancer
-    shootCone: 8
-    shadow: 8
-
-    bullet: {
-      type: LaserBulletType
-      damage: 320
-      length: 180
-      width: 30
-      lifetime: 20
-      collidesAir: true
-      collidesGround: true
-      pierce: true
-      pierceCap: 15
-
-      hitEffect: hitLancer
-      despawnEffect: none
-      
-      colors: [
-          ffff88
-          ffdd44
-          ffaa00
-        ]
-    }
-  }
-  {
     name: blaze-eruption
-    x: -10
-    y: 0
+    x: -15
+    y: -15
     rotate: true
     mirror: true
     reload: 18
@@ -127,9 +95,9 @@ weapons: [
         collidesGround: true
         hitEffect: hitLancer
         colors: [
-          ffff88
-          ffdd44
-          ffaa00
+          ffffff
+          ffffe1
+          ffffbb
         ]
       }
       fragBullets: 2
@@ -140,7 +108,41 @@ weapons: [
       fragLifeMin: 1
       fragOnHit: false
     }
+  },
+  {
+    name: blaze-mega-laser
+    x: 0
+    y: 0
+    shootY: 20
+    rotate: true
+    mirror: false
+    reload: 90
+    shootSound: shootLancer
+    shootCone: 8
+    shadow: 8
+
+    bullet: {
+      type: LaserBulletType
+      damage: 320
+      length: 180
+      width: 20
+      lifetime: 20
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceCap: 15
+
+      hitEffect: hitLancer
+      despawnEffect: none
+      
+      colors: [
+          ffffff
+          ffffe1
+          ffffbb
+        ]
+    }
   }
+  
 
   
 ]

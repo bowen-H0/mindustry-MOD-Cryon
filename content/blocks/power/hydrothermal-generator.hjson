@@ -7,13 +7,30 @@ category: power
 
 powerProduction: 0.3
 attribute: cryothermal
-minEfficiency: 0.0
+minEfficiency: 8.999
 
 requirements: [
   aluminum/30
   magnesium/10
 ]
-
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawRegion
+      suffix: "-rotator"
+      spinSprite: true
+      rotateSpeed: 1.5
+    }
+    {
+      type: DrawRegion
+      suffix: "-top"
+    }
+  ]
+}
 research: {
   parent: shattering-drill
   requirements: [

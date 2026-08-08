@@ -18,29 +18,6 @@ import mindustry.world.meta.*;
 //Modified from the erekir generator.
 //The script most prone to crashing.
 //The API updates here might be a bit frequent.
-/*
-    It crashed again recently.
-
-    [E] java.lang.NoSuchFieldError: Class mindustry.game.Rules does not have member field 'boolean showSpawns'
-	at example.CryonPlanetGenerator.generate(CryonPlanetGenerator.java:287)
-	at mindustry.maps.generators.BasicGenerator.generate(BasicGenerator.java:37)
-	at mindustry.maps.generators.PlanetGenerator.generate(PlanetGenerator.java:201)
-	at mindustry.core.World.lambda$loadSector$3(World.java:274)
-	at mindustry.core.World.loadGenerator(World.java:256)
-	at mindustry.core.World.loadSector(World.java:269)
-	at mindustry.core.Control.playNewSector(Control.java:573)
-	at mindustry.core.Control.lambda$playSector$34(Control.java:491)
-	at mindustry.core.UI.lambda$loadAnd$11(UI.java:303)
-	at arc.util.Timer$1.run(Timer.java:88)
-	at arc.util.TaskQueue.run(TaskQueue.java:17)
-	at arc.backend.sdl.SdlApplication.loop(SdlApplication.java:217)
-	at arc.backend.sdl.SdlApplication.<init>(SdlApplication.java:58)
-	at mindustry.desktop.DesktopLauncher.main(DesktopLauncher.java:53)
-
-
-
-* */
-//todo fix
 import static mindustry.Vars.*;
 
 public class CryonPlanetGenerator extends PlanetGenerator{
@@ -309,7 +286,6 @@ public class CryonPlanetGenerator extends PlanetGenerator{
 
         state.rules.waves = true;
         state.rules.waveTeam = Team.crux;
-        state.rules.showSpawns = true;
         float difficulty = sector.threat * 10f;
         state.rules.winWave = (int)(10*difficulty);
         state.rules.spawns.clear();
@@ -385,6 +361,5 @@ public class CryonPlanetGenerator extends PlanetGenerator{
 
 
         state.rules.waveSpacing = 60 * 30;
-        state.rules.showSpawns = true;
     }
 }

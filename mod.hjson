@@ -11,9 +11,27 @@ author: "Bowen-H0"
 main: "example.ExampleJavaMod"
 
 #the mod description as seen in the mod dialog
-description: "Frozen planet. New ores. New machines. New enemies.\nBuild, fight, explore.\nAdds Java-based mechanics and functionality for Cryon. This mod depends on Cryon and will not work standalone — make sure both are installed. Alpha/testing phase, bugs expected."
+
+description: '''
+[#7ec8e3]Cryon[] adds a brand new frozen planet to the game.
+
+You can carry resources to other sectors, just like in [accent]Serpulo[].
+
+Over [accent]100+[] new pieces of content! Including new ores, new machines, and new units.
+
+Current development progress: [accent]T1 ~ T3 tech[] is complete. The campaign is currently being tested.
+
+[accent]Thanks for playing this mod!
+Feel free to report issues or suggest ideas: [lightgray]github bowen-H0[]
+
+Supported languages: [cyan]English[] / [cyan]中文[]
+
+Your mod browser will usually handle dependencies automatically.
+dependencies: Cryon
+This mod is currently in testing.
+'''
 #the mod version
-version: 15.0.0
+version: 15.1.0
 #the minimum game build required to run this mod
 minGameVersion: 154
 

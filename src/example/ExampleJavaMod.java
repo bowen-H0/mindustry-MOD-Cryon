@@ -356,8 +356,16 @@ public class ExampleJavaMod extends Mod {
             CryonPlanetGenerator generator = new CryonPlanetGenerator();
 
             generator.baseSeed = 12;
-
+            cryonPlanet.updateLighting = false;
             cryonPlanet.generator = generator;
+            cryonPlanet.ruleSetter = r -> {
+                r.lighting = true;  // 启用光照
+                r.ambientLight = Color.valueOf("03030dd9");  // 暗环境光
+                r.fire=false;
+
+                r.fog = true;
+                r.staticFog = true;
+            };
 
         }
 

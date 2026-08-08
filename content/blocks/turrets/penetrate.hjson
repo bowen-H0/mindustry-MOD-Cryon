@@ -14,7 +14,10 @@ maxHeatEfficiency: 1.0
 consumes: {
   power: 5
 }
-
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
 shootType: {
   type: LaserBulletType
   damage: 150

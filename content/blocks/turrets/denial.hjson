@@ -23,7 +23,10 @@ shoot: {
   shots: 15
   spread: 4
 }
-
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
 ammoTypes: {
   aluminum: {
     type: BasicBulletType

@@ -22,7 +22,9 @@ shootY: 6
 recoils: 2
 
 drawer: {
+  
   type: DrawTurret
+  basePrefix: cryon-
   parts: [
     {
       type: RegionPart

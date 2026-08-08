@@ -9,7 +9,10 @@ inaccuracy: 2
 targetAir: true
 targetGround: true
 maxAmmo: 40
-
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
 ammoTypes: {
   magnesium: {
     type: BasicBulletType

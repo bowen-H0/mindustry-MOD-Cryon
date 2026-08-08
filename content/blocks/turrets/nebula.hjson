@@ -18,7 +18,10 @@ heatRequirement: 0
 consumes: {
     power: 14
 }
-
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
 shootType: {
     type: FlakBulletType
     damage: 25

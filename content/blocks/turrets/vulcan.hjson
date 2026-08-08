@@ -24,7 +24,10 @@ shootY: 10
 recoils: 1
 recoil: 2
 shake: 2
-
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
 
 
 ammoTypes: {

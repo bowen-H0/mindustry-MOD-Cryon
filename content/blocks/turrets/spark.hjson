@@ -19,7 +19,10 @@ maxAmmo: 40
 targetUnderBlocks: false
 heatRequirement: 6.0
 maxHeatEfficiency: 1.0
-
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
 shoot: {
   type: ShootSpread
   shots: 4

@@ -11,7 +11,7 @@ Cryon is a content expansion mod for the game *Mindustry*, primarily adding a br
 bowen-H0
 
 ## Current Version
-12.0.0
+13.0.0
 
 ## Minimum Game Version Requirement
 146

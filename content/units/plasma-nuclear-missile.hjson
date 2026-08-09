@@ -9,7 +9,7 @@
   speed: 6.5
   missileAccelTime: 12
   lifetime: 40
-  health: 3800          
+  health: 380
   hitSize: 16           
 
   rotateSpeed: 4.0
@@ -35,13 +35,13 @@
 
       bullet: {
         type: ExplosionBulletType
-        splashDamage: 2800
-        splashDamageRadius: 80
+        splashDamage: 280
+        splashDamageRadius: 40
 
         lightning: 20
         lightningLength: 25
         lightningLengthRand: 8
-        lightningDamage: 120
+        lightningDamage: 80
         hitColor: "66ccff",
         lightningColor: "66ccff",
         hitEffect: scatheExplosion

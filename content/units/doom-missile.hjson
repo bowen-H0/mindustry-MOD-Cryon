@@ -9,7 +9,7 @@
   speed: 7.5
   missileAccelTime: 10
   lifetime: 60
-  health: 2000
+  health: 800
   hitSize: 12
 
   rotateSpeed: 5.0
@@ -41,11 +41,11 @@
 
       bullet: {
         type: LaserBulletType
-        damage: 230     
+        damage: 80
         length: 30
         width: 16       
         lifetime: 30    
-        buildingDamageMultiplier: 1.8
+        buildingDamageMultiplier: 0.8
         hitEffect: massiveExplosion
 
         colors: [

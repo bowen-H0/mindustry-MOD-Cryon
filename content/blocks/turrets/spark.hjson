@@ -37,7 +37,7 @@ consumes: {
 ammoTypes: {
   graphite: {
     type: FlakBulletType
-    damage: 30
+    damage: 25
     speed: 10
     lifetime: 20
     width: 12

@@ -33,7 +33,7 @@ drawer: {
 ammoTypes: {
   graphite: {
     type: BasicBulletType
-    damage: 25
+    damage: 15
     speed: 8.5
     reloadMultiplier: 0.85
     lifetime: 24
@@ -45,7 +45,7 @@ ammoTypes: {
   }
   farstar-alloy: {
     type: BasicBulletType
-    damage: 28
+    damage: 10
     speed: 8.5
     reloadMultiplier: 1.0
     lifetime: 24
@@ -61,7 +61,7 @@ ammoTypes: {
 
     fragBullet: {
       type: BasicBulletType
-      damage: 10
+      damage: 2
       speed: 1.8
       lifetime: 9
       width: 4.5
@@ -86,7 +86,7 @@ ammoTypes: {
   }
   neutronite: {
     type: BasicBulletType
-    damage: 30
+    damage: 15
     speed: 9
     reloadMultiplier: 1.1
     lifetime: 24

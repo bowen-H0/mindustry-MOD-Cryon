@@ -54,7 +54,7 @@ weapons: [
     bullet: {
       type: ShrapnelBulletType
       length: 160
-      damage: 80
+      damage: 30
       width: 18
       toColor: ffffff
       serrations: 4

@@ -30,7 +30,7 @@ drawer: {
 ammoTypes: {
   aluminum: {
     type: BasicBulletType
-    damage: 40
+    damage: 5
     speed: 5.0
     lifetime: 25
     width: 14

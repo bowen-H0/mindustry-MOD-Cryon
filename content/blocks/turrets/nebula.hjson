@@ -16,7 +16,7 @@ smokeEffect: shootSmokeSquareSparse
 heatRequirement: 0
 
 consumes: {
-    power: 14
+    power: 5
 }
 drawer: {
   type: DrawTurret
@@ -39,7 +39,10 @@ shootType: {
     keepVelocity: false
     lightRadius: 90
     lightOpacity: 0.7
-
+    shoot: {
+      shots: 3
+      shotDelay: 6
+    }
     splashDamageRadius: 40
     splashDamage: 40
 

@@ -22,6 +22,10 @@ drawer: {
   type: DrawTurret
   basePrefix: cryon-
 }
+shoot: {
+      shots: 3
+      shotDelay: 6
+    }
 shootType: {
     type: FlakBulletType
     damage: 25
@@ -39,10 +43,7 @@ shootType: {
     keepVelocity: false
     lightRadius: 90
     lightOpacity: 0.7
-    shoot: {
-      shots: 3
-      shotDelay: 6
-    }
+    
     splashDamageRadius: 40
     splashDamage: 40
 

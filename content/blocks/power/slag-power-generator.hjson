@@ -7,7 +7,7 @@ size: 2
 health: 90
 category: power
 
-powerProduction: 0.8
+powerProduction: 1.8
 generateEffect: turbinegenerate
 effectChance: 0.05
 

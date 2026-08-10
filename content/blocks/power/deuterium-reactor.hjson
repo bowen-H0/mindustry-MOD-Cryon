@@ -25,7 +25,7 @@ consumes: {
   power: 10.0
   liquid: deuterium/0.03
   liquids: [
-    dry-ice-vapor/0.03
+    cryofluid/0.03
   ]
 }
 

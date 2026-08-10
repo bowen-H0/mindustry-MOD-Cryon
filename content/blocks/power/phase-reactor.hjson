@@ -26,7 +26,7 @@ consumes: {
   liquid: deuterium/0.05
   liquids: [
     tritium/0.05
-    dry-ice-vapor/0.05
+    cryofluid/0.05
   ]
   items: [
     phase-fabric/1

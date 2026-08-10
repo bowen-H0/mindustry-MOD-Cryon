@@ -1,7 +1,7 @@
 type: GenericCrafter
 
 name: "干冰升华器"
-description: "产生干冰蒸汽。"
+description: "产生冷却液。"
 
 size: 2
 health: 180
@@ -22,7 +22,7 @@ consumes: {
   ]
 }
 
-outputLiquid: dry-ice-vapor/0.3
+outputLiquid: cryofluid/0.3
 
 requirements: [
   aluminum/40

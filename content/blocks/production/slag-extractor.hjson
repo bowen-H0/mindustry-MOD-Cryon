@@ -15,7 +15,7 @@ craftTime: 60.0
 
 hasPower: true
 hasLiquids: true
-outputLiquid: slag/10.0
+outputLiquid: slag/1.0
 
 consumes: {
   power: 3.0

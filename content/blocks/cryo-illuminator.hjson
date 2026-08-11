@@ -1,0 +1,21 @@
+type: LightBlock
+name: 凝化照明器
+description: "Emits light."
+health: 120
+size: 1
+requirements: [
+  magnesium/6
+]
+category: effect
+research: {
+  parent: hydrothermal-generator
+  requirements: [
+    magnesium/100
+  ]
+}
+"consumes": {
+    "power": 0.2
+},
+brightness:0.75f
+radius:140f
+shownPlanets: [cryon]

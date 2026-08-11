@@ -1,0 +1,56 @@
+type: ImpactReactor
+
+name: "氘反应堆"
+description: "产生大量的电力。"
+
+size: 4
+health: 900
+category: power
+
+
+hasPower: true
+hasLiquids: true
+hasItems: false
+
+
+itemDuration: 140.0
+liquidCapacity: 80.0
+
+powerProduction: 80
+
+ambientSound: loopPulse
+ambientSoundVolume: 0.08
+
+consumes: {
+  power: 10.0
+  liquid: deuterium/0.03
+  liquids: [
+    cryofluid/0.03
+  ]
+}
+
+
+requirements: [
+  aluminum/580
+  titanium/560
+  magnesium/140
+  silicon/540
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }
+  ],
+  parent: magnesium-generator
+  requirements: [
+    aluminum/1580
+    titanium/1560
+    magnesium/1540
+    silicon/1520
+  ]
+}
+
+shownPlanets: [cryon]

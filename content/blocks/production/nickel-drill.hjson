@@ -1,0 +1,84 @@
+type: AttributeCrafter
+
+name: "镍矿钻井"
+description: "消耗大量电力，在地热区域钻取镍矿。"
+
+size: 3
+health: 120
+category: production
+
+
+attribute: cryothermal
+baseEfficiency: 0.0
+minEfficiency: 9.0
+boostScale: 0.1111
+craftTime: 140.0
+
+hasPower: true
+hasItems: true
+
+consumes: {
+  power: 10.0
+}
+
+outputItem: nickel/1
+
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      
+      type: DrawDefault
+    }
+    {
+      
+      type: DrawRegion
+      suffix: "-rotator"
+      
+      spinSprite: true
+      
+      rotateSpeed: 2.0
+    }
+    {
+      
+      type: DrawRegion
+      suffix: "-top"
+    }
+  ]
+}
+
+
+requirements: [
+  aluminum/80
+  magnesium/40
+  farstar-alloy/80
+  silicon/50
+  graphite/50
+]
+
+research: {
+  parent: titanium-drill
+  requirements: [
+    aluminum/700
+    magnesium/300
+    farstar-alloy/500
+    graphite/500
+    silicon/500
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: farstar-alloy
+    }
+    {
+      type: Produce
+      content: graphite
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }]
+}
+
+shownPlanets: [cryon]

@@ -1,0 +1,109 @@
+type: ItemTurret
+name: "拒止"
+description: "散射型炮塔，对空对地。铝弹命中后分裂带电碎片，可造成麻痹状态。"
+size: 3
+health: 7000
+range: 125
+reload: 18
+recoil: 2
+shake: 1
+inaccuracy: 0.2
+velocityRnd: 0.17
+shootCone: 40
+shootY: 5
+ammoPerShot: 2
+consumeAmmoOnce: true
+targetAir: true
+targetGround: true
+maxAmmo: 40
+targetUnderBlocks: false
+
+shoot: {
+  type: ShootSpread
+  shots: 15
+  spread: 4
+}
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+ammoTypes: {
+  aluminum: {
+    type: BasicBulletType
+    damage: 5
+    speed: 5.0
+    lifetime: 25
+    width: 14
+    height: 18
+    reloadMultiplier: 0.85
+    ammoMultiplier: 2
+    buildingDamageMultiplier: 0.3
+    knockback: 3
+
+    backColor: "6ad4ff"
+    frontColor: "c8f0ff"
+    hitColor: "6ad4ff"
+    trailColor: "6ad4ff"
+    trailWidth: 3.5
+    trailLength: 8
+    shootEffect: shootBigColor
+    smokeEffect: shootSmokeSquareSparse
+    hitEffect: hitSquaresColor
+    despawnEffect: hitSquaresColor
+
+    
+    fragBullet: {
+      type: BasicBulletType
+      damage: 12
+      speed: 3.5
+      lifetime: 18
+      width: 7
+      height: 11
+      pierceCap: 2
+      homingPower: 0.07
+      backColor: "6ad4ff"
+      frontColor: "c8f0ff"
+      hitColor: "6ad4ff"
+      trailColor: "6ad4ff"
+      trailWidth: 2.0
+      trailLength: 5
+      buildingDamageMultiplier: 0.2
+      hitEffect: hitSquaresColor
+      despawnEffect: hitSquaresColor
+      status: electrified
+      statusDuration: 30
+    }
+    fragBullets: 2
+    fragVelocityMin: 0.4
+    fragVelocityMax: 1.1
+    fragLifeMin: 0.4
+    fragOnHit: true
+  }
+}
+
+category: turret
+requirements: [
+  aluminum/80
+  magnesium/80
+  titanium/30
+]
+
+research: {
+  parent: spiral
+  requirements: [
+    aluminum/260
+    magnesium/260
+    titanium/80
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: titanium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }]
+}
+shownPlanets: [cryon]

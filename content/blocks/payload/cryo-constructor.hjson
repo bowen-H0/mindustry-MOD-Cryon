@@ -1,0 +1,50 @@
+type: Constructor
+name: "凝化构造器"
+size: 3
+
+requirements: [
+  silicon/50
+  aluminum/75
+  titanium/40
+]
+
+hasPower: true
+buildSpeed: 0.6
+
+consumes: {
+  power: 2.5
+}
+
+filter: [
+  "aluminum-wall-large",
+  "aluminum-wall",
+  "composite-wall",
+  "composite-wall-large",
+  "aggregated-wall",
+  "aggregated-wall-large",
+  "cryo-titanium-wall-large",
+  "cryo-titanium-wall",
+  "cavity",
+  "denial",
+  "penetrate",
+  "spark",
+  "spiral",
+  "torrent"
+]
+
+category: units
+
+research: {
+  parent: silicon-separator
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-gravel-ice
+    }
+  ]
+  requirements: [
+    aluminum/700
+    magnesium/300
+    silicon/500
+  ]
+}

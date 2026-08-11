@@ -1,0 +1,22 @@
+type: Wall
+name: 大型聚合墙
+description: "由大量废弃金属与残骸聚合而成的防御方块。"
+health: 2600
+size: 2
+requirements: [
+  scrap/32
+]
+category: defense
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-1
+    }
+  ],
+  parent: aggregated-wall
+  requirements: [
+    scrap/560
+  ]
+}
+shownPlanets: [cryon]

@@ -1,0 +1,120 @@
+type: mech
+name:暗影
+speed: 0.65
+flying: false
+health: 800
+armor: 4
+hitSize: 18
+faceTarget:true
+outlineColor: a9a9b4
+mechLegColor: a9a9b4
+buildSpeed: 0.8
+canBoost: true
+boostMultiplier: 1.2
+buildBeamOffset: 3
+engineOffset: 7
+engineSize:4
+abilities: [
+  {
+    type: RepairFieldAbility
+    range: 50
+    amount: 4
+    reload: 120
+  }
+]
+
+weapons: [
+  {
+    name: bolide-missile-mount
+    top: true         
+    x: 0
+    y: 0
+    rotate: true
+    mirror: false
+    reload: 150
+    shootCone: 15
+    shootSound: shootMissile
+
+    shootWarmupSpeed: 0.05      
+    minWarmup: 0.9              
+
+    parts: [
+      {
+        type: RegionPart
+        suffix: "-left"
+        progress: reload
+        moveX: -6
+        moveY: 0
+      },
+      {
+        type: RegionPart
+        suffix: "-right"
+        progress: reload
+        moveX: 6
+        moveY: 0
+      }
+      
+
+    ]
+    bullet: {
+      instantDisappear: true    
+      damage: 0
+      spawnUnit: umbra-missile
+      range:320
+      shootEffect: {
+        type: MultiEffect
+        effects: [
+          {
+            type: ParticleEffect
+            line: false
+            particles: 6        
+            lifetime: 100        
+            sizeFrom: 18         
+            sizeTo: 0            
+            length: 45           
+
+            cone: 360
+            
+            colorFrom: "8a4212ff"
+            
+            colorTo: "8a421200"
+          }
+          {
+            type: ParticleEffect
+            line: false
+            particles: 15        
+            lifetime: 25         
+            sizeFrom: 12         
+            sizeTo: 2            
+            length: 50           
+            cone: 15             
+            colorFrom: ffa64d    
+            colorTo: ff4d00      
+
+            rotWithParent: true  
+
+            baseRotation: 180    
+          }
+          
+        ]
+      }
+    }
+  }
+]
+
+research: {
+  parent: bolide
+  requirements: [
+    farstar-alloy/500
+    silicon/2000
+    phase-fabric/3000
+  ]
+  objectives: [
+    
+  
+  
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }]
+}

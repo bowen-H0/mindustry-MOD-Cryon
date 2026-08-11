@@ -1,0 +1,12 @@
+type: PowerNode
+name: "镁制节点（旧版）"
+description: "基础的镁制电力节点。连接范围和上限都很低。"
+size: 1
+health: 40
+
+
+maxNodes: 5
+laserRange: 8
+
+buildVisibility: hidden
+shownPlanets: []

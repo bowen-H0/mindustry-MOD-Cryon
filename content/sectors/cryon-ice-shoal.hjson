@@ -1,0 +1,15 @@
+planet: cryon
+sector: 36
+captureWave: 20
+alwaysUnlocked: false
+difficulty: 2
+
+research: {
+  parent: cryon-sector-1
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-1
+    }
+  ]
+}

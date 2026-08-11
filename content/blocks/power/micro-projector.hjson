@@ -1,0 +1,60 @@
+{
+  "type": "ForceProjector",
+  "name": "微型投影器",
+  "description": "消耗电力产生微弱的力场。",
+  "size": 1,
+  "health": 60,
+  "hasPower": true,
+  "consumes": {
+    "power": 2.0
+  },
+  "radius": 64.0,
+  "shieldHealth": 200,
+  "cooldownNormal": 0.25,
+  "cooldownBrokenBase": 0.08,
+  
+  /* 禁用强化机制 */
+  "canOverdrive": false,
+  "phaseRadiusBoost": 0,
+  "phaseShieldBoost": 0,
+  
+  "category": "effect",
+  "requirements": [
+    aluminum/40
+    magnesium/20
+    silicon/80
+  ],
+  research: {
+
+  parent: cryo-mender
+  requirements: [
+    aluminum/140
+    magnesium/60
+    silicon/100
+  ]
+  "objectives": [
+    {
+      "type": "Research",
+      "content": "magnesium-generator"
+    },
+    {
+      type: Produce
+      content: magnesium
+    },
+    {
+      type: Produce
+      content: dry-ice
+    },
+    {
+      type: Produce
+      content: silicon
+    },
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ]    
+
+}
+  "buildVisibility": "shown"
+}

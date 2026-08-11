@@ -1,0 +1,129 @@
+type: tank
+
+health: 420
+armor: 6
+speed: 0.37
+hitSize: 20
+omniMovement: false
+faceTarget: false
+targetAir: true
+targetGround: true
+itemCapacity: 30
+rotateSpeed: 3.5
+
+treadPullOffset: 3
+treadRects: [
+  {
+    x: -36
+    y: -38
+    width: 18
+    height: 76
+  }
+  {
+    x: 18
+    y: -38
+    width: 18
+    height: 76
+  }
+]
+
+weapons: [
+  {
+    name: cryon-buffer-weapon
+    x: -6
+    y: 4
+    rotate: true
+    mirror: true
+    reload: 12
+    shootSound: shoot
+    
+    bullet: {
+      type: BasicBulletType
+      damage: 20
+      speed: 8
+      lifetime: 20
+      collidesAir: true
+      collidesGround: true
+      pierce: false
+      pierceBuilding: false
+      splashDamage: 0
+      splashDamageRadius: 0
+      width: 5
+      height: 8
+      backColor: ffdc99
+      frontColor: ffffff
+    }
+  },
+    {
+    name: guardian-laser-weapon
+    x: 0
+    y: -4
+    rotate: true
+    mirror: false
+    reload: 240
+    shootSound: shootLancer
+    shootCone: 15
+    shadow: 6
+
+    bullet: {
+      type: LaserBulletType
+      damage: 70
+      length: 160
+      width: 3.5
+      lifetime: 16
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceCap: 2
+
+      hitEffect: hitLancer
+      despawnEffect: none
+
+    }
+  }
+
+]
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }
+  ],
+  parent: buffer
+  requirements: [
+      titanium/500
+      silicon/1000
+      graphite/1000
+    ]
+  "objectives": [
+    {
+      "type": "Research",
+      "content": "t2factory"
+    },
+    {
+      type: Produce
+      content: magnesium
+    },
+    {
+      type: Produce
+      content: dry-ice
+    },
+    {
+      type: Produce
+      content: silicon
+    },
+    {
+      type: Produce
+      content: graphite
+    },
+    {
+      type: Produce
+      content: titanium
+    },
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }
+  ]    
+}

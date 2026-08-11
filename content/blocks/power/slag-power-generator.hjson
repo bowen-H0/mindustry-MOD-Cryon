@@ -1,0 +1,44 @@
+type: ConsumeGenerator
+
+name: "slag-power-generator"
+description: "Burns slag directly to generate power."
+
+size: 2
+health: 90
+category: power
+
+powerProduction: 1.8
+generateEffect: turbinegenerate
+effectChance: 0.05
+
+hasLiquids: true
+liquidCapacity: 10.0
+
+consumes: {
+  liquids: [
+    slag/0.3
+  ]
+}
+
+requirements: [
+  aluminum/40
+  magnesium/20
+  scrap/30
+]
+
+research: {
+  parent: magnesium-generator
+  requirements: [
+    aluminum/300
+    magnesium/150
+    scrap/200
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: scrap
+    }
+  ]
+}
+
+shownPlanets: [cryon]

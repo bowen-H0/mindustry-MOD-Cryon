@@ -1,0 +1,26 @@
+type: Conduit
+name: "凝化管道"
+description: "传输流体或气体。"
+size: 1
+health: 20
+liquidCapacity: 16.0
+liquidPressure: 1.0
+category: liquid
+requirements: [
+  titanium/1
+]
+research: {
+  parent: core-pioneer
+  requirements: [
+    titanium/50
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: titanium
+    }
+  ]
+}
+bridgeReplacement: cryo-liquid-bridge
+junctionReplacement: cryo-liquid-junction
+shownPlanets: [cryon]

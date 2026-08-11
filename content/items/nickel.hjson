@@ -1,0 +1,22 @@
+name: 镍
+description: "镍"
+hardness: 3
+explosiveness: 0
+flammability: 0
+charge: 0
+radioactivity: 0
+color: e3decfff
+research: {
+  parent: titanium
+  objectives: [
+    {
+      type: Produce
+      content: nickel
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }]
+}
+shownPlanets: [cryon]

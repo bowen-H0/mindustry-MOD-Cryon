@@ -1,0 +1,31 @@
+{
+  "type": "Unloader",
+  "name": "凝化卸载器",
+  "description": "从容器中卸载指定物品。",
+  "size": 1,
+  "category": "distribution",
+  
+  "speed": 5.4545,
+  
+  "requirements": [
+    "titanium/25",
+    "silicon/30"
+  ],
+  
+  "research": {
+    "parent": "vacuum-bridge",
+    "requirements": [
+    "titanium/70",
+    "silicon/90"
+  ],
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-glacial-basin
+    }
+  ]
+  },
+  
+  "shownPlanets": ["cryon"]
+}
+

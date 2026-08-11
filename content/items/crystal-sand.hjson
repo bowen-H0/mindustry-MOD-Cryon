@@ -1,0 +1,22 @@
+name: 晶砂
+description: "通常用于提取矿物。"
+hardness: 1
+explosiveness: 0.0
+flammability: 0.0
+charge: 0.1
+radioactivity: 0.0
+color: f5f5f5ff
+research: {
+  parent: magnesium
+  objectives: [
+    {
+      type: Produce
+      content: crystal-sand
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }]
+}
+shownPlanets: [cryon]

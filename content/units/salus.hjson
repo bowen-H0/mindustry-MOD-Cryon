@@ -1,0 +1,177 @@
+type: legs
+name: Salus
+
+# 基础属性
+speed: 0.55
+health: 1200
+armor: 4
+hitSize: 32
+
+# 腿部核心参数
+legCount: 6
+legLength: 38
+legBaseOffset: 10
+legMoveSpace: 1.8
+legSpeed: 0.6
+legExtension: -2
+legStraightness: 0.5
+legGroupSize: 2
+legContinuousMove: true
+
+outlineColor: 38404B
+mechLegColor: 606bb9
+
+abilities: [
+  {
+    type: ShieldRegenFieldAbility
+    amount: 5
+    max: 50
+    reload: 60
+    range: 80
+  }
+]
+
+weapons: [
+  {
+    name: salus-weapon
+    type: Weapon
+    x: 0              
+    y: 11
+    
+    rotate: false
+    mirror: false
+    reload: 35
+    alternate: true
+    ejectEffect: casing1
+    shootSound: shootFuse
+
+    shoot: {
+      type: ShootSpread
+      shots: 5
+      spread: 25
+    }
+    
+    bullet: {
+      type: ShrapnelBulletType
+      length: 160
+      damage: 30
+      width: 18
+      toColor: ffffff
+      serrations: 4
+    }
+  }
+  {
+    type: PointDefenseWeapon
+    name: cryon-point-defense
+    rotate: true
+    x: 5
+    y: -9
+    reload: 9
+    targetInterval: 9
+    targetSwitchInterval: 12
+    recoil: 0.5
+    bullet: {
+      shootSound: shootLaser
+      shootEffect: sparkShoot
+      hitEffect: pointHit
+      maxRange: 100
+      damage: 38
+      hitColor: F47B76
+    }
+  }
+  {
+    type: PointDefenseWeapon
+    name: cryon-point-defense
+    rotate: true
+    x: 10
+    y: -9
+    reload: 9
+    targetInterval: 9
+    targetSwitchInterval: 12
+    recoil: 0.5
+    bullet: {
+      shootSound: shootLaser
+      shootEffect: sparkShoot
+      hitEffect: pointHit
+      maxRange: 100
+      damage: 38
+      hitColor: F47B76
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 14
+    y: -4
+    reload: 18
+    rotate: true
+    mirror: true
+
+    bullet: {
+      type: SapBulletType
+      sapStrength: 0.8
+      length: 50
+      width: 0.4
+      knockback: -0.65
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  },
+  {
+    name: salus-meltdown-weapon
+    type: Weapon
+    x: 8    
+    y: 5
+    reload: 0          # 设为 0 实现无冷却一直照射
+    rotate: false
+    mirror: true       
+    alternate: false   # 关键：设置为 false，让左右两门副炮同时一起开火
+    continuous: true   
+    shootSound: beamMeltdown
+
+    shoot: {
+      firstShotDelay: 0
+    }
+    
+    bullet: {
+      type: ContinuousLaserBulletType
+      damage: 8        # 因为变成了每帧都在无缝滋水的绝对持续伤害，适当降低单帧伤害以平衡秒伤
+      length: 130      
+      width: 3         
+      lifetime: 10     # 极短的生存周期配合 0 冷却，可以死死粘在机体上无缝延伸
+      
+      # 移除所有燃烧与熔化属性，变为纯粹的高能粒子切割
+      incendChance: 0
+      incendSpread: 0
+      incendAmount: 0
+      
+      # 视觉效果全面翻新：由内而外的纯净亮蓝色与烈焰白
+      colors: [8ca9f4, 5c7cf2, ffffff]
+    }
+  }
+]
+
+research: {
+  parent: mechanical-assembler
+  requirements: [
+    titanium/2400
+    farstar-alloy/2600
+    silicon/2300
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: titanium
+    }
+    {
+      type: Produce
+      content: graphite
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-cryon-gravel-ice
+    }]
+}

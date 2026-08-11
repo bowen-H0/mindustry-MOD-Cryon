@@ -1,0 +1,46 @@
+type: missile
+physics: false
+template: MissileUnitType
+flying: true
+useUnitCap: false
+hidden: true
+
+speed: 6.5
+missileAccelTime: 15
+lifetime: 49
+health: 800             # 高血量，难以被拦截击落
+hitSize: 10
+
+rotateSpeed: 4.5
+autoFindTarget: true
+homingDelay: 5
+faceTarget: true
+circleTarget: false
+
+lowAltitude: false
+
+engineSize: 1.5
+engineOffset: 4.0
+trailColor: "ffd37f"
+trailLength: 18
+
+weapons: [
+  {
+    reload: 1
+    shootOnDeath: true
+    mirror: false
+    shootCone: 360
+    shake: 8
+
+    bullet: {
+      type: ExplosionBulletType
+      splashDamage: 100
+      splashDamageRadius: 80
+      hitEffect: massiveExplosion
+      lightning: 12
+      lightningLength: 12
+      lightningDamage: 40
+      lightningColor: "ffd37f"
+    }
+  }
+]

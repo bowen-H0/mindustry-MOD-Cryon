@@ -1,0 +1,47 @@
+type: LaunchPad
+name: "小型发射台"
+description: "用于扇区间资源运输,发射时需持续消耗电力与氢气。"
+size: 3
+health: 220
+buildTime: 45.0
+
+category: effect
+requirements: [
+  aluminum/350
+  magnesium/300
+  titanium/250
+]
+
+launchTime: 600.0
+launchSoundPitchRand: 0.1
+acceptMultipleItems: false
+lightStep: 1.0
+lightSteps: 3
+liquidPad: 2.0
+
+lightColor: eab678ff
+bottomColor: 565666ff
+
+itemCapacity: 20
+
+consumes: {
+  power: 3.0
+  liquid: hydrogen/0.15
+}
+
+research: {
+  parent: vacuum-conduit
+  requirements: [
+    aluminum/550
+    magnesium/520
+    titanium/500
+  ],
+   objectives: [
+    {
+      type: Produce
+      content: hydrogen
+    }
+    ]
+}
+
+shownPlanets: [cryon]

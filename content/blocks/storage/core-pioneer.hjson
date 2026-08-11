@@ -1,0 +1,23 @@
+type: CoreBlock
+name: "先锋核心"
+description: "Cryon 星球的先遣核心，用于建立初步的工业基地。"
+size: 4
+health: 2000
+itemCapacity: 3500
+unitType: expedition
+unitCapModifier: 30
+category: effect
+alwaysUnlocked: true
+isFirstTier: true
+
+research: {
+  planet: cryon
+  root: true
+  name: "克莱恩"
+  requiresUnlock: false
+}
+
+requirements: [
+  aluminum/700
+  magnesium/200
+]

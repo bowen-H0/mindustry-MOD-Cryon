@@ -1,0 +1,138 @@
+type: ItemTurret
+name: "电花"
+description: "高射速霰弹炮塔，对空对地。发射石墨高爆弹，命中后分裂激光并释放电弧，可造成等离子状态。"
+size: 4
+health: 4250
+range: 200
+reload: 18
+recoil: 2
+shake: 1
+inaccuracy: 0.2
+velocityRnd: 0.17
+shootCone: 40
+shootY: 5
+ammoPerShot: 2
+consumeAmmoOnce: true
+targetAir: true
+targetGround: true
+maxAmmo: 40
+targetUnderBlocks: false
+heatRequirement: 6.0
+maxHeatEfficiency: 1.0
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+shoot: {
+  type: ShootSpread
+  shots: 4
+  spread: 20
+  shotDelay: 5
+}
+
+consumes: {
+  power: 2.5
+}
+
+ammoTypes: {
+  graphite: {
+    type: FlakBulletType
+    damage: 25
+    speed: 10
+    lifetime: 20
+    width: 12
+    height: 20
+    hitSize: 5
+    ammoMultiplier: 2
+    buildingDamageMultiplier: 0.3
+    knockback: 2
+
+    homingPower: 0.17
+    homingDelay: 8
+    homingRange: 80
+
+    explodeRange: 40
+    explodeDelay: 0
+
+    flakInterval: 20
+    backColor: "fff0d0"
+    frontColor: "ffffff"
+    hitColor: "ffebc0"
+    trailColor: "ffe2a0"
+
+    trailWidth: 3.0
+    trailLength: 10
+    shootEffect: shootBigColor
+    smokeEffect: shootSmokeSquareSparse
+    hitEffect: hitSquaresColor
+    despawnEffect: hitSquaresColor
+    despawnShake: 2
+    status: cryon-plasma
+    statusDuration: 5
+    intervalBullet: {
+      type: LightningBulletType
+      lightningColor: "ffdd88"
+      lightningCone: 15
+      lightningLength: 40
+      lightningLengthRand: 4
+      damage: 10
+    }
+    bulletInterval: 20
+    intervalBullets: 1
+    intervalRandomSpread: 0
+    intervalSpread: 0
+
+    fragBullet: {
+      type: LaserBulletType
+      damage: 35
+      width: 12
+      length: 50
+      lifetime: 14
+      sideAngle: 175
+      sideWidth: 1
+      sideLength: 18
+      pierceCap: 2
+      buildingDamageMultiplier: 0.25
+      hitEffect: hitLancer
+      colors: [
+        "ffaa2266"
+        "ffcc44"
+        "ffffff"
+      ]
+    }
+    fragBullets: 2
+    fragSpread: 0
+    fragRandomSpread: 0
+    fragVelocityMin: 1
+    fragVelocityMax: 1
+    fragLifeMin: 1
+    fragOnHit: false
+  }
+}
+
+category: turret
+requirements: [
+  aluminum/80
+  magnesium/80
+  titanium/30
+]
+
+research: {
+  parent: gem
+  requirements: [
+    aluminum/260
+    magnesium/260
+    titanium/80
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: titanium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-shattered-abyss
+    }]
+}
+shownPlanets: [cryon]

@@ -1,0 +1,14 @@
+research: {
+  parent: water
+  objectives: [
+    {
+      type: Produce
+      content: nitrogen
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }]
+}
+shownPlanets: [cryon, erekir]

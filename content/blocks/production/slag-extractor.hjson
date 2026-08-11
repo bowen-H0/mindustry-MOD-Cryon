@@ -1,0 +1,70 @@
+type: AttributeCrafter
+
+name: "Slag Extractor"
+description: "Extract Slag."
+
+size: 3
+health: 100
+category: production
+
+attribute: cryothermal
+baseEfficiency: 0.0
+minEfficiency: 8.999
+boostScale: 0.1111
+craftTime: 60.0
+
+hasPower: true
+hasLiquids: true
+outputLiquid: slag/1.0
+
+consumes: {
+  power: 3.0
+}
+
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawRegion
+      suffix: "-rotator"
+      spinSprite: true
+      rotateSpeed: 1.5
+    }
+    {
+      type: DrawRegion
+      suffix: "-top"
+    }
+  ]
+}
+
+requirements: [
+  aluminum/60
+  magnesium/30
+  scrap/50
+  silicon/40
+]
+
+research: {
+  parent: hydrothermal-generator
+  requirements: [
+    aluminum/500
+    magnesium/250
+    scrap/400
+    silicon/400
+  ]
+  objectives: [
+    {
+      type: Produce
+      content: scrap
+    },
+    {
+      type: SectorComplete
+      preset: cryon-sector-shattered-shoal
+    }
+  ]
+}
+
+shownPlanets: [cryon]

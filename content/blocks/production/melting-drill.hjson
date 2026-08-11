@@ -1,0 +1,40 @@
+type: Drill
+name: "热融钻头"
+description: "通过热量脆化冰层开采矿物，需要持续供电。"
+size: 2
+health: 80
+tier: 1
+drillTime: 220
+category: production
+
+hasPower: true
+consumes: {
+  power: 0.6
+}
+
+requirements: [
+  aluminum/22
+  magnesium/8
+]
+drillMultipliers: {
+  aluminum: 2.0
+  salt:0.1
+}
+blockedItems: [
+  dry-ice
+  
+]
+research: {
+  parent: hydrothermal-generator
+  requirements: [
+    aluminum/8
+    magnesium/2
+  ]
+  "objectives": [
+    {
+      type: Produce
+      content: magnesium
+    }
+  ]
+}
+shownPlanets: [cryon]

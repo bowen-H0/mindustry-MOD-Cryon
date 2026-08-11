@@ -1,0 +1,126 @@
+type: ItemTurret
+name: "火神"
+description: "双管高速射炮塔，密集的穿透弹幕将敌人撕成碎片。"
+size: 4
+health: 10850
+range: 200
+reload: 8
+inaccuracy: 1.5
+targetAir: true
+targetGround: true
+maxAmmo: 60
+ammoUseEffect: casing3
+
+shoot: {
+  type: ShootAlternate
+  barrels: 2
+  spread: 6        
+  shots: 4
+  shotDelay: 2
+}
+
+shootX: 0
+shootY: 10
+recoils: 1
+recoil: 2
+shake: 2
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+
+
+ammoTypes: {
+  graphite: {
+    type: BasicBulletType
+    damage: 15
+    speed: 8.5
+    reloadMultiplier: 0.85
+    lifetime: 24
+    width: 8
+    height: 14
+    pierce: true
+    pierceCap: 4
+    pierceDamageFactor: 0.6
+  }
+  farstar-alloy: {
+    type: BasicBulletType
+    damage: 10
+    speed: 8.5
+    reloadMultiplier: 1.0
+    lifetime: 24
+    width: 8
+    height: 14
+    pierce: true
+    pierceCap: 4
+    pierceDamageFactor: 0.6
+    status: freezing
+    statusDuration: 70
+    backColor: "bf40bf"
+    frontColor: "f3e5f5"
+
+    fragBullet: {
+      type: BasicBulletType
+      damage: 2
+      speed: 1.8
+      lifetime: 9
+      width: 4.5
+      height: 7.5
+      backColor: "bf40bf"
+      frontColor: "f3e5f5"
+      hitColor: "bf40bf"
+      trailColor: "bf40bf"
+      trailWidth: 0.9
+      trailLength: 2
+      status: freezing
+      statusDuration: 25
+      hitEffect: hitSquaresColor
+      despawnEffect: hitSquaresColor
+    }
+    fragBullets: 4
+    fragVelocityMin: 0.2
+    fragVelocityMax: 0.6
+    fragLifeMin: 0.5
+    fragRandomSpread: 360
+    fragOnHit: true
+  }
+  neutronite: {
+    type: BasicBulletType
+    damage: 15
+    speed: 9
+    reloadMultiplier: 1.1
+    lifetime: 24
+    width: 12
+    height: 18
+    pierce: true
+    pierceCap: 5
+    pierceDamageFactor: 0.65
+    status: cryon-radiated
+    statusDuration: 300
+  }
+}
+
+category: turret
+requirements: [
+  aluminum/55
+  magnesium/25
+  titanium/20
+  silicon/15
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }
+  ],
+  parent: torrent
+  requirements: [
+    graphite/100
+    magnesium/120
+    titanium/60
+    silicon/40
+  ]
+}
+shownPlanets: [cryon]

@@ -1,0 +1,14 @@
+research: {
+  parent: water
+  objectives: [
+    {
+      type: Produce
+      content: ozone
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-shattered-abyss
+    }]
+}
+shownPlanets: [cryon, erekir]

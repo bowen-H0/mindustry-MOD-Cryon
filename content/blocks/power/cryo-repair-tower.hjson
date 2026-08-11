@@ -1,0 +1,52 @@
+type: RepairTower
+name: "凝化维修塔"
+description: "消耗电力，发射修复光束持续治疗范围内受损的友方单位。"
+size: 2
+health: 140
+category: units
+
+range: 80              # 维修半径
+healAmount: 0.5        # 基础修复速度
+
+consumes: {
+  power: 1.2
+}
+
+requirements: [
+  aluminum/40
+  magnesium/20
+  graphite/50
+  silicon/45
+]
+
+research: {
+  parent: cryo-mender
+  requirements: [
+    aluminum/700
+    magnesium/300
+    graphite/400
+    silicon/800
+  ],
+  objectives: [
+    {
+      type: Produce
+      content: magnesium
+    },
+    {
+      type: Produce
+      content: dry-ice
+    },
+    {
+      type: Produce
+      content: silicon
+    },
+    {
+      type: Research
+      content: unit-projector
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }]
+}

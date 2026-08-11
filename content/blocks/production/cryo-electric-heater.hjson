@@ -1,0 +1,42 @@
+type: HeatProducer
+
+name: "凝化电热制机"
+description: "消耗电生产热量。"
+
+size: 2
+health: 240
+category: crafting
+
+hasPower: true
+hasItems: false
+hasLiquids: false
+
+heatOutput: 2
+
+consumes: {
+  power: 1.0
+}
+
+
+requirements: [
+  aluminum/60
+  silicon/50
+  graphite/30
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ],
+  parent: magnesium-converter
+requirements: [
+  aluminum/260
+  silicon/250
+  graphite/230
+]
+}
+
+shownPlanets: [cryon]

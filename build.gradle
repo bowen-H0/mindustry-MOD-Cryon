@@ -81,15 +81,12 @@ tasks.register('jarAndroid'){
 
 jar{
     archiveFileName = "${project.name}Desktop.jar"
-
     from{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
     }
-
     from(projectDir){
-        include 'mod.hjson', 'icon.png'
+        include 'mod.hjson', 'icon.png', 'shaders/**'
     }
-
     from("assets/"){
         include "**"
     }

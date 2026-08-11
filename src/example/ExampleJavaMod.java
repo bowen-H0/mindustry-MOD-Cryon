@@ -168,8 +168,12 @@ public class ExampleJavaMod extends Mod {
             shootSound = Sounds.shootArc;
             loopSound = Sounds.loopSmelter;
             loopSoundVolume = 1.4f;
-
-            shootType = new BasicBulletType(4f, 550f){{
+            shoot = new ShootPattern(){{
+                shots = 1;
+                firstShotDelay = 350f;
+            }};
+            shootWarmupSpeed = 0.015f;
+            shootType = new BasicBulletType(4f, 120f){{
                 sprite = "cryon-java-dependency-tesla-orb";
                 width = 40f;
                 height = 40f;
@@ -181,7 +185,7 @@ public class ExampleJavaMod extends Mod {
                 lightning = 6;
                 lightningLength = 28;
                 lightningLengthRand = 20;
-                lightningDamage = 120;
+                lightningDamage = 60;
                 lightningColor=Color.valueOf("00d8d8");;
                 despawnShake = 6f;
             }};
@@ -323,8 +327,6 @@ public class ExampleJavaMod extends Mod {
             health = 22500;
             inaccuracy = 2f;
             rotateSpeed = 10f;
-            coolant = consumeCoolant(0.1f);
-            coolantMultiplier = 10f;
             researchCostMultiplier = 0.05f;
             depositCooldown = 2.0f;
 
@@ -596,6 +598,15 @@ public class ExampleJavaMod extends Mod {
 
         MeltingDrillInjector.inject("cryon-melting-drill",5f,0.05f, 60f, 150f);
         DeuteriumReactorInjector.inject("cryon-deuterium-reactor", "cryon-tritium", 0.125f);
+        Events.on(ClientLoadEvent.class, e -> {
+            if (fluxBarrier.fluxShader == null) {
+                fluxBarrier.fluxShader = new FluxShieldShader();
+            }
+        });
+        Events.run(Trigger.draw, () -> {
+            FluxShieldRenderer.drawFluxShields();
+        });
+
 
 
         //SectorIdDebug.install();

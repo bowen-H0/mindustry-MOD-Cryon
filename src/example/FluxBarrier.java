@@ -54,6 +54,12 @@ public class FluxBarrier extends Block{
     public Effect absorbEffect = Fx.absorb;
     public Effect shieldBreakEffect = Fx.shieldBreak;
     private TextureRegion topRegion;
+    public float flash;
+
+    public static @Nullable FluxShieldShader fluxShader;
+    public static final float layerFluxShield = Layer.shields + 10;
+
+
     //TODO json support
     public @Nullable Consume itemConsumer, coolantConsumer;
 
@@ -102,6 +108,7 @@ public class FluxBarrier extends Block{
     public void load() {
         super.load();
         topRegion = Core.atlas.find(name + "-top");
+
     }
     public FluxBarrier(String name){
         super(name);
@@ -340,11 +347,27 @@ public class FluxBarrier extends Block{
             return super.sense(sensor);
         }
 
-            @Override
-            public void draw(){
-                super.draw();
-                drawShield();
+        @Override
+        public void draw(){
+            super.draw();
+
+            float heatFrac = shieldHeat / maxShieldHeat;
+            if (heatFrac > 0.01f) {
+                Draw.color(Color.clear, Color.valueOf("ff9575a3"), heatFrac);
+                Fill.rect(x, y, tilesize * size, tilesize * size);
+
+                float flashThreshold = 0.46f;
+                if (heatFrac > flashThreshold) {
+                    flash += (1f + ((heatFrac - flashThreshold) / (1f - flashThreshold)) * 5.4f) * Time.delta;
+                    Draw.color(Color.red, Color.yellow, Mathf.absin(flash, 9f, 1f));
+                    Draw.alpha(0.3f);
+                    Draw.rect(topRegion, x, y);
+                }
+                Draw.reset();
             }
+
+            drawShield();
+        }
 
         public void drawShield(){
             if(!broken){
@@ -354,10 +377,10 @@ public class FluxBarrier extends Block{
                     Draw.color(team.color, Color.white, Mathf.clamp(hit));
 
                     if(renderer.animateShields){
-                        Draw.z(Layer.shields + 0.001f * hit);
+                        Draw.z(layerFluxShield + 0.001f * hit);
                         Fill.poly(x, y, sides, radius, shieldRotation);
                     }else{
-                        Draw.z(Layer.shields);
+                        Draw.z(layerFluxShield);
                         Lines.stroke(1.5f);
                         Draw.alpha(0.09f + Mathf.clamp(0.08f * hit));
                         Fill.poly(x, y, sides, radius, shieldRotation);

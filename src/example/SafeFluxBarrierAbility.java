@@ -245,10 +245,10 @@ public class SafeFluxBarrierAbility extends Ability {
         Draw.color(unit.type.shieldColor(unit), Color.white, Mathf.clamp(hit));
 
         if (renderer.animateShields) {
-            Draw.z(Layer.shields + 0.001f * hit);
+            Draw.z(FluxBarrier.layerFluxShield + 0.001f * hit);
             Fill.poly(unit.x, unit.y, sides, r, rotation);
         } else {
-            Draw.z(Layer.shields);
+            Draw.z(FluxBarrier.layerFluxShield);
             Lines.stroke(1.5f);
             Draw.alpha(0.09f + Mathf.clamp(0.08f * hit));
             Fill.poly(unit.x, unit.y, sides, r, rotation);
@@ -267,7 +267,7 @@ public class SafeFluxBarrierAbility extends Ability {
         float pulse     = (Mathf.sin(Time.time * 0.15f) * 0.5f + 0.5f) * 0.4f + 0.1f;
         float alpha     = Mathf.lerp(0.05f, 0.35f, progress) * pulse * 2f;
 
-        Draw.z(Layer.shields);
+        Draw.z(FluxBarrier.layerFluxShield);
         Draw.color(unit.type.shieldColor(unit), Color.gray, 1f - progress);
         Lines.stroke(1f);
         Draw.alpha(Mathf.clamp(alpha));

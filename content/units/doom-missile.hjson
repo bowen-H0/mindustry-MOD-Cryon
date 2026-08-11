@@ -1,0 +1,70 @@
+{
+  type: missile
+  physics: false
+  template: MissileUnitType
+  flying: true
+  useUnitCap: false
+  hidden: true
+
+  speed: 7.5
+  missileAccelTime: 10
+  lifetime: 60
+  health: 800
+  hitSize: 12
+
+  rotateSpeed: 5.0
+  autoFindTarget: true
+  homingDelay: 0
+  faceTarget: true
+  circleTarget: false
+
+  lowAltitude: false
+
+  engineSize: 2.2
+  engineOffset: 5.0
+  trailColor: "ff6600"
+  trailLength: 35
+
+  weapons: [
+    {
+      reload: 1
+      shootOnDeath: true
+      mirror: false
+      shootCone: 360
+      shake: 20
+
+      shoot: {
+        type: ShootSpread
+        shots: 16       
+        spread: 22.5    
+      }
+
+      bullet: {
+        type: LaserBulletType
+        damage: 80
+        length: 30
+        width: 16       
+        lifetime: 30    
+        buildingDamageMultiplier: 0.8
+        hitEffect: massiveExplosion
+
+        colors: [
+          "ff330066"
+          "ff6600"
+          "ffdd99"
+          "ffffff"
+        ]
+      }
+    }
+  ],
+  "abilities": [
+    {
+      "type": "MoveEffectAbility",
+      "effect": "missileTrailSmokeSmall",
+      "rotation": 180,
+      "y": -9,
+      "color": "ff330066",  
+      "interval": 4
+    }
+  ]
+}

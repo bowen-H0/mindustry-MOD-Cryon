@@ -1,0 +1,42 @@
+type: HeatConductor
+
+name: "凝化热量传递器"
+description: "用于重定向并传递热量。"
+
+size: 2
+health: 180
+category: crafting
+
+splitHeat: false
+
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawHeatOutput
+    }
+    {
+      type: DrawHeatInput
+      suffix: "-heat"
+    }
+  ]
+}
+
+regionRotated1: 1
+
+requirements: [
+  aluminum/10
+  graphite/4
+]
+research: {
+
+  parent: cryo-electric-heater
+  requirements: [
+  aluminum/40
+  graphite/24
+]
+}
+shownPlanets: [cryon]

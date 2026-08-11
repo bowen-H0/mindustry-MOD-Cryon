@@ -1,0 +1,57 @@
+name: Charonia
+type: flying
+flying: true
+
+health: 7500
+armor: 6
+speed: 1.8
+rotateSpeed: 4.5
+hitSize: 24
+itemCapacity: 90
+
+targetAir: true
+targetGround: true
+faceTarget: true
+lowAltitude: false
+
+controller: flyingAI
+
+engineSize: 5
+engineOffset: 12
+
+weapons: [
+  {
+    mirror: true
+    alternate: true
+    rotate: false
+    
+    reload: 6
+    x: 8
+    y: 4
+    
+    bullet: {
+      # 脉冲粒子束视觉效果
+      type: BasicBulletType
+      damage: 35
+      speed: 8
+      lifetime: 35
+      collidesAir: true
+      collidesGround: true
+      
+      # 穿透效果设置
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 3
+      
+      # 粒子束外观：细长且带有亮蓝色脉冲感
+      width: 3
+      height: 18
+      backColor: 66ccff
+      frontColor: ffffff
+      
+      trailWidth: 1.5
+      trailLength: 6
+      trailColor: 66ccff
+    }
+  }
+]

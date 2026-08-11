@@ -1,0 +1,41 @@
+{
+  "type": "MendProjector",
+  "name": "凝化修复仪",
+  "description": "持续修复周围受损的建筑。",
+  "size": 1,
+  "health": 80,
+  "category": "effect",
+  
+  "reload": 200,
+  "range": 40,
+  "healPercent": 4,
+  "phaseBoost": 0,
+  "phaseRangeBoost": 0,
+  
+  "consumes": {
+    "power": 0.3
+  },
+  
+  "requirements": [
+    "aluminum/35",
+    "magnesium/15",
+    "silicon/30"
+  ],
+  
+  "research": {
+    "parent": "silicon-separator",
+    "requirements": [
+      "aluminum/700",
+      "magnesium/300",
+      "silicon/500"
+    ],
+    objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-1
+    }
+  ]
+  },
+  
+  "shownPlanets": ["cryon"]
+}

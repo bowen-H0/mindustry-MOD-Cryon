@@ -1,0 +1,16 @@
+name: 干冰
+description: "固态二氧化碳，极低温，可用于冷却。"
+hardness: 1
+explosiveness:0.7
+charge:0.1
+color: c8eeff
+research: {
+  parent: aluminum
+  objectives: [
+    {
+      type: Produce
+      content: dry-ice
+    }
+  ]
+}
+shownPlanets: [cryon]

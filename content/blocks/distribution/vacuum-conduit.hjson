@@ -1,0 +1,20 @@
+type: Duct
+name: "真空管道"
+description: "使用真空压力快速传输物品。"
+size: 1
+health: 20
+speed: 5.0
+category: distribution
+requirements: [
+  aluminum/1
+]
+research: {
+  parent: core-pioneer
+  requirements: [
+    aluminum/8
+  ]
+}
+bridgeReplacement: vacuum-bridge
+junctionReplacement: vacuum-crosser
+
+shownPlanets: [cryon]

@@ -1,0 +1,10 @@
+research: {
+  parent: dry-ice
+  objectives: [
+    {
+      type: Produce
+      content: water
+    }
+  ]
+}
+shownPlanets: [cryon, erekir, serpulo]

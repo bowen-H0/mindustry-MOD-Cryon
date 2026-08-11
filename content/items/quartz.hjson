@@ -1,0 +1,22 @@
+name: 石英
+description: "一种坚硬的半透明晶体，常用于电子元件和玻璃制造。"
+hardness: 2
+explosiveness: 0.0
+flammability: 0.0
+charge: 0.1
+radioactivity: 0.0
+color: f5f5f5ff
+research: {
+  parent: salt
+  objectives: [
+    {
+      type: Produce
+      content: quartz
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-shattered-abyss
+    }]
+}
+shownPlanets: [cryon]

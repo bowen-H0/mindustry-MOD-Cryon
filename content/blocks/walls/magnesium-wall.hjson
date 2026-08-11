@@ -1,0 +1,7 @@
+type: Wall
+name: 镁墙（旧版）
+description: "由镁制成的防御方块。"
+health: 320
+size: 1
+buildVisibility: hidden
+shownPlanets: []

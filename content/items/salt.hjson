@@ -1,0 +1,18 @@
+name: 盐
+description: "一种易碎的白色晶体。"
+hardness: 1
+explosiveness: 0.0
+flammability: 0.0
+charge: 0.05
+radioactivity: 0.0
+color: ffffffff
+research: {
+  parent: aluminum
+  objectives: [
+    {
+      type: Produce
+      content: salt
+    }
+  ]
+}
+shownPlanets: [cryon]

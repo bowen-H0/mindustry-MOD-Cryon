@@ -1,0 +1,56 @@
+type: Battery
+name: "储能电池"
+description: "专为电网过载设计的储能设备。在电力产生赤字时自动放电，维持系统运转。"
+size: 1
+health: 140
+
+
+consumes: {
+  powerBuffered: 1000
+}
+
+category: power
+requirements: [
+  aluminum/35
+  magnesium/15
+  graphite/20
+    silicon/20
+]
+
+research: {
+  parent: hydrothermal-generator
+  requirements: [
+    aluminum/100
+    magnesium/50
+    graphite/50
+    silicon/100
+  ],
+  "objectives": [
+    {
+      "type": "Research",
+      "content": "magnesium-generator"
+    },
+    {
+      type: Produce
+      content: magnesium
+    },
+    {
+      type: Produce
+      content: dry-ice
+    },
+    {
+      type: Produce
+      content: silicon
+    },
+    {
+      type: Produce
+      content: graphite
+    },
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ]    
+}
+
+shownPlanets: [cryon]

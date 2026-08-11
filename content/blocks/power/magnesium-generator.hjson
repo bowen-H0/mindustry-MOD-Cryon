@@ -1,0 +1,49 @@
+type: ConsumeGenerator
+name: "镁能发电机"
+description: "通过干冰与镁的化学反应产生大量电力。"
+size: 1
+health: 40
+category: power
+
+powerProduction: 2.0
+
+
+consumes: {
+  items: [
+    dry-ice/1
+    magnesium/2
+  ]
+}
+
+
+itemDuration: 120
+
+requirements: [
+  aluminum/28
+  magnesium/12
+  silicon/20
+]
+
+research: {
+  parent: silicon-separator
+  objectives: [
+    {
+      type: Produce
+      content: magnesium
+    }
+    {
+      type: Produce
+      content: dry-ice
+    }
+    {
+      type: SectorComplete
+      preset: cryon-sector-1
+    }
+  ]
+  requirements: [
+    aluminum/140
+    magnesium/60
+  ]
+}
+
+shownPlanets: [cryon]

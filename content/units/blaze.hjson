@@ -1,0 +1,150 @@
+type: tank
+name:"煌阳"
+health: 10000
+armor: 18
+speed: 0.37
+hitSize: 45
+omniMovement: false
+targetAir: true
+targetGround: true
+itemCapacity: 30
+faceTarget: true
+
+rotateSpeed: 3.5
+treadPullOffset: 5
+crushDamage: 5
+treadRects: [
+  {
+    x: -88.5
+    y: 36.5
+    width: 56
+    height: 73
+  }
+  {
+    x: -91.5
+    y: -73.5
+    width: 29
+    height: 17
+  }
+  {
+    x: -56.5
+    y: -106.5
+    width: 39
+    height: 19
+  }
+]
+weapons: [
+  {
+    name: blaze-eruption
+    x: -15
+    y: -15
+    rotate: true
+    mirror: true
+    reload: 18
+    shootSound: shoot
+    shootCone: 40
+    shadow: 4
+    
+    shoot: {
+      type: ShootSpread
+      shots: 4
+      spread: 20
+      shotDelay: 5
+    }
+
+    bullet: {
+      type: FlakBulletType
+      damage: 30
+      speed: 10
+      lifetime: 20
+      width: 12
+      height: 20
+      hitSize: 5
+      ammoMultiplier: 2
+      knockback: 2
+      collidesAir: true
+      collidesGround: true
+
+      homingPower: 0.17
+      homingDelay: 8
+      homingRange: 80
+
+      explodeRange: 40
+      explodeDelay: 0
+
+      flakInterval: 20
+      backColor: ffdd88
+      frontColor: ffffff
+      hitColor: ffebc0
+      trailColor: ffe2a0
+      trailWidth: 3.0
+      trailLength: 10
+
+      hitEffect: hitSquaresColor
+      despawnEffect: hitSquaresColor
+      despawnShake: 2
+
+      fragBullet: {
+        type: LaserBulletType
+        damage: 20
+        width: 8
+        length: 40
+        lifetime: 12
+        pierceCap: 2
+        collidesAir: true
+        collidesGround: true
+        hitEffect: hitLancer
+        colors: [
+          ffffff
+          ffffe1
+          ffffbb
+        ]
+      }
+      fragBullets: 2
+      fragSpread: 0
+      fragRandomSpread: 0
+      fragVelocityMin: 1
+      fragVelocityMax: 1
+      fragLifeMin: 1
+      fragOnHit: false
+    }
+  },
+  {
+    name: blaze-mega-laser
+    x: 0
+    y: 0
+    shootY: 20
+    rotate: true
+    mirror: false
+    reload: 90
+    shootSound: shootLancer
+    shootCone: 8
+    shadow: 8
+
+    bullet: {
+      type: LaserBulletType
+      damage: 320
+      length: 180
+      width: 20
+      lifetime: 20
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceCap: 15
+
+      hitEffect: hitLancer
+      despawnEffect: none
+      
+      colors: [
+          ffffff
+          ffffe1
+          ffffbb
+        ]
+    }
+  }
+  
+
+  
+]
+
+shownPlanets: [cryon]

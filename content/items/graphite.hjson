@@ -1,0 +1,14 @@
+research: {
+  parent: dry-ice
+  objectives: [
+    {
+      type: Produce
+      content: graphite
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }]
+}
+shownPlanets: [serpulo, erekir, cryon]

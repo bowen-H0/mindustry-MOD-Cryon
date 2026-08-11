@@ -1,0 +1,16 @@
+type: Wall
+name: 铝墙
+description: "由铝制成的防御方块。轻质但不耐打。"
+health: 200
+size: 1
+requirements: [
+  aluminum/6
+]
+category: defense
+research: {
+  parent: spiral
+  requirements: [
+    aluminum/20
+  ]
+}
+shownPlanets: [cryon]

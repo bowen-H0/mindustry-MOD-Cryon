@@ -1,0 +1,78 @@
+parent: sun
+orbitRadius: 130
+radius: 1
+accessible: true
+alwaysUnlocked: true
+visible: true
+startSector: 0
+minZoom: 0.5
+maxZoom: 2.0
+bloom: false
+lightSrcFrom: 0.05
+lightSrcTo: 0.05
+lightDstFrom: 0.05
+lightDstTo: 0.05
+mesh: [
+
+  {
+    type: NoiseMesh
+    planet: cryon
+    divisions: 5
+    seed: 12
+    radius: 1.00
+    color1: 4a6880ff
+    color2: 2a3a48ff
+    octaves: 4
+    persistence: 0.5
+    scale: 1.5
+    mag: 0.6
+  },
+
+  {
+    type: SunMesh
+    divisions: 5
+    octaves: 60
+    persistence: 0.2
+    scl: 1.2
+    pow: 1.0
+    colorScale: 1.0
+    colors: [
+        ffffff33
+        ffffff22
+        4a688044
+    ]
+  },
+  {
+    type: HexSkyMesh
+    speed: 0.8
+    divisions: 5
+    radius: 0.15
+    color: a0c0e066
+    octaves: 3
+    persistence: 0.4
+    scl: 2.0
+    thresh: 0.55
+    seed: 7
+  }
+]
+hasAtmosphere: true
+atmosphereRadIn: 0.001
+atmosphereRadOut: 0.03
+sectorSize: 2
+generator: {
+  octaves: 3
+  persistence: 0.5
+  scale: 20
+  mag: 0.7
+  thresh: 1.0
+  min: 100
+  max: 100
+  radMin: 220
+  radMax: 600
+}
+
+launchCandidates: []
+allowLaunchToNumbered: true
+allowLaunchLoadout: true
+iconColor: 5a8fb0
+defaultCore: "core-pioneer"

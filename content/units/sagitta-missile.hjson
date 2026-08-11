@@ -1,0 +1,83 @@
+type: missile
+physics: false
+template: MissileUnitType
+  flying: true,
+  useUnitCap: false,
+  hidden: true,
+
+  speed: 4.4,
+  maxRange: 6,
+  lifetime: 81,
+  hitSize: 10,
+  outlineColor: "404049",
+
+  engineColor: "ffd37f",
+  trailColor: "ffd37f",
+  engineSize: 3.1,
+  engineOffset: 10,
+
+  rotateSpeed: 0.25,
+  trailLength: 18,
+  missileAccelTime: 30,
+  lowAltitude: true,
+
+  loopSound: "loopMissileTrail",
+  loopSoundVolume: 0.6,
+  deathSound: "explosionMissile",
+
+  targetAir: true,
+  targetUnderBlocks: false,
+  fogRadius: 6,
+
+  health: 500,
+
+  weapons: [
+    {
+      shootCone: 360,
+      rotate: true,
+      rotationLimit: 0,
+      reload: 1,
+      shootOnDeath: true,
+      shake: 10,
+
+      bullet: {
+        type: "ExplosionBulletType",
+        damage: 220,
+        splashDamageRadius: 60,
+        splashDamage: 220,
+        hitColor: "ffd37f",
+        shootEffect: {
+          type: "MultiEffect",
+          effects: ["massiveExplosion", "scatheExplosionSmall"]
+        },
+
+        collidesAir: true,
+
+        fragLifeMin: 0.1,
+        fragBullets: 5,
+        fragRandomSpread: 0,
+        fragSpread: 20,
+
+        fragBullet: {
+          type: BulletType,
+          damage: 0,
+          shootEffect: shootBig,
+          smokeEffect: shootSmokeMissileColor,
+          hitColor: ffd37f,
+
+          spawnUnit: sagitta-missile-sub
+        }
+      }
+    }
+  ],
+
+  abilities: [
+    {
+      type: MoveEffectAbility,
+      effect: missileTrailSmoke,
+      rotation: 180,
+      y: -9,
+      color: 998f6b66,
+      interval: 7
+    }
+  ]

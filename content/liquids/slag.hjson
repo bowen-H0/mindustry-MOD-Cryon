@@ -1,0 +1,10 @@
+research: {
+  parent: water
+  objectives: [
+    {
+      type: Produce
+      content: slag
+    }
+  ]
+}
+shownPlanets: [cryon, erekir, serpulo]

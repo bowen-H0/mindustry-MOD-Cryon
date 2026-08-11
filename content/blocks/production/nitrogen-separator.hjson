@@ -1,0 +1,40 @@
+type: GenericCrafter
+
+name: "氮气分离器"
+description: "消耗大量电力，从大气分离出氮气。"
+
+size: 2
+health: 200
+category: crafting
+
+
+hasPower: true
+hasLiquids: true
+hasItems: false
+
+
+liquidCapacity: 20.0
+craftTime: 60.0
+
+consumes: {
+  power: 8.0
+}
+
+outputLiquid: nitrogen/0.3
+
+requirements: [
+  aluminum/50
+  silicon/30
+]
+
+research: {
+  parent: magnesium-converter
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-sector-frost-outpost
+    }
+  ]
+}
+
+shownPlanets: [cryon]

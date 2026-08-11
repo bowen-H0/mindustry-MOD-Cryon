@@ -1,0 +1,14 @@
+research: {
+  parent: neutronite
+  objectives: [
+    {
+      type: Produce
+      content: phase-fabric
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }]
+}
+shownPlanets: [serpulo, erekir, cryon]

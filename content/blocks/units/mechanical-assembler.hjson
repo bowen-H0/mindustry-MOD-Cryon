@@ -1,0 +1,45 @@
+type: UnitAssembler
+name: "机械装配厂"
+size: 5
+
+requirements: [
+  farstar-alloy/500
+  titanium/150
+  graphite/80
+  silicon/650
+]
+
+plans: [
+  {
+    unit: salus
+    time: 1500
+    requirements: [
+      { item: benignitas, amount: 2 }
+      { item: cryo-titanium-wall-large, amount: 10 }
+      { item: cavity, amount: 2 }
+    ]
+  }
+]
+
+areaSize: 13
+researchCostMultiplier: 0.4
+
+consumes: {
+  power: 2.5
+  liquid: {
+    liquid: nitrogen
+    amount: 0.5
+  }
+}
+
+category: units
+
+research: {
+  parent: benignitas
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-gravel-ice
+    }
+  ]
+}

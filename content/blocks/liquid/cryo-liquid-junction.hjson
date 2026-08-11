@@ -1,0 +1,18 @@
+type: LiquidJunction
+name: "凝化流体交叉器"
+description: "用于两条相交管道的两个方向互不干扰地通行。"
+size: 1
+health: 30
+liquidCapacity: 20.0
+category: liquid
+requirements: [
+  titanium/2
+]
+research: {
+
+  parent: cryo-conduit
+  requirements: [
+    titanium/200
+  ]
+}
+shownPlanets: [cryon]

@@ -1,0 +1,24 @@
+type: Wall
+name: 大型复合墙
+description: "经过特殊处理的大型防御方块。拥有更大的体积与极高的耐久度，能够稳固地阻挡激光武器的攻击。"
+health: 4400
+size: 2
+requirements: [
+  farstar-alloy/16
+  nickel/16
+  phase-fabric/16
+  quartz/16
+]
+category: defense
+absorbLasers: true
+lightningChance: 0.15
+research: {
+  parent: composite-wall
+  requirements: [
+    farstar-alloy/900
+    nickel/900
+    phase-fabric/900
+    quartz/900
+  ]
+}
+shownPlanets: [cryon]

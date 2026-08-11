@@ -1,0 +1,28 @@
+name: 氚
+description: "用于先进发电。"
+gas: true
+coolant: false
+incinerable: true
+heatCapacity: 0.1
+temperature: 0.3
+explosiveness: 1.5
+flammability: 3.5
+color: d0a0e0
+gasColor: d0a0e0
+barColor: d0a0e0
+lightColor: e8d5ff66
+research: {
+  parent: deuterium
+  objectives: [
+    {
+      type: Produce
+      content: tritium
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }]
+}
+
+shownPlanets: [cryon]

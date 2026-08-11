@@ -1,0 +1,19 @@
+type: LiquidBridge
+name: "凝化流体桥接器"
+description: "跨越地形和建筑物传输流体或气体。"
+size: 1
+health: 30
+range: 4
+category: liquid
+requirements: [
+  titanium/4
+]
+hasPower:false
+research: {
+  
+  parent: cryo-conduit,
+  requirements: [
+    titanium/400
+  ]
+}
+shownPlanets: [cryon]

@@ -1,0 +1,44 @@
+type: GenericCrafter
+name: "镁能转化炉"
+description: "通过电力催化镁与干冰的反应，将其还原为石墨。"
+size: 2
+health: 160
+category: crafting
+
+
+craftTime: 120
+
+
+consumes: {
+  
+  power: 0.5
+  items: [
+    dry-ice/1
+    magnesium/2
+  ]
+}
+
+
+outputItem: graphite/1
+
+requirements: [
+  aluminum/35
+  magnesium/15
+  silicon/30
+]
+
+research: {
+  objectives: [
+    {
+      type: SectorComplete
+      preset: cryon-ice-shoal
+    }
+  ],
+  parent: magnesium-generator
+  requirements: [
+    aluminum/210
+    magnesium/90
+  ]
+}
+
+shownPlanets: [cryon]

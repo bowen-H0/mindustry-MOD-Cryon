@@ -1,0 +1,80 @@
+type: flying
+flying: true
+name:"沉雷"
+health: 800
+armor: 8
+speed: 0.8
+rotateSpeed: 8
+hitSize: 20
+itemCapacity: 60
+
+targetAir: false
+targetGround: true
+circleTarget: true
+faceTarget: false
+lowAltitude: false
+
+controller: flyingAI
+
+engineOffset:11
+engineSize:3
+
+weapons: [
+  {
+    mirror: false
+    rotate: false
+    reload: 8
+    x: 0
+    y: 0
+    inaccuracy: 25
+
+    shoot: {
+      type: ShootSpread
+      shots: 6
+      spread: 0
+      shotDelay: 3
+    }
+
+    bullet: {
+      type: BombBulletType
+      damage: 0
+      speed: 1.2
+      lifetime: 35
+      collidesAir: false
+      collidesGround: true
+      splashDamage: 60
+      splashDamageRadius: 32
+      width: 9
+      height: 13
+      backColor: "ff795e"
+      frontColor: "ffffff"
+      hitEffect: massiveExplosion
+      despawnEffect: massiveExplosion
+      shootEffect: none
+    }
+  }
+]
+
+research: {
+  parent: natica
+  objectives: [
+    {
+      type: Produce
+      content: farstar-alloy
+    },
+    {
+      type: Produce
+      content: phase-fabric
+    }
+  
+    {
+      type: SectorComplete
+      preset: cryon-neutron-flux-zone
+    }]
+  requirements: [
+    farstar-alloy/500
+    silicon/2000
+    phase-fabric/3000
+  ]
+  
+}

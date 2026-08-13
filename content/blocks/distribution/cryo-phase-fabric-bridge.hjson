@@ -1,11 +1,15 @@
-type: DuctBridge
+type: ItemBridge
 name: "凝化相织桥"
 description: "利用相位织物构建稳定传输通道，跨越更远的地形传输物品，运行时需持续消耗电力。"
 size: 1
 health: 55
-speed: 5.0
 range: 12
 category: distribution
+transportTime: 2.0
+arrowPeriod: 0.9
+arrowTimeScl: 2.75
+hasPower: true
+pulse: true
 consumes: {
   power: 0.5
 }

@@ -5,11 +5,19 @@ size: 1
 health: 55
 range: 12
 category: liquid
+floating: true
+arrowPeriod: 0.9
+arrowTimeScl: 2.75
+hasPower: true
+canOverdrive: false
+pulse: true
+explosivenessScale: 0.2
+flammabilityScale: 0.2
+liquidCapacity: 100.0
+consumes: {
+  power: 0.5
+}
 requirements: [
   phase-fabric/10
   aluminum/6
 ]
-hasPower: true
-consumes: {
-  power: 0.5
-}

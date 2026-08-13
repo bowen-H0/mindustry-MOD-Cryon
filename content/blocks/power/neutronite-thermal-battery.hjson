@@ -1,7 +1,7 @@
 type: ConsumeGenerator
 name: "核热电池"
 description: "内部蕴含核热反应核心，无需消耗任何资源即可持续产生电力。"
-size: 1
+size: 2
 health: 60
 category: power
 powerProduction: 0.1

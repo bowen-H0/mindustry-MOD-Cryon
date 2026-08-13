@@ -3,9 +3,6 @@ name: "超导节点"
 description: "具有极高的连接范围和连接上限。"
 size: 1
 health: 120
-
 maxNodes: 10
 laserRange: 15
-
 buildVisibility: hidden
-shownPlanets: []

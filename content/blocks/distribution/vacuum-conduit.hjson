@@ -8,13 +8,5 @@ category: distribution
 requirements: [
   aluminum/1
 ]
-research: {
-  parent: core-pioneer
-  requirements: [
-    aluminum/8
-  ]
-}
 bridgeReplacement: vacuum-bridge
 junctionReplacement: vacuum-crosser
-
-shownPlanets: [cryon]

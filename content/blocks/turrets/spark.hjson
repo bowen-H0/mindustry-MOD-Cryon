@@ -29,11 +29,9 @@ shoot: {
   spread: 20
   shotDelay: 5
 }
-
 consumes: {
   power: 2.5
 }
-
 ammoTypes: {
   graphite: {
     type: FlakBulletType
@@ -46,20 +44,16 @@ ammoTypes: {
     ammoMultiplier: 2
     buildingDamageMultiplier: 0.3
     knockback: 2
-
     homingPower: 0.17
     homingDelay: 8
     homingRange: 80
-
     explodeRange: 40
     explodeDelay: 0
-
     flakInterval: 20
     backColor: "fff0d0"
     frontColor: "ffffff"
     hitColor: "ffebc0"
     trailColor: "ffe2a0"
-
     trailWidth: 3.0
     trailLength: 10
     shootEffect: shootBigColor
@@ -81,7 +75,6 @@ ammoTypes: {
     intervalBullets: 1
     intervalRandomSpread: 0
     intervalSpread: 0
-
     fragBullet: {
       type: LaserBulletType
       damage: 35
@@ -109,30 +102,9 @@ ammoTypes: {
     fragOnHit: false
   }
 }
-
 category: turret
 requirements: [
   aluminum/80
   magnesium/80
   titanium/30
 ]
-
-research: {
-  parent: gem
-  requirements: [
-    aluminum/260
-    magnesium/260
-    titanium/80
-  ]
-  objectives: [
-    {
-      type: Produce
-      content: titanium
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-shattered-abyss
-    }]
-}
-shownPlanets: [cryon]

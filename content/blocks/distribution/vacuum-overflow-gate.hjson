@@ -1,0 +1,11 @@
+type: OverflowGate
+name: "真空溢流门"
+description: "通过真空管道分流多余物品。物品过量时优先向此方向溢出。"
+size: 1
+health: 40
+buildTime: 1.0
+category: distribution
+requirements: [
+  aluminum/6
+  magnesium/2
+]

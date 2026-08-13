@@ -1,14 +1,11 @@
 {
   type: Reconstructor
-
   name: "二级重构工厂"
   description: "升级单位到二级"
-
   size: 3
   health: 500
   hasPower: true
   hasItems: true
-
   consumes: {
     power: 6.0
     items: [
@@ -17,37 +14,17 @@
       titanium/5
     ]
   }
-
   requirements: [
     magnesium/150
     silicon/100
     titanium/60
   ]
-
-  research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }
-  ],
-    parent: unit-projector
-    requirements: [
-      graphite/2000
-      silicon/2000
-      titanium/2000
-    ]
-  }
-
   category: units
   buildVisibility: shown
-
   upgrades: [
     [buffer, guardian],
     [littorina, natica],
     [comet, bolide]
-
   ]
-
   constructTime: 1200
 }

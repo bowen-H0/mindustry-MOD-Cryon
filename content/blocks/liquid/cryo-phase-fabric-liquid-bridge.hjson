@@ -1,0 +1,15 @@
+type: LiquidBridge
+name: "凝化相织流体桥接器"
+description: "利用相位织物构建稳定通道，跨越更远的地形传输流体或气体，运行时需持续消耗电力。"
+size: 1
+health: 55
+range: 12
+category: liquid
+requirements: [
+  phase-fabric/10
+  aluminum/6
+]
+hasPower: true
+consumes: {
+  power: 0.5
+}

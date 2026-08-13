@@ -2,13 +2,3 @@ planet: cryon
 sector: 14
 alwaysUnlocked: false
 difficulty: 6
-
-research: {
-  parent: cryon-sector-frost-outpost
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }
-  ]
-}

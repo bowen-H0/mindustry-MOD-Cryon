@@ -1,23 +1,15 @@
 type: GenericCrafter
-
 name: "中子活化炉"
 description: ""
-
 size: 2
 health: 240
 category: crafting
-
-
 hasPower: true
 hasLiquids: true
 hasItems: true
-
-
 craftTime: 120.0
 liquidCapacity: 30.0
-
 consumes: {
-  
   power: 3.0
   liquid: deuterium/0.03
   items: [
@@ -28,26 +20,8 @@ outputItem: {
   item: neutronite
   amount: 1
 }
-
-
 requirements: [
   farstar-alloy/50
   silicon/100
   nickel/120
 ]
-
-research: {
-  parent: quartz-reactor
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-neutron-flux-zone
-    }]
-  requirements: [
-    farstar-alloy/150
-    silicon/1100
-    nickel/1120
-  ]
-}
-
-shownPlanets: [cryon]

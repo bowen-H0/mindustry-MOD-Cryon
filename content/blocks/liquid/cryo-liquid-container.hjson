@@ -1,27 +1,12 @@
 type: LiquidRouter
-
 name: "凝化流体容器"
 description: "可以储存流体。"
-
 size: 2
 health: 160
 category: liquid
-
 hasLiquids: true
 liquidCapacity: 700.0
-
-
 requirements: [
   aluminum/80
   silicon/40
 ]
-
-research: {
-  requirements: [
-  aluminum/800
-  silicon/400
-],
-  parent: cryo-conduit
-}
-
-shownPlanets: [cryon]

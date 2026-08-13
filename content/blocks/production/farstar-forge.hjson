@@ -1,32 +1,21 @@
 type: GenericCrafter
-
 name: "远星合金制造厂"
 description: "制造出远星合金。"
-
 size: 3
 health: 320
 category: crafting
-
-
 hasPower: true
 hasLiquids: true
 hasItems: true
-
 craftTime: 40.0
 itemCapacity: 10
 liquidCapacity: 30.0
-
 consumes: {
-  
   power: 5.0
-  
-  
   items: [
     titanium/2
     silicon/2
   ]
-  
-  
   liquid: nitrogen/0.1
 }
 drawer: {
@@ -41,28 +30,9 @@ drawer: {
     }
   ]
 }
-
 outputItem: farstar-alloy/1
-
 requirements: [
   titanium/100
   aluminum/80
   magnesium/60
 ]
-
-research: {
-  parent: magnesium-converter
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-shattered-abyss
-    }
-  ]
-  requirements: [
-    titanium/1300
-    aluminum/1280
-    magnesium/1260
-  ]
-}
-
-shownPlanets: [cryon]

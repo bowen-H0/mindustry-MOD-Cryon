@@ -1,53 +1,38 @@
 type: AttributeCrafter
-
 name: "钛矿钻井"
 description: "消耗大量电力，在地热区域钻取钛矿。"
-
 size: 3
 health: 120
 category: production
-
-
 attribute: cryothermal
 baseEfficiency: 0.0
 minEfficiency: 9.0
 boostScale: 0.1111
 craftTime: 220.0
-
 hasPower: true
 hasItems: true
-
 consumes: {
   power: 4.5
 }
-
-outputItem: titanium/9
-
+outputItem: titanium/3
 drawer: {
   type: DrawMulti
   drawers: [
     {
-      
       type: DrawDefault
     }
     {
-      
       type: DrawRegion
       suffix: "-rotator"
-      
       spinSprite: true
-      
       rotateSpeed: 2.0
     }
     {
-      
       type: DrawRegion
       suffix: "-top"
     }
   ]
 }
-
-
 requirements: [
   aluminum/80
   magnesium/40
@@ -55,30 +40,3 @@ requirements: [
   silicon/50
   graphite/50
 ]
-
-research: {
-  parent: melting-drill
-  requirements: [
-    aluminum/700
-    magnesium/300
-    scrap/500
-    graphite/500
-    silicon/500
-  ]
-  objectives: [
-    {
-      type: Produce
-      content: scrap
-    },
-    {
-      type: Produce
-      content: graphite
-    },
-    {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ]
-}
-
-shownPlanets: [cryon]

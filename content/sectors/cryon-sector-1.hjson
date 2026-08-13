@@ -3,9 +3,3 @@ sector: 0
 alwaysUnlocked: true
 difficulty: 1
 captureWave: 10
-
-research: {
-  parent: core-pioneer
-  planet: cryon
-  alwaysUnlocked: true
-}

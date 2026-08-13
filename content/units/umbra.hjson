@@ -22,7 +22,6 @@ abilities: [
     reload: 120
   }
 ]
-
 weapons: [
   {
     name: bolide-missile-mount
@@ -34,10 +33,8 @@ weapons: [
     reload: 150
     shootCone: 15
     shootSound: shootMissile
-
     shootWarmupSpeed: 0.05      
     minWarmup: 0.9              
-
     parts: [
       {
         type: RegionPart
@@ -53,8 +50,6 @@ weapons: [
         moveX: 6
         moveY: 0
       }
-      
-
     ]
     bullet: {
       instantDisappear: true    
@@ -72,11 +67,8 @@ weapons: [
             sizeFrom: 18         
             sizeTo: 0            
             length: 45           
-
             cone: 360
-            
             colorFrom: "8a4212ff"
-            
             colorTo: "8a421200"
           }
           {
@@ -90,31 +82,11 @@ weapons: [
             cone: 15             
             colorFrom: ffa64d    
             colorTo: ff4d00      
-
             rotWithParent: true  
-
             baseRotation: 180    
           }
-          
         ]
       }
     }
   }
 ]
-
-research: {
-  parent: bolide
-  requirements: [
-    farstar-alloy/500
-    silicon/2000
-    phase-fabric/3000
-  ]
-  objectives: [
-    
-  
-  
-    {
-      type: SectorComplete
-      preset: cryon-neutron-flux-zone
-    }]
-}

@@ -1,0 +1,26 @@
+type: GenericCrafter
+name: "纳米纤维编织器"
+description: "编织出纳米纤维。"
+size: 2
+health: 130
+category: crafting
+hasPower: true
+hasLiquids: false
+hasItems: true
+craftTime: 30.0
+itemCapacity: 10
+consumes: {
+  power: 1.5
+  items: [
+    phase-fabric/2
+    neutronite/1
+    titanium/1
+  ]
+}
+outputItem: nanofiber/1
+requirements: [
+  titanium/60
+  silicon/40
+  phase-fabric/10
+  surge-alloy/20
+]

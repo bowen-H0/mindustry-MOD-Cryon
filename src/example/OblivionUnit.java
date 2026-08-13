@@ -87,7 +87,7 @@ public class OblivionUnit {
                 float[] airAngles = {0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f};
                 float airDist = 18f;
                 for (float a : airAngles) {
-                    weapons.add(new Weapon("cryon-java-dependency-oblivion-missile-air") {{
+                    weapons.add(new Weapon("cryon-oblivion-missile-air") {{
                         x = Mathf.cosDeg(a) * airDist;
                         y = Mathf.sinDeg(a) * airDist;
                         mirror = false;
@@ -114,7 +114,7 @@ public class OblivionUnit {
                 // missile-heavy x4
                 float[][] heavyPos = {{-20f, -20f}, {20f, -20f}, {-20f, 20f}, {20f, 20f}};
                 for (float[] pos : heavyPos) {
-                    weapons.add(new Weapon("cryon-java-dependency-oblivion-missile-heavy") {{
+                    weapons.add(new Weapon("cryon-oblivion-missile-heavy") {{
                         x = pos[0]; y = pos[1];
                         mirror = false;
                         reload = 150f;

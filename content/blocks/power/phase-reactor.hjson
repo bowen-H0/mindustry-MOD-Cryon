@@ -1,26 +1,17 @@
 type: ImpactReactor
-
 name: "相变反应堆"
 description: "产生大量的电力。"
-
 size: 5
 health: 900
 category: power
-
-
 hasPower: true
 hasLiquids: true
 hasItems: true
-
-
 itemDuration: 140.0
 liquidCapacity: 80.0
-
 powerProduction: 160
-
 ambientSound: loopPulse
 ambientSoundVolume: 0.08
-
 consumes: {
   power: 20.0
   liquid: deuterium/0.05
@@ -32,19 +23,6 @@ consumes: {
     phase-fabric/1
   ]
 }
-
 requirements: [
   aluminum/80
 ]
-
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-fusion-bastion
-    }
-  ],
-  parent: magnesium-generator
-}
-
-shownPlanets: [cryon]

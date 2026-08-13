@@ -14,7 +14,6 @@ shootY: 8
 shootEffect: shootBigColor
 smokeEffect: shootSmokeSquareSparse
 heatRequirement: 0
-
 consumes: {
     power: 5
 }
@@ -43,10 +42,8 @@ shootType: {
     keepVelocity: false
     lightRadius: 90
     lightOpacity: 0.7
-    
     splashDamageRadius: 40
     splashDamage: 40
-
     backColor: "8a2be2"
     frontColor: "e0b0ff"
     hitColor: "b57edc"
@@ -54,14 +51,11 @@ shootType: {
     trailWidth: 3.5
     trailLength: 30
     lightColor: "9932cc"
-
     weaveScale: 8
     weaveMag: 1
-
     hitEffect: hitSquaresColor
     despawnEffect: hitSquaresColor
     despawnSound: explosion
-
     fragBullets: 8
     fragVelocityMin: 0.3
     fragBullet: {
@@ -73,27 +67,22 @@ shootType: {
         weaveMag: 4
         weaveScale: 4
         keepVelocity: false
-
         splashDamage: 18
         splashDamageRadius: 24
-
         backColor: "8a2be2"
         frontColor: "e0b0ff"
         trailColor: "9932cc"
         trailWidth: 2.5
         trailLength: 22
         trailChance: -1
-
         lightColor: "9932cc"
         lightRadius: 45
         lightOpacity: 0.7
-
         hitSound: none
         despawnEffect: none
         hitEffect: hitSquaresColor
     }
 }
-
 category: turret
 requirements: [
     nickel/120
@@ -101,20 +90,3 @@ requirements: [
     quartz/110
     phase-fabric/100
 ]
-
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-1
-    }
-  ],
-    parent: gem
-    requirements: [
-        nickel/540
-        silicon/1080
-        quartz/320
-        phase-fabric/300
-    ]
-}
-shownPlanets: [cryon]

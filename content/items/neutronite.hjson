@@ -6,17 +6,3 @@ flammability: 0.0
 charge: 0.1
 radioactivity: 0.9
 color: 90c8ffff
-research: {
-  parent: nickel
-  objectives: [
-    {
-      type: Produce
-      content: neutronite
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-neutron-flux-zone
-    }]
-}
-shownPlanets: [cryon]

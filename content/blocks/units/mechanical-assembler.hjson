@@ -1,14 +1,12 @@
 type: UnitAssembler
 name: "机械装配厂"
 size: 5
-
 requirements: [
   farstar-alloy/500
   titanium/150
   graphite/80
   silicon/650
 ]
-
 plans: [
   {
     unit: salus
@@ -20,10 +18,8 @@ plans: [
     ]
   }
 ]
-
 areaSize: 13
 researchCostMultiplier: 0.4
-
 consumes: {
   power: 2.5
   liquid: {
@@ -31,15 +27,4 @@ consumes: {
     amount: 0.5
   }
 }
-
 category: units
-
-research: {
-  parent: benignitas
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-gravel-ice
-    }
-  ]
-}

@@ -1,5 +1,4 @@
 type: tank
-
 health: 120
 armor: 1
 speed: 0.44
@@ -9,7 +8,6 @@ faceTarget: false
 targetAir: true
 targetGround: true
 itemCapacity: 10
-
 rotateSpeed: 3.5
 treadPullOffset: 2
 treadRects: [
@@ -26,7 +24,6 @@ treadRects: [
     height: 50
   }
 ]
-
 weapons: [
   {
     name: cryon-buffer-weapon
@@ -36,7 +33,6 @@ weapons: [
     mirror: false
     reload: 18
     shootSound: shoot
-    
     bullet: {
       type: BasicBulletType
       damage: 13
@@ -55,17 +51,3 @@ weapons: [
     }
   }
 ]
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-ice-shoal
-    }
-  ],
-    parent: unit-projector
-    requirements: [
-      magnesium/200
-      silicon/50
-    ]
-    
-  }

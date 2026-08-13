@@ -10,20 +10,3 @@ requirements: [
   magnesium/1
   silicon/2
 ]
-
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ],
-  parent: vacuum-sorter
-  requirements: [
-    aluminum/35
-    magnesium/15
-    silicon/20
-  ]
-}
-
-shownPlanets: [cryon]

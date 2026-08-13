@@ -4,26 +4,8 @@ description: "分类物品。"
 size: 1
 health: 30
 category: distribution
-
 requirements: [
   aluminum/4
   magnesium/1
   silicon/2
 ]
-
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ],
-  parent: vacuum-crosser
-  requirements: [
-    aluminum/35
-    magnesium/15
-    silicon/20
-  ]
-}
-
-shownPlanets: [cryon]

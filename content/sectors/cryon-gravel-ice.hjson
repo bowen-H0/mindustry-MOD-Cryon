@@ -3,13 +3,3 @@ sector: 56
 alwaysUnlocked: false
 difficulty: 6
 captureWave: 20
-
-research: {
-  parent: cryon-shattered-abyss
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-shattered-abyss
-    }
-  ]
-}

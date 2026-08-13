@@ -5,24 +5,8 @@ size: 1
 health: 25
 buildTime: 0.8
 speed: 5.0
-
 category: distribution
 requirements: [
   aluminum/6
   magnesium/2
 ]
-research: {
-  parent: vacuum-conduit
-  requirements: [
-    aluminum/22
-    magnesium/8
-  ]
-  objectives: [
-    {
-      type: Produce
-      content: magnesium
-    }
-    ]
-}
-
-shownPlanets: [cryon]

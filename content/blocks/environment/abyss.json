@@ -1,8 +1,0 @@
-{
-  "type": "StaticWall",
-  "name": "弃用",
-  
-  "variants": 4,
-  "hasShadow": false,
-  "solid": true
-}

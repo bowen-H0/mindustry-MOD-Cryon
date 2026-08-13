@@ -6,10 +6,7 @@ health: 80
 tier: 1
 drillTime: 280
 category: production
-
-
 consumes: {}
-
 requirements: [
   aluminum/40
 ]
@@ -19,16 +16,3 @@ drillMultipliers: {
   salt: 1.5
   dry-ice: 1.5
 }
-research: {
-  parent: core-pioneer
-  requirements: [
-    aluminum/100
-  ]
-  "objectives": [
-    {
-      type: Produce
-      content: aluminum
-    }
-  ]
-}
-shownPlanets: [cryon]

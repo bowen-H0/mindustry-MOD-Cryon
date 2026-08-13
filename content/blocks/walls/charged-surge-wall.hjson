@@ -1,0 +1,12 @@
+type: Wall
+name: 充能巨浪墙
+description: "内置蓄能的特殊防御方块。"
+health: 1225
+size: 1
+requirements: [
+  surge-alloy/4
+  neutronite/4
+]
+category: defense
+absorbLasers: false
+lightningChance: 1.0

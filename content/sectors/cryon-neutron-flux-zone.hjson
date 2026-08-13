@@ -2,13 +2,3 @@ planet: cryon
 sector: 31
 alwaysUnlocked: false
 difficulty: 7
-
-research: {
-  parent: cryon-gravel-ice
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-gravel-ice
-    }
-  ]
-}

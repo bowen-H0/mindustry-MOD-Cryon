@@ -6,12 +6,10 @@ health: 80
 tier: 1
 drillTime: 220
 category: production
-
 hasPower: true
 consumes: {
   power: 0.6
 }
-
 requirements: [
   aluminum/22
   magnesium/8
@@ -22,19 +20,4 @@ drillMultipliers: {
 }
 blockedItems: [
   dry-ice
-  
 ]
-research: {
-  parent: hydrothermal-generator
-  requirements: [
-    aluminum/8
-    magnesium/2
-  ]
-  "objectives": [
-    {
-      type: Produce
-      content: magnesium
-    }
-  ]
-}
-shownPlanets: [cryon]

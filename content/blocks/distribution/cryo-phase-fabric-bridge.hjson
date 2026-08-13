@@ -1,0 +1,16 @@
+type: DuctBridge
+name: "凝化相织桥"
+description: "利用相位织物构建稳定传输通道，跨越更远的地形传输物品，运行时需持续消耗电力。"
+size: 1
+health: 55
+speed: 5.0
+range: 12
+category: distribution
+consumes: {
+  power: 0.5
+}
+requirements: [
+  phase-fabric/10
+  aluminum/6
+  silicon/6
+]

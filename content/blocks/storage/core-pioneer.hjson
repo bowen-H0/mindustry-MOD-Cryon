@@ -7,16 +7,7 @@ itemCapacity: 3500
 unitType: expedition
 unitCapModifier: 30
 category: effect
-alwaysUnlocked: true
 isFirstTier: true
-
-research: {
-  planet: cryon
-  root: true
-  name: "克莱恩"
-  requiresUnlock: false
-}
-
 requirements: [
   aluminum/700
   magnesium/200

@@ -7,10 +7,3 @@ requirements: [
   aluminum/24
 ]
 category: defense
-research: {
-  parent: aluminum-wall
-  requirements: [
-    aluminum/700
-  ]
-}
-shownPlanets: [cryon]

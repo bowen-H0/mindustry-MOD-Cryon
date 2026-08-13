@@ -1,53 +1,20 @@
 {
   type: UnitFactory
-
   name: "单位投影场"
   description: "消耗资源，投影出战斗单位。"
-
   size: 3
   health: 400
   hasPower: true
   hasItems: true
-
   consumes: {
     power: 3.0
   }
-
   requirements: [
     magnesium/80
     silicon/60
   ]
-
-  research: {
-    parent: core-pioneer
-    requirements: [
-      magnesium/300
-      silicon/200
-    ],
-    "objectives": [
-    {
-      "type": "Produce",
-      "content": "silicon"
-    },
-    {
-      "type": "Produce",
-      "content": "magnesium"
-    },
-    {
-      "type": "Research",
-      "content": "vacuum-router"
-    },
-    {
-      type: SectorComplete
-      preset: cryon-ice-shoal
-    }
-  ]
-  }
-
   category: units
   buildVisibility: shown
-
-  
   plans: [
     {
       unit: littorina
@@ -66,14 +33,12 @@
       ]
     },
     {
-      
       unit: comet
       time: 2400
       requirements: [
         magnesium/20
         silicon/20
         graphite/5
-
       ]
     }
   ]

@@ -1,8 +1,8 @@
 #the mod name as displayed in-game
-displayName: "Cryon Core"
+displayName: "Cryon"
 
 #the internal name of your mod
-name: "cryon-java-dependency"
+name: "cryon"
 #Changing this ID may cause an error.
 #your name
 author: "Bowen-H0"
@@ -26,19 +26,12 @@ Feel free to report issues or suggest ideas: [lightgray]github bowen-H0[]
 
 Supported languages: [cyan]English[] / [cyan]中文[]
 
-Your mod browser will usually handle dependencies automatically.
-dependencies: Cryon
 This mod is currently in testing.
 '''
 #the mod version
-version: 15.1.0
+version: 20.0.0
 #the minimum game build required to run this mod
 minGameVersion: 154
 
 #this is a java mod
 java: true
-#cryon-java-dependency is not a dependency; cryon is a dependency of cryon-java-dependency.
-#cryon-java-dependency is the main package.
-dependencies: [
-  "cryon"
-]

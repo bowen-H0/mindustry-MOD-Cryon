@@ -7,18 +7,14 @@ speed: 0.8
 rotateSpeed: 8
 hitSize: 20
 itemCapacity: 60
-
 targetAir: false
 targetGround: true
 circleTarget: true
 faceTarget: false
 lowAltitude: false
-
 controller: flyingAI
-
 engineOffset:11
 engineSize:3
-
 weapons: [
   {
     mirror: false
@@ -27,14 +23,12 @@ weapons: [
     x: 0
     y: 0
     inaccuracy: 25
-
     shoot: {
       type: ShootSpread
       shots: 6
       spread: 0
       shotDelay: 3
     }
-
     bullet: {
       type: BombBulletType
       damage: 0
@@ -54,27 +48,3 @@ weapons: [
     }
   }
 ]
-
-research: {
-  parent: natica
-  objectives: [
-    {
-      type: Produce
-      content: farstar-alloy
-    },
-    {
-      type: Produce
-      content: phase-fabric
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-neutron-flux-zone
-    }]
-  requirements: [
-    farstar-alloy/500
-    silicon/2000
-    phase-fabric/3000
-  ]
-  
-}

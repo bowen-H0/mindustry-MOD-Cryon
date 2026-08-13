@@ -10,31 +10,3 @@ requirements: [
   aluminum/1
   silicon/5
 ]
-research: {
-  parent: cryo-payload-conveyor
-  requirements: [
-    titanium/35
-    aluminum/15
-    silicon/50
-
-  ]
-  objectives: [
-    {
-      "type": "Research",
-      "content": "unit-projector"
-    },
-    {
-      type: Produce
-      content: titanium
-    },
-    {
-      type: Produce
-      content: silicon
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-gravel-ice
-    }]
-}
-shownPlanets: [cryon]

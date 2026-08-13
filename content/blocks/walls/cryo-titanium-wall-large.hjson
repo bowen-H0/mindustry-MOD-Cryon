@@ -7,21 +7,3 @@ requirements: [
   titanium/24
 ]
 category: defense
-research: {
-  parent: cryo-titanium-wall
-  objectives: [
-    {
-      type: Produce
-      content: titanium
-    }
-  
-    {
-      type: SectorComplete
-      
-      preset: cryon-sector-glacial-basin
-    }],
-  requirements: [
-    titanium/4000
-  ]
-}
-shownPlanets: [cryon]

@@ -1,0 +1,467 @@
+package example;
+
+import arc.struct.*;
+import arc.util.Log;
+import example.CryonContent;
+import mindustry.Vars;
+import mindustry.content.Planets;
+import mindustry.content.TechTree;
+import mindustry.ctype.*;
+import mindustry.game.Objectives.*;
+import mindustry.type.*;
+import mindustry.world.*;
+import mindustry.world.consumers.*;
+import mindustry.content.TechTree.TechNode;
+
+import static mindustry.content.TechTree.*;
+
+public class CryonTechTree{
+
+    // ================== 可调参数 ==================
+
+    /** 建筑标记 auto 时,每深一级科技树,材料成本额外增加的比例 */
+    static final float DEPTH_COST_STEP = 1.50f;
+
+    /** 物品/液体标记 auto 时的基础花费数量(乘以深度倍率) */
+    static final int ITEM_AUTO_BASE = 30;
+
+    // ================== 深度计算 ==================
+
+    static int nextDepth(){
+        TechNode ctx = context();
+        return ctx == null ? 0 : ctx.depth + 1;
+    }
+
+    static float depthMultiplier(){
+        return 1f + nextDepth() * DEPTH_COST_STEP;
+    }
+
+    // ================== 自动花费 / 自动前提 ==================
+
+    static ItemStack[] scaledBlockCost(Block block){
+        float mult = depthMultiplier();
+        ItemStack[] base = block.requirements;
+        ItemStack[] scaled = new ItemStack[base.length];
+        for(int i = 0; i < base.length; i++){
+            scaled[i] = new ItemStack(base[i].item, Math.max(1, Math.round(base[i].amount * mult)));
+        }
+        return scaled;
+    }
+
+    static Seq<Objective> autoObjectives(Block block){
+        Seq<Objective> objs = new Seq<>();
+        for(Consume c : block.consumers){
+            if(c instanceof ConsumeItems ci){
+                for(ItemStack stack : ci.items) objs.add(new Research(stack.item));
+            }else if(c instanceof ConsumeLiquid cl){
+                objs.add(new Research(cl.liquid));
+            }
+        }
+        return objs;
+    }
+
+    // ================== 数据表定义 ==================
+
+    enum Kind{ ITEM, LIQUID, BLOCK, UNIT_BLOCK, UNIT, SECTOR }
+
+    static class Entry{
+        Kind kind; String name; String parent; ItemStack[] manualReqs;
+        Entry(Kind kind, String name, String parent, ItemStack[] manualReqs){
+            this.kind = kind; this.name = name; this.parent = parent; this.manualReqs = manualReqs;
+        }
+    }
+
+    static Seq<Entry> entries = new Seq<>();
+    static ObjectMap<String, Entry> byName = new ObjectMap<>();
+    static ObjectMap<String, Seq<Entry>> childrenOf = new ObjectMap<>();
+
+    static void add(Kind kind, String name, String parent, ItemStack... reqs){
+        entries.add(new Entry(kind, name, parent, reqs.length == 0 && kind != Kind.UNIT ? null : reqs));
+    }
+
+    /** 明确标 auto 的重载,避免和"空数组"混淆 */
+    static void addAuto(Kind kind, String name, String parent){
+        entries.add(new Entry(kind, name, parent, null));
+    }
+
+    static ItemStack[] r(Object... pairs){
+        ItemStack[] arr = new ItemStack[pairs.length / 2];
+        for(int i = 0; i < arr.length; i++){
+            arr[i] = new ItemStack((Item)pairs[i * 2], (Integer)pairs[i * 2 + 1]);
+        }
+        return arr;
+    }
+
+    static{
+        // ---- ITEM(全部 auto) ----
+        addAuto(Kind.ITEM, "aluminum", "core-pioneer");
+        addAuto(Kind.ITEM, "crystal-sand", "magnesium");
+        addAuto(Kind.ITEM, "dry-ice", "aluminum");
+        addAuto(Kind.ITEM, "farstar-alloy", "titanium");
+        addAuto(Kind.ITEM, "graphite", "dry-ice");
+        addAuto(Kind.ITEM, "magnesium", "aluminum");
+        addAuto(Kind.ITEM, "neutronite", "nickel");
+        addAuto(Kind.ITEM, "nickel", "titanium");
+        addAuto(Kind.ITEM, "phase-fabric", "neutronite");
+        addAuto(Kind.ITEM, "quartz", "salt");
+        addAuto(Kind.ITEM, "salt", "aluminum");
+        addAuto(Kind.ITEM, "scrap", "magnesium");
+        addAuto(Kind.ITEM, "silicon", "crystal-sand");
+        addAuto(Kind.ITEM, "titanium", "scrap");
+        addAuto(Kind.ITEM, "surge-alloy", "titanium");
+        addAuto(Kind.ITEM, "nanofiber", "phase-fabric");
+
+
+
+
+        // ---- LIQUID(全部 auto) ----
+        addAuto(Kind.LIQUID, "deuterium", "hydrogen");
+        addAuto(Kind.LIQUID, "hydrogen", "water");
+        addAuto(Kind.LIQUID, "nitrogen", "water");
+        addAuto(Kind.LIQUID, "ozone", "water");
+        addAuto(Kind.LIQUID, "slag", "water");
+        addAuto(Kind.LIQUID, "tritium", "deuterium");
+        addAuto(Kind.LIQUID, "water", "dry-ice");
+
+        // ---- BLOCK ----
+        addAuto(Kind.BLOCK, "abyss", "penetrate");
+
+
+
+        addAuto(Kind.BLOCK, "aggregated-wall", "aluminum-wall-large");
+        addAuto(Kind.BLOCK, "aggregated-wall-large", "aggregated-wall");
+        addAuto(Kind.BLOCK, "agitator-tower", "spiral");
+        addAuto(Kind.BLOCK, "aluminum-node", "hydrothermal-generator");
+        addAuto(Kind.BLOCK, "aluminum-wall", "spiral");
+        addAuto(Kind.BLOCK, "aluminum-wall-large", "aluminum-wall");
+        addAuto(Kind.BLOCK, "cavity", "spiral");
+        addAuto(Kind.BLOCK, "nickel-wall", "cryo-titanium-wall-large");
+        addAuto(Kind.BLOCK, "nickel-wall-large", "nickel-wall");
+
+        addAuto(Kind.BLOCK, "composite-wall", "cryo-titanium-wall-large");
+        addAuto(Kind.BLOCK, "charged-surge-wall", "cryo-titanium-wall-large");
+        addAuto(Kind.BLOCK, "charged-surge-wall-large", "charged-surge-wall");
+
+
+
+
+        addAuto(Kind.BLOCK, "core-pioneer", null); // 根节点,单独处理
+        addAuto(Kind.BLOCK, "cryo-conduit", "core-pioneer");
+        addAuto(Kind.BLOCK, "cryo-constructor", "silicon-separator");
+        addAuto(Kind.BLOCK, "cryo-container", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "cryo-electric-heater", "magnesium-converter");
+        addAuto(Kind.BLOCK, "cryo-electrolyzer", "cryon-water-extractor");
+        addAuto(Kind.BLOCK, "cryo-heat-redirector", "cryo-electric-heater");
+        addAuto(Kind.BLOCK, "cryo-illuminator", "hydrothermal-generator");
+
+
+        addAuto(Kind.BLOCK, "cryo-liquid-bridge", "cryo-conduit");
+        addAuto(Kind.BLOCK, "cryo-phase-fabric-bridge", "cryo-liquid-bridge");
+
+        addAuto(Kind.BLOCK, "cryo-liquid-container", "cryo-conduit");
+        addAuto(Kind.BLOCK, "cryo-liquid-junction", "cryo-conduit");
+        addAuto(Kind.BLOCK, "cryo-liquid-router", "cryo-conduit");
+        addAuto(Kind.BLOCK, "cryo-liquid-tank", "cryo-liquid-container");
+        addAuto(Kind.BLOCK, "cryo-message", "silicon-separator");
+        addAuto(Kind.BLOCK, "cryo-payload-conveyor", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "cryo-payload-conveyor-large", "cryo-payload-conveyor");
+
+        addAuto(Kind.BLOCK, "cryo-repair-tower", "cryo-mender");
+        addAuto(Kind.BLOCK, "cryo-titanium-wall", "aluminum-wall-large");
+        addAuto(Kind.BLOCK, "cryo-titanium-wall-large", "cryo-titanium-wall");
+        addAuto(Kind.BLOCK, "cryo-vault", "cryo-container");
+        addAuto(Kind.BLOCK, "cryon-water-extractor", "magnesium-converter");
+        addAuto(Kind.BLOCK, "denial", "spiral");
+        addAuto(Kind.BLOCK, "deuterium-reactor", "magnesium-generator");
+        addAuto(Kind.BLOCK, "neutronite-decay-generator", "deuterium-reactor");
+        addAuto(Kind.BLOCK, "neutronite-thermal-battery", "neutronite-decay-generator");
+        addAuto(Kind.BLOCK, "phase-reactor", "deuterium-reactor");
+        addAuto(Kind.BLOCK, "hydrogen-generator", "magnesium-generator");
+        addAuto(Kind.BLOCK, "ozone-generator", "hydrogen-generator");
+
+        addAuto(Kind.BLOCK, "constructor-node", "phase-reactor");
+        addAuto(Kind.BLOCK, "construct-wave-emitter", "constructor-node");
+        addAuto(Kind.BLOCK, "constructor-drill", "construct-wave-emitter");
+
+
+
+        addAuto(Kind.BLOCK, "dry-ice-sublimator", "magnesium-converter");
+        addAuto(Kind.BLOCK, "farstar-forge", "magnesium-converter");
+        addAuto(Kind.BLOCK, "surge-alloy-forge", "farstar-forge");
+
+
+        addAuto(Kind.BLOCK, "flux-barrier", "micro-projector");
+        addAuto(Kind.BLOCK, "gem", "spiral");
+        addAuto(Kind.BLOCK, "heating-furnace", "cryo-electric-heater");
+        addAuto(Kind.BLOCK, "hydrothermal-generator", "shattering-drill");
+        addAuto(Kind.BLOCK, "isotope-separator", "cryo-electrolyzer");
+        addAuto(Kind.BLOCK, "magnesium-converter", "silicon-separator");
+        addAuto(Kind.BLOCK, "magnesium-generator", "silicon-separator");
+        addAuto(Kind.BLOCK, "melting-drill", "hydrothermal-generator");
+        addAuto(Kind.BLOCK, "micro-projector", "cryo-mender");
+        addAuto(Kind.BLOCK, "nebula", "gem");
+
+
+        addAuto(Kind.BLOCK, "neutron-activator", "quartz-reactor");
+        addAuto(Kind.BLOCK, "nickel-drill", "titanium-drill");
+        addAuto(Kind.BLOCK, "nitrogen-separator", "magnesium-converter");
+        addAuto(Kind.BLOCK, "overload-battery", "hydrothermal-generator");
+        addAuto(Kind.BLOCK, "penetrate", "cavity");
+        addAuto(Kind.BLOCK, "phase-constructor", "neutron-activator");
+        addAuto(Kind.BLOCK, "nanofiber-weaver", "phase-constructor");
+        addAuto(Kind.BLOCK, "quartz-reactor", "magnesium-converter");
+        addAuto(Kind.BLOCK, "scrap-pyrolyzer", "magnesium-converter");
+        addAuto(Kind.BLOCK, "shattering-drill", "core-pioneer");
+        addAuto(Kind.BLOCK, "silicon-separator", "hydrothermal-generator");
+
+        addAuto(Kind.BLOCK, "slag-extractor", "hydrothermal-generator");
+
+        addAuto(Kind.BLOCK, "slag-power-generator", "magnesium-generator");
+
+        addAuto(Kind.BLOCK, "small-launch-pad", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "spark", "gem");
+        addAuto(Kind.BLOCK, "spiral", "core-pioneer");
+        addAuto(Kind.BLOCK, "titanium-drill", "melting-drill");
+        addAuto(Kind.BLOCK, "torrent", "spiral");
+
+        addAuto(Kind.BLOCK, "vacuum-bridge", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "cryo-phase-fabric-bridge", "vacuum-bridge");
+
+        addAuto(Kind.BLOCK, "vacuum-conduit", "core-pioneer");
+        addAuto(Kind.BLOCK, "vacuum-crosser", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "vacuum-inverted-sorter", "vacuum-sorter");
+        addAuto(Kind.BLOCK, "vacuum-router", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "vacuum-sorter", "vacuum-crosser");
+        addAuto(Kind.BLOCK, "vacuum-overflow-gate", "vacuum-crosser");
+        addAuto(Kind.BLOCK, "vacuum-underflow-gate", "vacuum-overflow-gate");
+        addAuto(Kind.BLOCK, "small-launch-pad", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "small-landing-pad", "small-launch-pad");
+        addAuto(Kind.BLOCK, "titanium-cargo-loader", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "titanium-cargo-unload-point", "titanium-cargo-loader");
+
+
+
+
+
+        addAuto(Kind.BLOCK, "vulcan", "torrent");
+
+        // ---- UNIT_BLOCK ----
+        addAuto(Kind.UNIT_BLOCK, "mechanical-assembler", "benignitas");
+        addAuto(Kind.UNIT_BLOCK, "mechanical-factory", "unit-projector");
+        addAuto(Kind.UNIT_BLOCK, "t2factory", "unit-projector");
+        addAuto(Kind.UNIT_BLOCK, "t3universal-assembler", "t2factory");
+
+
+        addAuto(Kind.UNIT_BLOCK, "unit-projector", "core-pioneer");
+
+        // ---- UNIT(全部手动花费) ----
+        add(Kind.UNIT, "benignitas", "mechanical-factory", r(CryonContent.item("titanium"), 40, CryonContent.item("silicon"), 50));
+        add(Kind.UNIT, "bolide", "comet", r(CryonContent.item("titanium"), 300, CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 300));
+        add(Kind.UNIT, "buffer", "unit-projector", r(CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 50));
+        add(Kind.UNIT, "comet", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
+        add(Kind.UNIT, "guardian", "buffer", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
+        add(Kind.UNIT, "littorina", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 60));
+        add(Kind.UNIT, "murex", "natica", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+        add(Kind.UNIT, "natica", "littorina", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
+        add(Kind.UNIT, "peak", "guardian", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+        add(Kind.UNIT, "salus", "mechanical-assembler", r(CryonContent.item("titanium"), 2400, CryonContent.item("farstar-alloy"), 2600, CryonContent.item("silicon"), 2300));
+        add(Kind.UNIT, "umbra", "bolide", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+
+        // ---- SECTOR(全部 auto,前提条件后续手动补) ----
+        addAuto(Kind.SECTOR, "cryon-fusion-bastion", "cryon-neutron-flux-zone");
+        addAuto(Kind.SECTOR, "cryon-gravel-ice", "cryon-shattered-abyss");
+        addAuto(Kind.SECTOR, "cryon-ice-shoal", "cryon-sector-1");
+        addAuto(Kind.SECTOR, "cryon-neutron-flux-zone", "cryon-gravel-ice");
+        addAuto(Kind.SECTOR, "cryon-sector-1", "core-pioneer");
+        addAuto(Kind.SECTOR, "cryon-sector-frost-outpost", "cryon-sector-shattered-shoal");
+        addAuto(Kind.SECTOR, "cryon-sector-glacial-basin", "cryon-ice-shoal");
+        addAuto(Kind.SECTOR, "cryon-sector-shattered-shoal", "cryon-ice-shoal");
+        addAuto(Kind.SECTOR, "cryon-shattered-abyss", "cryon-sector-frost-outpost");
+    }
+
+    // ================== 索引 ==================
+
+    static void index(){
+        for(Entry e : entries) byName.put(e.name, e);
+        for(Entry e : entries){
+            if(e.parent != null){
+                childrenOf.get(e.parent, Seq::new).add(e);
+            }
+        }
+    }
+
+    // ================== 自动物品花费 ==================
+
+    static ItemStack[] autoItemCost(String parentName){
+        Entry parentEntry = byName.get(parentName);
+        if(parentEntry == null || parentEntry.kind != Kind.ITEM) return new ItemStack[]{};
+        Item parentItem = CryonContent.item(parentEntry.name);
+        int amount = Math.round(ITEM_AUTO_BASE * depthMultiplier());
+        return new ItemStack[]{ new ItemStack(parentItem, amount) };
+    }
+
+    // ================== 递归建树 ==================
+
+    static void buildNode(Entry e){
+        Planet cryonPlanet = Vars.content.planet("cryon-cryon");
+
+        switch(e.kind){
+            case ITEM -> {
+                Item item = CryonContent.item(e.name);
+                if (item == null) {
+                    Log.warn("[CryonTechTree] Item not found: " + e.name + ", skipping");
+                    return;
+                }
+                TechNode node;
+                if(e.manualReqs != null){
+                    node = node(item, e.manualReqs, () -> buildChildrenOf(e.name));
+                }else{
+                    // auto:不消耗材料研究,而是要求玩家先生产出该物品本身
+                    Seq<Objective> objs = Seq.with(new Produce(item));
+                    node = node(item, new ItemStack[]{}, objs, () -> buildChildrenOf(e.name));
+                }
+
+                // 设置 shownPlanets
+                if (item.name.startsWith("cryon-")) {
+                    // 如果是 cryon 前缀，直接覆盖
+                    item.shownPlanets = ObjectSet.with(cryonPlanet);
+                } else {
+                    // 如果不是 cryon 前缀，添加 cryon
+                    if (item.shownPlanets == null) {
+                        item.shownPlanets = new ObjectSet<>();
+                    }
+                    item.shownPlanets.add(cryonPlanet);
+                }
+            }
+            case LIQUID -> {
+                Liquid liquid = CryonContent.liquid(e.name);
+                if (liquid == null) {
+                    Log.warn("[CryonTechTree] Liquid not found: " + e.name + ", skipping");
+                    return;
+                }
+                TechNode node = node(liquid, new ItemStack[]{}, () -> buildChildrenOf(e.name));
+
+                if (liquid.name.startsWith("cryon-")) {
+                    liquid.shownPlanets = ObjectSet.with(cryonPlanet);
+                } else {
+                    if (liquid.shownPlanets == null) {
+                        liquid.shownPlanets = new ObjectSet<>();
+                    }
+                    liquid.shownPlanets.add(cryonPlanet);
+                }
+            }
+            case BLOCK, UNIT_BLOCK -> {
+                Block block = CryonContent.block(e.name);
+                if (block == null) {
+                    Log.warn("[CryonTechTree] Block not found: " + e.name + ", skipping");
+                    return;
+                }
+                TechNode node;
+                if(e.manualReqs != null){
+                    node = node(block, e.manualReqs, autoObjectives(block), () -> buildChildrenOf(e.name));
+                }else{
+                    Seq<Objective> objs = autoObjectives(block);
+                    node = node(block, scaledBlockCost(block), objs, () -> buildChildrenOf(e.name));
+                }
+
+                if (block.name.startsWith("cryon-")) {
+                    block.shownPlanets = ObjectSet.with(cryonPlanet);
+                } else {
+                    if (block.shownPlanets == null) {
+                        block.shownPlanets = new ObjectSet<>();
+                    }
+                    block.shownPlanets.add(cryonPlanet);
+                }
+            }
+            case UNIT -> {
+                UnitType unit = CryonContent.unit(e.name);
+                if (unit == null) {
+                    Log.warn("[CryonTechTree] Unit not found: " + e.name + ", skipping");
+                    return;
+                }
+                TechNode node = node(unit, e.manualReqs, () -> buildChildrenOf(e.name));
+
+                if (unit.name.startsWith("cryon-")) {
+                    unit.shownPlanets = ObjectSet.with(cryonPlanet);
+                } else {
+                    if (unit.shownPlanets == null) {
+                        unit.shownPlanets = new ObjectSet<>();
+                    }
+                    unit.shownPlanets.add(cryonPlanet);
+                }
+            }
+            case SECTOR -> {
+                SectorPreset sector = CryonContent.sector(e.name);
+                if (sector == null) {
+                    Log.warn("[CryonTechTree] Sector not found: " + e.name + ", skipping");
+                    return;
+                }
+                TechNode node = node(sector, new ItemStack[]{}, () -> buildChildrenOf(e.name));
+
+                if (sector.name.startsWith("cryon-")) {
+                    sector.shownPlanets = ObjectSet.with(cryonPlanet);
+                } else {
+                    if (sector.shownPlanets == null) {
+                        sector.shownPlanets = new ObjectSet<>();
+                    }
+                    sector.shownPlanets.add(cryonPlanet);
+                }
+            }
+        }
+    }
+
+    static void buildChildrenOf(String name){
+        Seq<Entry> children = childrenOf.get(name);
+        if(children == null) return;
+        for(Entry c : children) buildNode(c);
+    }
+
+    // ================== 入口 ==================
+
+
+    public static void load(){
+        index();
+
+        Planet cryonPlanet = Vars.content.planet("cryon-cryon");
+        Block core = CryonContent.block("core-pioneer");
+
+        if (core == null) {
+            Log.err("[CryonTechTree] core-pioneer not found!");
+            return;
+        }
+
+        var root = nodeRoot("cryon", core, true, () -> {
+            buildChildrenOf("core-pioneer");
+        });
+        core.alwaysUnlocked = true;
+        root.planet = cryonPlanet;
+        cryonPlanet.techTree = root;
+
+        core.shownPlanets = ObjectSet.with(cryonPlanet);
+
+        // 统一处理所有 cryon- 前缀的内容
+        for (Seq<Content> seq : Vars.content.getContentMap()) {
+            for (Content content : seq) {
+                if (content instanceof UnlockableContent u && u.name.startsWith("cryon-")) {
+                    u.shownPlanets = ObjectSet.with(cryonPlanet);
+                    // 清理 databaseTabs，只保留 cryon-cryon
+                    u.databaseTabs.clear();
+                    u.databaseTabs.add(cryonPlanet);
+                }
+            }
+        }
+
+        // 隐藏小行星
+        for (Planet p : Vars.content.planets()) {
+            if (p != cryonPlanet && p != Planets.serpulo && p != Planets.erekir && p != Planets.sun) {
+                p.hideDatabase = true;
+                p.databaseTabs.clear();
+            }
+        }
+
+        // 清理 cryon 自身的 databaseTabs
+        cryonPlanet.databaseTabs.clear();
+
+        Log.info("[CryonTechTree] Tech tree loaded");
+    }
+}

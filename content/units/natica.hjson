@@ -1,22 +1,17 @@
 type: flying
 flying: true
-
 health: 160
 armor: 4
 speed: 2.3
 rotateSpeed: 8
 hitSize: 12
 itemCapacity: 30
-
 targetAir: true
 targetGround: true
 circleTarget: false
 faceTarget: false
 lowAltitude: true
-
-
 controller: flyingAI
-
 engineSize: 0
 engines: [
   {
@@ -26,7 +21,6 @@ engines: [
     rotation: -90
   }
 ]
-
 weapons: [
   {
     name: natica-missiles-mount
@@ -37,7 +31,6 @@ weapons: [
     shootSound: shootMissile
     x: 4
     y: 0
-    
     bullet: {
       type: MissileBulletType
       damage: 15
@@ -58,41 +51,3 @@ weapons: [
     }
   }
 ]
-research: {
-    parent: littorina
-    requirements: [
-      titanium/500
-      silicon/1000
-      graphite/1000
-    ]
-  "objectives": [
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    },
-    {
-      "type": "Research",
-      "content": "t2factory"
-    },
-    {
-      type: Produce
-      content: magnesium
-    },
-    {
-      type: Produce
-      content: dry-ice
-    },
-    {
-      type: Produce
-      content: silicon
-    },
-    {
-      type: Produce
-      content: graphite
-    },
-    {
-      type: Produce
-      content: titanium
-    }
-  ]
-  }

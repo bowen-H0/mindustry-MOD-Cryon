@@ -4,11 +4,9 @@ description: "消耗电力将废料进行分离。"
 size: 3
 health: 160
 category: crafting
-
 hasPower: true
 hasItems: true
 craftTime: 90.0
-
 consumes: {
   power: 2.0
   items: {
@@ -17,41 +15,14 @@ consumes: {
     ]
   }
 }
-
 results: [
   aluminum/4
   magnesium/2
   silicon/2
   dry-ice/1
 ]
-
 requirements: [
   aluminum/55
   magnesium/25
   graphite/40
 ]
-
-research: {
-  parent: magnesium-converter
-  requirements: [
-    aluminum/210
-    magnesium/90
-    graphite/50
-  ],
-  "objectives": [
-    {
-      type: Produce
-      content: scrap
-    },
-     {
-      type: Produce
-      content: graphite
-    },
-     {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ]
-}
-
-shownPlanets: [cryon]

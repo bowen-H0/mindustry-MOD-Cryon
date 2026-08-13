@@ -1,0 +1,12 @@
+type: OverflowGate
+name: "真空反向溢流门"
+description: "通过真空管道分流物品。物品不足时优先向此方向输送。"
+size: 1
+health: 40
+buildTime: 1.0
+category: distribution
+invert: true
+requirements: [
+  aluminum/6
+  magnesium/2
+]

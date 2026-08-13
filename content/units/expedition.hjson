@@ -1,7 +1,6 @@
 type: flying
 flying: true
 name:"远征"
-
 health: 160
 armor: 0
 speed: 3.0
@@ -24,17 +23,13 @@ abilities: [
     range: 60
   }
 ]
-
 # 挖矿能力
 mineTier: 2
 mineSpeed: 3.5
-
 # 防护属性（不能被攻击）
 targetable: false
 hittable: false
-
 controller: flyingAI
-
 engineSize: 0
 engines: [
   {
@@ -44,7 +39,6 @@ engines: [
     rotation: -90
   }
 ]
-
 weapons: [
   {
     type: RepairBeamWeapon
@@ -63,12 +57,9 @@ weapons: [
     targetBuildings: true
     autoTarget: false
     controllable: true
-    
     bullet: {
       type: BulletType
       maxRange: 60
     }
   }
 ]
-
-shownPlanets: [cryon]

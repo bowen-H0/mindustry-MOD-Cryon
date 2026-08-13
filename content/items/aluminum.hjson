@@ -5,13 +5,3 @@ explosiveness: 0.05
 flammability: 0.1
 charge: 0.6
 color: c8d4e0
-research: {
-  parent: core-pioneer
-  objectives: [
-    {
-      type: Produce
-      content: aluminum
-    }
-  ]
-}
-shownPlanets: [cryon]

@@ -1,0 +1,16 @@
+type: ConsumeGenerator
+name: "氢能发电机"
+description: "通过燃烧氢气产生电力。"
+size: 1
+health: 40
+category: power
+powerProduction: 1.5
+consumes: {
+  liquid: hydrogen/0.1
+}
+requirements: [
+  graphite/15
+  aluminum/20
+  titanium/10
+  magnesium/5
+]

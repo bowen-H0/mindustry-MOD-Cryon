@@ -1,5 +1,4 @@
 type: tank
-
 health: 420
 armor: 6
 speed: 0.37
@@ -10,7 +9,6 @@ targetAir: true
 targetGround: true
 itemCapacity: 30
 rotateSpeed: 3.5
-
 treadPullOffset: 3
 treadRects: [
   {
@@ -26,7 +24,6 @@ treadRects: [
     height: 76
   }
 ]
-
 weapons: [
   {
     name: cryon-buffer-weapon
@@ -36,7 +33,6 @@ weapons: [
     mirror: true
     reload: 12
     shootSound: shoot
-    
     bullet: {
       type: BasicBulletType
       damage: 20
@@ -64,7 +60,6 @@ weapons: [
     shootSound: shootLancer
     shootCone: 15
     shadow: 6
-
     bullet: {
       type: LaserBulletType
       damage: 70
@@ -75,55 +70,8 @@ weapons: [
       collidesGround: true
       pierce: true
       pierceCap: 2
-
       hitEffect: hitLancer
       despawnEffect: none
-
     }
   }
-
 ]
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-shattered-shoal
-    }
-  ],
-  parent: buffer
-  requirements: [
-      titanium/500
-      silicon/1000
-      graphite/1000
-    ]
-  "objectives": [
-    {
-      "type": "Research",
-      "content": "t2factory"
-    },
-    {
-      type: Produce
-      content: magnesium
-    },
-    {
-      type: Produce
-      content: dry-ice
-    },
-    {
-      type: Produce
-      content: silicon
-    },
-    {
-      type: Produce
-      content: graphite
-    },
-    {
-      type: Produce
-      content: titanium
-    },
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }
-  ]    
-}

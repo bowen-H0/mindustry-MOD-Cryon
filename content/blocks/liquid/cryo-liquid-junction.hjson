@@ -8,11 +8,3 @@ category: liquid
 requirements: [
   titanium/2
 ]
-research: {
-
-  parent: cryo-conduit
-  requirements: [
-    titanium/200
-  ]
-}
-shownPlanets: [cryon]

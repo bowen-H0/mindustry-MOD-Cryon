@@ -43,24 +43,8 @@ ammoTypes: {
     height: 11
   }
 }
-
 category: turret
 requirements: [
   aluminum/35
   magnesium/15
 ]
-
-research: {
-  parent: core-pioneer
-  requirements: [
-    aluminum/35
-    magnesium/15
-  ]
-  "objectives": [
-    {
-      "type": "Produce",
-      "content": "magnesium"
-    }
-  ]
-}
-shownPlanets: [cryon]

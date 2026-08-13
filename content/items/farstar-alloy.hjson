@@ -5,17 +5,3 @@ flammability: 0.0
 flammability:0.0
 charge:0.6
 color: d0a0ff
-research: {
-  parent: titanium
-  objectives: [
-    {
-      type: Produce
-      content: farstar-alloy
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }]
-}
-shownPlanets: [cryon]

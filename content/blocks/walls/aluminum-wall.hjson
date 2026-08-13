@@ -7,10 +7,3 @@ requirements: [
   aluminum/6
 ]
 category: defense
-research: {
-  parent: spiral
-  requirements: [
-    aluminum/20
-  ]
-}
-shownPlanets: [cryon]

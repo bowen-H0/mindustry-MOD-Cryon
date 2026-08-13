@@ -14,7 +14,6 @@ shootY: 3
 shootEffect: shootBigColor
 smokeEffect: shootSmokeSquareSparse
 heatRequirement: 0
-
 consumes: {
     power: 0.6
 }
@@ -31,36 +30,17 @@ shootType: {
     height: 6
     hitSize: 3
     pierce: false
-
     backColor: "ffe2a0"
     frontColor: "ffffff"
     hitColor: "ffebc0"
     trailColor: "ffe2a0"
     trailWidth: 1.2
     trailLength: 4
-
     hitEffect: hitSquaresColor
     despawnEffect: hitSquaresColor
 }
-
 category: turret
 requirements: [
     aluminum/40
     silicon/30
 ]
-
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset:cryon-sector-1
-
-    }
-  ],
-    parent: spiral
-    requirements: [
-        aluminum/200
-        silicon/100
-    ]
-}
-shownPlanets: [cryon]

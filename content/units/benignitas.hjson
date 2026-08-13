@@ -1,12 +1,10 @@
 type: legs
 name: Benignitas
-
 # 基础属性
 speed: 0.55
 health: 600
 armor: 4
 hitSize: 26
-
 # 腿部核心参数
 legCount: 6
 legLength: 22
@@ -17,7 +15,6 @@ legStraightness: 0.5
 legGroupSize: 2
 legSpeed: 0.6
 legContinuousMove: true
-
 outlineColor: 38404B
 mechLegColor: 606bb9
 abilities: [
@@ -34,20 +31,17 @@ weapons: [
     type: Weapon
     x: 0              
     y: 0
-    
     rotate: false
     mirror: false
     reload: 35
     alternate: true
     ejectEffect: casing1
     shootSound: shootFuse
-  
     shoot: {
       type: ShootSpread
       shots: 3
       spread: 20
     }
-    
     bullet: {
       type: ShrapnelBulletType
       length: 100
@@ -56,8 +50,6 @@ weapons: [
       toColor: ffffff
       serrations: 3
     }
-
-
   },
  {
   type: PointDefenseWeapon
@@ -76,8 +68,7 @@ weapons: [
     maxRange: 100
     damage: 38
     hitColor: F47B76
-  },
- },
+  }},
  {
   type: PointDefenseWeapon
   name: cryon-point-defense
@@ -98,16 +89,3 @@ weapons: [
   }
 }
 ]
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }
-  ],
-    parent: mechanical-factory
-    requirements: [
-      titanium/40
-      silicon/50
-    ]
-  }

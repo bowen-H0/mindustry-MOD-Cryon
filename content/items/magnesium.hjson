@@ -5,13 +5,3 @@ explosiveness:0.85
 flammability:2.2
 charge:0.8
 color: e3e3e3
-research: {
-  parent: aluminum
-  objectives: [
-    {
-      type: Produce
-      content: magnesium
-    }
-  ]
-}
-shownPlanets: [cryon]

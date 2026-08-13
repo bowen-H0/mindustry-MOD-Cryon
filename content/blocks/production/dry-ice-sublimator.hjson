@@ -1,48 +1,24 @@
 type: GenericCrafter
-
 name: "干冰升华器"
 description: "产生冷却液。"
-
 size: 2
 health: 180
 category: crafting
-
 hasPower: true
 hasLiquids: true
 hasItems: true
-
 craftTime: 30.0
 liquidCapacity: 60.0
 itemCapacity: 10
-
 consumes: {
   power: 2.0
   items: [
     dry-ice/5
   ]
 }
-
 outputLiquid: cryofluid/0.3
-
 requirements: [
   aluminum/40
   magnesium/30
   titanium/20
 ]
-
-research: {
-  parent: magnesium-converter
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }
-]
-requirements: [
-    aluminum/440
-    magnesium/430
-    titanium/420
-  ]
-}
-
-shownPlanets: [cryon]

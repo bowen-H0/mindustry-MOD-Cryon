@@ -7,16 +7,3 @@ requirements: [
   scrap/32
 ]
 category: defense
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-1
-    }
-  ],
-  parent: aggregated-wall
-  requirements: [
-    scrap/560
-  ]
-}
-shownPlanets: [cryon]

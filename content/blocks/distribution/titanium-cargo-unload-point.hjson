@@ -1,0 +1,11 @@
+type: UnitCargoUnloadPoint
+name: "钛货运卸载点"
+description: "接收并卸载运输单位携带的货物。"
+size: 2
+category: distribution
+itemCapacity: 100
+requirements: [
+  titanium/50
+  aluminum/25
+  quartz/20
+]

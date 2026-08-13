@@ -1,0 +1,13 @@
+type: StackConveyor
+name: "镍传送带"
+description: "重型堆叠式传送带，凭借镍合金的高韧性拥有更大载量与更强耐久，但堆叠速度略慢。"
+size: 1
+health: 140
+speed: 0.05
+itemCapacity: 16
+category: distribution
+requirements: [
+  nickel/1
+  silicon/1
+  graphite/1
+]

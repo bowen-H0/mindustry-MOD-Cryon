@@ -1,0 +1,41 @@
+type: GenericCrafter
+name: "巨浪合金制造厂"
+description: "制造出巨浪合金。"
+size: 3
+health: 320
+category: crafting
+hasPower: true
+hasLiquids: true
+hasItems: true
+craftTime: 240.0
+itemCapacity: 50
+liquidCapacity: 100.0
+consumes: {
+  power: 60.0
+  items: [
+    titanium/20
+    silicon/20
+    aluminum/20
+    nickel/20
+  ]
+  liquid: tritium/5.0
+}
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawFlame
+      flameColor: "99d1ff"
+    }
+  ]
+}
+outputItem: surge-alloy/6
+requirements: [
+  titanium/2000
+  aluminum/1500
+  nickel/1200
+  silicon/1000
+]

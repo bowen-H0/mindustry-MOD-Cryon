@@ -6,13 +6,3 @@ flammability: 0.0
 charge: 0.05
 radioactivity: 0.0
 color: ffffffff
-research: {
-  parent: aluminum
-  objectives: [
-    {
-      type: Produce
-      content: salt
-    }
-  ]
-}
-shownPlanets: [cryon]

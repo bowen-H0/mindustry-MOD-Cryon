@@ -11,17 +11,3 @@ color: e8d5ff
 gasColor: e8d5ff
 barColor: e8d5ff66
 lightColor: e8d5ffb3
-research: {
-  parent: hydrogen
-  objectives: [
-    {
-      type: Produce
-      content: deuterium
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-shattered-abyss
-    }]
-}
-shownPlanets: [cryon]

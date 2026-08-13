@@ -1,0 +1,9 @@
+type: Wall
+name: "大型镍墙"
+description: "使用镍材料建造的大型防御方块。"
+health: 4000
+size: 2
+category: defense
+requirements: [
+  nickel/16
+]

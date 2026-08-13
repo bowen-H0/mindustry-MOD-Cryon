@@ -11,19 +11,3 @@ requirements: [
   aluminum/4
   magnesium/2
 ]
-research: {
-  parent: vacuum-conduit
-  requirements: [
-    aluminum/14
-    magnesium/6
-  ]
-  objectives: [
-    {
-      type: Produce
-      content: magnesium
-    }
-  
-    ]
-}
-
-shownPlanets: [cryon]

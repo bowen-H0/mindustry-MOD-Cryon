@@ -1,0 +1,18 @@
+type: ConsumeGenerator
+name: "衰变发电机"
+description: "通过中子素的持续衰变反应产生稳定电力。"
+size: 1
+health: 40
+category: power
+powerProduction: 1.0
+consumes: {
+  items: [
+    neutronite/1
+  ]
+}
+itemDuration: 120
+requirements: [
+  aluminum/28
+  nickel/12
+  silicon/20
+]

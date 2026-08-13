@@ -7,16 +7,3 @@ requirements: [
   scrap/8
 ]
 category: defense
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-1
-    }
-  ],
-  parent: aluminum-wall-large
-  requirements: [
-    scrap/100
-  ]
-}
-shownPlanets: [cryon]

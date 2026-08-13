@@ -1,47 +1,19 @@
 type: SolidPump
-
 name: "水提取器"
 description: "消耗电力加热并融化冰面，从而提取出水。"
-
 size: 2
 health: 160
 category: production
-
 attribute: cryon-ice
-
 pumpAmount: 0.1
-
-
 hasPower: true
 hasLiquids: true
 hasItems: false
-
-
 result: water
-
 consumes: {
   power: 0.5
 }
-
-
 requirements: [
   titanium/90
   graphite/50
 ]
-
-research: {
-  parent: magnesium-converter
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }
-  
-]
-requirements: [
-    titanium/290
-    graphite/250
-  ]
-}
-
-shownPlanets: [cryon]

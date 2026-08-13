@@ -3,13 +3,3 @@ sector: 15
 captureWave: 30
 alwaysUnlocked: false
 difficulty: 4
-
-research: {
-  parent: cryon-ice-shoal
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-ice-shoal
-    }
-  ]
-}

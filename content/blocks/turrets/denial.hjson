@@ -17,7 +17,6 @@ targetAir: true
 targetGround: true
 maxAmmo: 40
 targetUnderBlocks: false
-
 shoot: {
   type: ShootSpread
   shots: 15
@@ -39,7 +38,6 @@ ammoTypes: {
     ammoMultiplier: 2
     buildingDamageMultiplier: 0.3
     knockback: 3
-
     backColor: "6ad4ff"
     frontColor: "c8f0ff"
     hitColor: "6ad4ff"
@@ -50,8 +48,6 @@ ammoTypes: {
     smokeEffect: shootSmokeSquareSparse
     hitEffect: hitSquaresColor
     despawnEffect: hitSquaresColor
-
-    
     fragBullet: {
       type: BasicBulletType
       damage: 12
@@ -80,30 +76,9 @@ ammoTypes: {
     fragOnHit: true
   }
 }
-
 category: turret
 requirements: [
   aluminum/80
   magnesium/80
   titanium/30
 ]
-
-research: {
-  parent: spiral
-  requirements: [
-    aluminum/260
-    magnesium/260
-    titanium/80
-  ]
-  objectives: [
-    {
-      type: Produce
-      content: titanium
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }]
-}
-shownPlanets: [cryon]

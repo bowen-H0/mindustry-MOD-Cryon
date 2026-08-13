@@ -85,7 +85,9 @@ jar{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
     }
     from(projectDir){
-        include 'mod.hjson', 'icon.png', 'shaders/**'
+        include 'mod.hjson', 'icon.png', 'shaders/**',
+                'content/**', 'bundles/**', 'maps/**',
+                'schematics/**', 'scripts/**', 'sounds/**', 'sprites/**'
     }
     from("assets/"){
         include "**"

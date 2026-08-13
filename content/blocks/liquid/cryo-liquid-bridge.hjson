@@ -9,11 +9,3 @@ requirements: [
   titanium/4
 ]
 hasPower:false
-research: {
-  
-  parent: cryo-conduit,
-  requirements: [
-    titanium/400
-  ]
-}
-shownPlanets: [cryon]

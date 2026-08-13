@@ -64,6 +64,7 @@ public class ExampleJavaMod extends Mod {
     public static FluxBarrier    fluxBarrier;
     public static AgitatorBlock  agitatorTower;
     public static UniversalUnitAssembler t3universalAssembler;
+    public static UniversalUnitAssembler t4universalAssembler;
     public static ConstructorSource constructorSource;
     public static ConstructorSink   constructorSink;
     public static ConstructorNode   constructorNode;
@@ -109,7 +110,16 @@ public class ExampleJavaMod extends Mod {
 
             researchCostMultiplier = 0.4f;
         }};
-
+        t4universalAssembler=new UniversalUnitAssembler("t4universal-assembler") {{
+            size             = 5;
+            areaSize         = 13;
+            category         = Category.units;
+            buildVisibility  = BuildVisibility.shown;
+            constructorUse  = 50;
+            hasPower = true;
+            consumePower(5.5f);
+            researchCostMultiplier = 0.4f;
+        }};
         constructorSource = new ConstructorSource("constructor-source") {{
             size            = 1;
             production      = 1000000f / 60f;
@@ -174,7 +184,7 @@ public class ExampleJavaMod extends Mod {
             }};
             shootWarmupSpeed = 0.015f;
             shootType = new BasicBulletType(4f, 120f){{
-                sprite = "cryon-java-dependency-tesla-orb";
+                sprite = "cryon-tesla-orb";
                 width = 40f;
                 height = 40f;
                 lifetime = 65f;
@@ -340,7 +350,6 @@ public class ExampleJavaMod extends Mod {
     // ══════════════════════════════════════════════════════════════
     @Override
     public void init() {
-
         UnitType peak  = Vars.content.unit("cryon-peak");
         UnitType umbra = Vars.content.unit("cryon-umbra");
         UnitType murex = Vars.content.unit("cryon-murex");
@@ -406,7 +415,6 @@ public class ExampleJavaMod extends Mod {
                 new ItemStack(Items.silicon, 40)
         });
         if (cryonPlanet != null) waveEmitter.shownPlanets.add(cryonPlanet);
-
         // 添加生产计划
         if (peak != null) {
             t3universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
@@ -451,6 +459,66 @@ public class ExampleJavaMod extends Mod {
         }
         t3universalAssembler.initCapacities();
 
+        t4universalAssembler.requirements(Category.units, BuildVisibility.shown, new ItemStack[]{
+                new ItemStack(farstarAlloy, 1500),
+                new ItemStack(Items.phaseFabric, 300),
+                new ItemStack(Items.graphite, 150),
+                new ItemStack(Items.silicon, 1200),
+        });
+        if (cryonPlanet != null) t4universalAssembler.shownPlanets.add(cryonPlanet);
+
+        // T4
+        UnitType sagitta = Vars.content.unit("cryon-sagitta");
+        UnitType blaze = Vars.content.unit("cryon-blaze");
+        UnitType charonia = Vars.content.unit("cryon-charonia");
+        Block chargedWall = Vars.content.block("cryon-charged-surge-wall-large");
+        UnitType umbra_prev = umbra;
+        UnitType peak_prev = peak;
+
+        if (sagitta != null && umbra_prev != null) {
+            t4universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = sagitta;
+                time = 4000f;
+                requirements = Seq.with(
+                        new PayloadStack(umbra_prev, 2),
+                        new PayloadStack(chargedWall, 5)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Vars.content.liquid("nitrogen"), (20f/60f))
+                };
+            }});
+        }
+
+        if (blaze != null && peak_prev != null) {
+            t4universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = blaze;
+                time = 4000f;
+                requirements = Seq.with(
+                        new PayloadStack(peak_prev, 2),
+                        new PayloadStack(chargedWall, 5)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Vars.content.liquid("nitrogen"), (20f/60f))
+                };
+            }});
+        }
+
+        if (charonia != null) {
+            t4universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = charonia;
+                time = 4000f;
+                requirements = Seq.with(
+                        new PayloadStack(murex, 2),
+                        new PayloadStack(chargedWall, 5)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Vars.content.liquid("nitrogen"), (20f/60f))
+                };
+            }});
+        }
+
+        t4universalAssembler.initCapacities();
+
         //abilities
         UnitType comet = Vars.content.units().find(u -> u.name.equals("cryon-comet"));
         if (comet != null) {
@@ -470,10 +538,11 @@ public class ExampleJavaMod extends Mod {
         if (umbra != null) {
             umbra.abilities.add(new SafeFluxBarrierAbility(50f, 100f, 20f,4,45f,600));
         }
-
         // TechTree
         Events.on(ClientLoadEvent.class, e -> {
-            TechNode root = TechTree.roots.find(
+            CryonTechTree.load();
+
+             TechNode root = TechTree.roots.find(
                     n -> n.content != null && n.content.name.equals("cryon-core-pioneer"));
             if (root == null) {
                 Log.warn("[CryonCore] Cryon-core-pioneer not found");
@@ -488,110 +557,6 @@ public class ExampleJavaMod extends Mod {
                     "cryon-cryon-sector-1",
                     "cryon-magnesium"
             });
-
-            TechNode parentNode = null;
-            for (TechNode node : TechTree.all) {
-                if (node.content != null && node.content.name.equals("cryon-t2factory")) {
-                    parentNode = node;
-                    break;
-                }
-            }
-
-            if (parentNode == null) {
-            } else {
-                SectorPreset neutronFluxZone = Vars.content.getByName(
-                        ContentType.sector,
-                        "cryon-cryon-neutron-flux-zone"
-                );
-
-                Seq<Objective> objectives = Seq.with();
-                if (neutronFluxZone != null) {
-                    objectives.add(new Objectives.SectorComplete(neutronFluxZone));
-                }
-
-                TechNode assemblerNode = new TechNode(parentNode, t3universalAssembler, new ItemStack[]{
-                        new ItemStack(farstarAlloy, 500),
-                        new ItemStack(Items.phaseFabric, 150),
-                        new ItemStack(Items.graphite, 80),
-                        new ItemStack(Items.silicon, 650),
-                });
-                assemblerNode.objectives = objectives;
-
-                if (!parentNode.children.contains(assemblerNode)) {
-                    parentNode.children.add(assemblerNode);
-                }
-
-                //peak, umbra, murex
-                String[] unitNames = {"cryon-peak", "cryon-umbra", "cryon-murex"};
-                for (String unitName : unitNames) {
-                    UnitType unitType = Vars.content.unit(unitName);
-                    if (unitType == null) {
-                        continue;
-                    }
-
-                    TechNode unitNode = TechTree.all.find(n -> n.content == unitType);
-                    if (unitNode == null) {
-                        continue;
-                    }
-
-                    Seq<Objective> existingObjectives = unitNode.objectives;
-                    if (existingObjectives == null) {
-                        existingObjectives = new Seq<>();
-                    }
-
-                    boolean alreadyHasResearch = existingObjectives.contains(
-                            obj -> obj instanceof Objectives.Research &&
-                                    ((Objectives.Research) obj).content == t3universalAssembler
-                    );
-
-                    if (!alreadyHasResearch) {
-                        existingObjectives.add(new Objectives.Research(t3universalAssembler));
-                    }
-
-                    unitNode.objectives = existingObjectives;
-                }
-            }
-
-            // Add a tech tree chain
-
-            TechNode phaseReactorNode = null;
-            for (TechNode node : TechTree.all) {
-                if (node.content != null && node.content.name.equals("cryon-phase-reactor")) {
-                    phaseReactorNode = node;
-                    break;
-                }
-            }
-
-            if (phaseReactorNode == null) {
-            } else {
-                TechNode constructorNodeTech = new TechNode(phaseReactorNode, constructorNode, new ItemStack[]{
-                        new ItemStack(Items.phaseFabric, 10),
-                        new ItemStack(farstarAlloy, 6)
-                });
-
-                if (!phaseReactorNode.children.contains(constructorNodeTech)) {
-                    phaseReactorNode.children.add(constructorNodeTech);
-                }
-
-                TechNode waveEmitterNode = new TechNode(constructorNodeTech, waveEmitter, new ItemStack[]{
-                        new ItemStack(Items.phaseFabric, 60),
-                        new ItemStack(farstarAlloy, 50),
-                        new ItemStack(Items.silicon, 40)
-                });
-
-                if (!constructorNodeTech.children.contains(waveEmitterNode)) {
-                    constructorNodeTech.children.add(waveEmitterNode);
-                }
-                TechNode constructorDrillNode = new TechNode(waveEmitterNode, constructorDrill, new ItemStack[]{
-                        new ItemStack(Items.phaseFabric, 20),
-                        new ItemStack(Items.graphite, 20),
-                        new ItemStack(Items.silicon, 30)
-                });
-
-                if (!waveEmitterNode.children.contains(constructorDrillNode)) {
-                    waveEmitterNode.children.add(constructorDrillNode);
-                }
-            }
         });
         HeatBoostTurret.inject("cryon-spiral", 4f, 1.0f);
         HeatBoostTurret.inject("cryon-torrent", 4f, 1.0f);

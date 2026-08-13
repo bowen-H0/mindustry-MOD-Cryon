@@ -10,19 +10,15 @@ targetAir: true
 targetGround: true
 maxAmmo: 40
 ammoUseEffect: casing2
-
 shoot: {
   type: ShootAlternate
   spread: 6
   shotDelay: 9
 }
-
 shootX: 0
 shootY: 6
 recoils: 2
-
 drawer: {
-  
   type: DrawTurret
   basePrefix: cryon-
   parts: [
@@ -46,7 +42,6 @@ drawer: {
     }
   ]
 }
-
 ammoTypes: {
   silicon: {
     type: MissileBulletType
@@ -80,7 +75,6 @@ ammoTypes: {
     statusDuration: 60
     backColor: "bf40bf"
     frontColor: "f3e5f5"
-
     fragBullet: {
       type: BasicBulletType
       damage: 8
@@ -107,34 +101,9 @@ ammoTypes: {
     fragOnHit: true
   }
 }
-
 category: turret
 requirements: [
   aluminum/35
   magnesium/15
   titanium/10
 ]
-
-research: {
-  parent: spiral
-  objectives: [
-    {
-      type: Produce
-      content: magnesium
-    }
-    {
-      type: Produce
-      content: titanium
-    }
-    {
-      type: SectorComplete
-      preset: cryon-sector-frost-outpost
-    }
-    ]
-  requirements: [
-    graphite/60
-    magnesium/80
-    titanium/30
-  ]
-}
-shownPlanets: [cryon]

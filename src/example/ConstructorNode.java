@@ -49,8 +49,8 @@ public class ConstructorNode extends ConstructorBlock {
     @Override
     public void load(){
         super.load();
-        laser    = arc.Core.atlas.find("cryon-java-dependency-constructor-beam");
-        laserEnd = arc.Core.atlas.find("cryon-java-dependency-constructor-beam-end");
+        laser    = arc.Core.atlas.find("cryon-constructor-beam");
+        laserEnd = arc.Core.atlas.find("cryon-constructor-beam-end");
     }
 
 

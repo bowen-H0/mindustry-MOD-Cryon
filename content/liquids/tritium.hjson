@@ -11,18 +11,3 @@ color: d0a0e0
 gasColor: d0a0e0
 barColor: d0a0e0
 lightColor: e8d5ff66
-research: {
-  parent: deuterium
-  objectives: [
-    {
-      type: Produce
-      content: tritium
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-neutron-flux-zone
-    }]
-}
-
-shownPlanets: [cryon]

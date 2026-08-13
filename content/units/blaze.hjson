@@ -9,7 +9,6 @@ targetAir: true
 targetGround: true
 itemCapacity: 30
 faceTarget: true
-
 rotateSpeed: 3.5
 treadPullOffset: 5
 crushDamage: 5
@@ -44,14 +43,12 @@ weapons: [
     shootSound: shoot
     shootCone: 40
     shadow: 4
-    
     shoot: {
       type: ShootSpread
       shots: 4
       spread: 20
       shotDelay: 5
     }
-
     bullet: {
       type: FlakBulletType
       damage: 30
@@ -64,14 +61,11 @@ weapons: [
       knockback: 2
       collidesAir: true
       collidesGround: true
-
       homingPower: 0.17
       homingDelay: 8
       homingRange: 80
-
       explodeRange: 40
       explodeDelay: 0
-
       flakInterval: 20
       backColor: ffdd88
       frontColor: ffffff
@@ -79,11 +73,9 @@ weapons: [
       trailColor: ffe2a0
       trailWidth: 3.0
       trailLength: 10
-
       hitEffect: hitSquaresColor
       despawnEffect: hitSquaresColor
       despawnShake: 2
-
       fragBullet: {
         type: LaserBulletType
         damage: 20
@@ -120,7 +112,6 @@ weapons: [
     shootSound: shootLancer
     shootCone: 8
     shadow: 8
-
     bullet: {
       type: LaserBulletType
       damage: 320
@@ -131,10 +122,8 @@ weapons: [
       collidesGround: true
       pierce: true
       pierceCap: 15
-
       hitEffect: hitLancer
       despawnEffect: none
-      
       colors: [
           ffffff
           ffffe1
@@ -142,9 +131,4 @@ weapons: [
         ]
     }
   }
-  
-
-  
 ]
-
-shownPlanets: [cryon]

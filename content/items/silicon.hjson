@@ -1,14 +1,1 @@
-research: {
-  parent: crystal-sand
-  objectives: [
-    {
-      type: Produce
-      content: silicon
-    }
-  
-    {
-      type: SectorComplete
-      preset: cryon-ice-shoal
-    }]
-}
-shownPlanets: [serpulo, erekir, cryon]
+

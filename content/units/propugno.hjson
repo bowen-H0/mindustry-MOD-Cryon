@@ -1,12 +1,10 @@
 type: legs
 name: 卫戍
-
 # 基础属性
 speed: 0.75
 health: 2000
 armor: 8
 hitSize: 32
-
 # 腿部核心参数
 legCount: 6
 legLength: 38
@@ -17,10 +15,8 @@ legExtension: -2
 legStraightness: 0.5
 legGroupSize: 2
 legContinuousMove: true
-
 outlineColor: 38404B
 mechLegColor: 606bb9
-
 abilities: [
   {
     type: ShieldRegenFieldAbility
@@ -37,27 +33,23 @@ abilities: [
   range: 60
 }
 ]
-
 weapons: [
   {
     name: salus-weapon
     type: Weapon
     x: 0              
     y: 11
-    
     rotate: false
     mirror: false
     reload: 20
     alternate: true
     ejectEffect: casing1
     shootSound: shootFuse
-
     shoot: {
       type: ShootSpread
       shots: 6
       spread: 20
     }
-    
     bullet: {
       type: ShrapnelBulletType
       length: 160
@@ -113,7 +105,6 @@ weapons: [
     reload: 12
     rotate: true
     mirror: true
-
     bullet: {
       type: SapBulletType
       sapStrength: 1.2
@@ -137,38 +128,19 @@ weapons: [
     alternate: false
     continuous: true   
     shootSound: beamMeltdown
-
     shoot: {
       firstShotDelay: 0
     }
-    
     bullet: {
       type: ContinuousLaserBulletType
       damage: 18
       length: 160      
       width: 5         
       lifetime: 10
-      
       incendChance: 0
       incendSpread: 0
       incendAmount: 0
-      
       colors: [8ca9f4, 5c7cf2, ffffff]
     }
   }
 ]
-
-research: {
-  
-  requirements: [
-    farstar-alloy/1000
-    quartz/1000
-    silicon/2000
-    phase-fabric/3000
-  ]
-  objectives: [
-    { 
-      type: SectorComplete
-      preset: cryon-neutron-flux-zone
-    }]
-}

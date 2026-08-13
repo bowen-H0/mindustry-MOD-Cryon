@@ -1,20 +1,14 @@
 type: HeatCrafter
-
 name: "石英反应釜"
 description: "消耗硅和臭氧，在高温下生产石英。"
-
 size: 2
 health: 240
 category: crafting
-
 hasPower: true
 hasLiquids: true
 hasItems: true
-
 craftTime: 60.0
-
 heatRequirement: 2.0
-
 consumes: {
   power: 2.0
   items: [
@@ -24,31 +18,12 @@ consumes: {
     ozone/0.05
   ]
 }
-
 outputItem: {
   item: quartz
   amount: 2
 }
-
 requirements: [
   farstar-alloy/60
   titanium/40
   graphite/40
 ]
-
-research: {
-  parent: magnesium-converter
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-shattered-abyss
-    }
-  ]
-  requirements: [
-    farstar-alloy/160
-    titanium/140
-    graphite/120
-  ]
-}
-
-shownPlanets: [cryon]

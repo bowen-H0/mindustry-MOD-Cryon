@@ -1,22 +1,17 @@
 type: flying
 flying: true
-
 health: 60
 armor: 1
 speed: 2.5
 rotateSpeed: 8
 hitSize: 9
 itemCapacity: 10
-
 targetAir: true
 targetGround: true
 circleTarget: true
 faceTarget: true
 lowAltitude: false
-
-
 controller: flyingAI
-
 engineSize: 0
 engines: [
   {
@@ -26,7 +21,6 @@ engines: [
     rotation: -90
   }
 ]
-
 weapons: [
   {
     mirror: true
@@ -36,7 +30,6 @@ weapons: [
     shootSound: shoot
     x: 4
     y: 3
-    
     bullet: {
       type: BasicBulletType
       damage: 10
@@ -53,17 +46,3 @@ weapons: [
     }
   }
 ]
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-ice-shoal
-    }
-  ],
-    parent: unit-projector
-    requirements: [
-      magnesium/100
-      silicon/60
-    ]
-    
-  }

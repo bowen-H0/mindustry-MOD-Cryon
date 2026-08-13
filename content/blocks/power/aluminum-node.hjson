@@ -3,28 +3,10 @@ name: "铝制节点"
 description: "铝制电力节点。导电性优于镁制节点，连接范围和上限更高。"
 size: 1
 health: 80
-
 maxNodes: 8
 laserRange: 12
-
 category: power
 requirements: [
   aluminum/8
   magnesium/2
 ]
-
-research: {
-  parent: hydrothermal-generator
-  requirements: [
-    aluminum/80
-    magnesium/20
-  ]
-  objectives: [
-    {
-      type: Produce
-      content: aluminum
-    }
-  ]
-}
-
-shownPlanets: [cryon]

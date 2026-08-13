@@ -10,7 +10,6 @@ targetAir: true
 targetGround: true
 maxAmmo: 60
 ammoUseEffect: casing3
-
 shoot: {
   type: ShootAlternate
   barrels: 2
@@ -18,7 +17,6 @@ shoot: {
   shots: 4
   shotDelay: 2
 }
-
 shootX: 0
 shootY: 10
 recoils: 1
@@ -28,8 +26,6 @@ drawer: {
   type: DrawTurret
   basePrefix: cryon-
 }
-
-
 ammoTypes: {
   graphite: {
     type: BasicBulletType
@@ -58,7 +54,6 @@ ammoTypes: {
     statusDuration: 70
     backColor: "bf40bf"
     frontColor: "f3e5f5"
-
     fragBullet: {
       type: BasicBulletType
       damage: 2
@@ -99,7 +94,6 @@ ammoTypes: {
     statusDuration: 300
   }
 }
-
 category: turret
 requirements: [
   aluminum/55
@@ -107,20 +101,3 @@ requirements: [
   titanium/20
   silicon/15
 ]
-
-research: {
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-neutron-flux-zone
-    }
-  ],
-  parent: torrent
-  requirements: [
-    graphite/100
-    magnesium/120
-    titanium/60
-    silicon/40
-  ]
-}
-shownPlanets: [cryon]

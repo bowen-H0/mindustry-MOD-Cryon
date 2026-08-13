@@ -1,33 +1,12 @@
 type: StorageBlock
-
 name: "凝化物品仓库"
 description: "物品储存设备。"
-
 size: 3
 health: 490
 category: effect
-
-
 hasItems: true
 itemCapacity: 1000
-
 requirements: [
   titanium/180
   silicon/140
 ]
-
-research: {
-  requirements: [
-    titanium/1800
-    silicon/1400
-  ],
-  objectives: [
-    {
-      type: SectorComplete
-      preset: cryon-sector-glacial-basin
-    }
-  ],
-  parent: cryo-container
-}
-
-shownPlanets: [cryon]

@@ -1,0 +1,6 @@
+{
+  "type": "Floor",
+  "name": "cryo-fluid-ice",
+  "variants": 2,
+  "speedMultiplier": 1.3
+}

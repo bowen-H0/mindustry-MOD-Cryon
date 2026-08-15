@@ -1,0 +1,8 @@
+{
+  "type": "StaticWall",
+  "name": "cryon-ice-rock-wall",
+  "solid": true,
+  "destructible": false,
+  "size": 1,
+  "variants": 1
+}

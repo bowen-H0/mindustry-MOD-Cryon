@@ -1,0 +1,6 @@
+{
+  "type": "Floor",
+  "name": "sticky-cryofluid-floor",
+  "variants": 1,
+  "speedMultiplier": 0.6
+}

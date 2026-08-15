@@ -1,0 +1,8 @@
+{
+  "type": "StaticWall",
+  "name": "cryofluid-wall",
+  "solid": true,
+  "destructible": false,
+  "size": 1,
+  "variants": 1
+}

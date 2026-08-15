@@ -1,0 +1,8 @@
+{
+  "type": "StaticWall",
+  "name": "shattered-ice",
+  "solid": true,
+  "destructible": false,
+  "size": 1,
+  "variants": 2
+}

@@ -1,4 +1,4 @@
-# Cryon Core
+# Cryon
 
 > This mod does not require any dependencies.
 

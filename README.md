@@ -1,8 +1,6 @@
 # Cryon Core
 
-> Your mod browser will usually handle dependencies automatically.
-
-> Dependencies: [Cryon](https://github.com/bowen-H0/mindustry-MOD-Cryon).
+> This mod does not require any dependencies.
 
 Alpha test version: contains bugs, mechanics subject to change.
 

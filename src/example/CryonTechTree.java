@@ -2,6 +2,7 @@ package example;
 
 import arc.struct.*;
 import arc.util.Log;
+import arc.util.Time;
 import example.CryonContent;
 import mindustry.Vars;
 import mindustry.content.Planets;
@@ -10,9 +11,12 @@ import mindustry.ctype.*;
 import mindustry.game.Objectives.*;
 import mindustry.type.*;
 import mindustry.world.*;
+import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.consumers.*;
 import mindustry.content.TechTree.TechNode;
 
+import static mindustry.Vars.schematics;
+import static mindustry.Vars.universe;
 import static mindustry.content.TechTree.*;
 
 public class CryonTechTree{
@@ -451,16 +455,32 @@ public class CryonTechTree{
             }
         }
 
-        // 隐藏小行星
+        /* 隐藏小行星
         for (Planet p : Vars.content.planets()) {
             if (p != cryonPlanet && p != Planets.serpulo && p != Planets.erekir && p != Planets.sun) {
                 p.hideDatabase = true;
                 p.databaseTabs.clear();
             }
-        }
+        }*/
 
         // 清理 cryon 自身的 databaseTabs
-        cryonPlanet.databaseTabs.clear();
+        //cryonPlanet.databaseTabs.clear();
+        Time.runTask(10f, () -> {
+            Log.info("[CryonTechTree] Refreshing loadout cache...");
+
+            // 重新加载 schematics
+            schematics.load();
+
+            // 强制刷新所有核心的 loadout
+            for(Block block : Vars.content.blocks()){
+                if(block instanceof CoreBlock schematics_core){
+                    // 这会触发重新从配置文件读取
+                    universe.getLoadout(schematics_core);
+                }
+            }
+
+            Log.info("[CryonTechTree] Loadout refresh complete");
+        });
 
         Log.info("[CryonTechTree] Tech tree loaded");
     }

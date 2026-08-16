@@ -74,5 +74,6 @@ generator: {
 launchCandidates: []
 allowLaunchToNumbered: true
 allowLaunchLoadout: true
+allowLaunchSchematics: true
 iconColor: 5a8fb0
 defaultCore: "core-pioneer"

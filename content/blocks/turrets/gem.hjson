@@ -42,5 +42,5 @@ shootType: {
 category: turret
 requirements: [
     aluminum/40
-    silicon/30
+    magnesium/30
 ]

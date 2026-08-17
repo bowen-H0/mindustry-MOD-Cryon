@@ -54,11 +54,33 @@ public class CryonTechTree{
 
     static Seq<Objective> autoObjectives(Block block){
         Seq<Objective> objs = new Seq<>();
+        ObjectSet<Item> seenItems = new ObjectSet<>();
+        ObjectSet<Liquid> seenLiquids = new ObjectSet<>();
+
+        for(ItemStack stack : block.requirements){
+            if(seenItems.add(stack.item)){
+                objs.add(new Research(stack.item));
+            }
+        }
+
         for(Consume c : block.consumers){
             if(c instanceof ConsumeItems ci){
-                for(ItemStack stack : ci.items) objs.add(new Research(stack.item));
+                for(ItemStack stack : ci.items){
+                    if(seenItems.add(stack.item)){
+                        objs.add(new Research(stack.item));
+                    }
+                }
             }else if(c instanceof ConsumeLiquid cl){
-                objs.add(new Research(cl.liquid));
+                if(seenLiquids.add(cl.liquid)){
+                    objs.add(new Research(cl.liquid));
+                }
+            }
+            else if(c instanceof ConsumeLiquids cls){
+                for(LiquidStack stack : cls.liquids){
+                    if(seenLiquids.add(stack.liquid)){
+                        objs.add(new Research(stack.liquid));
+                    }
+                }
             }
         }
         return objs;
@@ -93,6 +115,15 @@ public class CryonTechTree{
         static void sectorReq(String sectorName, Object... prereqItems){
             sectorPrereqs.put(sectorName, prereqItems);
         }
+    /** 原始表:sector -> [被这个 sector 门控的内容名]  */
+    static ObjectMap<String, String[]> sectorGateTable = new ObjectMap<>();
+
+    /** 反向索引:内容名 -> 需要先占领哪些 sector(自动生成,不要手填) */
+    static ObjectMap<String, Seq<String>> sectorGateReverse = new ObjectMap<>();
+
+    static void sectorGate(String sectorName, String... gatedNames){
+        sectorGateTable.put(sectorName, gatedNames);
+    }
 
     /** 明确标 auto 的重载,避免和"空数组"混淆 */
     static void addAuto(Kind kind, String name, String parent){
@@ -180,7 +211,7 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "cryo-message", "silicon-separator");
         addAuto(Kind.BLOCK, "cryo-payload-conveyor", "vacuum-conduit");
         addAuto(Kind.BLOCK, "cryo-payload-conveyor-large", "cryo-payload-conveyor");
-
+        addAuto(Kind.BLOCK, "cryo-mender", "hydrothermal-generator");
         addAuto(Kind.BLOCK, "cryo-repair-tower", "cryo-mender");
         addAuto(Kind.BLOCK, "cryo-titanium-wall", "aluminum-wall-large");
         addAuto(Kind.BLOCK, "cryo-titanium-wall-large", "cryo-titanium-wall");
@@ -319,6 +350,44 @@ public class CryonTechTree{
         sectorReq("cryon-fusion-bastion",
                 CryonContent.block("t3universal-assembler"),
                 CryonContent.unit("umbra"));
+        // ---- SECTOR 占领门控表(方块/单位) ----
+
+        sectorGate("cryon-sector-1",
+                "hydrothermal-generator", "gem");
+
+        sectorGate("cryon-ice-shoal", "magnesium-converter", "cryo-electric-heater",
+                "cavity", "micro-projector", "cryo-mender",
+                "aggregated-wall", "aggregated-wall-large",
+                "magnesium-generator", "unit-projector", "cryon-water-extractor");
+
+        sectorGate("cryon-sector-shattered-shoal",
+                "titanium-drill", "scrap-pyrolyzer",
+                "cryo-titanium-wall", "cryo-titanium-wall-large",
+                "dry-ice-sublimator", "penetrate",
+                "hydrogen-generator", "ozone-generator",
+                "cryo-electrolyzer", "flux-barrier", "mechanical-factory");
+
+        sectorGate("cryon-sector-glacial-basin",
+                "slag-extractor", "slag-power-generator", "comet");
+
+        sectorGate("cryon-sector-frost-outpost",
+                "t2factory", "denial", "deuterium-reactor",
+                "isotope-separator", "quartz-reactor", "torrent",
+                "small-launch-pad", "small-landing-pad");
+
+        sectorGate("cryon-shattered-abyss",
+                "spark", "abyss", "farstar-forge", "nitrogen-separator");
+
+        sectorGate("cryon-gravel-ice",
+                "mechanical-assembler", "titanium-cargo-loader",
+                "titanium-cargo-unload-point", "nickel-drill");
+
+        sectorGate("cryon-neutron-flux-zone",
+                "neutron-activator", "nanofiber-weaver", "phase-constructor",
+                "t3universal-assembler", "nebula");
+
+        sectorGate("cryon-fusion-bastion",
+                "phase-reactor", "agitator-tower");
     }
 
     // ================== 索引 ==================
@@ -330,6 +399,28 @@ public class CryonTechTree{
                 childrenOf.get(e.parent, Seq::new).add(e);
             }
         }
+
+        // 生成 sectorGate 反向索引
+        for(var entry : sectorGateTable){
+            String sectorName = entry.key;
+            for(String gatedName : entry.value){
+                sectorGateReverse.get(gatedName, Seq::new).add(sectorName);
+            }
+        }
+    }
+    static Seq<Objective> sectorGateObjectives(String name){
+        Seq<Objective> objs = new Seq<>();
+        Seq<String> sectors = sectorGateReverse.get(name);
+        if(sectors == null) return objs;
+        for(String sectorName : sectors){
+            SectorPreset preset = CryonContent.sector(sectorName);
+            if(preset == null){
+                Log.warn("[CryonTechTree] sectorGate: sector not found: " + sectorName);
+                continue;
+            }
+            objs.add(new SectorComplete(preset));
+        }
+        return objs;
     }
 
     // ================== 自动物品花费 ==================
@@ -398,11 +489,16 @@ public class CryonTechTree{
                     Log.warn("[CryonTechTree] Block not found: " + e.name + ", skipping");
                     return;
                 }
+                Seq<Objective> gateObjs = sectorGateObjectives(e.name);
+
                 TechNode node;
                 if(e.manualReqs != null){
-                    node = node(block, e.manualReqs, autoObjectives(block), () -> buildChildrenOf(e.name));
+                    Seq<Objective> objs = autoObjectives(block);
+                    objs.addAll(gateObjs);
+                    node = node(block, e.manualReqs, objs, () -> buildChildrenOf(e.name));
                 }else{
                     Seq<Objective> objs = autoObjectives(block);
+                    objs.addAll(gateObjs);
                     node = node(block, scaledBlockCost(block), objs, () -> buildChildrenOf(e.name));
                 }
 
@@ -421,7 +517,9 @@ public class CryonTechTree{
                     Log.warn("[CryonTechTree] Unit not found: " + e.name + ", skipping");
                     return;
                 }
-                TechNode node = node(unit, e.manualReqs, () -> buildChildrenOf(e.name));
+                Seq<Objective> objs = sectorGateObjectives(e.name);
+                TechNode node = node(unit, e.manualReqs, objs, () -> buildChildrenOf(e.name));
+
 
                 if (unit.name.startsWith("cryon-")) {
                     unit.shownPlanets = ObjectSet.with(cryonPlanet);
@@ -534,5 +632,7 @@ public class CryonTechTree{
         });
 
         Log.info("[CryonTechTree] Tech tree loaded");
+        DebugUnlock.enabled = true;
+        DebugUnlock.apply();
     }
 }

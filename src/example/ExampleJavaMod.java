@@ -576,8 +576,7 @@ public class ExampleJavaMod extends Mod {
 
 
         //SectorIdDebug.install();
-        //DebugUnlock.enabled = true;
-        //DebugUnlock.apply();
+
     }
 
 

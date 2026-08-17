@@ -68,20 +68,31 @@ public class CryonTechTree{
 
     enum Kind{ ITEM, LIQUID, BLOCK, UNIT_BLOCK, UNIT, SECTOR }
 
-    static class Entry{
-        Kind kind; String name; String parent; ItemStack[] manualReqs;
-        Entry(Kind kind, String name, String parent, ItemStack[] manualReqs){
-            this.kind = kind; this.name = name; this.parent = parent; this.manualReqs = manualReqs;
+    static class Entry {
+        Kind kind;
+        String name;
+        String parent;
+        ItemStack[] manualReqs;
+        Object[] prereqs;
+
+        Entry(Kind kind, String name, String parent, ItemStack[] manualReqs) {
+            this.kind = kind;
+            this.name = name;
+            this.parent = parent;
+            this.manualReqs = manualReqs;
         }
     }
-
     static Seq<Entry> entries = new Seq<>();
     static ObjectMap<String, Entry> byName = new ObjectMap<>();
     static ObjectMap<String, Seq<Entry>> childrenOf = new ObjectMap<>();
+    static ObjectMap<String, Object[]> sectorPrereqs = new ObjectMap<>();
 
-    static void add(Kind kind, String name, String parent, ItemStack... reqs){
+        static void add(Kind kind, String name, String parent, ItemStack... reqs){
         entries.add(new Entry(kind, name, parent, reqs.length == 0 && kind != Kind.UNIT ? null : reqs));
     }
+        static void sectorReq(String sectorName, Object... prereqItems){
+            sectorPrereqs.put(sectorName, prereqItems);
+        }
 
     /** 明确标 auto 的重载,避免和"空数组"混淆 */
     static void addAuto(Kind kind, String name, String parent){
@@ -254,22 +265,20 @@ public class CryonTechTree{
         addAuto(Kind.UNIT_BLOCK, "mechanical-factory", "unit-projector");
         addAuto(Kind.UNIT_BLOCK, "t2factory", "unit-projector");
         addAuto(Kind.UNIT_BLOCK, "t3universal-assembler", "t2factory");
-
-
         addAuto(Kind.UNIT_BLOCK, "unit-projector", "core-pioneer");
 
         // ---- UNIT(全部手动花费) ----
         add(Kind.UNIT, "benignitas", "mechanical-factory", r(CryonContent.item("titanium"), 40, CryonContent.item("silicon"), 50));
-        add(Kind.UNIT, "bolide", "comet", r(CryonContent.item("titanium"), 300, CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 300));
+        add(Kind.UNIT, "bolide", "t2factory", r(CryonContent.item("titanium"), 300, CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 300));
         add(Kind.UNIT, "buffer", "unit-projector", r(CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 50));
         add(Kind.UNIT, "comet", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
-        add(Kind.UNIT, "guardian", "buffer", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
+        add(Kind.UNIT, "guardian", "t2factory", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
         add(Kind.UNIT, "littorina", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 60));
-        add(Kind.UNIT, "murex", "natica", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
-        add(Kind.UNIT, "natica", "littorina", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
-        add(Kind.UNIT, "peak", "guardian", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+        add(Kind.UNIT, "murex", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+        add(Kind.UNIT, "natica", "t2factory", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
+        add(Kind.UNIT, "peak", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
         add(Kind.UNIT, "salus", "mechanical-assembler", r(CryonContent.item("titanium"), 2400, CryonContent.item("farstar-alloy"), 2600, CryonContent.item("silicon"), 2300));
-        add(Kind.UNIT, "umbra", "bolide", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+        add(Kind.UNIT, "umbra", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
 
         // ---- SECTOR(全部 auto,前提条件后续手动补) ----
         addAuto(Kind.SECTOR, "cryon-fusion-bastion", "cryon-neutron-flux-zone");
@@ -281,6 +290,35 @@ public class CryonTechTree{
         addAuto(Kind.SECTOR, "cryon-sector-glacial-basin", "cryon-ice-shoal");
         addAuto(Kind.SECTOR, "cryon-sector-shattered-shoal", "cryon-ice-shoal");
         addAuto(Kind.SECTOR, "cryon-shattered-abyss", "cryon-sector-frost-outpost");
+
+        // ---- SECTOR 额外前提条件列表 ----
+        sectorReq("cryon-ice-shoal",
+                CryonContent.block("melting-drill"),
+                CryonContent.block("gem"));
+
+        sectorReq("cryon-sector-glacial-basin",
+                CryonContent.block("unit-projector"),
+                CryonContent.unit("buffer"),
+                CryonContent.item("graphite"));
+
+        sectorReq("cryon-sector-frost-outpost",
+                CryonContent.sector("cryon-sector-glacial-basin"),
+                CryonContent.unit("comet"),
+                CryonContent.item("titanium"));
+
+        sectorReq("cryon-shattered-abyss",
+                CryonContent.unit("natica"),
+                CryonContent.block("t2factory"));
+
+        sectorReq("cryon-neutron-flux-zone",
+                CryonContent.unit("salus"),
+                CryonContent.block("deuterium-reactor"),
+                CryonContent.unit("guardian"),
+                CryonContent.item("farstar-alloy"));
+
+        sectorReq("cryon-fusion-bastion",
+                CryonContent.block("t3universal-assembler"),
+                CryonContent.unit("umbra"));
     }
 
     // ================== 索引 ==================
@@ -400,7 +438,20 @@ public class CryonTechTree{
                     Log.warn("[CryonTechTree] Sector not found: " + e.name + ", skipping");
                     return;
                 }
-                TechNode node = node(sector, new ItemStack[]{}, () -> buildChildrenOf(e.name));
+
+                Seq<Objective> objs = new Seq<>();
+                Object[] reqs = sectorPrereqs.get(e.name);
+                if(reqs != null){
+                    for(Object o : reqs){
+                        if(o instanceof Item item) objs.add(new Research(item));
+                        else if(o instanceof Liquid liquid) objs.add(new Research(liquid));
+                        else if(o instanceof Block block) objs.add(new Research(block));
+                        else if(o instanceof UnitType unit) objs.add(new Research(unit));
+                        else if(o instanceof SectorPreset preset) objs.add(new SectorComplete(preset));
+                    }
+                }
+
+                TechNode node = node(sector, new ItemStack[]{}, objs, () -> buildChildrenOf(e.name));
 
                 if (sector.name.startsWith("cryon-")) {
                     sector.shownPlanets = ObjectSet.with(cryonPlanet);

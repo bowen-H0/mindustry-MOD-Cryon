@@ -2,7 +2,7 @@ type: PowerTurret
 name: "宝石"
 description: "小型电力炮塔，消耗少量电力发射高速弹丸。"
 size: 1
-health: 440
+health: 240
 range: 200
 reload: 18
 recoil: 1

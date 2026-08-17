@@ -1,5 +1,6 @@
 package example;
 
+import arc.files.Fi;
 import arc.graphics.*;
 import arc.math.*;
 import arc.math.geom.*;
@@ -18,6 +19,8 @@ import mindustry.world.meta.*;
 //Modified from the erekir generator.
 //The script most prone to crashing.
 //The API updates here might be a bit frequent.
+import java.io.IOException;
+
 import static mindustry.Vars.*;
 
 public class CryonPlanetGenerator extends PlanetGenerator{
@@ -40,6 +43,8 @@ public class CryonPlanetGenerator extends PlanetGenerator{
     private static Block oreMagnesium;
     private static Block oreSalt;
     private static Block oreAluminum;
+    public static Schematic cryonLoadout;
+
     static {
         iceWall = Vars.content.block("cryon-cryon-ice-wall");
         if(iceWall == null) {
@@ -100,13 +105,27 @@ public class CryonPlanetGenerator extends PlanetGenerator{
             Log.warn("ore-aluminum not found, using oreThorium");
             oreAluminum = Blocks.oreThorium;
         }
+        Fi file = Vars.tree.get("schematics/core-pioneer.msch");
+        if(file.exists()){
+            try {
+                cryonLoadout = Schematics.read(file);
+                Log.info("[Cryon] Loaded core-pioneer loadout from file");
+            } catch (IOException e) {
+                Log.err("[Cryon] Failed to load core-pioneer.msch", e);
+                cryonLoadout = Loadouts.basicShard;  // fallback
+            }
+        } else {
+            Log.warn("[Cryon] core-pioneer.msch not found, using basicShard as fallback");
+            cryonLoadout = Loadouts.basicShard;
+        }
+
     }
 
     Block[] terrain = {iceFloor, iceRock};
 
     {
         baseSeed = 2;
-        defaultLoadout = Loadouts.basicBastion;
+        defaultLoadout = cryonLoadout;
     }
 
     @Override
@@ -283,7 +302,6 @@ public class CryonPlanetGenerator extends PlanetGenerator{
         state.rules.placeRangeCheck = true;
 
         Schematics.placeLaunchLoadout(spawnX, spawnY);
-
         state.rules.waves = true;
         state.rules.waveTeam = Team.crux;
         float difficulty = sector.threat * 10f;

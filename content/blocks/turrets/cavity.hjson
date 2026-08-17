@@ -2,7 +2,7 @@ type: LaserTurret
 name: "束腔"
 description: "发射高能持续激光束。"
 size: 2
-health: 850
+health: 450
 range: 112
 category: turret
 shootDuration: 60

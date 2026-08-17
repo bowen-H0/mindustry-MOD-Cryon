@@ -2,7 +2,7 @@ type: PowerTurret
 name: "Nebula"
 description: "Massive electric turret that fires strange plasma missiles which split into homing warheads. Draws heavy power."
 size: 3
-health: 4200
+health: 2200
 range: 250
 reload: 90
 recoil: 3

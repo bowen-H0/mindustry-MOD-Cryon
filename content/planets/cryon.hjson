@@ -13,41 +13,90 @@ lightSrcTo: 0.05
 lightDstFrom: 0.05
 lightDstTo: 0.05
 mesh: [
-
   {
     type: NoiseMesh
     planet: cryon
-    divisions: 5
+    divisions: 6
     seed: 12
-    radius: 1.00
-    color1: 4a6880ff
-    color2: 2a3a48ff
-    octaves: 4
-    persistence: 0.5
-    scale: 1.5
-    mag: 0.6
-  },
-
+    radius: 0.85
+    color1: 020406ff
+    color2: 010203ff
+    octaves: 5
+    persistence: 0.6
+    scale: 1.2
+    mag: 0.8
+  }
   {
-    type: SunMesh
-    divisions: 5
-    octaves: 60
-    persistence: 0.2
-    scl: 1.2
-    pow: 1.0
-    colorScale: 1.0
-    colors: [
-        ffffff33
-        ffffff22
-        4a688044
-    ]
-  },
+    type: NoiseMesh
+    planet: cryon
+    divisions: 6
+    seed: 12
+    radius: 0.90
+    color1: 04060aff
+    color2: 020408ff
+    octaves: 5
+    persistence: 0.6
+    scale: 1.2
+    mag: 0.8
+  }
+  {
+    type: NoiseMesh
+    planet: cryon
+    divisions: 6
+    seed: 12
+    radius: 0.94
+    color1: 080c14ff
+    color2: 040810ff
+    octaves: 5
+    persistence: 0.6
+    scale: 1.2
+    mag: 0.8
+  }
+  {
+    type: NoiseMesh
+    planet: cryon
+    divisions: 6
+    seed: 12
+    radius: 0.97
+    color1: 0e1418ff
+    color2: 080c10ff
+    octaves: 5
+    persistence: 0.6
+    scale: 1.2
+    mag: 0.8
+  }
+  {
+    type: NoiseMesh
+    planet: cryon
+    divisions: 6
+    seed: 12
+    radius: 0.99
+    color1: 141a1aff
+    color2: 0c1010ff
+    octaves: 5
+    persistence: 0.6
+    scale: 1.2
+    mag: 0.8
+  }
+  {
+    type: NoiseMesh
+    planet: cryon
+    divisions: 6
+    seed: 12
+    radius: 1.01
+    color1: 1a1e20ff
+    color2: 121618ff
+    octaves: 4
+    persistence: 0.4
+    scale: 1.5
+    mag: 0.3
+  }
   {
     type: HexSkyMesh
     speed: 0.8
     divisions: 5
     radius: 0.15
-    color: a0c0e066
+    color: 6688aa77
     octaves: 3
     persistence: 0.4
     scl: 2.0
@@ -55,6 +104,8 @@ mesh: [
     seed: 7
   }
 ]
+
+
 hasAtmosphere: true
 atmosphereRadIn: 0.001
 atmosphereRadOut: 0.03

@@ -334,7 +334,7 @@ public class ExampleJavaMod extends Mod {
             range = 260;
             shootCone = 15f;
             ammoUseEffect = Fx.casing1;
-            health = 22500;
+            health = 12500;
             inaccuracy = 2f;
             rotateSpeed = 10f;
             researchCostMultiplier = 0.05f;
@@ -558,6 +558,7 @@ public class ExampleJavaMod extends Mod {
                     "cryon-magnesium"
             });
         });
+
         HeatBoostTurret.inject("cryon-spiral", 4f, 1.0f);
         HeatBoostTurret.inject("cryon-torrent", 4f, 1.0f);
 

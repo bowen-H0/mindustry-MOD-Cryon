@@ -632,7 +632,7 @@ public class CryonTechTree{
         });
 
         Log.info("[CryonTechTree] Tech tree loaded");
-        DebugUnlock.enabled = true;
-        DebugUnlock.apply();
+        //DebugUnlock.enabled = true;
+        //DebugUnlock.apply();
     }
 }

@@ -20,6 +20,6 @@ lightColor: eab678ff
 bottomColor: 565666ff
 itemCapacity: 20
 consumes: {
-  power: 3.0
-  liquid: hydrogen/0.15
+  power: 0.5
+  liquid: hydrogen/0.5
 }

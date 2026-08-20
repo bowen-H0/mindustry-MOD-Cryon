@@ -4,7 +4,7 @@ description: "通过分解臭氧释放能量产生电力。"
 size: 1
 health: 40
 category: power
-powerProduction: 1.8
+powerProduction: 2.8
 consumes: {
   liquid: ozone/0.1
 }

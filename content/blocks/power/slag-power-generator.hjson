@@ -4,7 +4,7 @@ description: "Burns slag directly to generate power."
 size: 2
 health: 90
 category: power
-powerProduction: 1.8
+powerProduction: 2.8
 generateEffect: turbinegenerate
 effectChance: 0.05
 hasLiquids: true

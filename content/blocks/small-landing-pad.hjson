@@ -12,8 +12,8 @@ requirements: [
 ]
 itemCapacity: 20
 liquidCapacity: 300.0
-consumeLiquidAmount: 150.0
+consumeLiquidAmount: 50.0
 consumeLiquid: cryofluid
 consumes: {
-  power: 3.0
+  power: 0.3
 }

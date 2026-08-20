@@ -1,20 +1,20 @@
 type: AttributeCrafter
 name: "镍矿钻井"
-description: "消耗大量电力，在地热区域钻取镍矿。"
+description: "消耗大量电力，钻取镍矿。在地热区域效率更高。"
 size: 3
 health: 120
 category: production
 attribute: cryothermal
-baseEfficiency: 0.0
-minEfficiency: 9.0
-boostScale: 0.1111
+baseEfficiency: 1.0
+minEfficiency: 0.01
+boostScale: 0.2
 craftTime: 140.0
 hasPower: true
 hasItems: true
 consumes: {
-  power: 10.0
+  power: 5.0
 }
-outputItem: nickel/1
+outputItem: nickel/2
 drawer: {
   type: DrawMulti
   drawers: [

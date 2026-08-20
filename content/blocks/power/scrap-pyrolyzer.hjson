@@ -20,6 +20,8 @@ results: [
   magnesium/2
   silicon/2
   dry-ice/1
+  titanium/1
+  crystal-sand/2
 ]
 requirements: [
   aluminum/55

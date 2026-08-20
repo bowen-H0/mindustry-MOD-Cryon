@@ -360,6 +360,10 @@ public class ExampleJavaMod extends Mod {
         UnitType littorina = Vars.content.unit("cryon-littorina");
         UnitType natica = Vars.content.unit("cryon-natica");
         Item farstarAlloy = Vars.content.item("cryon-farstar-alloy");
+        Item magnesium = CryonContent.item("magnesium");
+        Item aluminum = CryonContent.item("aluminum");
+
+
         Planet cryonPlanet = Vars.content.planet("cryon-cryon");
         // generator
         if(cryonPlanet != null) {
@@ -379,6 +383,16 @@ public class ExampleJavaMod extends Mod {
             };
 
         }
+        fluxBarrier.requirements(Category.effect, BuildVisibility.shown, new ItemStack[]{
+                new ItemStack(Items.graphite, 80),
+                new ItemStack(magnesium, 60),
+                new ItemStack(aluminum, 100),
+        });
+        agitatorTower.requirements(Category.effect, BuildVisibility.shown, new ItemStack[]{
+                new ItemStack(farstarAlloy, 60),
+                new ItemStack(Items.phaseFabric, 40),
+                new ItemStack(Items.silicon, 80),
+        });
 
 
         if (cryonPlanet == null) Log.warn("[CryonCore] Cryon is not enabled.");

@@ -4,7 +4,7 @@ description: "通过燃烧氢气产生电力。"
 size: 1
 health: 40
 category: power
-powerProduction: 1.5
+powerProduction: 2.5
 consumes: {
   liquid: hydrogen/0.1
 }

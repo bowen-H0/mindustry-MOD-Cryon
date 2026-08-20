@@ -168,6 +168,8 @@ public class CryonTechTree{
         addAuto(Kind.LIQUID, "slag", "water");
         addAuto(Kind.LIQUID, "tritium", "deuterium");
         addAuto(Kind.LIQUID, "water", "dry-ice");
+        addAuto(Kind.LIQUID, "cryofluid", "water");
+
 
         // ---- BLOCK ----
         addAuto(Kind.BLOCK, "abyss", "penetrate");
@@ -194,7 +196,8 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "core-pioneer", null); // 根节点,单独处理
         addAuto(Kind.BLOCK, "cryo-conduit", "core-pioneer");
         addAuto(Kind.BLOCK, "cryo-constructor", "silicon-separator");
-        addAuto(Kind.BLOCK, "cryo-container", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "cryo-container", "cryo-unloader");
+
         addAuto(Kind.BLOCK, "cryo-electric-heater", "magnesium-converter");
         addAuto(Kind.BLOCK, "cryo-electrolyzer", "cryon-water-extractor");
         addAuto(Kind.BLOCK, "cryo-heat-redirector", "cryo-electric-heater");
@@ -202,7 +205,7 @@ public class CryonTechTree{
 
 
         addAuto(Kind.BLOCK, "cryo-liquid-bridge", "cryo-conduit");
-        addAuto(Kind.BLOCK, "cryo-phase-fabric-bridge", "cryo-liquid-bridge");
+        addAuto(Kind.BLOCK, "cryo-phase-fabric-liquid-bridge", "cryo-liquid-bridge");
 
         addAuto(Kind.BLOCK, "cryo-liquid-container", "cryo-conduit");
         addAuto(Kind.BLOCK, "cryo-liquid-junction", "cryo-conduit");
@@ -210,6 +213,8 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "cryo-liquid-tank", "cryo-liquid-container");
         addAuto(Kind.BLOCK, "cryo-message", "silicon-separator");
         addAuto(Kind.BLOCK, "cryo-payload-conveyor", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "cryo-unloader", "vacuum-conduit");
+        addAuto(Kind.BLOCK, "nickel-conveyor", "cryo-unloader");
         addAuto(Kind.BLOCK, "cryo-payload-conveyor-large", "cryo-payload-conveyor");
         addAuto(Kind.BLOCK, "cryo-mender", "hydrothermal-generator");
         addAuto(Kind.BLOCK, "cryo-repair-tower", "cryo-mender");
@@ -225,7 +230,7 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "hydrogen-generator", "magnesium-generator");
         addAuto(Kind.BLOCK, "ozone-generator", "hydrogen-generator");
 
-        addAuto(Kind.BLOCK, "constructor-node", "phase-reactor");
+        addAuto(Kind.BLOCK, "constructor-node", "aluminum-node");
         addAuto(Kind.BLOCK, "construct-wave-emitter", "constructor-node");
         addAuto(Kind.BLOCK, "constructor-drill", "construct-wave-emitter");
 
@@ -264,7 +269,6 @@ public class CryonTechTree{
 
         addAuto(Kind.BLOCK, "slag-power-generator", "magnesium-generator");
 
-        addAuto(Kind.BLOCK, "small-launch-pad", "vacuum-conduit");
         addAuto(Kind.BLOCK, "spark", "gem");
         addAuto(Kind.BLOCK, "spiral", "core-pioneer");
         addAuto(Kind.BLOCK, "titanium-drill", "melting-drill");
@@ -384,7 +388,7 @@ public class CryonTechTree{
 
         sectorGate("cryon-neutron-flux-zone",
                 "neutron-activator", "nanofiber-weaver", "phase-constructor",
-                "t3universal-assembler", "nebula");
+                "t3universal-assembler", "nebula","vulcan");
 
         sectorGate("cryon-fusion-bastion",
                 "phase-reactor", "agitator-tower");
@@ -472,7 +476,8 @@ public class CryonTechTree{
                     Log.warn("[CryonTechTree] Liquid not found: " + e.name + ", skipping");
                     return;
                 }
-                TechNode node = node(liquid, new ItemStack[]{}, () -> buildChildrenOf(e.name));
+                Seq<Objective> objs = Seq.with(new Produce(liquid));
+                TechNode node = node(liquid, new ItemStack[]{}, objs, () -> buildChildrenOf(e.name));
 
                 if (liquid.name.startsWith("cryon-")) {
                     liquid.shownPlanets = ObjectSet.with(cryonPlanet);

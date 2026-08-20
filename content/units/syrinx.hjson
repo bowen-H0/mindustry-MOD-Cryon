@@ -1,0 +1,114 @@
+name: Syrinx
+type: flying
+flying: true
+health: 17500
+armor: 11
+speed: 0.6
+rotateSpeed: 1.6
+hitSize: 56
+itemCapacity: 120
+targetAir: true
+targetGround: true
+faceTarget: false
+lowAltitude: true
+controller: flyingAI
+engineSize: 7
+engineOffset: 43
+weapons: [
+  {
+    name: syrinx-heavy-cannon
+    x: 18
+    y: 5
+    rotate: true
+    mirror: true
+    reload: 75
+    recoil: 6
+    shake: 5
+    shootY: 12
+    shadow: 10
+    shootSound: shootBig
+    shoot: {
+      type: ShootAlternate
+      barrels: 2
+      shots: 1
+    }
+    bullet: {
+      type: BasicBulletType
+      damage: 180
+      speed: 8.5
+      lifetime: 40
+      collidesAir: true
+      collidesGround: true
+
+      width: 13
+      height: 34
+      backColor: 4a1580
+      frontColor: e8c8ff
+
+      trailWidth: 4.5
+      trailLength: 18
+      trailColor: 9b4dff
+
+      shootEffect: shootBigSmoke
+      smokeEffect: shootBig
+      hitEffect: massiveExplosion
+      despawnEffect: massiveExplosion
+      hitColor: bf92f9
+      hitSound: spark
+
+      lightning: 5
+      lightningLength: 22
+      lightningLengthRand: 16
+      lightningDamage: 45
+      lightningColor: c9a0ff
+
+      fragBullet: {
+        type: ShrapnelBulletType
+        length: 70
+        damage: 25
+        width: 9
+        toColor: bf92f9
+        serrations: 4
+      }
+      fragBullets: 4
+      fragSpread: 30
+      fragVelocityMin: 0.5
+      fragVelocityMax: 1.3
+    }
+  }
+  {
+    name: syrinx-cannon
+    x: 20
+    y: -16
+    rotate: true
+    mirror: true
+    reload: 32
+    shootCone: 20
+    shadow: 9
+    recoil: 2
+    shake: 2
+    shootSound: shootBig
+    bullet: {
+      type: ArtilleryBulletType
+      collidesAir: true
+      collidesGround: true
+      collidesTiles: true
+      speed: 5.5
+      lifetime: 32
+      width: 12
+      height: 17
+      backColor: 4a1580
+      frontColor: e8c8ff
+      damage: 50
+      splashDamage: 110
+      splashDamageRadius: 34
+      shootEffect: shootBigSmoke
+      hitEffect: massiveExplosion
+      despawnEffect: massiveExplosion
+      hitColor: bf92f9
+      trailEffect: artilleryTrail
+      trailSize: 3.5
+      trailInterval: 2.5
+    }
+  }
+]

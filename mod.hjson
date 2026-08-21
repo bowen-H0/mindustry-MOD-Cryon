@@ -29,7 +29,7 @@ Supported languages: [cyan]English[] / [cyan]中文[]
 This mod is currently in testing.
 '''
 #the mod version
-version: 20.3.0
+version: 20.4.0
 #the minimum game build required to run this mod
 minGameVersion: 154
 

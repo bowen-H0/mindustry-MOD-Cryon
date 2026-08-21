@@ -187,6 +187,7 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "nickel-wall-large", "nickel-wall");
 
         addAuto(Kind.BLOCK, "composite-wall", "cryo-titanium-wall-large");
+        addAuto(Kind.BLOCK, "composite-wall-large", "composite-wall");
         addAuto(Kind.BLOCK, "charged-surge-wall", "cryo-titanium-wall-large");
         addAuto(Kind.BLOCK, "charged-surge-wall-large", "charged-surge-wall");
 

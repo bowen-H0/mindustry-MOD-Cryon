@@ -26,7 +26,6 @@ weapons: [
     shake: 5
     shootY: 12
     shadow: 10
-    shootSound: shootBig
     shoot: {
       type: ShootAlternate
       barrels: 2
@@ -50,11 +49,9 @@ weapons: [
       trailColor: 9b4dff
 
       shootEffect: shootBigSmoke
-      smokeEffect: shootBig
       hitEffect: massiveExplosion
       despawnEffect: massiveExplosion
       hitColor: bf92f9
-      hitSound: spark
 
       lightning: 5
       lightningLength: 22
@@ -87,7 +84,6 @@ weapons: [
     shadow: 9
     recoil: 2
     shake: 2
-    shootSound: shootBig
     bullet: {
       type: ArtilleryBulletType
       collidesAir: true

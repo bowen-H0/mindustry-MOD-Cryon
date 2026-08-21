@@ -72,6 +72,7 @@ public class ExampleJavaMod extends Mod {
     public static ConstructorDrill constructorDrill;
 
     public static PowerTurret abyss;
+    public static PowerTurret kismet;
 
     // ══════════════════════════════════════════════════════════════
     //  loadContent
@@ -342,6 +343,107 @@ public class ExampleJavaMod extends Mod {
 
             limitRange(5f);
         }};
+        kismet = new PowerTurret("kismet") {{
+            size = 3;
+
+            shootSound = Sounds.shootForeshadow;
+            loopSound = Sounds.none;
+
+            shoot = new ShootPattern() {{
+                shots = 1;
+                firstShotDelay = 0f;
+            }};
+            shootWarmupSpeed = 0.03f;
+
+            shootType = new KismetBulletType(4.5f, 4f) {{
+                width = 10f;
+                height = 14f;
+                lifetime = 60f;
+
+                // 正常红色弹药配色
+                frontColor = Color.valueOf("ff3333"); // 弹头主色
+                backColor  = Color.valueOf("aa1616"); // 弹头暗部/后半段
+                hitColor   = trailColor = Color.valueOf("ff3333");
+
+                // 长拖尾
+                trailLength = 26;       // 拖尾节点数量，越大越长
+                trailWidth  = 2.4f;     // 拖尾宽度
+                trailColor  = Color.valueOf("ff3333");
+                trailInterval = 1f;     // 拖尾采样间隔，越小越密
+
+                despawnEffect = hitEffect = Fx.hitLancer;
+                pierceArmor = true;
+                linkRange = 110f;
+                shareFraction = 1.0f;
+                linkColor = Color.valueOf("ff2b2b"); // 链接光效也用红色，呼应整体邪恶感
+            }};
+
+            drawer = new DrawTurret("reinforced-"){{
+
+                // 只在开火瞬间显示：recoil 在开火时冲到1，然后迅速回落到0，平时为0（隐藏）
+                var arrayProgress = PartProgress.recoil;
+                Color arrayColor = Color.valueOf("ffb3b3");
+
+                parts.addAll(
+                        // 中心方块：shapes=1、haloRadius=0，相当于单独一个方块摆在炮塔正中心
+                        new HaloPart(){{
+                            progress = arrayProgress;
+                            color = arrayColor;
+                            sides = 4; hollow = true;
+                            stroke = 0f; strokeTo = 2.2f;
+                            radius = 6f;
+                            shapes = 1;
+                            haloRadius = 0f;
+                            haloRotateSpeed = 2f; // 方块本身自转
+                            layer = Layer.effect;
+                        }},
+
+                        // 外环：数量适中，不做尖刺，也不过密，围绕中心方块
+                        new HaloPart(){{
+                            progress = arrayProgress;
+                            color = arrayColor;
+                            tri = false;
+                            shapes = 10;
+                            radius = 1.6f;
+                            haloRadius = 14f;
+                            haloRotateSpeed = -1.2f;
+                            layer = Layer.effect;
+                        }}
+                );
+            }};
+            reload = 90f;
+            range = 220f;
+            inaccuracy = 1f;
+            rotateSpeed = 6f;
+            recoil = 2f;
+            shootCone = 20f;
+            health = 900;
+            armor = 6f;
+
+            hasPower = true;
+            consumePower(4f);
+            unitSort = (unit, x, y) -> {
+                // 先检查是否在链接中
+                if (KismetBulletType.links.containsKey(unit) ||
+                        KismetBulletType.links.containsValue(unit, true)) {
+                    return 10000f; // 大值，排到最后
+                }
+                // 再检查是否已被标记
+                if (KismetBulletType.markedUnits.contains(unit)) {
+                    return 5000f; // 中等值，排在已链接之前
+                }
+                // 未被标记和链接的敌人优先
+                return unit.dst(x, y); // 按距离排序
+            };
+
+            targetGround = true;
+            targetAir = true;
+
+            category = Category.turret;
+            buildVisibility = BuildVisibility.shown;
+
+            researchCostMultiplier = 0.3f;
+        }};
         OblivionUnit.load();
     }
 
@@ -585,6 +687,15 @@ public class ExampleJavaMod extends Mod {
         });
         Events.run(Trigger.draw, () -> {
             FluxShieldRenderer.drawFluxShields();
+        });
+        // 添加渲染钩子 - 绘制链接
+        Events.run(Trigger.draw, () -> {
+            KismetBulletType.drawLinks();
+        });
+
+        // 添加更新钩子 - 清理无效链接
+        Events.run(Trigger.update, () -> {
+            KismetBulletType.cleanup();
         });
 
 

@@ -1,16 +1,16 @@
 package example;
 
-import arc.graphics.Color;
+import arc.Core;
 import arc.struct.*;
-import arc.util.Log;
+import arc.util.*;
 import mindustry.*;
 import mindustry.gen.*;
 import mindustry.graphics.Pal;
 import mindustry.ui.*;
 import mindustry.world.*;
+import mindustry.world.meta.*;
 
 public class ConstructorBlock extends Block {
-
     public boolean outputsConstructor = false;
     public boolean consumesConstructor = false;
 
@@ -21,16 +21,21 @@ public class ConstructorBlock extends Block {
     }
 
     @Override
+    public void setStats() {
+        super.setStats();
+    }
+
+    @Override
     public void setBars() {
         super.setBars();
-        addBar("构造", (ConstructorBuild b) ->
+        addBar("constructor", (ConstructorBuild b) ->
                 new Bar(
                         () -> {
                             ConstructorGraph g = b.constructorGraph;
-                            if (g == null) return "构造: --";
+                            if (g == null) return Core.bundle.get("bar.constructor.none");
                             float balance = g.getBalance();
                             String sign = balance >= 0 ? "+" : "";
-                            return "构造: " + sign + (int) (balance * 60);
+                            return Core.bundle.format("bar.constructor", sign + (int) (balance * 60));
                         },
                         () -> Pal.accent,
                         () -> b.constructorGraph != null ? b.constructorGraph.getSatisfaction() : 0f
@@ -39,9 +44,7 @@ public class ConstructorBlock extends Block {
     }
 
     // ---------------------------------------------------------------
-
     public class ConstructorBuild extends Building {
-
         public ConstructorGraph constructorGraph;
         public IntSeq constructorLinkPositions = new IntSeq();
         public float constructorSatisfaction = 1f;
@@ -57,7 +60,6 @@ public class ConstructorBlock extends Block {
             }
             return out;
         }
-
 
         public void applyConstructorSatisfaction(float sat) {
             this.constructorSatisfaction = sat;
@@ -76,13 +78,11 @@ public class ConstructorBlock extends Block {
             if (enabled && efficiency > 0f) {
                 consume();
             }
-
         }
 
         @Override
         public void onRemoved() {
             super.onRemoved();
-
             if (constructorGraph != null) {
                 constructorGraph.removeBuilding(this);
                 constructorGraph = null;

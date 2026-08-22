@@ -145,7 +145,7 @@ public class UniversalUnitAssembler extends mindustry.world.blocks.payloads.Payl
                 new Bar(
                         () -> {
                             float boost =( e.constructorSatisfaction*maxConstructorEfficiency) ;
-                            return "structure: " + (int)(boost * 100) + "%";
+                            return Core.bundle.format("bar.constructor.structure", (int)(boost * 100));
                         },
                         () -> Pal.accent,
                         () -> Math.min(e.constructorSatisfaction, 1f)
@@ -251,6 +251,9 @@ public class UniversalUnitAssembler extends mindustry.world.blocks.payloads.Payl
     @Override
     public void setStats() {
         super.setStats();
+        stats.add(Stat.input, StatValues.string(
+                Core.bundle.format("stat.constructor.input", (int) constructorUse)
+        ));
 
         stats.add(Stat.output, table -> {
             table.row();

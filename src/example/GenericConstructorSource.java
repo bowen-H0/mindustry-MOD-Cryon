@@ -1,5 +1,6 @@
 package example;
 
+import arc.Core;
 import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.util.Time;
@@ -18,7 +19,6 @@ public class GenericConstructorSource extends ConstructorBlock {
         consumesConstructor = false;
         update = true;
         solid = true;
-
         hasItems = true;
         hasLiquids = true;
         hasPower = true;
@@ -31,7 +31,8 @@ public class GenericConstructorSource extends ConstructorBlock {
         super.setBars();
         addBar("constructor-out", (ConstructorBuild b) ->
                 new Bar(
-                        () -> "Output: " + (int)(production * 60f / craftTime * b.efficiency) + "/s",
+                        () -> Core.bundle.format("bar.constructor.output",
+                                (int)(production * 60f / craftTime * b.efficiency)),
                         () -> activeColor,
                         () -> b.enabled ? b.efficiency : 0f
                 )
@@ -41,11 +42,14 @@ public class GenericConstructorSource extends ConstructorBlock {
     @Override
     public void setStats() {
         super.setStats();
-        stats.add(Stat.output, production * 60f / craftTime, StatUnit.powerSecond);
+        // 真实数值,不是写死;用字符串形式展示,不依赖 StatUnit
+        float perSecond = production * 60f / craftTime;
+        stats.add(Stat.output, StatValues.string(
+                Core.bundle.format("stat.constructor.output", (int) perSecond)
+        ));
     }
 
     // ==================================================================
-
     public class GenericConstructorSourceBuild extends ConstructorBuild {
         public float progress;
         public float warmup;
@@ -53,15 +57,11 @@ public class GenericConstructorSource extends ConstructorBlock {
         @Override
         public void updateTile() {
             updateConsumption();
-
             ensureGraph();
-
             warmup = Mathf.lerpDelta(warmup, enabled ? efficiency : 0f, 0.1f);
-
             if (enabled && efficiency > 0.001f) {
                 progress += warmup * Time.delta / craftTime;
             }
-
             if (progress >= 1f) {
                 consume();
                 progress -= 1f;

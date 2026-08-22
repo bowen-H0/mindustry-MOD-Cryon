@@ -4,9 +4,7 @@ description: "经过特殊处理的防御方块。能够有效阻挡激光武器
 health: 1100
 size: 1
 requirements: [
-  farstar-alloy/4
   nickel/4
-  phase-fabric/4
   quartz/4
 ]
 category: defense

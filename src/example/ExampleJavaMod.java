@@ -73,6 +73,7 @@ public class ExampleJavaMod extends Mod {
 
     public static PowerTurret abyss;
     public static PowerTurret kismet;
+    public static PowerTurret beacon;
 
     // ══════════════════════════════════════════════════════════════
     //  loadContent
@@ -444,6 +445,48 @@ public class ExampleJavaMod extends Mod {
 
             researchCostMultiplier = 0.3f;
         }};
+        beacon = new PowerTurret("beacon") {{
+            size = 3;
+
+            shootSound = Sounds.none;
+            loopSound  = Sounds.none;
+            shootEffect = Fx.none;
+            smokeEffect = Fx.none;
+
+            shoot = new ShootPattern() {{
+                shots = 1;
+                firstShotDelay = 0f;
+            }};
+
+            shootType = new BeaconBulletType(5f, 0f) {{
+                lifetime     = 20f;   // 落点确定前的极短过渡,弹体不可见
+                strikeDelay  = 90f;   // 标记后 1.5 秒光束落下
+                strikeRadius = 80f;
+                strikeDamage = 220f;
+                markColor = Color.valueOf("57c2ff");
+                beamColor = Color.valueOf("bfe9ff");
+            }};
+
+            targetGround = true;  // 直接选定地面坐标点,而不是跟踪单位
+            targetAir    = false;
+            shootCone    = 360f;
+
+            range      = 260f;
+            reload     = 180f;
+            inaccuracy = 0f;
+            rotateSpeed = 6f;
+
+            hasPower = true;
+            consumePower(6f);
+
+            health = 700;
+            armor  = 5f;
+
+            category        = Category.turret;
+            buildVisibility = BuildVisibility.shown;
+
+            researchCostMultiplier = 0.3f;
+        }};
         OblivionUnit.load();
     }
 
@@ -518,7 +561,7 @@ public class ExampleJavaMod extends Mod {
                 Items.graphite, 600,
                 Items.phaseFabric, 400
         ));
-        abyss.shownPlanets.add(cryonPlanet);
+
         constructorNode.requirements(Category.power, BuildVisibility.shown, new ItemStack[]{
                 new ItemStack(Items.phaseFabric,  10),
                 new ItemStack(farstarAlloy, 6),
@@ -697,7 +740,9 @@ public class ExampleJavaMod extends Mod {
         Events.run(Trigger.update, () -> {
             KismetBulletType.cleanup();
         });
-
+        Events.run(Trigger.draw, () -> {
+            BeaconBulletType.drawMarkers();
+        });
 
 
         //SectorIdDebug.install();

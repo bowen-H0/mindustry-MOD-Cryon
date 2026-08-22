@@ -4,9 +4,7 @@ description: "经过特殊处理的大型防御方块。拥有更大的体积与
 health: 4400
 size: 2
 requirements: [
-  farstar-alloy/16
   nickel/16
-  phase-fabric/16
   quartz/16
 ]
 category: defense

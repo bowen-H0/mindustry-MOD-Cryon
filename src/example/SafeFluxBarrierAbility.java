@@ -227,9 +227,8 @@ public class SafeFluxBarrierAbility extends Ability {
         t.add(abilityStat("repairspeed",
                 Strings.autoFixed(heatDissipationRate, 2) +
                         StatUnit.perSecond.localized())).row();
-        //todo internationalization.
-        t.add("[lightgray]Shield recovery time: " +
-                Strings.autoFixed(brokenCooldown / 60f, 1) + "s").row();
+        t.add(Core.bundle.format("ability.safefluxbarrier.recovertime",
+                Strings.autoFixed(brokenCooldown / 60f, 1))).row();
     }
 
     @Override
@@ -279,7 +278,7 @@ public class SafeFluxBarrierAbility extends Ability {
     public void displayBars(Unit unit, Table bars) {
         if (broken) {
             bars.add(new Bar(
-                    "[red]Shield is recovering[]",
+                    Core.bundle.get("ability.safefluxbarrier.recovering"),
                     Pal.remove,
                     () -> 1f - Mathf.clamp(brokenTimer / brokenCooldown)
             )).row();

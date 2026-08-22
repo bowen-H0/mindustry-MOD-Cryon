@@ -248,6 +248,7 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "hydrothermal-generator", "shattering-drill");
         addAuto(Kind.BLOCK, "isotope-separator", "cryo-electrolyzer");
         addAuto(Kind.BLOCK, "magnesium-converter", "silicon-separator");
+        addAuto(Kind.BLOCK, "electric-arc-graphitizer", "magnesium-converter");
         addAuto(Kind.BLOCK, "magnesium-generator", "silicon-separator");
         addAuto(Kind.BLOCK, "melting-drill", "hydrothermal-generator");
         addAuto(Kind.BLOCK, "micro-projector", "cryo-mender");

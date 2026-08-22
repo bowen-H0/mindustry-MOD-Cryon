@@ -24,5 +24,8 @@ consumes: {
   ]
 }
 requirements: [
-  aluminum/80
+  titanium/300
+  nickel/500
+  phase-fabric/140
+  silicon/540
 ]

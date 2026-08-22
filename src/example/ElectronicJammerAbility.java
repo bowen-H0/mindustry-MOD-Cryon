@@ -15,24 +15,19 @@ import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.meta.*;
-
 import static arc.Core.*;
 import static mindustry.Vars.*;
+
 // The most useless feature.
 public class ElectronicJammerAbility extends Ability {
-
     public float jamRadius = 160f;
-
     public float offsetRadius = 100f;
-
     public float jamChance = 0.75f;
-
     protected float warmup = 0f;
     protected float pulse  = 0f;
 
     private static float sJamX, sJamY, sOffsetRadius, sJamChance;
     private static Team  sEnemyTeam;
-
     private static final Object JAMMED = new Object();
 
     private static final Cons<Bullet> bulletConsumer = b -> {
@@ -40,14 +35,11 @@ public class ElectronicJammerAbility extends Ability {
         if (b.data == JAMMED) return;
         if (b.time > 2f) return;
         if (sJamChance < 1f && !Mathf.chance(sJamChance)) return;
-
         b.data = JAMMED;
-
         float angle = Mathf.random(360f);
         float dist  = Mathf.random(sOffsetRadius);
         float fakeX = sJamX + Mathf.cosDeg(angle) * dist;
         float fakeY = sJamY + Mathf.sinDeg(angle) * dist;
-
         float speed = b.vel.len();
         float dx = fakeX - b.x;
         float dy = fakeY - b.y;
@@ -88,7 +80,6 @@ public class ElectronicJammerAbility extends Ability {
         warmup = Mathf.lerpDelta(warmup, 1f, 0.08f);
         pulse += Time.delta / 60f;
         if (pulse > 1f) pulse -= 1f;
-
         if (warmup < 0.05f) return;
 
         sJamX         = unit.x;
@@ -112,13 +103,8 @@ public class ElectronicJammerAbility extends Ability {
 
     @Override
     public void addStats(Table t) {
-        t.add(Core.bundle.format("bullet.range",
-                Strings.autoFixed(jamRadius / tilesize, 2))).row();
-        t.add("[lightgray]Offset radius: []"
-                + Strings.autoFixed(offsetRadius, 2) + "px").row();
-        if (jamChance < 1f) {
-            t.add("[lightgray]Jam chance: []"
-                    + Strings.autoFixed(jamChance * 100f, 0) + "%").row();
-        }
+        // 不显示任何数值参数,只按强弱等级展示本地化文本
+        boolean strong = jamChance >= 0.75f;
+        t.add(Core.bundle.get(strong ? "ability.jammer.strong" : "ability.jammer.weak")).row();
     }
 }

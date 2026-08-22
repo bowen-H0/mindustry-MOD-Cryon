@@ -1,0 +1,37 @@
+type: GenericCrafter
+name: "electric-arc-graphitizer"
+description: "xxx"
+size: 3
+health: 720
+category: crafting
+craftTime: 150
+consumes: {
+  power: 12.0
+  items: [
+    dry-ice/4
+    magnesium/6
+    nickel/1
+  ]
+}
+outputItem: graphite/9
+requirements: [
+  titanium/120
+  nickel/15
+  silicon/90
+]
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawRegion
+      suffix: "-bottom"
+    }
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawFlame
+      flameColor: "99d9ff"
+    }
+  ]
+}

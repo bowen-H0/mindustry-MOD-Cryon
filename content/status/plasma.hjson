@@ -1,1 +1,9 @@
-reloadMultiplier: 0.9
+{
+  "damage": 0.1,
+  "reloadMultiplier": 0.9,
+  "color": "ffb400",
+  "effect": "hitSquaresColor",
+  "effectChance": 0.2,
+  "applyEffect": "hitSquaresColor",
+  "applyColor": "ff3333"
+}

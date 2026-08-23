@@ -1,0 +1,8 @@
+{
+  "damage": 0.3,
+  "color": "b266ff",
+  "effect": "hitSquaresColor",
+  "effectChance": 0.2,
+  "applyEffect": "hitSquaresColor",
+  "applyColor": "b266ff"
+}

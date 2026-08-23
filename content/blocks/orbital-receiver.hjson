@@ -1,0 +1,19 @@
+type: UnitReceivePad
+name: "orbital-receiver"
+description: "xxx"
+size: 3
+health: 220
+category: effect
+hasPower: true
+hasItems: true
+payloadsCapacity: 40
+reload: 120
+consumes: {
+  power: 8.0
+}
+requirements: [
+  aluminum/300
+  silicon/200
+  farstar-alloy/100
+  titanium/200
+]

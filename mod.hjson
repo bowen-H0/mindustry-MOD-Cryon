@@ -35,3 +35,6 @@ minGameVersion: 154
 
 #this is a java mod
 java: true
+
+#mods required for this mod to work
+dependencies: [unitlanuch]

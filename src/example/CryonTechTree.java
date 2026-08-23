@@ -246,6 +246,7 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "gem", "spiral");
         addAuto(Kind.BLOCK, "heating-furnace", "cryo-electric-heater");
         addAuto(Kind.BLOCK, "hydrothermal-generator", "shattering-drill");
+
         addAuto(Kind.BLOCK, "isotope-separator", "cryo-electrolyzer");
         addAuto(Kind.BLOCK, "magnesium-converter", "silicon-separator");
         addAuto(Kind.BLOCK, "electric-arc-graphitizer", "magnesium-converter");
@@ -288,6 +289,10 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "vacuum-underflow-gate", "vacuum-overflow-gate");
         addAuto(Kind.BLOCK, "small-launch-pad", "vacuum-conduit");
         addAuto(Kind.BLOCK, "small-landing-pad", "small-launch-pad");
+        addAuto(Kind.BLOCK, "orbital-ejector", "small-launch-pad");
+        addAuto(Kind.BLOCK, "orbital-receiver", "orbital-ejector");
+
+
         addAuto(Kind.BLOCK, "titanium-cargo-loader", "vacuum-conduit");
         addAuto(Kind.BLOCK, "titanium-cargo-unload-point", "titanium-cargo-loader");
 

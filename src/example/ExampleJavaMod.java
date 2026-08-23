@@ -59,6 +59,8 @@ import mindustry.game.Objectives.Objective;
 import java.io.IOException;
 
 import static mindustry.type.ItemStack.*;
+import static mindustry.world.meta.StatValues.ammo;
+
 //This project was developed using AI.
 public class ExampleJavaMod extends Mod {
 
@@ -76,8 +78,11 @@ public class ExampleJavaMod extends Mod {
     public static ConstructorDrill constructorDrill;
 
     public static PowerTurret abyss;
-    public static PowerTurret kismet;
+    public static ConstructorTurret kismet;
     public static PowerTurret beacon;
+    public static ConstructorTurret aurora;
+
+
 
     // ══════════════════════════════════════════════════════════════
     //  loadContent
@@ -492,6 +497,72 @@ public class ExampleJavaMod extends Mod {
 
             researchCostMultiplier = 0.3f;
         }};
+        aurora = new ConstructorTurret("aurora"){
+            RailBulletType auroraBullet;
+
+            {
+                float brange = range = 280f;
+
+                requirements(Category.turret, with(
+                        Items.copper, 900,
+                        Items.metaglass, 550,
+                        Items.surgeAlloy, 260,
+                        Items.plastanium, 180,
+                        Items.silicon, 650
+                ));
+
+                auroraBullet = new RailBulletType(){{
+                    shootEffect   = Fx.instShoot;
+                    hitEffect     = Fx.instHit;
+                    pierceEffect  = Fx.railHit;
+                    smokeEffect   = Fx.smokeCloud;
+                    pointEffect   = Fx.instTrail;
+                    despawnEffect = Fx.instBomb;
+                    pointEffectSpace = 20f;
+                    damage = 650;
+                    buildingDamageMultiplier = 0.2f;
+                    pierceDamageFactor = 1f;
+                    length = brange;
+                    hitShake = 5f;
+                    ammoMultiplier = 1f;
+                    statusDuration = 360f;
+                }};
+
+                ammo(ObjectMap.of(Items.surgeAlloy, auroraBullet));
+                shootType = auroraBullet; // ★ 关键补充：PowerTurret.setStats() 依赖这个字段
+
+                maxAmmo = 40;
+                ammoPerShot = 5;
+                rotateSpeed = 2f;
+                reload = 160f;
+                ammoUseEffect = Fx.casing3Double;
+                recoil = 5f;
+                cooldownTime = reload;
+                shake = 4f;
+                size = 4;
+                shootCone = 2f;
+                shootSound = Sounds.shootForeshadow;
+                unitSort = UnitSorts.strongest;
+                envEnabled |= Env.space;
+
+                coolantMultiplier = 0.4f;
+                liquidCapacity = 60f;
+                scaledHealth = 150;
+
+                coolant = consumeCoolant(1f);
+                depositCooldown = 2.0f;
+
+                hasPower = true;
+                consumePower(28f);
+                consumeConstructor(20f);
+            }
+
+            @Override
+            public void init() {
+                super.init();
+                auroraBullet.status = Vars.content.statusEffect("cryon-imbalance");
+            }
+        };
         OblivionUnit.load();
     }
 

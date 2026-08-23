@@ -1,0 +1,12 @@
+type: PowerNode
+name: "大型电力塔"
+description: "用于远距离电网中继。"
+size: 2
+health: 800
+maxNodes: 2
+laserRange: 60
+category: power
+requirements: [
+  farstar-alloy/40
+  surge-alloy/15
+]

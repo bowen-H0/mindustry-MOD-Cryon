@@ -37,4 +37,4 @@ minGameVersion: 154
 java: true
 
 #mods required for this mod to work
-dependencies: [unitlanuch]
+dependencies: []

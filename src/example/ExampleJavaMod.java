@@ -1,6 +1,7 @@
 package example;
 
 import arc.*;
+import arc.files.Fi;
 import arc.graphics.Color;
 import arc.util.*;
 import arc.struct.Seq;
@@ -14,6 +15,7 @@ import mindustry.content.TechTree;
 import mindustry.content.TechTree.TechNode;
 import mindustry.mod.*;
 import mindustry.type.*;
+import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.meta.*;
 import arc.graphics.*;
@@ -53,6 +55,8 @@ import mindustry.world.consumers.*;
 import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 import mindustry.game.Objectives.Objective;
+
+import java.io.IOException;
 
 import static mindustry.type.ItemStack.*;
 //This project was developed using AI.
@@ -164,7 +168,7 @@ public class ExampleJavaMod extends Mod {
             tier        = 3;
             drillTime   = 150;
             size        = 3;
-            constructorConsumption = 1f;
+            constructorConsumption = 4f;
         }};
 
         //Abyss
@@ -344,7 +348,7 @@ public class ExampleJavaMod extends Mod {
 
             limitRange(5f);
         }};
-        kismet = new PowerTurret("kismet") {{
+        kismet = new ConstructorTurret("kismet") {{
             size = 3;
 
             shootSound = Sounds.shootForeshadow;
@@ -423,6 +427,7 @@ public class ExampleJavaMod extends Mod {
 
             hasPower = true;
             consumePower(4f);
+            consumeConstructor(4f);
             unitSort = (unit, x, y) -> {
                 // 先检查是否在链接中
                 if (KismetBulletType.links.containsKey(unit) ||
@@ -495,6 +500,42 @@ public class ExampleJavaMod extends Mod {
     // ══════════════════════════════════════════════════════════════
     @Override
     public void init() {
+        Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
+        if(exist == null){
+            Mods.LoadedMod self = Vars.mods.locateMod("cryon");
+            if(self == null){
+                Log.err("找不到 mod 'cryon',无法定位库文件所在目录");
+                return;
+            }
+
+            Fi jar = self.root.child("单位发射台library.jar");
+            if(!jar.exists()){
+                Log.err("找不到jar文件: @", jar.absolutePath());
+                return;
+            }
+
+            try{
+                Vars.mods.importMod(jar);
+                Log.info("成功导入 unitlanuch 库,强制重启生效");
+
+                Events.on(ClientLoadEvent.class, e -> {
+                    BaseDialog dialog = new BaseDialog("@cryon.unitlanuch.restart.title");
+                    dialog.cont.add(Core.bundle.get("cryon.unitlanuch.restart")).pad(10f).wrap().width(400f);
+                    dialog.buttons.button("@ok", Icon.ok, () -> {
+                        dialog.hide();
+                        Core.app.exit();
+                    }).size(180f, 54f);
+                    dialog.show();
+                });
+
+                return;
+            }catch(IOException e){
+                Log.err("导入 unitlanuch 失败: @", e.getMessage());
+                e.printStackTrace();
+                return;
+            }
+        }
+
         UnitType peak  = Vars.content.unit("cryon-peak");
         UnitType umbra = Vars.content.unit("cryon-umbra");
         UnitType murex = Vars.content.unit("cryon-murex");
@@ -712,6 +753,7 @@ public class ExampleJavaMod extends Mod {
                     "cryon-cryo-conduit",
                     "cryon-shattering-drill",
                     "cryon-spiral",
+                    "core-outpost",
                     "cryon-unit-projector",
                     "cryon-cryon-sector-1",
                     "cryon-magnesium"
@@ -745,8 +787,7 @@ public class ExampleJavaMod extends Mod {
         });
 
 
-        //SectorIdDebug.install();
-
+        SectorIdDebug.install();
     }
 
 

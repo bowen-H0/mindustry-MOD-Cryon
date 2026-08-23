@@ -180,6 +180,7 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "aggregated-wall-large", "aggregated-wall");
         addAuto(Kind.BLOCK, "agitator-tower", "spiral");
         addAuto(Kind.BLOCK, "aluminum-node", "hydrothermal-generator");
+        addAuto(Kind.BLOCK, "superconducting-node", "aluminum-node");
         addAuto(Kind.BLOCK, "aluminum-wall", "spiral");
         addAuto(Kind.BLOCK, "aluminum-wall-large", "aluminum-wall");
         addAuto(Kind.BLOCK, "cavity", "spiral");
@@ -195,6 +196,9 @@ public class CryonTechTree{
 
 
         addAuto(Kind.BLOCK, "core-pioneer", null); // 根节点,单独处理
+        addAuto(Kind.BLOCK, "core-outpost", "core-pioneer");
+
+
         addAuto(Kind.BLOCK, "cryo-conduit", "core-pioneer");
         addAuto(Kind.BLOCK, "cryo-constructor", "silicon-separator");
         addAuto(Kind.BLOCK, "cryo-container", "cryo-unloader");
@@ -326,6 +330,10 @@ public class CryonTechTree{
         addAuto(Kind.SECTOR, "cryon-fusion-bastion", "cryon-neutron-flux-zone");
         addAuto(Kind.SECTOR, "cryon-gravel-ice", "cryon-shattered-abyss");
         addAuto(Kind.SECTOR, "cryon-ice-shoal", "cryon-sector-1");
+        addAuto(Kind.SECTOR, "desolate-zone-87", "cryon-sector-glacial-basin");
+
+        addAuto(Kind.SECTOR, "laboratory-088", "desolate-zone-87");
+
         addAuto(Kind.SECTOR, "cryon-neutron-flux-zone", "cryon-gravel-ice");
         addAuto(Kind.SECTOR, "cryon-sector-1", "core-pioneer");
         addAuto(Kind.SECTOR, "cryon-sector-frost-outpost", "cryon-sector-shattered-shoal");
@@ -361,6 +369,10 @@ public class CryonTechTree{
         sectorReq("cryon-fusion-bastion",
                 CryonContent.block("t3universal-assembler"),
                 CryonContent.unit("umbra"));
+        //T3后
+        sectorReq("laboratory-088",
+                CryonContent.block("t3universal-assembler"));
+
         // ---- SECTOR 占领门控表(方块/单位) ----
 
         sectorGate("cryon-sector-1",
@@ -644,7 +656,7 @@ public class CryonTechTree{
         });
 
         Log.info("[CryonTechTree] Tech tree loaded");
-        //DebugUnlock.enabled = true;
-        //DebugUnlock.apply();
+        DebugUnlock.enabled = true;
+        DebugUnlock.apply();
     }
 }

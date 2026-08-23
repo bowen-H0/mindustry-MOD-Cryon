@@ -1,0 +1,15 @@
+type: CoreBlock
+name: "拓进核心"
+description: "次级核心。"
+size: 5
+health: 4200
+itemCapacity: 6000
+unitType: expedition
+unitCapModifier: 60
+category: effect
+isFirstTier: false
+requirements: [
+	aluminum/1400
+	magnesium/500
+	silicon/300
+]

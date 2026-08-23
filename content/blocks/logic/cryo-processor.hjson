@@ -1,0 +1,10 @@
+type: LogicBlock
+name: "cryo-processor"
+category: logic
+requirements: [
+	titanium/80
+	silicon/120
+	graphite/60
+]
+instructionsPerTick: 6
+size: 2

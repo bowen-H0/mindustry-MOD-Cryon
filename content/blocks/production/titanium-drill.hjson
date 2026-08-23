@@ -34,9 +34,8 @@ drawer: {
   ]
 }
 requirements: [
-  aluminum/80
+  aluminum/180
   magnesium/40
-  titanium/80
   silicon/50
   graphite/50
 ]

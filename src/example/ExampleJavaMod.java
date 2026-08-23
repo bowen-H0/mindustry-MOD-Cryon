@@ -535,6 +535,11 @@ public class ExampleJavaMod extends Mod {
                 return;
             }
         }
+        Block launchBlock = Vars.content.block("unitlanuch-发射台");
+        if (launchBlock != null) launchBlock.buildVisibility = BuildVisibility.sandboxOnly;
+
+        Block receiveBlock = Vars.content.block("unitlanuch-接收台");
+        if (receiveBlock != null) receiveBlock.buildVisibility = BuildVisibility.sandboxOnly;
 
         UnitType peak  = Vars.content.unit("cryon-peak");
         UnitType umbra = Vars.content.unit("cryon-umbra");
@@ -548,8 +553,6 @@ public class ExampleJavaMod extends Mod {
         Item farstarAlloy = Vars.content.item("cryon-farstar-alloy");
         Item magnesium = CryonContent.item("magnesium");
         Item aluminum = CryonContent.item("aluminum");
-
-
         Planet cryonPlanet = Vars.content.planet("cryon-cryon");
         // generator
         if(cryonPlanet != null) {

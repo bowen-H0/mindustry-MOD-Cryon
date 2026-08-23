@@ -861,7 +861,7 @@ public class ExampleJavaMod extends Mod {
         });
 
 
-        SectorIdDebug.install();
+        //SectorIdDebug.install();
     }
 
 

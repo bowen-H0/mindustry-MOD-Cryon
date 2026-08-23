@@ -85,7 +85,7 @@ jar{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }
     }
     from(projectDir){
-        include 'mod.hjson', 'icon.png', 'shaders/**',
+        include 'mod.hjson', 'icon.png',"单位发射台library.jar", 'shaders/**',
                 'content/**', 'bundles/**', 'maps/**',
                 'schematics/**', 'scripts/**', 'sounds/**', 'sprites/**'
     }

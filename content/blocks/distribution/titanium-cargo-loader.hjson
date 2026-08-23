@@ -1,6 +1,6 @@
 type: UnitCargoLoader
 name: "钛货运装载机"
-description: "将单位装载为可运输的货物。"
+description: "单位运输货物。"
 size: 3
 category: distribution
 itemCapacity: 200

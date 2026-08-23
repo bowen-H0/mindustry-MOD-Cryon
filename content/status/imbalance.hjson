@@ -1,9 +1,8 @@
 {
-  "damage": 0.1,
-  "reloadMultiplier": 0.9,
-  "color": "ffb400",
+  "damage": 0.3,
+  "color": "b266ff",
   "effect": "hitSquaresColor",
   "effectChance": 0.2,
   "applyEffect": "hitSquaresColor",
-  "applyColor": "ff3333"
+  "applyColor": "b266ff"
 }

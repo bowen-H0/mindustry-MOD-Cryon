@@ -1,0 +1,15 @@
+type: Battery
+name: "巨型储能电池"
+description: "为工业级电网设计的超大型储能设备。"
+size: 3
+health: 1200
+consumes: {
+  powerBuffered: 120000
+}
+category: power
+requirements: [
+  titanium/420
+  magnesium/180
+  graphite/240
+  silicon/240
+]

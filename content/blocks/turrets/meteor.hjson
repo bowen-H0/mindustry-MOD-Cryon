@@ -1,0 +1,30 @@
+type: ItemTurret
+name: "陨星"
+description: "重型专精防空炮塔，发射钛制制导导弹进行远程拦截。射程极远，射速缓慢，专克空中目标。"
+size: 4
+health: 900
+range: 320
+reload: 240
+inaccuracy: 0
+targetAir: true
+targetGround: false
+maxAmmo: 20
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+ammoTypes: {
+  titanium: {
+    type: BasicBulletType
+    instantDisappear: true
+    damage: 0
+    spawnUnit: meteor-missile
+    range: 320
+  }
+}
+category: turret
+requirements: [
+  titanium/60
+  silicon/40
+aluminum/420
+]

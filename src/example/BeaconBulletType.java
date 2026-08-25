@@ -5,15 +5,12 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.content.Fx;
-import mindustry.entities.Damage;
 import mindustry.entities.Effect;
 import mindustry.entities.Units;
 import mindustry.entities.bullet.ArtilleryBulletType;
-import mindustry.entities.bullet.BulletType;
 import mindustry.game.Team;
 import mindustry.gen.Bullet;
 import mindustry.graphics.Layer;
@@ -21,19 +18,13 @@ import mindustry.graphics.Layer;
 /**
  * BeaconBulletType —— 轨道打击标记弹。
  * 基于 ArtilleryBulletType:弹道会精确落在开火瞬间选定的目标点上,
- * 不依赖真实碰撞检测,因此天然满足"直接决定落点"的需求。
- * 弹体本身完全不绘制(draw 被清空),玩家看不到任何飞行中的子弹,
- * 只会看到落点出现警告标记,延迟后蓝色光束落下造成范围伤害。
+ * 弹体本身完全不绘制,玩家看到落点警告标记,延迟后蓝色光束落下造成范围伤害。
  */
 public class BeaconBulletType extends ArtilleryBulletType {
 
-    /** 标记到光束落下之间的延迟(tick, 60tick = 1秒) */
     public float strikeDelay = 90f;
-    /** 光束打击的伤害半径 */
     public float strikeRadius = 80f;
-    /** 光束打击造成的伤害 */
     public float strikeDamage = 220f;
-    /** 警告标记 / 光束整体色调 */
     public Color markColor = Color.valueOf("57c2ff");
     public Color beamColor = Color.valueOf("bfe9ff");
 
@@ -52,16 +43,13 @@ public class BeaconBulletType extends ArtilleryBulletType {
             this.startTime = Time.time;
         }
 
-        /** 0 -> 1, 距离光束落下还剩多少进度 */
         public float progress() {
             return Mathf.clamp((Time.time - startTime) / delay);
         }
     }
 
-    /** 全局待触发的标记列表,供绘制钩子读取 */
     public static final Seq<Marker> markers = new Seq<>();
 
-    /** speed 决定"决定落点"前的极短过渡时间(弹体不可见,几乎无感知);damage 参数不使用 */
     public BeaconBulletType(float speed, float unusedDamage) {
         super(speed, 0f);
         damage = 0f;
@@ -77,31 +65,24 @@ public class BeaconBulletType extends ArtilleryBulletType {
 
     @Override
     public void draw(Bullet b) {
-        // 完全不绘制弹体本身 —— 不出现"看得见的子弹"
     }
 
     @Override
     public void update(Bullet b) {
         super.update(b);
 
-        // 子弹一生成就立即标记（第一次 update 就触发）
-        if (b.time < 1f) {  // 只在第一帧执行
-            Log.info("[Beacon] Instant mark at aim=(@, @)", b.aimX, b.aimY);
+        if (b.time < 1f) {
             mark(b.team, b.aimX, b.aimY);
-            b.remove();  // 立即销毁子弹
+            b.remove();
         }
     }
 
-
     @Override
     public void hit(Bullet b, float x, float y) {
-        Log.info("[Beacon] hit() called! aim=(@, @), hit=(@, @)", b.aimX, b.aimY, x, y);
-        // 标记目标点
-        mark(b.team, b.aimX, b.aimY);  // 使用 aim 坐标而不是 hit 坐标
+        mark(b.team, b.aimX, b.aimY);
     }
 
     protected void mark(Team team, float x, float y) {
-        Log.info("[Beacon] mark() called at (@, @)", x, y);
         Marker m = new Marker(x, y, strikeRadius, strikeDelay, markColor, team);
         markers.add(m);
         Fx.circleColorSpark.at(x, y, markColor);
@@ -112,48 +93,24 @@ public class BeaconBulletType extends ArtilleryBulletType {
         });
     }
 
-
     protected void strike(Team team, float x, float y) {
-        Log.info("[Beacon] Strike at (@, @), damage=@, radius=@", x, y, strikeDamage, strikeRadius);
-
-        // 1. 你的自定义特效
         BeaconFx.beam.at(x, y, 0f, beamColor);
         BeaconFx.impact.at(x, y, 0f, beamColor);
 
-        // 2. 对单位造成伤害（参考 MeltingDrillInjector）
         Units.nearbyEnemies(team, x, y, strikeRadius, unit -> {
             unit.damage(strikeDamage);
-            Log.info("[Beacon] Damaged unit: @, health now: @", unit, unit.health);
         });
 
-        // 3. 对方块造成伤害（参考 MeltingDrillInjector）
         Vars.indexer.eachBlock(null, x, y, strikeRadius,
                 building -> building.team != team,
-                building -> {
-                    building.damage(strikeDamage);
-                    Log.info("[Beacon] Damaged building: @, health now: @", building, building.health);
-                }
+                building -> building.damage(strikeDamage)
         );
 
-        // 4. 使用内置爆炸特效（参考 MeltingDrillInjector 的 explosionEffect）
-        Fx.blastExplosion.at(x, y);  // 大爆炸
-        Fx.massiveExplosion.at(x, y, 0f, beamColor);
+        Fx.hitBulletColor.at(x, y, 0f, beamColor);
 
-        // 5. 附加火焰效果（参考 MeltingDrillInjector 的 fireEffect）
-        for (int i = 0; i < 8; i++) {
-            Fx.fireballsmoke.at(
-                    x + Mathf.range(strikeRadius * 0.8f),
-                    y + Mathf.range(strikeRadius * 0.8f)
-            );
-        }
-
-        // 6. 震动效果
-        Effect.shake(6f, 6f, x, y);
-
-        Log.info("[Beacon] Strike complete!");
+        Effect.shake(4f, 4f, x, y);
     }
 
-    /** 在绘制钩子里调用,渲染所有待落下的警告标记与倒计时圈 */
     public static void drawMarkers() {
         for (Marker m : markers) {
             float progress = m.progress();

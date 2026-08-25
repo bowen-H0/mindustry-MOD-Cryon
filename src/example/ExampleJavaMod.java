@@ -3,6 +3,9 @@ package example;
 import arc.*;
 import arc.files.Fi;
 import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Fill;
+import arc.graphics.g2d.Lines;
 import arc.util.*;
 import arc.struct.Seq;
 import mindustry.Vars;
@@ -81,7 +84,7 @@ public class ExampleJavaMod extends Mod {
     public static ConstructorTurret kismet;
     public static PowerTurret beacon;
     public static ConstructorTurret aurora;
-
+    public static ConstructorTurret quantum;
 
 
     // ══════════════════════════════════════════════════════════════
@@ -355,47 +358,25 @@ public class ExampleJavaMod extends Mod {
         }};
         kismet = new ConstructorTurret("kismet") {{
             size = 3;
-
             shootSound = Sounds.shootForeshadow;
             loopSound = Sounds.none;
-
             shoot = new ShootPattern() {{
                 shots = 1;
                 firstShotDelay = 0f;
             }};
             shootWarmupSpeed = 0.03f;
-
             shootType = new KismetBulletType(4.5f, 4f) {{
                 width = 10f;
                 height = 14f;
                 lifetime = 60f;
-
-                // 正常红色弹药配色
-                frontColor = Color.valueOf("ff3333"); // 弹头主色
-                backColor  = Color.valueOf("aa1616"); // 弹头暗部/后半段
-                hitColor   = trailColor = Color.valueOf("ff3333");
-
-                // 长拖尾
-                trailLength = 26;       // 拖尾节点数量，越大越长
-                trailWidth  = 2.4f;     // 拖尾宽度
-                trailColor  = Color.valueOf("ff3333");
-                trailInterval = 1f;     // 拖尾采样间隔，越小越密
-
-                despawnEffect = hitEffect = Fx.hitLancer;
-                pierceArmor = true;
                 linkRange = 110f;
                 shareFraction = 1.0f;
-                linkColor = Color.valueOf("ff2b2b"); // 链接光效也用红色，呼应整体邪恶感
+                linkColor = Color.valueOf("ff2b2b");
             }};
-
             drawer = new DrawTurret("reinforced-"){{
-
-                // 只在开火瞬间显示：recoil 在开火时冲到1，然后迅速回落到0，平时为0（隐藏）
                 var arrayProgress = PartProgress.recoil;
                 Color arrayColor = Color.valueOf("ffb3b3");
-
                 parts.addAll(
-                        // 中心方块：shapes=1、haloRadius=0，相当于单独一个方块摆在炮塔正中心
                         new HaloPart(){{
                             progress = arrayProgress;
                             color = arrayColor;
@@ -407,8 +388,6 @@ public class ExampleJavaMod extends Mod {
                             haloRotateSpeed = 2f; // 方块本身自转
                             layer = Layer.effect;
                         }},
-
-                        // 外环：数量适中，不做尖刺，也不过密，围绕中心方块
                         new HaloPart(){{
                             progress = arrayProgress;
                             color = arrayColor;
@@ -429,30 +408,22 @@ public class ExampleJavaMod extends Mod {
             shootCone = 20f;
             health = 900;
             armor = 6f;
-
             hasPower = true;
             consumePower(4f);
             consumeConstructor(4f);
             unitSort = (unit, x, y) -> {
-                // 先检查是否在链接中
-                if (KismetBulletType.links.containsKey(unit) ||
-                        KismetBulletType.links.containsValue(unit, true)) {
-                    return 10000f; // 大值，排到最后
+                if (KismetBulletType.unitGroup.containsKey(unit)) {
+                    return 10000f;
                 }
-                // 再检查是否已被标记
                 if (KismetBulletType.markedUnits.contains(unit)) {
-                    return 5000f; // 中等值，排在已链接之前
+                    return 5000f;
                 }
-                // 未被标记和链接的敌人优先
-                return unit.dst(x, y); // 按距离排序
+                return unit.dst(x, y);
             };
-
             targetGround = true;
             targetAir = true;
-
             category = Category.turret;
             buildVisibility = BuildVisibility.shown;
-
             researchCostMultiplier = 0.3f;
         }};
         beacon = new PowerTurret("beacon") {{
@@ -491,36 +462,149 @@ public class ExampleJavaMod extends Mod {
 
             health = 700;
             armor  = 5f;
-
+            recoil=0;
             category        = Category.turret;
             buildVisibility = BuildVisibility.shown;
 
             researchCostMultiplier = 0.3f;
         }};
+        Effect auroraTrail = new Effect(28f, e -> {
+            // 多层光带叠加，制造极光的层次感
+            for(int i = 0; i < 3; i++){
+                float offset = i * 6f - 6f; // 三层轨迹左右微微错开
+                float widthMul = 1f - i * 0.25f;
+
+                // 用噪声让颜色随时间、随位置流动，制造"飘动"的极光感
+                float colorShift = Mathf.absin(e.time + i * 30f, 12f, 1f);
+                Draw.color(
+                        Color.valueOf("ffffff"),
+                        Color.valueOf("d94dff"),
+                        Mathf.clamp(e.fin() + colorShift * 0.3f)
+                );
+                Draw.alpha(e.fout() * (0.9f - i * 0.25f));
+
+                Lines.stroke(3.2f * widthMul * e.fout());
+                Tmp.v1.trns(e.rotation + 90f, offset);
+                Lines.lineAngle(
+                        e.x + Tmp.v1.x, e.y + Tmp.v1.y,
+                        e.rotation, 9f + i * 2f
+                );
+            }
+
+            // 中心一条更亮更细的白紫核心线，增加"华丽感"
+            Draw.color(Color.white);
+            Draw.alpha(e.fout());
+            Lines.stroke(1.4f * e.fout());
+            Lines.lineAngle(e.x, e.y, e.rotation, 10f);
+
+            // 随机小光点点缀，像极光边缘的星芒闪烁
+            Draw.color(Color.valueOf("d94dff"));
+            Draw.alpha(e.fout() * 0.8f);
+            Angles.randLenVectors(e.id, 2, 6f * e.fin(), e.rotation, 40f, (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 1.1f * e.fout());
+            });
+
+            Drawf.light(e.x, e.y, 30f * e.fout(), Color.valueOf("d94dff"), 0.6f * e.fout());
+
+            Draw.reset();
+        });
+
+        Effect auroraShoot = new Effect(18f, e -> {
+            Draw.color(Color.white, Color.valueOf("d94dff"), e.fin());
+            Draw.alpha(e.fout());
+
+            // 中心闪光
+            Fill.circle(e.x, e.y, 5f * e.fout());
+
+            // 环形波纹向外扩散
+            Lines.stroke(2f * e.fout());
+            Lines.circle(e.x, e.y, 4f + 10f * e.fin());
+
+            // 几道放射状光刺，模拟蓄能炮口的华丽感
+            Angles.randLenVectors(e.id, 5, 14f * e.fin(), e.rotation, 50f, (x, y) -> {
+                Lines.lineAngle(e.x, e.y, Mathf.angle(x, y), 3f * e.fout());
+            });
+
+            Drawf.light(e.x, e.y, 70f * e.fout(), Color.valueOf("d94dff"), 0.8f * e.fout());
+
+            Draw.reset();
+        });
+
+        Effect auroraHit = new Effect(30f, e -> {
+            // 白紫爆闪核心
+            Draw.color(Color.white, Color.valueOf("d94dff"), e.fin());
+            Draw.alpha(e.fout());
+            Fill.circle(e.x, e.y, 6f * e.fout());
+
+            // 多层扩散冲击环
+            for(int i = 0; i < 2; i++){
+                float delay = i * 0.15f;
+                float fin = Mathf.clamp(e.fin() - delay);
+                Draw.alpha(e.fout() * (1f - i * 0.4f));
+                Lines.stroke(2.2f * (1f - i * 0.3f));
+                Lines.circle(e.x, e.y, 3f + 22f * fin);
+            }
+
+            // 破碎光屑向外飞溅
+            Draw.color(Color.valueOf("d94dff"));
+            Angles.randLenVectors(e.id, 8, 4f + 20f * e.fin(), (x, y) -> {
+                Draw.alpha(e.fout());
+                Fill.circle(e.x + x, e.y + y, 1.3f * e.fout());
+            });
+
+            Drawf.light(e.x, e.y, 60f * e.fout(), Color.valueOf("d94dff"), 0.9f * e.fout());
+
+            Draw.reset();
+        });
+
+        Effect auroraPierce = new Effect(16f, e -> {
+            Draw.color(Color.white, Color.valueOf("d94dff"), e.fin());
+            Draw.alpha(e.fout());
+
+            // 较小的穿透闪光，不如命中特效那么夸张
+            Fill.circle(e.x, e.y, 3f * e.fout());
+            Lines.stroke(1.4f * e.fout());
+            Lines.circle(e.x, e.y, 2f + 8f * e.fin());
+
+            // 少量碎光点，表示能量泄漏
+            Angles.randLenVectors(e.id, 3, 3f + 6f * e.fin(), e.rotation, 30f, (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 0.9f * e.fout());
+            });
+
+            Drawf.light(e.x, e.y, 25f * e.fout(), Color.valueOf("d94dff"), 0.5f * e.fout());
+
+            Draw.reset();
+        });
+
+        Effect auroraDespawn = new Effect(22f, e -> {
+            Draw.color(Color.valueOf("d94dff"), Color.white, e.fout());
+            Draw.alpha(e.fout());
+
+            // 光束末端收缩成一点后消散
+            Fill.circle(e.x, e.y, 4f * e.fout());
+            Lines.stroke(1.6f * e.fout());
+            Lines.circle(e.x, e.y, 6f * e.fin());
+
+            Drawf.light(e.x, e.y, 20f * e.fout(), Color.valueOf("d94dff"), 0.4f * e.fout());
+
+            Draw.reset();
+        });
         aurora = new ConstructorTurret("aurora"){
             RailBulletType auroraBullet;
 
             {
-                float brange = range = 280f;
+                float brange = range = 380f;
 
-                requirements(Category.turret, with(
-                        Items.copper, 900,
-                        Items.metaglass, 550,
-                        Items.surgeAlloy, 260,
-                        Items.plastanium, 180,
-                        Items.silicon, 650
-                ));
 
                 auroraBullet = new RailBulletType(){{
-                    shootEffect   = Fx.instShoot;
-                    hitEffect     = Fx.instHit;
-                    pierceEffect  = Fx.railHit;
-                    smokeEffect   = Fx.smokeCloud;
-                    pointEffect   = Fx.instTrail;
-                    despawnEffect = Fx.instBomb;
+                    shootEffect   = auroraShoot;
+                    hitEffect     = auroraHit;
+                    pierceEffect  = auroraPierce;
+                    despawnEffect = auroraDespawn;
+                    pointEffect   = auroraTrail;
+                    hitColor      = Color.valueOf("ffffff");
                     pointEffectSpace = 20f;
-                    damage = 650;
-                    buildingDamageMultiplier = 0.2f;
+                    damage = 250;
                     pierceDamageFactor = 1f;
                     length = brange;
                     hitShake = 5f;
@@ -529,7 +613,7 @@ public class ExampleJavaMod extends Mod {
                 }};
 
                 ammo(ObjectMap.of(Items.surgeAlloy, auroraBullet));
-                shootType = auroraBullet; // ★ 关键补充：PowerTurret.setStats() 依赖这个字段
+                shootType = auroraBullet;
 
                 maxAmmo = 40;
                 ammoPerShot = 5;
@@ -561,6 +645,83 @@ public class ExampleJavaMod extends Mod {
             public void init() {
                 super.init();
                 auroraBullet.status = Vars.content.statusEffect("cryon-imbalance");
+                requirements(Category.turret, with(
+                        Items.silicon, 700,
+                        Items.surgeAlloy, 150,
+                        Items.phaseFabric, 600,
+                        CryonContent.item("aluminum"), 550
+
+                ));
+            }
+        };
+        quantum = new ConstructorTurret("quantum"){
+            BasicBulletType quantumBullet;
+            {
+                float brange = range = 220f;
+
+                quantumBullet = new BasicBulletType(11f, 95){{
+                    width = 11f;
+                    height = 16f;
+                    lifetime = brange / speed;
+                    hitEffect = Fx.hitBulletColor;
+                    despawnEffect = Fx.hitBulletColor;
+                    hitColor = Color.valueOf("ffffff");
+                    backColor = Color.valueOf("fc7272");
+                    frontColor = Color.valueOf("ffb7b7");
+
+                    trailColor = Color.valueOf("fc7272");
+                    trailWidth = 2.4f;
+                    trailLength = 12;
+
+                    ammoMultiplier = 4f;
+                    pierceCap = 1;
+                    reloadMultiplier = 1f;
+                    knockback = 1.2f;
+                    inaccuracy = 2f;
+
+                    pierceArmor = true;
+                    armorMultiplier = 0.3f;
+
+                    splashDamage = 25f;
+                    splashDamageRadius = 15f;
+
+                    hitShake = 2f;
+                    statusDuration = 30f;
+                }};
+                ammo(ObjectMap.of(Items.thorium, quantumBullet));
+                shootType = quantumBullet;
+                maxAmmo = 100;
+                ammoPerShot = 1;
+                rotateSpeed = 5f;
+                reload = 5f;
+                shootCone = 10f;
+                recoil = 0.5f;
+                cooldownTime = reload;
+                shake = 3f;
+                size = 4;
+                shootSound = Sounds.shootAlpha;
+                unitSort = UnitSorts.strongest;
+                coolantMultiplier = 0.5f;
+                liquidCapacity = 60f;
+                scaledHealth = 180;
+                coolant = consumeCoolant(1.2f);
+                depositCooldown = 1.5f;
+                hasPower = true;
+                consumePower(24f);
+                consumeConstructor(28f);
+            }
+            @Override
+            public void init() {
+                super.init();
+                quantumBullet.status = Vars.content.statusEffect("cryon-imbalance");
+                requirements(Category.turret, with(
+                        Items.silicon, 550,
+                        Items.graphite, 550,
+                        Items.surgeAlloy, 300,
+                        Items.phaseFabric, 300,
+                        CryonContent.item("farstar-alloy"), 500
+
+                ));
             }
         };
         OblivionUnit.load();

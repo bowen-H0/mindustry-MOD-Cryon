@@ -181,6 +181,8 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "agitator-tower", "spiral");
         addAuto(Kind.BLOCK, "aluminum-node", "hydrothermal-generator");
         addAuto(Kind.BLOCK, "superconducting-node", "aluminum-node");
+        addAuto(Kind.BLOCK, "power-tower-large", "superconducting-node");
+
         addAuto(Kind.BLOCK, "aluminum-wall", "spiral");
         addAuto(Kind.BLOCK, "aluminum-wall-large", "aluminum-wall");
         addAuto(Kind.BLOCK, "cavity", "spiral");
@@ -231,6 +233,8 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "deuterium-reactor", "magnesium-generator");
         addAuto(Kind.BLOCK, "neutronite-decay-generator", "deuterium-reactor");
         addAuto(Kind.BLOCK, "neutronite-thermal-battery", "neutronite-decay-generator");
+
+
         addAuto(Kind.BLOCK, "phase-reactor", "deuterium-reactor");
         addAuto(Kind.BLOCK, "hydrogen-generator", "magnesium-generator");
         addAuto(Kind.BLOCK, "ozone-generator", "hydrogen-generator");
@@ -264,6 +268,9 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "nickel-drill", "titanium-drill");
         addAuto(Kind.BLOCK, "nitrogen-separator", "magnesium-converter");
         addAuto(Kind.BLOCK, "overload-battery", "hydrothermal-generator");
+        addAuto(Kind.BLOCK, "battery-giant", "overload-battery");
+
+
         addAuto(Kind.BLOCK, "penetrate", "cavity");
         addAuto(Kind.BLOCK, "phase-constructor", "neutron-activator");
         addAuto(Kind.BLOCK, "nanofiber-weaver", "phase-constructor");

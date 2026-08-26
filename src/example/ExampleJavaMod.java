@@ -356,6 +356,7 @@ public class ExampleJavaMod extends Mod {
 
             limitRange(5f);
         }};
+
         kismet = new ConstructorTurret("kismet") {{
             size = 3;
             shootSound = Sounds.shootForeshadow;

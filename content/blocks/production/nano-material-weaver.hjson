@@ -1,6 +1,6 @@
 type: GenericCrafter
-name: "纳米纤维编织器"
-description: "编织出纳米纤维。"
+name: "纳米编织器"
+description: "编织出纳米材料。"
 size: 2
 health: 130
 category: crafting
@@ -17,7 +17,7 @@ consumes: {
     titanium/1
   ]
 }
-outputItem: nanofiber/1
+outputItem: nano-material/1
 requirements: [
   titanium/60
   silicon/40

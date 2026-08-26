@@ -1,8 +1,7 @@
-name: 纳米纤维
-description: "纳米纤维"
+name: "纳米材料"
 hardness: 2
 explosiveness: 0.0
 flammability: 0.15
 charge: 0.0
 radioactivity: 0.3
-color: e8f4ffff
+color: "e8f4ff"

@@ -101,6 +101,140 @@ ammoTypes: {
     fragLifeMin: 1
     fragOnHit: false
   }
+    surge-alloy: {
+      type: FlakBulletType
+      damage: 25
+      speed: 10
+      lifetime: 20
+      width: 12
+      height: 20
+      hitSize: 5
+      ammoMultiplier: 2
+      buildingDamageMultiplier: 0.3
+      knockback: 2
+      homingPower: 0.17
+      homingDelay: 8
+      homingRange: 80
+      explodeRange: 40
+      explodeDelay: 0
+      flakInterval: 20
+      backColor: "f6e07f"
+      frontColor: "ffffff"
+      hitColor: "f6e07f"
+      trailColor: "f6e07f"
+      trailWidth: 3.0
+      trailLength: 10
+      shootEffect: shootBigColor
+      smokeEffect: shootSmokeSquareSparse
+      hitEffect: hitSquaresColor
+      despawnEffect: hitSquaresColor
+      despawnShake: 2
+      status: cryon-plasma
+      statusDuration: 5
+      intervalBullet: {
+        type: LightningBulletType
+        lightningColor: "f6e07f"
+        lightningCone: 15
+        lightningLength: 40
+        lightningLengthRand: 4
+        damage: 10
+      }
+      bulletInterval: 20
+      intervalBullets: 1
+      intervalRandomSpread: 0
+      intervalSpread: 0
+      fragBullet: {
+        type: LightningBulletType
+        damage: 30
+        lightningColor: "f6e07f"
+        lightningCone: 360
+        lightningLength: 14
+        lightningLengthRand: 4
+        lightningType: {
+          type: BasicBulletType
+          speed: 0
+          damage: 0
+          hitEffect: hitSquaresColor
+          despawnEffect: hitSquaresColor
+        }
+      }
+      fragBullets: 3
+      fragSpread: 0
+      fragRandomSpread: 0
+      fragVelocityMin: 1
+      fragVelocityMax: 1
+      fragLifeMin: 1
+      fragOnHit: false
+    }
+  farstar-alloy: {
+    type: FlakBulletType
+    damage: 25
+    speed: 10
+    lifetime: 20
+    width: 12
+    height: 20
+    hitSize: 5
+    ammoMultiplier: 2
+    buildingDamageMultiplier: 0.3
+    knockback: 2
+    homingPower: 0.17
+    homingDelay: 8
+    homingRange: 80
+    explodeRange: 40
+    explodeDelay: 0
+    flakInterval: 20
+    backColor: "e0c8ff"
+    frontColor: "ffffff"
+    hitColor: "d6a8ff"
+    trailColor: "c98aff"
+    trailWidth: 3.0
+    trailLength: 10
+    shootEffect: shootBigColor
+    smokeEffect: shootSmokeSquareSparse
+    hitEffect: hitSquaresColor
+    despawnEffect: hitSquaresColor
+    despawnShake: 2
+    status: freezing
+    statusDuration: 5
+    intervalBullet: {
+      type: LightningBulletType
+      lightningColor: "c98aff"
+      lightningCone: 15
+      lightningLength: 40
+      lightningLengthRand: 4
+      damage: 10
+    }
+    bulletInterval: 20
+    intervalBullets: 1
+    intervalRandomSpread: 0
+    intervalSpread: 0
+    fragBullet: {
+      type: BasicBulletType
+      damage: 18
+      speed: 3.2
+      lifetime: 18
+      width: 6
+      height: 10
+      hitSize: 3
+      pierceCap: 1
+      buildingDamageMultiplier: 0.25
+      backColor: "9932cc"
+      frontColor: "e0b0ff"
+      hitColor: "d6a8ff"
+      trailColor: "c98aff"
+      trailWidth: 1.5
+      trailLength: 6
+      hitEffect: hitSquaresColor
+      despawnEffect: hitSquaresColor
+    }
+    fragBullets: 6
+    fragSpread: 30
+    fragRandomSpread: 20
+    fragVelocityMin: 0.7
+    fragVelocityMax: 1
+    fragLifeMin: 0.6
+    fragOnHit: false
+  }
 }
 category: turret
 requirements: [

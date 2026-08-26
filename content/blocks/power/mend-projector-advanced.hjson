@@ -1,0 +1,21 @@
+{
+  type: MendProjector
+  name: "mend-projector-advanced"
+  size: 2
+  health: 260
+  category: effect
+  reload: 150
+  range: 70
+  healPercent: 7
+  phaseBoost: 0
+  phaseRangeBoost: 0
+  consumes: {
+    power: 1.2
+  }
+  requirements: [
+    aluminum/120
+    magnesium/60
+    silicon/90
+    titanium/50
+  ]
+}

@@ -1,5 +1,5 @@
 type: LaserTurret
-name: "烬灭"
+name: "贯穿"
 description: "消耗大量电力，发射一道具有毁灭性穿透力的长程激光。"
 size: 4
 health: 2200

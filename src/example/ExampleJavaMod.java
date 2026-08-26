@@ -795,13 +795,16 @@ public class ExampleJavaMod extends Mod {
             generator.baseSeed = 12;
             cryonPlanet.updateLighting = false;
             cryonPlanet.generator = generator;
+            cryonPlanet.allowWaves = true;
+            cryonPlanet.allowSectorInvasion = true;
+            cryonPlanet.enemyCoreSpawnReplace = true;
             cryonPlanet.ruleSetter = r -> {
                 r.lighting = true;  // 启用光照
                 r.ambientLight = Color.valueOf("03030dd9");  // 暗环境光
                 r.fire=false;
 
-                r.fog = true;
-                r.staticFog = true;
+
+
             };
 
         }

@@ -2,4 +2,4 @@ planet: cryon
 sector: 72
 alwaysUnlocked: false
 difficulty: 7
-isLastSector: true
+isLastSector: false

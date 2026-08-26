@@ -56,7 +56,7 @@ shootType: {
     hitEffect: hitSquaresColor
     despawnEffect: hitSquaresColor
     despawnSound: explosion
-    fragBullets: 8
+    fragBullets: 4
     fragVelocityMin: 0.3
     fragBullet: {
         type: MissileBulletType

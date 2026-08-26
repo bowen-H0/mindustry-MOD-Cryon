@@ -155,7 +155,7 @@ public class CryonTechTree{
         addAuto(Kind.ITEM, "silicon", "crystal-sand");
         addAuto(Kind.ITEM, "titanium", "scrap");
         addAuto(Kind.ITEM, "surge-alloy", "titanium");
-        addAuto(Kind.ITEM, "nanofiber", "phase-fabric");
+        addAuto(Kind.ITEM, "nano-material", "phase-fabric");
 
 
 
@@ -273,7 +273,7 @@ public class CryonTechTree{
 
         addAuto(Kind.BLOCK, "penetrate", "cavity");
         addAuto(Kind.BLOCK, "phase-constructor", "neutron-activator");
-        addAuto(Kind.BLOCK, "nanofiber-weaver", "phase-constructor");
+        addAuto(Kind.BLOCK, "nano-material-weaver", "phase-constructor");
         addAuto(Kind.BLOCK, "quartz-reactor", "magnesium-converter");
         addAuto(Kind.BLOCK, "scrap-pyrolyzer", "magnesium-converter");
         addAuto(Kind.BLOCK, "shattering-drill", "core-pioneer");
@@ -347,6 +347,8 @@ public class CryonTechTree{
         addAuto(Kind.SECTOR, "cryon-sector-glacial-basin", "cryon-ice-shoal");
         addAuto(Kind.SECTOR, "cryon-sector-shattered-shoal", "cryon-ice-shoal");
         addAuto(Kind.SECTOR, "cryon-shattered-abyss", "cryon-sector-frost-outpost");
+        addAuto(Kind.SECTOR, "titanium-fortress", "cryon-fusion-bastion");
+        addAuto(Kind.SECTOR, "silent-tundra", "titanium-fortress");
 
         // ---- SECTOR 额外前提条件列表 ----
         sectorReq("cryon-ice-shoal",
@@ -379,6 +381,8 @@ public class CryonTechTree{
         //T3后
         sectorReq("laboratory-088",
                 CryonContent.block("t3universal-assembler"));
+        sectorReq("titanium-fortress",
+                CryonContent.sector("laboratory-088"));
 
         // ---- SECTOR 占领门控表(方块/单位) ----
 
@@ -413,7 +417,7 @@ public class CryonTechTree{
                 "titanium-cargo-unload-point", "nickel-drill");
 
         sectorGate("cryon-neutron-flux-zone",
-                "neutron-activator", "nanofiber-weaver", "phase-constructor",
+                "neutron-activator", "nano-material-weaver", "phase-constructor",
                 "t3universal-assembler", "nebula","vulcan");
 
         sectorGate("cryon-fusion-bastion",

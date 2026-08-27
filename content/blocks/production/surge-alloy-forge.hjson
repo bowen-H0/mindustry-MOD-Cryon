@@ -11,14 +11,14 @@ craftTime: 240.0
 itemCapacity: 50
 liquidCapacity: 100.0
 consumes: {
-  power: 60.0
+  power: 20.0
   items: [
     titanium/20
     silicon/20
     aluminum/20
     nickel/20
   ]
-  liquid: tritium/5.0
+  liquid: tritium/0.1
 }
 drawer: {
   type: DrawMulti

@@ -98,7 +98,9 @@ public class BeaconBulletType extends ArtilleryBulletType {
         BeaconFx.impact.at(x, y, 0f, beamColor);
 
         Units.nearbyEnemies(team, x, y, strikeRadius, unit -> {
-            unit.damage(strikeDamage);
+            if (unit.isGrounded()) { // 只伤害地面单位
+                unit.damage(strikeDamage);
+            }
         });
 
         Vars.indexer.eachBlock(null, x, y, strikeRadius,

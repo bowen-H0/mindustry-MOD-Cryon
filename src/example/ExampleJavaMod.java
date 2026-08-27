@@ -726,6 +726,7 @@ public class ExampleJavaMod extends Mod {
             }
         };
         OblivionUnit.load();
+        DestroyerUnit.load();
     }
 
     // ══════════════════════════════════════════════════════════════

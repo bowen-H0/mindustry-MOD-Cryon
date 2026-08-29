@@ -730,7 +730,7 @@ public class ExampleJavaMod extends Mod {
             {
                 float brange = range = 220f;
 
-                quantumBullet = new BasicBulletType(11f, 95){{
+                quantumBullet = new BasicBulletType(11f, 8){{
                     width = 11f;
                     height = 16f;
                     lifetime = brange / speed;

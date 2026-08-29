@@ -675,7 +675,7 @@ public class ExampleJavaMod extends Mod {
                     pointEffect   = auroraTrail;
                     hitColor      = Color.valueOf("ffffff");
                     pointEffectSpace = 20f;
-                    damage = 250;
+                    damage = 1200;
                     pierceDamageFactor = 1f;
                     length = brange;
                     hitShake = 5f;
@@ -730,7 +730,7 @@ public class ExampleJavaMod extends Mod {
             {
                 float brange = range = 220f;
 
-                quantumBullet = new BasicBulletType(11f, 8){{
+                quantumBullet = new BasicBulletType(11f, 58){{
                     width = 11f;
                     height = 16f;
                     lifetime = brange / speed;

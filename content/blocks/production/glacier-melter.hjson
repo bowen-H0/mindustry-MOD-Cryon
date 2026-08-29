@@ -10,7 +10,7 @@ hasPower: false
 hasLiquids: true
 hasItems: false
 liquidCapacity: 120
-outputLiquid: water/60
+outputLiquid: water/20
 requirements: [
   farstar-alloy/70
   graphite/30

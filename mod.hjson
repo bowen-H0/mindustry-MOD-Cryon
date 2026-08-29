@@ -26,10 +26,12 @@ Feel free to report issues or suggest ideas: [lightgray]github bowen-H0[]
 
 Supported languages: [cyan]English[] / [cyan]中文[]
 
+Contributors: LSK133
+
 This mod is currently in testing.
 '''
 #the mod version
-version: 20.9.0
+version: 21.0.0
 #the minimum game build required to run this mod
 minGameVersion: 159
 

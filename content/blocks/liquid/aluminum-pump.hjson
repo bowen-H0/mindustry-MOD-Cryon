@@ -1,0 +1,15 @@
+//type: Pump
+name: "aluminum-pump"
+description: "xxx"
+size: 1
+health: 100
+category: production
+hasPower: false
+hasLiquids: true
+hasItems: false
+liquidCapacity: 20.0
+pumpAmount: 0.11
+requirements: [
+  aluminum/30
+  magnesium/20
+]

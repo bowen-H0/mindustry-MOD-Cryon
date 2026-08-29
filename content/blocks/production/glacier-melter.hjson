@@ -1,0 +1,18 @@
+type: HeatCrafter
+name: "glacier-melter"
+description: "xxx"
+size: 3
+health: 160
+category: production
+heatRequirement: 18
+craftTime: 60
+hasPower: false
+hasLiquids: true
+hasItems: false
+liquidCapacity: 120
+outputLiquid: water/60
+requirements: [
+  farstar-alloy/70
+  graphite/30
+  silicon/40
+]

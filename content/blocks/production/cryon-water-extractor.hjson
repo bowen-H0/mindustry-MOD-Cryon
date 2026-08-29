@@ -1,4 +1,4 @@
-type: SolidPump
+//type: SolidPump
 name: "水提取器"
 description: "消耗电力加热并融化冰面，从而提取出水。"
 size: 2

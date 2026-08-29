@@ -1,4 +1,4 @@
-type: Drill
+//type: Drill
 name: "热融钻头"
 description: "通过热量脆化冰层开采矿物，需要持续供电。"
 size: 2

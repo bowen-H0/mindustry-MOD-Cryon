@@ -2,5 +2,8 @@
   "type": "Floor",
   "name": "cryon-broken-ice",
   "variants": 3,
-  "speedMultiplier": 1.3
+  "speedMultiplier": 1.3,
+  "attributes": {
+    "cryon-ice": 0.8
+  }
 }

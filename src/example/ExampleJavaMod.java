@@ -11,6 +11,7 @@ import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.content.Items;
+import mindustry.content.Liquids;
 import mindustry.ctype.ContentType;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType.*;
@@ -77,7 +78,10 @@ public class ExampleJavaMod extends Mod {
     public static ConstructorSource constructorSource;
     public static ConstructorSink   constructorSink;
     public static ConstructorNode   constructorNode;
-    public static GenericConstructorSource waveEmitter; // 提升为字段，方便在 init() 里设置依赖 cryon- 内容的字段
+    public static GenericConstructorSource waveEmitter;
+    public static GenericCrafter cryoElectrolyzer;
+
+
     public static ConstructorDrill constructorDrill;
 
     public static PowerTurret abyss;
@@ -92,7 +96,8 @@ public class ExampleJavaMod extends Mod {
     // ══════════════════════════════════════════════════════════════
     @Override
     public void loadContent() {
-
+        new Drill("melting-drill") {{ }};
+        new Drill("shattering-drill") {{ }};
         fluxBarrier = new FluxBarrier("flux-barrier") {{
             size             = 3;
             category         = Category.effect;
@@ -167,6 +172,60 @@ public class ExampleJavaMod extends Mod {
 
             consumePower(3f);
         }};
+        cryoElectrolyzer = new GenericCrafter("cryo-electrolyzer"){{
+
+
+            size = 3;
+            health = 240;
+            craftTime = 60f;
+            rotate = true;
+            invertFlip = true;
+            group = BlockGroup.liquids;
+
+            itemCapacity = 0;
+            liquidCapacity = 30f;
+
+            consumeLiquid(Liquids.water, 2f);
+            consumePower(1.5f);
+
+            outputLiquids = LiquidStack.with(
+                    Liquids.hydrogen, 2f,
+                    Liquids.ozone, 1.2f
+            );
+            liquidOutputDirections = new int[]{1, 3};
+
+            ambientSound = Sounds.loopElectricHum;
+            ambientSoundVolume = 0.08f;
+
+            regionRotated1 = 3;
+
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(Liquids.water, 2f),
+                    new DrawBubbles(Color.valueOf("7693e3")){{
+                        sides = 10;
+                        recurrence = 3f;
+                        spread = 6;
+                        radius = 1.5f;
+                        amount = 20;
+                    }},
+                    new DrawRegion(),
+                    new DrawLiquidOutputs(),
+                    new DrawGlowRegion(){{
+                        alpha = 0.7f;
+                        color = Color.valueOf("c4bdf3");
+                        glowIntensity = 0.3f;
+                        glowScale = 6f;
+                    }}
+            );
+
+        }
+            @Override
+            public void init() {
+                super.init();
+                requirements(Category.crafting, with(CryonContent.item("aluminum"), 60, Items.silicon, 40, Items.graphite, 40));
+            }
+        };
         constructorDrill = new ConstructorDrill("constructor-drill") {{
             requirements(Category.production, new ItemStack[]{
                     new ItemStack(Items.phaseFabric, 20),
@@ -178,6 +237,17 @@ public class ExampleJavaMod extends Mod {
             size        = 3;
             constructorConsumption = 4f;
         }};
+        new AttributeCrafter("titanium-drill") {{ }};
+        new AttributeCrafter("nickel-drill") {{ }};
+        new Pump("aluminum-pump") {{ }};
+
+        new SolidPump("cryon-water-extractor") {{ }};
+        new AttributeCrafter("slag-extractor") {{ }};
+
+
+
+
+
 
         //Abyss
         abyss = new PowerTurret("abyss"){{

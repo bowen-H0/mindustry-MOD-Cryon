@@ -1,4 +1,4 @@
-type: Drill
+//type: Drill
 name: "裂碎钻头"
 description: "安全的机械粉碎矿物。不过对常规矿物效率更低。"
 size: 2

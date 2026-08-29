@@ -1,4 +1,4 @@
-type: AttributeCrafter
+//type: AttributeCrafter
 name: "镍矿钻井"
 description: "消耗大量电力，钻取镍矿。在地热区域效率更高。"
 size: 3

@@ -1,6 +1,9 @@
 {
     "type": "Floor",
     "name": "克莱恩冰石",
-    "variants": 1,
-    "speedMultiplier": 1.2
+    "variants": 3,
+    "speedMultiplier": 1.2,
+    "attributes": {
+        "cryon-ice": 0.2
+    }
 }

@@ -1,4 +1,4 @@
-type: AttributeCrafter
+//type: AttributeCrafter
 name: "Slag Extractor"
 description: "Extract Slag."
 size: 3

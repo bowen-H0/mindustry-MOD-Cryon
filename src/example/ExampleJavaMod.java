@@ -784,7 +784,7 @@ public class ExampleJavaMod extends Mod {
             @Override
             public void init() {
                 super.init();
-                quantumBullet.status = Vars.content.statusEffect("cryon-imbalance");
+                quantumBullet.status = Vars.content.statusEffect("cryon-decay");
                 requirements(Category.turret, with(
                         Items.silicon, 550,
                         Items.graphite, 550,

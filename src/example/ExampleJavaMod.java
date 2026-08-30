@@ -675,7 +675,7 @@ public class ExampleJavaMod extends Mod {
                     pointEffect   = auroraTrail;
                     hitColor      = Color.valueOf("ffffff");
                     pointEffectSpace = 20f;
-                    damage = 250;
+                    damage = 1200;
                     pierceDamageFactor = 1f;
                     length = brange;
                     hitShake = 5f;
@@ -730,7 +730,7 @@ public class ExampleJavaMod extends Mod {
             {
                 float brange = range = 220f;
 
-                quantumBullet = new BasicBulletType(11f, 95){{
+                quantumBullet = new BasicBulletType(11f, 58){{
                     width = 11f;
                     height = 16f;
                     lifetime = brange / speed;
@@ -784,7 +784,7 @@ public class ExampleJavaMod extends Mod {
             @Override
             public void init() {
                 super.init();
-                quantumBullet.status = Vars.content.statusEffect("cryon-imbalance");
+                quantumBullet.status = Vars.content.statusEffect("cryon-decay");
                 requirements(Category.turret, with(
                         Items.silicon, 550,
                         Items.graphite, 550,

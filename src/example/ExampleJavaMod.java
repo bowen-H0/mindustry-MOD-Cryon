@@ -496,7 +496,18 @@ public class ExampleJavaMod extends Mod {
             category = Category.turret;
             buildVisibility = BuildVisibility.shown;
             researchCostMultiplier = 0.3f;
-        }};
+        }
+            @Override
+            public void init() {
+                super.init();
+                requirements(Category.turret, with(
+                        Items.graphite, 250,
+                        Items.phaseFabric, 200,
+                        CryonContent.item("neutronite"), 200
+
+                ));
+            }
+        };
         beacon = new PowerTurret("beacon") {{
             size = 3;
 
@@ -538,7 +549,18 @@ public class ExampleJavaMod extends Mod {
             buildVisibility = BuildVisibility.shown;
 
             researchCostMultiplier = 0.3f;
-        }};
+
+        }
+            @Override
+            public void init() {
+                super.init();
+                requirements(Category.turret, with(
+                        Items.silicon, 150,
+                        Items.phaseFabric, 150,
+                        CryonContent.item("farstar-alloy"), 200
+
+                ));
+            }};
         Effect auroraTrail = new Effect(28f, e -> {
             // 多层光带叠加，制造极光的层次感
             for(int i = 0; i < 3; i++){

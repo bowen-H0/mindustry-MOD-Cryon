@@ -154,7 +154,7 @@ public class CryonTechTree{
         addAuto(Kind.ITEM, "scrap", "magnesium");
         addAuto(Kind.ITEM, "silicon", "crystal-sand");
         addAuto(Kind.ITEM, "titanium", "scrap");
-        addAuto(Kind.ITEM, "surge-alloy", "titanium");
+        addAuto(Kind.ITEM, "surge-alloy", "nickel");
         addAuto(Kind.ITEM, "nano-material", "phase-fabric");
 
 
@@ -308,10 +308,18 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "titanium-cargo-unload-point", "titanium-cargo-loader");
 
 
+        addAuto(Kind.BLOCK, "aluminum-pump", "cryo-conduit");
+        addAuto(Kind.BLOCK, "glacier-melter", "cryon-water-extractor");
 
 
 
         addAuto(Kind.BLOCK, "vulcan", "torrent");
+        addAuto(Kind.BLOCK, "aurora", "gem");
+        addAuto(Kind.BLOCK, "quantum", "vulcan");
+        addAuto(Kind.BLOCK, "beacon", "gem");
+
+
+
 
         // ---- UNIT_BLOCK ----
         addAuto(Kind.UNIT_BLOCK, "mechanical-assembler", "benignitas");
@@ -349,6 +357,10 @@ public class CryonTechTree{
         addAuto(Kind.SECTOR, "cryon-shattered-abyss", "cryon-sector-frost-outpost");
         addAuto(Kind.SECTOR, "titanium-fortress", "cryon-fusion-bastion");
         addAuto(Kind.SECTOR, "silent-tundra", "titanium-fortress");
+        addAuto(Kind.SECTOR, "relay-32a", "cryon-fusion-bastion");
+        addAuto(Kind.SECTOR, "stellar-observatory", "silent-tundra");
+        addAuto(Kind.SECTOR, "exclusion-zone", "cryon-neutron-flux-zone");
+        addAuto(Kind.SECTOR, "baryon-bastion", "exclusion-zone");
 
         // ---- SECTOR 额外前提条件列表 ----
         sectorReq("cryon-ice-shoal",
@@ -384,6 +396,11 @@ public class CryonTechTree{
         sectorReq("titanium-fortress",
                 CryonContent.sector("laboratory-088"));
 
+        sectorReq("relay-32a",
+                CryonContent.sector("titanium-fortress"));
+        sectorReq("baryon-bastion",
+                CryonContent.sector("titanium-fortress"));
+
         // ---- SECTOR 占领门控表(方块/单位) ----
 
         sectorGate("cryon-sector-1",
@@ -417,11 +434,20 @@ public class CryonTechTree{
                 "titanium-cargo-unload-point", "nickel-drill");
 
         sectorGate("cryon-neutron-flux-zone",
-                "neutron-activator", "nano-material-weaver", "phase-constructor",
+                "neutron-activator", "phase-constructor",
                 "t3universal-assembler", "nebula","vulcan");
 
         sectorGate("cryon-fusion-bastion",
                 "phase-reactor", "agitator-tower");
+        sectorGate("relay-32a",
+                "beacon");
+        sectorGate("stellar-observatory",
+                "aurora");
+
+        sectorGate("baryon-bastion",
+                "surge-alloy-forge");
+        sectorGate("exclusion-zone",
+                "nano-material-weaver","quantum");
     }
 
     // ================== 索引 ==================

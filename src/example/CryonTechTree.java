@@ -241,6 +241,9 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "hydrogen-generator", "magnesium-generator");
         addAuto(Kind.BLOCK, "ozone-generator", "hydrogen-generator");
 
+        addAuto(Kind.BLOCK, "piezo-generator", "magnesium-generator");
+
+
         addAuto(Kind.BLOCK, "constructor-node", "aluminum-node");
         addAuto(Kind.BLOCK, "construct-wave-emitter", "constructor-node");
         addAuto(Kind.BLOCK, "constructor-drill", "construct-wave-emitter");
@@ -669,6 +672,24 @@ public class CryonTechTree{
                 }
             }
         }
+            // 使用栈遍历所有子节点
+        Seq<TechNode> stack = Seq.with(root);
+        while (!stack.isEmpty()) {
+            TechNode node = stack.pop();
+            if (node.content != null) {
+                UnlockableContent u = node.content;
+                if (!u.name.startsWith("cryon-")) {
+                    if (u.shownPlanets == null) {
+                        u.shownPlanets = new ObjectSet<>();
+                    }
+                    u.shownPlanets.add(cryonPlanet);
+                    u.databaseTabs.add(cryonPlanet);
+                }
+            }
+            stack.addAll(node.children);
+        }
+
+
 
         /* 隐藏小行星
         for (Planet p : Vars.content.planets()) {

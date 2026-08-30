@@ -3,11 +3,11 @@ name: "Deluge"
 description: "xxx"
 size: 4
 health: 5500
-range: 170
+range: 130
 shootY: 11
 
 liquidCapacity: 80
-liquidConsumed: 22/60
+liquidConsumed: 0.3666666667
 targetInterval: 5
 newTargetInterval: 30
 targetUnderBlocks: false
@@ -20,7 +20,7 @@ ammoTypes: {
   ozone: {
     type: ContinuousFlameBulletType
     damage: 110
-    length: 170
+    length: 130
     ammoMultiplier: 1.4
     knockback: 1.5
     pierceCap: 3
@@ -32,8 +32,8 @@ ammoTypes: {
   chlorine: {
     type: ContinuousFlameBulletType
     damage: 200
-    rangeChange: 100
-    length: 270
+    rangeChange: 80
+    length: 200
     knockback: 3
     pierceCap: 4
     buildingDamageMultiplier: 0.35

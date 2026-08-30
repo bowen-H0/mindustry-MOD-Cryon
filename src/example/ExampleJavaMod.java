@@ -89,7 +89,7 @@ public class ExampleJavaMod extends Mod {
     public static PowerTurret beacon;
     public static ConstructorTurret aurora;
     public static ConstructorTurret quantum;
-
+    public static ConsumeGenerator piezoGenerator;
 
     // ══════════════════════════════════════════════════════════════
     //  loadContent
@@ -237,6 +237,28 @@ public class ExampleJavaMod extends Mod {
             size        = 3;
             constructorConsumption = 4f;
         }};
+        piezoGenerator = new ConsumeGenerator("piezo-generator") {{
+
+            size = 2;
+            powerProduction = 900f / 60f;
+            itemDuration = 60 * 14f;
+            envEnabled = Env.any;
+            generateEffect = Fx.generatespark;
+            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+
+            consume(new ConsumeItemCharge(0.1f));
+        }
+            @Override
+            public void init() {
+                super.init();
+                requirements(Category.power, with(
+                        Items.lead, 100,
+                        Items.silicon, 75,
+                        Items.titanium, 25,
+                        Items.graphite, 75,
+                        CryonContent.item("neutronite"), 50
+                ));
+            }};
         new AttributeCrafter("titanium-drill") {{ }};
         new AttributeCrafter("nickel-drill") {{ }};
         new Pump("aluminum-pump") {{ }};

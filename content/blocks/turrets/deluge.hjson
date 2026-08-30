@@ -29,7 +29,7 @@ ammoTypes: {
     colors: ["eb7abe99", "e189f5cc", "907ef7ff", "91a4ff", "ffffff"]
     flareColor: "e189f5"
   }
-  cyanogen: {
+  chlorine: {
     type: ContinuousFlameBulletType
     damage: 200
     rangeChange: 100

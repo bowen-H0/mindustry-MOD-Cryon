@@ -1,0 +1,27 @@
+type: GenericCrafter
+name: "熔盐电解槽"
+description: "通过电解熔融盐生成钠和氯气。"
+size: 3
+health: 350
+category: crafting
+hasPower: true
+hasLiquids: true
+hasItems: true
+itemCapacity: 10
+liquidCapacity: 30.0
+craftTime: 90.0
+
+consumes: {
+  power: 2.5
+  items: salt/2
+}
+
+outputItem: sodium/1
+outputLiquid: chlorine/0.4
+
+requirements: [
+  titanium/80
+  silicon/60
+  graphite/40
+  magnesium/20
+]

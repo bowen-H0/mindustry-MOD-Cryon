@@ -4,13 +4,13 @@ description: "xxx"
 size: 3
 health: 160
 category: production
-heatRequirement: 18
+heatRequirement: 36
 craftTime: 60
 hasPower: false
 hasLiquids: true
 hasItems: false
-liquidCapacity: 120
-outputLiquid: water/20
+liquidCapacity: 60
+outputLiquid: water/6
 requirements: [
   farstar-alloy/70
   graphite/30

@@ -149,7 +149,7 @@ public class CryonTechTree{
         addAuto(Kind.ITEM, "neutronite", "nickel");
         addAuto(Kind.ITEM, "nickel", "titanium");
         addAuto(Kind.ITEM, "phase-fabric", "neutronite");
-        addAuto(Kind.ITEM, "quartz", "salt");
+        addAuto(Kind.ITEM, "quartz", "silicon");
         addAuto(Kind.ITEM, "salt", "aluminum");
         addAuto(Kind.ITEM, "scrap", "magnesium");
         addAuto(Kind.ITEM, "silicon", "crystal-sand");
@@ -157,7 +157,7 @@ public class CryonTechTree{
         addAuto(Kind.ITEM, "surge-alloy", "nickel");
         addAuto(Kind.ITEM, "nano-material", "phase-fabric");
 
-
+        addAuto(Kind.ITEM, "sodium", "salt");
 
 
         // ---- LIQUID(全部 auto) ----
@@ -169,6 +169,7 @@ public class CryonTechTree{
         addAuto(Kind.LIQUID, "tritium", "deuterium");
         addAuto(Kind.LIQUID, "water", "dry-ice");
         addAuto(Kind.LIQUID, "cryofluid", "water");
+        addAuto(Kind.LIQUID, "chlorine", "water");
 
 
         // ---- BLOCK ----
@@ -219,6 +220,7 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "cryo-liquid-router", "cryo-conduit");
         addAuto(Kind.BLOCK, "cryo-liquid-tank", "cryo-liquid-container");
         addAuto(Kind.BLOCK, "cryo-message", "silicon-separator");
+        addAuto(Kind.BLOCK, "cryo-processor", "cryo-message");
         addAuto(Kind.BLOCK, "cryo-payload-conveyor", "vacuum-conduit");
         addAuto(Kind.BLOCK, "cryo-unloader", "vacuum-conduit");
         addAuto(Kind.BLOCK, "nickel-conveyor", "cryo-unloader");
@@ -256,6 +258,9 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "hydrothermal-generator", "shattering-drill");
 
         addAuto(Kind.BLOCK, "isotope-separator", "cryo-electrolyzer");
+        addAuto(Kind.BLOCK, "molten-salt-electrolyzer", "cryo-electrolyzer");
+
+
         addAuto(Kind.BLOCK, "magnesium-converter", "silicon-separator");
         addAuto(Kind.BLOCK, "electric-arc-graphitizer", "magnesium-converter");
         addAuto(Kind.BLOCK, "magnesium-generator", "silicon-separator");

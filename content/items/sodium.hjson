@@ -1,0 +1,9 @@
+{
+  "name": "sodium",
+  "description": "一种银白色的活泼金属，具有强还原性。",
+  "hardness": 0.5,
+  "explosiveness": 0.6,
+  "flammability": 3.0,
+  "charge": 0.7,
+  "color": "f0f0f0"
+}

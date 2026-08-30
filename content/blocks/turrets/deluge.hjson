@@ -44,7 +44,10 @@ ammoTypes: {
     hitColor: "89e8b6"
   }
 }
-
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
 category: turret
 requirements: [
   nickel/120

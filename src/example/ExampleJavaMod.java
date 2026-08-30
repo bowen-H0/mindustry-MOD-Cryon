@@ -244,7 +244,7 @@ public class ExampleJavaMod extends Mod {
             itemDuration = 60 * 14f;
             envEnabled = Env.any;
             generateEffect = Fx.generatespark;
-            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+            drawer = new DrawMulti(new DrawDefault());
 
             consume(new ConsumeItemCharge(0.1f));
         }

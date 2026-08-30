@@ -1,0 +1,13 @@
+name: chlorine
+description: "一种黄绿色的有毒气体，具有强氧化性。"
+gas: true
+coolant: false
+incinerable: false
+heatCapacity: 0.2
+temperature: 0.4
+explosiveness: 0.2
+flammability: 0.0
+color: a3ff00
+gasColor: a3ff00
+barColor: a3ff0066
+lightColor: a3ff00b3

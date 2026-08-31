@@ -1,0 +1,26 @@
+{
+  type: MendProjector
+  name: "纳米投影器"
+  description: "利用纳米材料实现超快速修复，持续治愈周围受损的建筑。"
+  size: 1
+  health: 90
+  category: effect
+  reload: 60
+  range: 50
+  healPercent: 12
+  phaseBoost: 0
+  phaseRangeBoost: 0
+  consumes:
+  {
+    power: 0.5
+    items: [
+      nano-material/1
+    ]
+  }
+  requirements:
+  [
+    nano-material/40
+    silicon/30
+    graphite/20
+  ]
+}

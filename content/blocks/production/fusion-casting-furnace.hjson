@@ -1,0 +1,27 @@
+type: HeatCrafter
+name: "熔合铸造炉"
+description: "消耗石墨、石英与钠，在高温下熔铸出克莱合金。"
+size: 2
+health: 240
+category: crafting
+hasPower: true
+hasLiquids: true
+hasItems: true
+craftTime: 3.0
+heatRequirement: 50.0
+consumes: {
+  items: [
+    graphite/30
+    quartz/30
+    sodium/20
+  ]
+}
+outputItem: {
+  item: cryo-alloy
+  amount: 1
+}
+requirements: [
+  farstar-alloy/200
+  quartz/150
+  graphite/300
+]

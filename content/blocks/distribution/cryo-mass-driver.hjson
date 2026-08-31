@@ -1,0 +1,17 @@
+type: MassDriver
+name: "凝化质量驱动器"
+description: "远距离发射物资的质量驱动器。"
+size: 3
+itemCapacity: 120
+reload: 200.0
+range: 440.0
+consumes: {
+  power: 1.75
+}
+requirements: [
+  farstar-alloy/125
+  silicon/75
+  graphite/125
+  magnesium/50
+]
+category: distribution

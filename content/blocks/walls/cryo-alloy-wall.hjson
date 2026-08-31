@@ -1,0 +1,9 @@
+type: Wall
+name: "克莱合金墙"
+description: "由克莱合金锻造的坚固防御方块。"
+health: 1400
+size: 1
+requirements: [
+  cryo-alloy/6
+]
+category: defense

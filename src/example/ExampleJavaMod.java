@@ -252,7 +252,6 @@ public class ExampleJavaMod extends Mod {
             public void init() {
                 super.init();
                 requirements(Category.power, with(
-                        Items.lead, 100,
                         Items.silicon, 75,
                         Items.titanium, 25,
                         Items.graphite, 75,

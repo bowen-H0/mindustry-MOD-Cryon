@@ -1,0 +1,28 @@
+{
+  type: NuclearReactor
+  name: "巨浪反应堆"
+  description: "以巨浪合金与中子素为燃料的高功率反应堆，需持续输入冷冻液维持冷却，否则将面临过热风险。"
+  size: 3
+  health: 1600
+  category: power
+  itemDuration: 360.0
+  powerProduction: 45.0
+  heating: 0.015
+  coolantPower: 0.125
+  consumes: {
+    items: [
+      surge-alloy/1
+      neutronite/1
+    ]
+    liquids: [
+      cryofluid/0.12
+    ]
+  }
+  requirements: [
+    neutronite/150
+    surge-alloy/150
+    silicon/200
+    graphite/200
+    aluminum/150
+  ]
+}

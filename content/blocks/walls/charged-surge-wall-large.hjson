@@ -3,6 +3,7 @@ name: 大型充能巨浪墙
 description: "内置蓄能的特殊防御方块。"
 health: 4900
 size: 2
+armor: 8
 requirements: [
   surge-alloy/16
   neutronite/16

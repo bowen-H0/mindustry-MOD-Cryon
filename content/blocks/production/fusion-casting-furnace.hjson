@@ -4,16 +4,16 @@ description: "消耗石墨、石英与钠，在高温下熔铸出克莱合金。
 size: 2
 health: 240
 category: crafting
-hasPower: true
+hasPower: false
 hasLiquids: true
 hasItems: true
 craftTime: 3.0
-heatRequirement: 50.0
+heatRequirement: 40.0
 consumes: {
   items: [
-    graphite/30
-    quartz/30
-    sodium/20
+    graphite/10
+    quartz/10
+    sodium/5
   ]
 }
 outputItem: {

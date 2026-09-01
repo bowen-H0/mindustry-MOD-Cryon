@@ -158,6 +158,9 @@ public class CryonTechTree{
         addAuto(Kind.ITEM, "nano-material", "phase-fabric");
 
         addAuto(Kind.ITEM, "sodium", "salt");
+        addAuto(Kind.ITEM, "cryo-alloy", "sodium");
+
+
 
 
         // ---- LIQUID(全部 auto) ----
@@ -195,6 +198,9 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "charged-surge-wall", "cryo-titanium-wall-large");
         addAuto(Kind.BLOCK, "charged-surge-wall-large", "charged-surge-wall");
 
+        addAuto(Kind.BLOCK, "cryo-alloy-wall", "charged-surge-wall-large");
+        addAuto(Kind.BLOCK, "cryo-alloy-wall-large", "cryo-alloy-wall");
+
 
 
 
@@ -227,6 +233,14 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "cryo-payload-conveyor-large", "cryo-payload-conveyor");
         addAuto(Kind.BLOCK, "cryo-mender", "hydrothermal-generator");
         addAuto(Kind.BLOCK, "cryo-repair-tower", "cryo-mender");
+        addAuto(Kind.BLOCK, "overdrive-tower", "cryo-mender");
+        addAuto(Kind.BLOCK, "nano-projector", "mend-projector-advanced");
+        addAuto(Kind.BLOCK, "mend-projector-advanced", "cryo-mender");
+
+
+
+
+
         addAuto(Kind.BLOCK, "cryo-titanium-wall", "aluminum-wall-large");
         addAuto(Kind.BLOCK, "cryo-titanium-wall-large", "cryo-titanium-wall");
         addAuto(Kind.BLOCK, "cryo-vault", "cryo-container");
@@ -238,6 +252,9 @@ public class CryonTechTree{
 
 
         addAuto(Kind.BLOCK, "phase-reactor", "deuterium-reactor");
+
+        addAuto(Kind.BLOCK, "surge-reactor", "phase-reactor");
+
         addAuto(Kind.BLOCK, "hydrogen-generator", "magnesium-generator");
         addAuto(Kind.BLOCK, "ozone-generator", "hydrogen-generator");
 
@@ -310,6 +327,9 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "small-landing-pad", "small-launch-pad");
         addAuto(Kind.BLOCK, "orbital-ejector", "small-launch-pad");
         addAuto(Kind.BLOCK, "orbital-receiver", "orbital-ejector");
+
+        addAuto(Kind.BLOCK, "cryo-mass-driver", "vacuum-conduit");
+
 
 
         addAuto(Kind.BLOCK, "titanium-cargo-loader", "vacuum-conduit");
@@ -453,9 +473,9 @@ public class CryonTechTree{
                 "aurora");
 
         sectorGate("baryon-bastion",
-                "surge-alloy-forge");
+                "surge-alloy-forge","cryo-mass-driver");
         sectorGate("exclusion-zone",
-                "nano-material-weaver","quantum");
+                "nano-material-weaver","quantum","surge-reactor");
     }
 
     // ================== 索引 ==================

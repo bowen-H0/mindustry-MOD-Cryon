@@ -76,6 +76,9 @@ public class ExampleJavaMod extends Mod {
     public ExampleJavaMod() {}
 
     public static FluxBarrier    fluxBarrier;
+    public static FluxBarrier    aegisBarrier;
+
+
     public static AgitatorBlock  agitatorTower;
     public static UniversalUnitAssembler t3universalAssembler;
     public static UniversalUnitAssembler t4universalAssembler;
@@ -83,6 +86,9 @@ public class ExampleJavaMod extends Mod {
     public static ConstructorSink   constructorSink;
     public static ConstructorNode   constructorNode;
     public static GenericConstructorSource waveEmitter;
+    public static GenericConstructorSource waveReactor;
+
+
     public static GenericCrafter cryoElectrolyzer;
 
 
@@ -106,7 +112,25 @@ public class ExampleJavaMod extends Mod {
             size             = 3;
             category         = Category.effect;
             buildVisibility  = BuildVisibility.shown;
+
         }};
+        aegisBarrier = new FluxBarrier("aegis-barrier") {{
+            health=1000;
+            size             = 4;
+            category         = Category.effect;
+            buildVisibility  = BuildVisibility.shown;
+            maxShieldHeat =1000f;
+            heatDissipationRate = 600f;
+            radius = 200f;
+            heatCooldownImmuneTime = 150f;
+
+        }
+            @Override
+            public void init() {
+                super.init();
+                requirements(Category.effect, with(Items.graphite, 50, Items.phaseFabric, 50, Items.silicon, 120,CryonContent.item("cryo-alloy"),200));
+            }
+        };
 
         agitatorTower = new AgitatorBlock("agitator-tower") {{
             size             = 2;
@@ -176,6 +200,25 @@ public class ExampleJavaMod extends Mod {
 
             consumePower(3f);
         }};
+        waveReactor = new GenericConstructorSource("wave-reactor") {{
+            size = 3;
+            health = 300;
+            production = 1200f;
+            craftTime = 60f;
+            consumeItems(new ItemStack[]{
+                    new ItemStack(Items.phaseFabric, 1),
+                    new ItemStack(Items.silicon, 2)
+            });
+
+
+            consumePower(3f);
+        }
+            @Override
+            public void init() {
+                super.init();
+                requirements(Category.power, with(Items.surgeAlloy, 60, Items.phaseFabric, 40, Items.graphite, 40,CryonContent.item("aluminum"),120));
+            }
+        };
         cryoElectrolyzer = new GenericCrafter("cryo-electrolyzer"){{
 
 
@@ -1091,12 +1134,12 @@ public class ExampleJavaMod extends Mod {
         UnitType umbra_prev = umbra;
         UnitType peak_prev = peak;
 
-        if (sagitta != null && umbra_prev != null) {
+        if (sagitta != null && bolide != null) {
             t4universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
                 unit = sagitta;
                 time = 4000f;
                 requirements = Seq.with(
-                        new PayloadStack(umbra_prev, 2),
+                        new PayloadStack(bolide, 2),
                         new PayloadStack(chargedWall, 5)
                 );
                 liquidReq = new LiquidStack[]{
@@ -1105,12 +1148,12 @@ public class ExampleJavaMod extends Mod {
             }});
         }
 
-        if (blaze != null && peak_prev != null) {
+        if (blaze != null && guardian != null) {
             t4universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
                 unit = blaze;
                 time = 4000f;
                 requirements = Seq.with(
-                        new PayloadStack(peak_prev, 2),
+                        new PayloadStack(guardian, 2),
                         new PayloadStack(chargedWall, 5)
                 );
                 liquidReq = new LiquidStack[]{
@@ -1124,7 +1167,7 @@ public class ExampleJavaMod extends Mod {
                 unit = charonia;
                 time = 4000f;
                 requirements = Seq.with(
-                        new PayloadStack(murex, 2),
+                        new PayloadStack(natica, 2),
                         new PayloadStack(chargedWall, 5)
                 );
                 liquidReq = new LiquidStack[]{
@@ -1143,6 +1186,10 @@ public class ExampleJavaMod extends Mod {
 
         if (bolide != null) {
             bolide.abilities.add(new FluxBarrierAbility(50f, 300f, 50f));
+        }
+        if (CryonContent.unit("sagitta") != null) {
+
+            CryonContent.unit("sagitta").abilities.add(new SafeFluxBarrierAbility(50f, 200f, 20f,4,45f,600));
         }
 
         if (natica != null) {

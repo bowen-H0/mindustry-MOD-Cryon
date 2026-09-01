@@ -190,12 +190,18 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "aluminum-wall", "spiral");
         addAuto(Kind.BLOCK, "aluminum-wall-large", "aluminum-wall");
         addAuto(Kind.BLOCK, "cavity", "spiral");
+        addAuto(Kind.BLOCK, "deluge", "cavity");
+
+
         addAuto(Kind.BLOCK, "nickel-wall", "cryo-titanium-wall-large");
         addAuto(Kind.BLOCK, "nickel-wall-large", "nickel-wall");
 
         addAuto(Kind.BLOCK, "composite-wall", "cryo-titanium-wall-large");
         addAuto(Kind.BLOCK, "composite-wall-large", "composite-wall");
         addAuto(Kind.BLOCK, "charged-surge-wall", "cryo-titanium-wall-large");
+        addAuto(Kind.BLOCK, "titanium-blast-door", "cryo-titanium-wall-large");
+
+
         addAuto(Kind.BLOCK, "charged-surge-wall-large", "charged-surge-wall");
 
         addAuto(Kind.BLOCK, "cryo-alloy-wall", "charged-surge-wall-large");
@@ -264,6 +270,8 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "constructor-node", "aluminum-node");
         addAuto(Kind.BLOCK, "construct-wave-emitter", "constructor-node");
         addAuto(Kind.BLOCK, "constructor-drill", "construct-wave-emitter");
+        addAuto(Kind.BLOCK, "wave-reactor", "construct-wave-emitter");
+
 
 
 
@@ -273,12 +281,16 @@ public class CryonTechTree{
 
 
         addAuto(Kind.BLOCK, "flux-barrier", "micro-projector");
+        addAuto(Kind.BLOCK, "aegis-barrier", "flux-barrier");
+
         addAuto(Kind.BLOCK, "gem", "spiral");
         addAuto(Kind.BLOCK, "heating-furnace", "cryo-electric-heater");
         addAuto(Kind.BLOCK, "hydrothermal-generator", "shattering-drill");
 
         addAuto(Kind.BLOCK, "isotope-separator", "cryo-electrolyzer");
         addAuto(Kind.BLOCK, "molten-salt-electrolyzer", "cryo-electrolyzer");
+        addAuto(Kind.BLOCK, "fusion-casting-furnace", "cryo-electrolyzer");
+
 
 
         addAuto(Kind.BLOCK, "magnesium-converter", "silicon-separator");
@@ -354,6 +366,9 @@ public class CryonTechTree{
         addAuto(Kind.UNIT_BLOCK, "mechanical-factory", "unit-projector");
         addAuto(Kind.UNIT_BLOCK, "t2factory", "unit-projector");
         addAuto(Kind.UNIT_BLOCK, "t3universal-assembler", "t2factory");
+        addAuto(Kind.UNIT_BLOCK, "t4universal-assembler", "t3universal-assembler");
+
+
         addAuto(Kind.UNIT_BLOCK, "unit-projector", "core-pioneer");
 
         // ---- UNIT(全部手动花费) ----
@@ -368,6 +383,9 @@ public class CryonTechTree{
         add(Kind.UNIT, "peak", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
         add(Kind.UNIT, "salus", "mechanical-assembler", r(CryonContent.item("titanium"), 2400, CryonContent.item("farstar-alloy"), 2600, CryonContent.item("silicon"), 2300));
         add(Kind.UNIT, "umbra", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+        add(Kind.UNIT, "sagitta", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
+        add(Kind.UNIT, "blaze", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
+        add(Kind.UNIT, "charonia", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
 
         // ---- SECTOR(全部 auto,前提条件后续手动补) ----
         addAuto(Kind.SECTOR, "cryon-fusion-bastion", "cryon-neutron-flux-zone");
@@ -429,6 +447,7 @@ public class CryonTechTree{
         sectorReq("baryon-bastion",
                 CryonContent.sector("titanium-fortress"));
 
+
         // ---- SECTOR 占领门控表(方块/单位) ----
 
         sectorGate("cryon-sector-1",
@@ -475,7 +494,10 @@ public class CryonTechTree{
         sectorGate("baryon-bastion",
                 "surge-alloy-forge","cryo-mass-driver");
         sectorGate("exclusion-zone",
-                "nano-material-weaver","quantum","surge-reactor");
+                "nano-material-weaver","quantum","surge-reactor","t4universal-assembler");
+        sectorGate("silent-tundra",
+                "deluge");
+
     }
 
     // ================== 索引 ==================

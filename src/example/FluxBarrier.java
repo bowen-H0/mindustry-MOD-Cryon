@@ -58,6 +58,7 @@ public class FluxBarrier extends Block{
 
     public static @Nullable FluxShieldShader fluxShader;
     public static final float layerFluxShield = Layer.shields + 10;
+    public float maxShieldHeat = 300f;
 
 
     //TODO json support
@@ -210,7 +211,7 @@ public class FluxBarrier extends Block{
         public boolean broken = true;
         public float buildup, radscl, hit, warmup, phaseHeat;
         public float shieldHeat = 0f;
-        public float maxShieldHeat = 300f;
+        public float maxShieldHeat = FluxBarrier.this.maxShieldHeat;
         public float heatCooldownTimer = 0f;
         public float MaxheatCooldownTime = 0f;
         public float heatCooldownImmune = 0f;

@@ -2,14 +2,10 @@ type: OverdriveProjector
 name: "超频发射塔"
 description: "为周围建筑提供超频加速，输入相织布可大幅提升效果。"
 size: 2
-speedBoost: 1.5
-phaseBoost: 2.0
+speedBoost: 0.5
 consumes: {
   power: 3.5
 }
-consumesItemsOptional: [
-  phase-fabric/1
-]
 requirements: [
   aluminum/100
   magnesium/75

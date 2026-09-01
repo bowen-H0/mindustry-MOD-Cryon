@@ -62,6 +62,10 @@ import mindustry.game.Objectives.Objective;
 
 import java.io.IOException;
 
+import static arc.graphics.g2d.Lines.stroke;
+import static arc.math.Angles.randLenVectors;
+import static arc.math.Mathf.rand;
+import static arc.scene.actions.Actions.color;
 import static mindustry.type.ItemStack.*;
 import static mindustry.world.meta.StatValues.ammo;
 
@@ -597,7 +601,7 @@ public class ExampleJavaMod extends Mod {
                 );
                 Draw.alpha(e.fout() * (0.9f - i * 0.25f));
 
-                Lines.stroke(3.2f * widthMul * e.fout());
+                stroke(3.2f * widthMul * e.fout());
                 Tmp.v1.trns(e.rotation + 90f, offset);
                 Lines.lineAngle(
                         e.x + Tmp.v1.x, e.y + Tmp.v1.y,
@@ -608,13 +612,13 @@ public class ExampleJavaMod extends Mod {
             // 中心一条更亮更细的白紫核心线，增加"华丽感"
             Draw.color(Color.white);
             Draw.alpha(e.fout());
-            Lines.stroke(1.4f * e.fout());
+            stroke(1.4f * e.fout());
             Lines.lineAngle(e.x, e.y, e.rotation, 10f);
 
             // 随机小光点点缀，像极光边缘的星芒闪烁
             Draw.color(Color.valueOf("d94dff"));
             Draw.alpha(e.fout() * 0.8f);
-            Angles.randLenVectors(e.id, 2, 6f * e.fin(), e.rotation, 40f, (x, y) -> {
+            randLenVectors(e.id, 2, 6f * e.fin(), e.rotation, 40f, (x, y) -> {
                 Fill.circle(e.x + x, e.y + y, 1.1f * e.fout());
             });
 
@@ -631,11 +635,11 @@ public class ExampleJavaMod extends Mod {
             Fill.circle(e.x, e.y, 5f * e.fout());
 
             // 环形波纹向外扩散
-            Lines.stroke(2f * e.fout());
+            stroke(2f * e.fout());
             Lines.circle(e.x, e.y, 4f + 10f * e.fin());
 
             // 几道放射状光刺，模拟蓄能炮口的华丽感
-            Angles.randLenVectors(e.id, 5, 14f * e.fin(), e.rotation, 50f, (x, y) -> {
+            randLenVectors(e.id, 5, 14f * e.fin(), e.rotation, 50f, (x, y) -> {
                 Lines.lineAngle(e.x, e.y, Mathf.angle(x, y), 3f * e.fout());
             });
 
@@ -655,13 +659,13 @@ public class ExampleJavaMod extends Mod {
                 float delay = i * 0.15f;
                 float fin = Mathf.clamp(e.fin() - delay);
                 Draw.alpha(e.fout() * (1f - i * 0.4f));
-                Lines.stroke(2.2f * (1f - i * 0.3f));
+                stroke(2.2f * (1f - i * 0.3f));
                 Lines.circle(e.x, e.y, 3f + 22f * fin);
             }
 
             // 破碎光屑向外飞溅
             Draw.color(Color.valueOf("d94dff"));
-            Angles.randLenVectors(e.id, 8, 4f + 20f * e.fin(), (x, y) -> {
+            randLenVectors(e.id, 8, 4f + 20f * e.fin(), (x, y) -> {
                 Draw.alpha(e.fout());
                 Fill.circle(e.x + x, e.y + y, 1.3f * e.fout());
             });
@@ -677,11 +681,11 @@ public class ExampleJavaMod extends Mod {
 
             // 较小的穿透闪光，不如命中特效那么夸张
             Fill.circle(e.x, e.y, 3f * e.fout());
-            Lines.stroke(1.4f * e.fout());
+            stroke(1.4f * e.fout());
             Lines.circle(e.x, e.y, 2f + 8f * e.fin());
 
             // 少量碎光点，表示能量泄漏
-            Angles.randLenVectors(e.id, 3, 3f + 6f * e.fin(), e.rotation, 30f, (x, y) -> {
+            randLenVectors(e.id, 3, 3f + 6f * e.fin(), e.rotation, 30f, (x, y) -> {
                 Fill.circle(e.x + x, e.y + y, 0.9f * e.fout());
             });
 
@@ -696,7 +700,7 @@ public class ExampleJavaMod extends Mod {
 
             // 光束末端收缩成一点后消散
             Fill.circle(e.x, e.y, 4f * e.fout());
-            Lines.stroke(1.6f * e.fout());
+            stroke(1.6f * e.fout());
             Lines.circle(e.x, e.y, 6f * e.fin());
 
             Drawf.light(e.x, e.y, 20f * e.fout(), Color.valueOf("d94dff"), 0.4f * e.fout());
@@ -883,11 +887,70 @@ public class ExampleJavaMod extends Mod {
             }
         }
         Block launchBlock = Vars.content.block("unitlanuch-发射台");
-        if (launchBlock != null) launchBlock.buildVisibility = BuildVisibility.sandboxOnly;
+        if (launchBlock != null) launchBlock.buildVisibility = BuildVisibility.hidden;
 
         Block receiveBlock = Vars.content.block("unitlanuch-接收台");
-        if (receiveBlock != null) receiveBlock.buildVisibility = BuildVisibility.sandboxOnly;
+        if (receiveBlock != null) receiveBlock.buildVisibility = BuildVisibility.hidden;
+        Effect giantArcExplosion = new Effect(45f, 500f, e -> {
+            float maxRadius = 120f;
+            int branches = 24;
 
+            // 核心闪爆
+            e.scaled(15f, flash -> {
+                color(Color.white);
+                stroke(6f * flash.fout());
+                Lines.circle(flash.x, flash.y, 5f + flash.finpow() * 50f);
+
+                color(Color.white);
+                Fill.circle(flash.x, flash.y, 10f + flash.fin() * 40f);
+                Drawf.light(flash.x, flash.y, 150f, Color.white, 0.9f * flash.fout());
+            });
+
+            // 主电弧放射
+            rand.setSeed(e.id);
+            for (int i = 0; i < branches; i++) {
+                float angle = (i / (float)branches) * 360f + rand.range(20f);
+                float length = (40f + rand.random(80f)) * e.finpow();
+                if (length > maxRadius * e.finpow()) {
+                    length = maxRadius * e.finpow();
+                }
+
+                color(Pal.surge);
+                stroke((1.5f + rand.random(3f)) * e.fout() + 0.5f);
+
+                float endX = e.x + Angles.trnsx(angle, length);
+                float endY = e.y + Angles.trnsy(angle, length);
+                Lines.line(e.x, e.y, endX, endY);
+
+                for (int j = 0; j < 3; j++) {
+                    float branchPos = rand.random(0.2f, 0.8f);
+                    float branchX = e.x + Angles.trnsx(angle, branchPos * length);
+                    float branchY = e.y + Angles.trnsy(angle, branchPos * length);
+
+                    float direction = rand.random(0f, 1f) > 0.5f ? 1f : -1f;
+                    float branchAngle = angle + rand.range(60f) * direction;
+                    float branchLen = rand.random(15f, 40f) * e.fout();
+
+                    color(Pal.surge);
+                    stroke((0.5f + rand.random(1.5f)) * e.fout() + 0.3f);
+
+                    float branchEndX = branchX + Angles.trnsx(branchAngle, branchLen);
+                    float branchEndY = branchY + Angles.trnsy(branchAngle, branchLen);
+                    Lines.line(branchX, branchY, branchEndX, branchEndY);
+                }
+            }
+
+            color(Pal.surge);
+            randLenVectors(e.id + 100, 30, e.finpow() * maxRadius * 1.2f, (x, y) -> {
+                float size = 0.5f + rand.random(2f) * e.fout();
+                Fill.circle(e.x + x, e.y + y, size);
+                Drawf.light(e.x + x, e.y + y, size * 3f, Pal.surge, 0.3f * e.fout());
+            });
+
+            Drawf.light(e.x, e.y, maxRadius * 1.5f * e.fin(), Pal.surge, 0.5f * e.fout());
+        });
+        NuclearReactor reactor = (NuclearReactor) CryonContent.block("surge-reactor");
+        reactor.explodeEffect = giantArcExplosion;
         UnitType peak  = Vars.content.unit("cryon-peak");
         UnitType umbra = Vars.content.unit("cryon-umbra");
         UnitType murex = Vars.content.unit("cryon-murex");

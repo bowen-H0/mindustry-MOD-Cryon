@@ -1,7 +1,7 @@
 type: legs
 name: 卫戍
 # 基础属性
-speed: 0.75
+speed: 0.55
 health: 2000
 armor: 8
 hitSize: 32
@@ -24,14 +24,7 @@ abilities: [
     max: 120
     reload: 45
     range: 150
-  },
-  {
-  type: StatusFieldAbility
-  effect: fast
-  duration: 360
-  reload: 360
-  range: 60
-}
+  }
 ]
 weapons: [
   {
@@ -142,5 +135,19 @@ weapons: [
       incendAmount: 0
       colors: [8ca9f4, 5c7cf2, ffffff]
     }
+  },
+  {
+      name: repair-beam-weapon
+      type: RepairBeamWeapon
+      x: 0
+      y: -5.5
+      shootY: 6
+      beamWidth: 0.8
+      mirror: false
+      repairSpeed: 0.75
+      bullet: {
+        type: BulletType
+        maxRange: 120
+      }
   }
 ]

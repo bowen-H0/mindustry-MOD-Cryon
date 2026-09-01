@@ -19,12 +19,12 @@ filter: [
   "aggregated-wall",
   "aggregated-wall-large",
   "cryo-titanium-wall-large",
-  "cryo-titanium-wall",
+  "charged-surge-wall",
+  "charged-surge-wall-large",
+  "cryo-alloy-wall-large",
+  "cryo-alloy-wall",
+
+
   "cavity",
-  "denial",
-  "penetrate",
-  "spark",
-  "spiral",
-  "torrent"
 ]
 category: units

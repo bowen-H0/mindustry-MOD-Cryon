@@ -36,7 +36,6 @@ public class DestroyerUnit{
 
     public static void load(){
 
-        Log.info("=== DestroyerUnit LOADING ===");
 
         destroyerBody = new UnitType("destroyer-body"){{
             constructor = LegsUnit::create;

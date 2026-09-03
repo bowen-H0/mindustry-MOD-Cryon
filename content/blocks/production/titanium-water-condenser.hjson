@@ -1,0 +1,30 @@
+type: GenericCrafter
+name: "钛水冷凝机"
+description: "制取冷冻液。"
+size: 2
+health: 260
+category: crafting
+hasPower: true
+hasLiquids: true
+hasItems: true
+liquidCapacity: 30.0
+craftTime: 40.0
+consumes: {
+  power: 1.5
+  items: [
+    titanium/1
+  ]
+  liquids: [
+    water/0.3
+  ]
+}
+requirements: [
+  titanium/45
+  aluminum/30
+  magnesium/20
+  silicon/15
+]
+outputLiquid: {
+  liquid: cryofluid
+  amount: 0.3
+}

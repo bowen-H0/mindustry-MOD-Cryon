@@ -7,7 +7,7 @@ category: crafting
 hasPower: false
 hasLiquids: true
 hasItems: true
-craftTime: 3.0
+craftTime: 60.0
 heatRequirement: 40.0
 consumes: {
   items: [

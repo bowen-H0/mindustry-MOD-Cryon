@@ -1,0 +1,25 @@
+type: GenericCrafter
+name: "碳捕合器"
+description: "利用金属钠捕捉空气中的二氧化碳，通过反应使碳稳定生成石墨，完成碳的固化。"
+size: 2
+health: 220
+category: crafting
+hasPower: true
+hasLiquids: false
+hasItems: true
+craftTime: 60.0
+consumes: {
+  power: 2.5
+  items: [
+    sodium/2
+  ]
+}
+requirements: [
+  sodium/40
+  aluminum/100
+  graphite/20
+]
+outputItem: {
+  item: graphite
+  amount: 1
+}

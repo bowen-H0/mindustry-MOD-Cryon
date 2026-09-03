@@ -19,6 +19,23 @@ import mindustry.world.meta.*;
 //Modified from the erekir generator.
 //The script most prone to crashing.
 //The API updates here might be a bit frequent.
+//
+// === Changelog (this revision) ===
+// 1. Block/unit lookups now go through CryonContent instead of manual
+//    Vars.content.block/unit + fallback boilerplate.
+// 2. Ore veins are now small clusters (~10 tiles each) instead of large
+//    continuous noise-threshold fields.
+// 3. Added more enemy tiers (benignitas, comet, umbra/salus/sagitta/blaze/
+//    charonia as late-game "elite" spawns).
+// 4. Caves are more open (airThresh/airScl tuned).
+// 5. cryon-ice-rock now generates its own wall variant, cryon-ice-rock-wall.
+// 6. Added scattered cryon-broken-ice floor patches.
+// 7. Added scattered shattered-crystal / shattered-ice rubble near walls.
+// 8. Added a rare, small cryo-fluid biome (cryo-fluid-ice floor,
+//    cryofluid-wall walls, cryofluid puddles).
+// 9. Added a "depth" pass that rarely turns cryon-ice-rock into
+//    cryon-dark-ice-rock further from spawn, with its own vent variant
+//    (cryon-dark-rock-vent) and a small chance of titanium ore on it.
 import java.io.IOException;
 
 import static mindustry.Vars.*;
@@ -32,79 +49,104 @@ public class CryonPlanetGenerator extends PlanetGenerator{
     public static float liqThresh = 0.64f, liqScl = 87f, redThresh = 3.1f, noArkThresh = 0.3f;
     public static int crystalSeed = 8, crystalOct = 2;
     public static float crystalScl = 0.9f, crystalMag = 0.3f;
-    public static float airThresh = 0.13f, airScl = 14;
+
+    //caves: lower threshold + larger scale => bigger, more open chambers
+    public static float airThresh = 0.08f, airScl = 22f;
+
+    //ore veins: small clusters instead of large continuous fields.
+    //oreClusterCount is an absolute target count (NOT a per-tile chance),
+    //so density no longer depends on map size - a tiny per-tile chance was
+    //the reason ore could fail to spawn at all on smaller maps.
+    public static int oreClusterCount = 120;
+    public static int oreClusterMinRadius = 4, oreClusterMaxRadius = 6;
+
+    //broken ice: scattered coherent patches replacing plain ice floor
+    public static float brokenIceThresh = 0.66f, brokenIceScl = 30f;
+
+    //shattered crystal/ice rubble decoration near walls
+    public static float shatterChance = 0.012f;
+
+    //dark ice rock: large connected patches via coherent noise (roughly half
+    //of all ice rock ends up dark), instead of independent per-tile chance
+    public static float darkRockScl = 70f, darkRockThresh = 0.5f;
+    //titanium veins on dark rock: small clusters of ~5 tiles, not scattered singles.
+    //also an absolute target count for the same reason as oreClusterCount.
+    public static int titaniumVeinCount = 25;
+    public static int titaniumVeinMinRadius = 2, titaniumVeinMaxRadius = 3;
+
+    //big cryo-fluid biome: a cluster of several overlapping blobs sized so
+    //the whole region covers roughly 1/10 of the map, dotted with many
+    //small puddles instead of a single central pool
+    public static float cryoBiomeAppearChance = 0.35f;
+    public static float cryoBiomeAreaFraction = 0.1f;
+    public static int cryoBiomeBlobCount = 6, cryoBiomeBlobCountVariance = 3;
+    public static float cryoBiomePuddleChance = 0.006f;
+    public static int cryoBiomePuddleMinRadius = 2, cryoBiomePuddleMaxRadius = 4;
+    //patches of sticky-cryofluid-floor within the cryo-fluid ice areas
+    public static float stickyFluidThresh = 0.6f, stickyFluidScl = 25f;
+
     private static Block iceWall;
+    private static Block iceRockWall;
     private static Block iceFloor;
     private static Block iceRock;
+    private static Block darkIceRock;
+    private static Block brokenIce;
+    private static Block shatteredCrystal;
+    private static Block shatteredIce;
     private static Block cryonVent;
     private static Block cryonRockVent;
+    private static Block darkRockVent;
+    private static Block cryoFluidIce;
+    private static Block cryoFluidWall;
+    private static Block cryoFluidPool;
+    private static Block stickyCryoFluidFloor;
+    private static Block cryoFluidVent;
     private static Block oreCrystalSand;
     private static Block oreDryIce;
     private static Block oreMagnesium;
     private static Block oreSalt;
     private static Block oreAluminum;
+    private static Block oreTitanium;
     public static Schematic cryonLoadout;
 
+    //small helper: fetch via CryonContent, warn + fall back if missing
+    private static Block block(String id, Block fallback){
+        Block b = CryonContent.block(id);
+        if(b == null){
+            Log.warn("[Cryon] block '" + id + "' not found, using fallback '" + fallback.name + "'");
+            return fallback;
+        }
+        return b;
+    }
+
     static {
-        iceWall = Vars.content.block("cryon-cryon-ice-wall");
-        if(iceWall == null) {
-            Log.warn("cryon-ice-wall not found, using stone wall");
-            iceWall = Blocks.stoneWall;
-        }
+        iceWall = block("cryon-ice-wall", Blocks.stoneWall);
+        iceRockWall = block("cryon-ice-rock-wall", iceWall);
+        iceFloor = block("cryon-ice", Blocks.snow);
+        iceRock = block("cryon-ice-rock", Blocks.stone);
+        darkIceRock = block("cryon-dark-ice-rock", iceRock);
+        brokenIce = block("cryon-broken-ice", iceFloor);
 
-        iceFloor = Vars.content.block("cryon-cryon-ice");
-        if(iceFloor == null) {
-            Log.warn("cryon-ice not found, using snow");
-            iceFloor = Blocks.snow;
-        }
+        shatteredCrystal = block("shattered-crystal", Blocks.sporeCluster);
+        shatteredIce = block("shattered-ice", iceFloor);
 
-        iceRock = Vars.content.block("cryon-cryon-ice-rock");
-        if(iceRock == null) {
-            Log.warn("cryon-ice-rock not found, using stone");
-            iceRock = Blocks.stone;
-        }
+        cryonVent = block("cryon-vent", Blocks.rhyoliteVent);
+        cryonRockVent = block("cryon-rock-vent", Blocks.rhyoliteVent);
+        darkRockVent = block("cryon-dark-rock-vent", cryonRockVent);
 
-        cryonVent = Vars.content.block("cryon-cryon-vent");
-        if(cryonVent == null) {
-            Log.warn("cryon-vent not found, using rhyoliteVent");
-            cryonVent = Blocks.rhyoliteVent;
-        }
+        cryoFluidIce = block("cryo-fluid-ice", iceFloor);
+        cryoFluidWall = block("cryofluid-wall", iceWall);
+        cryoFluidPool = block("pooled-cryofluid", Blocks.water);
+        stickyCryoFluidFloor = block("sticky-cryofluid-floor", cryoFluidIce);
+        cryoFluidVent = block("cryon-cryofluid-vent", cryonVent);
 
-        cryonRockVent = Vars.content.block("cryon-cryon-rock-vent");
-        if(cryonRockVent == null) {
-            Log.warn("cryon-rock-vent not found, using rhyoliteVent");
-            cryonRockVent = Blocks.rhyoliteVent;
-        }
+        oreCrystalSand = block("ore-crystal-sand", Blocks.oreCopper);
+        oreDryIce = block("ore-dry-ice", Blocks.oreLead);
+        oreMagnesium = block("ore-magnesium", Blocks.oreTitanium);
+        oreSalt = block("ore-salt", Blocks.oreCoal);
+        oreAluminum = block("ore-aluminum", Blocks.oreThorium);
+        oreTitanium = block("ore-titanium", Blocks.oreTitanium);
 
-        oreCrystalSand = Vars.content.block("cryon-ore-crystal-sand");
-        if(oreCrystalSand == null) {
-            Log.warn("ore-crystal-sand not found, using oreCopper");
-            oreCrystalSand = Blocks.oreCopper;
-        }
-
-        oreDryIce = Vars.content.block("cryon-ore-dry-ice");
-        if(oreDryIce == null) {
-            Log.warn("ore-dry-ice not found, using oreLead");
-            oreDryIce = Blocks.oreLead;
-        }
-
-        oreMagnesium = Vars.content.block("cryon-ore-magnesium");
-        if(oreMagnesium == null) {
-            Log.warn("ore-magnesium not found, using oreTitanium");
-            oreMagnesium = Blocks.oreTitanium;
-        }
-
-        oreSalt = Vars.content.block("cryon-ore-salt");
-        if(oreSalt == null) {
-            Log.warn("ore-salt not found, using oreCoal");
-            oreSalt = Blocks.oreCoal;
-        }
-
-        oreAluminum = Vars.content.block("cryon-ore-aluminum");
-        if(oreAluminum == null) {
-            Log.warn("ore-aluminum not found, using oreThorium");
-            oreAluminum = Blocks.oreThorium;
-        }
         Fi file = Vars.tree.get("schematics/core-pioneer.msch");
         if(file.exists()){
             try {
@@ -161,12 +203,144 @@ public class CryonPlanetGenerator extends PlanetGenerator{
 
     @Override
     public void genTile(Vec3 position, TileGen tile){
-        tile.floor = getBlock(position);
-        tile.block = iceWall;
+        Block floor = getBlock(position);
+        tile.floor = floor;
+        //cryon-ice-rock gets its own matching wall variant
+        tile.block = (floor == iceRock) ? iceRockWall : iceWall;
 
         if(Ridged.noise3d(seed + 1, position.x, position.y, position.z, 2, airScl) > airThresh){
             tile.block = Blocks.air;
         }
+    }
+
+    //some mod content models small decorations as solid-less Wall blocks
+    //rather than Floor overlays; this avoids ClassCastException either way
+    private static void placeOverlay(Tile tile, Block overlayBlock){
+        if(overlayBlock instanceof mindustry.world.blocks.environment.Floor){
+            tile.setOverlay(overlayBlock);
+        }else if(!tile.block().solid){
+            tile.setBlock(overlayBlock);
+        }
+    }
+
+    //plants a roughly-10-tile ore cluster centered on (cx, cy)
+    void placeOreCluster(int cx, int cy, Block ore){
+        placeOreCluster(cx, cy, ore, oreClusterMinRadius, oreClusterMaxRadius);
+    }
+
+    //plants a cluster of the given ore, radius range controls the size
+    //(minRadius=maxRadius=1 gives a ~5-tile vein, 1-2 gives ~5-13 tiles)
+    void placeOreCluster(int cx, int cy, Block ore, int minRadius, int maxRadius){
+        int crad = rand.random(minRadius, maxRadius);
+        float crad2 = crad * crad + 1f;
+        for(int dx = -crad; dx <= crad; dx++){
+            for(int dy = -crad; dy <= crad; dy++){
+                int rx = dx + cx, ry = dy + cy;
+                float n = noise(rx, ry + rx * 1.3f, 2, 0.6f, 6f, 2f);
+                if(dx * dx + dy * dy <= crad2 - n){
+                    Tile dest = tiles.get(rx, ry);
+                    if(dest != null && !dest.block().solid && dest.overlay() == Blocks.air && !nearWall(rx, ry)){
+                        placeOverlay(dest, ore);
+                    }
+                }
+            }
+        }
+    }
+
+    //big, organic-looking cryo-fluid region made of several overlapping
+    //blobs whose combined area is roughly cryoBiomeAreaFraction of the map
+    void genCryoFluidBiome(int spawnX, int spawnY, int endX, int endY){
+        if(!rand.chance(cryoBiomeAppearChance)) return;
+
+        float targetArea = width * height * cryoBiomeAreaFraction;
+        int blobs = Math.max(1, cryoBiomeBlobCount + rand.random(-cryoBiomeBlobCountVariance, cryoBiomeBlobCountVariance));
+        float blobArea = targetArea / blobs;
+        int blobRadius = Math.max(3, (int)Math.sqrt(blobArea / Math.PI));
+
+        //find a region center far enough from spawn/end to fit the whole cluster
+        int centerX = width/2, centerY = height/2;
+        boolean found = false;
+        for(int attempt = 0; attempt < 30 && !found; attempt++){
+            centerX = rand.random(blobRadius + 4, Math.max(blobRadius + 4, width - blobRadius - 4));
+            centerY = rand.random(blobRadius + 4, Math.max(blobRadius + 4, height - blobRadius - 4));
+            if(Mathf.dst(centerX, centerY, spawnX, spawnY) > blobRadius * 2.5f && Mathf.dst(centerX, centerY, endX, endY) > blobRadius * 2.5f){
+                found = true;
+            }
+        }
+        if(!found) return;
+
+        //scatter several overlapping blobs around the region center so the
+        //biome reads as one large, organic zone rather than a neat circle
+        for(int i = 0; i < blobs; i++){
+            float jitter = blobRadius * 1.1f;
+            int cx = centerX + (int)rand.range(jitter);
+            int cy = centerY + (int)rand.range(jitter);
+            int radius = (int)(blobRadius * rand.random(0.8f, 1.2f));
+            carveCryoBlob(cx, cy, radius);
+        }
+    }
+
+    //carves one blob of cryo-fluid ice/walls, seeding many small puddles as it goes
+    void carveCryoBlob(int cx, int cy, int radius){
+        float rad2 = radius * radius + 1f;
+        for(int dx = -radius; dx <= radius; dx++){
+            for(int dy = -radius; dy <= radius; dy++){
+                int rx = dx + cx, ry = dy + cy;
+                float n = noise(rx + 500, ry + 500, 3, 0.6f, radius * 0.6f, rad2 * 0.5f);
+                if(dx * dx + dy * dy <= rad2 - n){
+                    Tile dest = tiles.get(rx, ry);
+                    if(dest == null) continue;
+
+                    dest.setFloor(cryoFluidIce.asFloor());
+                    if(dest.block().isStatic()){
+                        dest.setBlock(cryoFluidWall);
+                    }
+
+                    //patches of sticky cryofluid floor within the ice area
+                    if(!dest.block().solid){
+                        float sn = noise(rx + 1500, ry + 1500, 3, 0.6f, stickyFluidScl, 1f);
+                        if(sn > stickyFluidThresh){
+                            dest.setFloor(stickyCryoFluidFloor.asFloor());
+                        }
+                    }
+
+                    //many small puddles scattered through the biome, not one big pool
+                    if(!dest.block().solid && dest.overlay() == Blocks.air && rand.chance(cryoBiomePuddleChance)){
+                        placeCryoPuddle(rx, ry);
+                    }
+                }
+            }
+        }
+    }
+
+    //a single small puddle of pooled-cryofluid
+    void placeCryoPuddle(int cx, int cy){
+        int radius = rand.random(cryoBiomePuddleMinRadius, cryoBiomePuddleMaxRadius);
+        float rad2 = radius * radius + 1f;
+        for(int dx = -radius; dx <= radius; dx++){
+            for(int dy = -radius; dy <= radius; dy++){
+                int rx = dx + cx, ry = dy + cy;
+                float n = noise(rx + 900, ry + 900, 2, 0.6f, radius * 1.2f, rad2 * 0.6f);
+                if(dx * dx + dy * dy <= rad2 - n){
+                    Tile dest = tiles.get(rx, ry);
+                    if(dest != null && !dest.block().solid){
+                        dest.setFloor(cryoFluidPool.asFloor());
+                    }
+                }
+            }
+        }
+    }
+
+    //maps a floor type to its matching vent block
+    private static Block ventFor(Block floor){
+        if(floor == darkIceRock) return darkRockVent;
+        if(floor == iceRock) return cryonRockVent;
+        if(floor == stickyCryoFluidFloor) return cryoFluidVent;
+        return cryonVent;
+    }
+
+    private static boolean isVentableFloor(Block floor){
+        return floor == iceFloor || floor == iceRock || floor == darkIceRock || floor == stickyCryoFluidFloor;
     }
 
     @Override
@@ -187,28 +361,63 @@ public class CryonPlanetGenerator extends PlanetGenerator{
 
         tiles.getn(endX, endY).setOverlay(Blocks.spawn);
 
-        //ores
-        pass((x, y) -> {
-            if(!nearWall(x, y)){
-                float n1 = noise(x + 150, y + x*2 + 100, 4, 0.8f, 55f, 1f);
-                float n2 = noise(x + 999, y + 600 - x, 4, 0.8f, 55f, 1f);
-                float n3 = noise(x + 2345, y - x*3 + 800, 4, 0.8f, 55f, 1f);
-                float n4 = noise(x + 4567, y + x*1.5f + 200, 4, 0.8f, 55f, 1f);
-                float n5 = noise(x + 7890, y - x*2.5f + 400, 4, 0.8f, 55f, 1f);
-
-                if(n1 > 0.72f){
-                    ore = oreCrystalSand;
-                }else if(n2 > 0.72f){
-                    ore = oreDryIce;
-                }else if(n3 > 0.72f){
-                    ore = oreMagnesium;
-                }else if(n4 > 0.72f){
-                    ore = oreSalt;
-                }else if(n5 > 0.72f){
-                    ore = oreAluminum;
+        //broken ice: scattered coherent patches over plain ice floor
+        for(Tile tile : tiles){
+            if(tile.floor() == iceFloor && !tile.block().solid){
+                float n = noise(tile.x + 3000, tile.y + 3000, 4, 0.6f, brokenIceScl, 1f);
+                if(n > brokenIceThresh){
+                    tile.setFloor(brokenIce.asFloor());
                 }
             }
-        });
+        }
+
+        //dark ice rock: large connected patches (coherent noise threshold),
+        //covering roughly half of all ice rock tiles - not scattered pixels
+        for(Tile tile : tiles){
+            if(tile.floor() == iceRock && noise(tile.x, tile.y, 4, 0.6f, darkRockScl, 1f) > darkRockThresh){
+                tile.setFloor(darkIceRock.asFloor());
+            }
+        }
+
+        //titanium veins on dark rock: small ~5-tile clusters, guaranteed count
+        //(sampled at random valid tiles rather than a tiny per-tile chance)
+        {
+            int placed = 0, attempts = 0, maxAttempts = titaniumVeinCount * 60;
+            while(placed < titaniumVeinCount && attempts++ < maxAttempts){
+                int x = rand.random(0, width - 1), y = rand.random(0, height - 1);
+                Tile tile = tiles.get(x, y);
+                if(tile != null && tile.floor() == darkIceRock && !tile.block().solid
+                        && tile.overlay() == Blocks.air && !nearWall(x, y)){
+                    placeOreCluster(x, y, oreTitanium, titaniumVeinMinRadius, titaniumVeinMaxRadius);
+                    placed++;
+                }
+            }
+        }
+
+        //ores: small clusters (~10 tiles each), guaranteed count regardless
+        //of map size (sampled at random valid tiles, not a tiny per-tile chance)
+        Block[] oreTypes = {oreCrystalSand, oreDryIce, oreMagnesium, oreSalt, oreAluminum};
+        {
+            int placed = 0, attempts = 0, maxAttempts = oreClusterCount * 60;
+            while(placed < oreClusterCount && attempts++ < maxAttempts){
+                int x = rand.random(0, width - 1), y = rand.random(0, height - 1);
+                Tile tile = tiles.get(x, y);
+                if(tile != null && !tile.block().solid && tile.overlay() == Blocks.air && !nearWall(x, y)){
+                    placeOreCluster(x, y, oreTypes[rand.random(oreTypes.length - 1)]);
+                    placed++;
+                }
+            }
+        }
+
+        //shattered crystal/ice rubble: sparse decoration near walls
+        for(Tile tile : tiles){
+            if(!tile.block().solid && tile.overlay() == Blocks.air && nearWall(tile.x, tile.y) && rand.chance(shatterChance)){
+                placeOverlay(tile, rand.chance(0.5f) ? shatteredCrystal : shatteredIce);
+            }
+        }
+
+        //rare, small cryo-fluid biome
+        genCryoFluidBiome(spawnX, spawnY, endX, endY);
 
         trimDark();
 
@@ -219,19 +428,19 @@ public class CryonPlanetGenerator extends PlanetGenerator{
         outer:
         for(Tile tile : tiles){
             var floor = tile.floor();
-            if((floor == iceFloor || floor == iceRock) && rand.chance(0.002)){
+            if(isVentableFloor(floor) && rand.chance(0.002)){
                 int radius = 2;
                 for(int x = -radius; x <= radius; x++){
                     for(int y = -radius; y <= radius; y++){
                         Tile other = tiles.get(x + tile.x, y + tile.y);
-                        if(other == null || (other.floor() != iceFloor && other.floor() != iceRock) || other.block().solid){
+                        if(other == null || !isVentableFloor(other.floor()) || other.block().solid){
                             continue outer;
                         }
                     }
                 }
 
                 ventCount ++;
-                Block vent = floor == iceRock ? cryonRockVent : cryonVent;
+                Block vent = ventFor(floor);
                 for(var pos : SteamVent.offsets){
                     Tile other = tiles.get(pos.x + tile.x + 1, pos.y + tile.y + 1);
                     other.setFloor(vent.asFloor());
@@ -258,11 +467,11 @@ public class CryonPlanetGenerator extends PlanetGenerator{
                     }
 
                     var floor = tile.floor();
-                    if(floor != iceFloor && floor != iceRock){
+                    if(floor != iceFloor && floor != iceRock && floor != darkIceRock){
                         continue;
                     }
 
-                    Block vent = floor == iceRock ? cryonRockVent : cryonVent;
+                    Block vent = floor == darkIceRock ? darkRockVent : floor == iceRock ? cryonRockVent : cryonVent;
                     ventCount ++;
                     for(var pos : SteamVent.offsets){
                         Tile other = tiles.get(pos.x + tile.x + 1, pos.y + tile.y + 1);
@@ -277,7 +486,9 @@ public class CryonPlanetGenerator extends PlanetGenerator{
                             if(cx*cx + rcy*rcy <= crad2 - noise(rx, ry + rx * 2f, 2, 0.7f, 8f, crad2 * 1.1f)){
                                 Tile dest = tiles.get(rx, ry);
                                 if(dest != null && dest.floor().attributes.get(Attribute.steam) == 0){
-                                    Block targetFloor = dest.floor() == iceRock ? iceRock : iceFloor;
+                                    Block targetFloor = dest.floor() == iceRock ? iceRock
+                                            : dest.floor() == darkIceRock ? darkIceRock
+                                              : iceFloor;
                                     dest.setFloor(targetFloor.asFloor());
                                     if(dest.block().isStatic()){
                                         dest.setBlock(iceWall);
@@ -309,23 +520,38 @@ public class CryonPlanetGenerator extends PlanetGenerator{
         state.rules.spawns.clear();
         //todo Find out why WinWave always returns 30.
 
-        //T3
-        UnitType peak  = Vars.content.unit("cryon-peak");
-        UnitType umbra = Vars.content.unit("cryon-umbra");
-        UnitType murex = Vars.content.unit("cryon-murex");
-        //ground
-        UnitType buffer   = Vars.content.unit("cryon-buffer");
-        UnitType guardian = Vars.content.unit("cryon-guardian");
+        //T1 (early / scout)
+        UnitType benignitas = CryonContent.unit("benignitas");
+        UnitType comet = CryonContent.unit("comet");
 
-        //air
-        UnitType bolide = Vars.content.unit("cryon-bolide");
-        UnitType littorina = Vars.content.unit("cryon-littorina");
-        UnitType natica = Vars.content.unit("cryon-natica");
+        //T1-T2 ground/air
+        UnitType buffer = CryonContent.unit("buffer");
+        UnitType littorina = CryonContent.unit("littorina");
+        UnitType guardian = CryonContent.unit("guardian");
+        UnitType natica = CryonContent.unit("natica");
+
+        //T3
+        UnitType peak = CryonContent.unit("peak");
+        UnitType umbra = CryonContent.unit("umbra");
+        UnitType murex = CryonContent.unit("murex");
+
+        //T4 / elite, late-game only
+        UnitType salus = CryonContent.unit("salus");
+        UnitType sagitta = CryonContent.unit("sagitta");
+        UnitType blaze = CryonContent.unit("blaze");
+        UnitType charonia = CryonContent.unit("charonia");
 
         boolean groundAttack = Mathf.randomBoolean();
 
         // This might be too difficult.
         if(groundAttack){
+
+            state.rules.spawns.add(new SpawnGroup(benignitas){{
+                unitAmount = 5;
+                max = (int)(30 * difficulty);
+                spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                unitScaling = 1;
+            }});
 
             state.rules.spawns.add(new SpawnGroup(buffer){{
                 unitAmount = 4;
@@ -350,7 +576,30 @@ public class CryonPlanetGenerator extends PlanetGenerator{
                 unitScaling = 3;
             }});
 
+            state.rules.spawns.add(new SpawnGroup(umbra){{
+                begin = 16;
+                unitAmount = 1;
+                max = (int)(6 * difficulty);
+                spacing = Math.max(2, 4 - (int)(difficulty / 5));
+                unitScaling = 3;
+            }});
+
+            state.rules.spawns.add(new SpawnGroup(salus){{
+                begin = 24;
+                unitAmount = 1;
+                max = (int)(3 * difficulty);
+                spacing = Math.max(3, 6 - (int)(difficulty / 5));
+                unitScaling = 4;
+            }});
+
         }else{
+
+            state.rules.spawns.add(new SpawnGroup(comet){{
+                unitAmount = 5;
+                max = (int)(30 * difficulty);
+                spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                unitScaling = 1;
+            }});
 
             state.rules.spawns.add(new SpawnGroup(littorina){{
                 unitAmount = 3;
@@ -375,8 +624,34 @@ public class CryonPlanetGenerator extends PlanetGenerator{
                 unitScaling = 3;
             }});
 
+            state.rules.spawns.add(new SpawnGroup(sagitta){{
+                begin = 18;
+                unitAmount = 1;
+                max = (int)(6 * difficulty);
+                spacing = Math.max(2, 4 - (int)(difficulty / 5));
+                unitScaling = 3;
+            }});
+
+            state.rules.spawns.add(new SpawnGroup(charonia){{
+                begin = 26;
+                unitAmount = 1;
+                max = (int)(3 * difficulty);
+                spacing = Math.max(3, 6 - (int)(difficulty / 5));
+                unitScaling = 4;
+            }});
+
         }
 
+        //rare mixed elite wave, independent of ground/air path, only on high-threat sectors
+        if(difficulty > 6f){
+            state.rules.spawns.add(new SpawnGroup(blaze){{
+                begin = 30;
+                unitAmount = 1;
+                max = (int)(2 * difficulty);
+                spacing = 8;
+                unitScaling = 4;
+            }});
+        }
 
         state.rules.waveSpacing = 60 * 30;
     }

@@ -276,6 +276,9 @@ public class CryonTechTree{
 
 
         addAuto(Kind.BLOCK, "dry-ice-sublimator", "magnesium-converter");
+        addAuto(Kind.BLOCK, "titanium-water-condenser", "dry-ice-sublimator");
+
+
         addAuto(Kind.BLOCK, "farstar-forge", "magnesium-converter");
         addAuto(Kind.BLOCK, "surge-alloy-forge", "farstar-forge");
 
@@ -289,7 +292,9 @@ public class CryonTechTree{
 
         addAuto(Kind.BLOCK, "isotope-separator", "cryo-electrolyzer");
         addAuto(Kind.BLOCK, "molten-salt-electrolyzer", "cryo-electrolyzer");
-        addAuto(Kind.BLOCK, "fusion-casting-furnace", "cryo-electrolyzer");
+        addAuto(Kind.BLOCK, "fusion-casting-furnace", "molten-salt-electrolyzer");
+        addAuto(Kind.BLOCK, "sodium‑carbon‑fixer", "molten-salt-electrolyzer");
+
 
 
 

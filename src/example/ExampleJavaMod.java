@@ -618,6 +618,7 @@ public class ExampleJavaMod extends Mod {
 
             researchCostMultiplier = 0.3f;
 
+
         }
             @Override
             public void init() {
@@ -887,6 +888,7 @@ public class ExampleJavaMod extends Mod {
         };
         OblivionUnit.load();
         DestroyerUnit.load();
+
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -894,6 +896,7 @@ public class ExampleJavaMod extends Mod {
     // ══════════════════════════════════════════════════════════════
     @Override
     public void init() {
+        CryonSectors.load();
         Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
         if(exist == null){
             Mods.LoadedMod self = Vars.mods.locateMod("cryon");
@@ -1022,6 +1025,7 @@ public class ExampleJavaMod extends Mod {
                 r.lighting = true;  // 启用光照
                 r.ambientLight = Color.valueOf("03030dd9");  // 暗环境光
                 r.fire=false;
+                r.coreDestroyClear = true;
 
 
 

@@ -516,143 +516,153 @@ public class CryonPlanetGenerator extends PlanetGenerator{
         state.rules.waves = true;
         state.rules.waveTeam = Team.crux;
         float difficulty = sector.threat * 10f;
-        state.rules.winWave = (int)(10*difficulty);
         state.rules.spawns.clear();
-        //todo Find out why WinWave always returns 30.
 
-        //T1 (early / scout)
-        UnitType benignitas = CryonContent.unit("benignitas");
-        UnitType comet = CryonContent.unit("comet");
+        if(sector.generateEnemyBase){
+            state.rules.attackMode = true;
+            state.rules.waves = false;
 
-        //T1-T2 ground/air
-        UnitType buffer = CryonContent.unit("buffer");
-        UnitType littorina = CryonContent.unit("littorina");
-        UnitType guardian = CryonContent.unit("guardian");
-        UnitType natica = CryonContent.unit("natica");
+            Tile enemyCoreTile = tiles.getn(endX, endY);
+            enemyCoreTile.setBlock(Blocks.coreShard, Team.crux);
 
-        //T3
-        UnitType peak = CryonContent.unit("peak");
-        UnitType umbra = CryonContent.unit("umbra");
-        UnitType murex = CryonContent.unit("murex");
+            Seq<Tile> enemyCores = Seq.with(enemyCoreTile);
+            new BaseGenerator().generate(tiles, enemyCores, tiles.getn(spawnX, spawnY), Team.crux, sector, sector.threat);
 
-        //T4 / elite, late-game only
-        UnitType salus = CryonContent.unit("salus");
-        UnitType sagitta = CryonContent.unit("sagitta");
-        UnitType blaze = CryonContent.unit("blaze");
-        UnitType charonia = CryonContent.unit("charonia");
-
-        boolean groundAttack = Mathf.randomBoolean();
-
-        // This might be too difficult.
-        if(groundAttack){
-
-            state.rules.spawns.add(new SpawnGroup(benignitas){{
-                unitAmount = 5;
-                max = (int)(30 * difficulty);
-                spacing = Math.max(1, 3 - (int)(difficulty / 5));
-                unitScaling = 1;
-            }});
-
-            state.rules.spawns.add(new SpawnGroup(buffer){{
-                unitAmount = 4;
-                max = (int)(25 * difficulty);
-                spacing = Math.max(1, 3 - (int)(difficulty / 5));
-                unitScaling = 1;
-            }});
-
-            state.rules.spawns.add(new SpawnGroup(guardian){{
-                begin = 5;
-                unitAmount = 2;
-                max = (int)(18 * difficulty);
-                spacing = Math.max(1, 3 - (int)(difficulty / 5));
-                unitScaling = 2;
-            }});
-
-            state.rules.spawns.add(new SpawnGroup(peak){{
-                begin = 10;
-                unitAmount = 1;
-                max = (int)(10 * difficulty);
-                spacing = Math.max(1, 3 - (int)(difficulty / 5));
-                unitScaling = 3;
-            }});
-
-            state.rules.spawns.add(new SpawnGroup(umbra){{
-                begin = 16;
-                unitAmount = 1;
-                max = (int)(6 * difficulty);
-                spacing = Math.max(2, 4 - (int)(difficulty / 5));
-                unitScaling = 3;
-            }});
-
-            state.rules.spawns.add(new SpawnGroup(salus){{
-                begin = 24;
-                unitAmount = 1;
-                max = (int)(3 * difficulty);
-                spacing = Math.max(3, 6 - (int)(difficulty / 5));
-                unitScaling = 4;
-            }});
+            sector.info.attack = true;
 
         }else{
+            state.rules.waves = true;
+            state.rules.waveTeam = Team.crux;
+            state.rules.winWave = (int)(10*difficulty);
 
-            state.rules.spawns.add(new SpawnGroup(comet){{
-                unitAmount = 5;
-                max = (int)(30 * difficulty);
-                spacing = Math.max(1, 3 - (int)(difficulty / 5));
-                unitScaling = 1;
-            }});
+            //todo Find out why WinWave always returns 30.
 
-            state.rules.spawns.add(new SpawnGroup(littorina){{
-                unitAmount = 3;
-                max = (int)(25 * difficulty);
-                spacing = Math.max(1, 3 - (int)(difficulty / 5));
-                unitScaling = 1;
-            }});
+            //T1 (early / scout)
+            UnitType benignitas = CryonContent.unit("benignitas");
+            UnitType comet = CryonContent.unit("comet");
 
-            state.rules.spawns.add(new SpawnGroup(natica){{
-                begin = 5;
-                unitAmount = 2;
-                max = (int)(18 * difficulty);
-                spacing = Math.max(1, 3 - (int)(difficulty / 5));
-                unitScaling = 2;
-            }});
+            //T1-T2 ground/air
+            UnitType buffer = CryonContent.unit("buffer");
+            UnitType littorina = CryonContent.unit("littorina");
+            UnitType guardian = CryonContent.unit("guardian");
+            UnitType natica = CryonContent.unit("natica");
 
-            state.rules.spawns.add(new SpawnGroup(murex){{
-                begin = 10;
-                unitAmount = 1;
-                max = (int)(10 * difficulty);
-                spacing = Math.max(1, 3 - (int)(difficulty / 5));
-                unitScaling = 3;
-            }});
+            //T3
+            UnitType peak = CryonContent.unit("peak");
+            UnitType umbra = CryonContent.unit("umbra");
+            UnitType murex = CryonContent.unit("murex");
 
-            state.rules.spawns.add(new SpawnGroup(sagitta){{
-                begin = 18;
-                unitAmount = 1;
-                max = (int)(6 * difficulty);
-                spacing = Math.max(2, 4 - (int)(difficulty / 5));
-                unitScaling = 3;
-            }});
+            //T4 / elite, late-game only
+            UnitType salus = CryonContent.unit("salus");
+            UnitType sagitta = CryonContent.unit("sagitta");
+            UnitType blaze = CryonContent.unit("blaze");
+            UnitType charonia = CryonContent.unit("charonia");
 
-            state.rules.spawns.add(new SpawnGroup(charonia){{
-                begin = 26;
-                unitAmount = 1;
-                max = (int)(3 * difficulty);
-                spacing = Math.max(3, 6 - (int)(difficulty / 5));
-                unitScaling = 4;
-            }});
+            boolean groundAttack = Mathf.randomBoolean();
 
+            // This might be too difficult.
+            if(groundAttack){
+
+                state.rules.spawns.add(new SpawnGroup(benignitas){{
+                    unitAmount = 5;
+                    max = (int)(30 * difficulty);
+                    spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                    unitScaling = 1;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(buffer){{
+                    unitAmount = 4;
+                    max = (int)(25 * difficulty);
+                    spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                    unitScaling = 1;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(guardian){{
+                    begin = 5;
+                    unitAmount = 2;
+                    max = (int)(18 * difficulty);
+                    spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                    unitScaling = 2;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(peak){{
+                    begin = 10;
+                    unitAmount = 1;
+                    max = (int)(10 * difficulty);
+                    spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                    unitScaling = 3;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(umbra){{
+                    begin = 16;
+                    unitAmount = 1;
+                    max = (int)(6 * difficulty);
+                    spacing = Math.max(2, 4 - (int)(difficulty / 5));
+                    unitScaling = 3;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(salus){{
+                    begin = 24;
+                    unitAmount = 1;
+                    max = (int)(3 * difficulty);
+                    spacing = Math.max(3, 6 - (int)(difficulty / 5));
+                    unitScaling = 4;
+                }});
+
+            }else{
+
+                state.rules.spawns.add(new SpawnGroup(comet){{
+                    unitAmount = 5;
+                    max = (int)(30 * difficulty);
+                    spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                    unitScaling = 1;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(littorina){{
+                    unitAmount = 3;
+                    max = (int)(25 * difficulty);
+                    spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                    unitScaling = 1;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(natica){{
+                    begin = 5;
+                    unitAmount = 2;
+                    max = (int)(18 * difficulty);
+                    spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                    unitScaling = 2;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(murex){{
+                    begin = 10;
+                    unitAmount = 1;
+                    max = (int)(10 * difficulty);
+                    spacing = Math.max(1, 3 - (int)(difficulty / 5));
+                    unitScaling = 3;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(sagitta){{
+                    begin = 18;
+                    unitAmount = 1;
+                    max = (int)(6 * difficulty);
+                    spacing = Math.max(2, 4 - (int)(difficulty / 5));
+                    unitScaling = 3;
+                }});
+
+                state.rules.spawns.add(new SpawnGroup(charonia){{
+                    begin = 26;
+                    unitAmount = 1;
+                    max = (int)(3 * difficulty);
+                    spacing = Math.max(3, 6 - (int)(difficulty / 5));
+                    unitScaling = 4;
+                }});
+
+            }
         }
 
-        //rare mixed elite wave, independent of ground/air path, only on high-threat sectors
-        if(difficulty > 6f){
-            state.rules.spawns.add(new SpawnGroup(blaze){{
-                begin = 30;
-                unitAmount = 1;
-                max = (int)(2 * difficulty);
-                spacing = 8;
-                unitScaling = 4;
-            }});
-        }
+        if(sector.hasEnemyBase()){
 
-        state.rules.waveSpacing = 60 * 30;
+            state.rules.attackMode = sector.info.attack = true;
+        }
     }
 }

@@ -82,6 +82,7 @@ public class ExampleJavaMod extends Mod {
     public static AgitatorBlock  agitatorTower;
     public static UniversalUnitAssembler t3universalAssembler;
     public static UniversalUnitAssembler t4universalAssembler;
+    public static UniversalUnitAssembler t5universalAssembler;
     public static ConstructorSource constructorSource;
     public static ConstructorSink   constructorSink;
     public static ConstructorNode   constructorNode;
@@ -166,6 +167,17 @@ public class ExampleJavaMod extends Mod {
             hasPower = true;
             consumePower(5.5f);
             researchCostMultiplier = 0.4f;
+        }};
+        t5universalAssembler = new UniversalUnitAssembler("t5universal-assembler") {{
+            size             = 5;
+            areaSize         = 15;
+            category         = Category.units;
+            buildVisibility  = BuildVisibility.shown;
+            constructorUse   = 120;
+            hasPower         = true;
+            consumePower(9f);
+            consumeLiquid(Liquids.cryofluid, 3f);
+            researchCostMultiplier = 0.3f;
         }};
         constructorSource = new ConstructorSource("constructor-source") {{
             size            = 1;
@@ -1181,7 +1193,63 @@ public class ExampleJavaMod extends Mod {
         }
 
         t4universalAssembler.initCapacities();
+        t5universalAssembler.requirements(Category.units, BuildVisibility.shown, new ItemStack[]{
+                new ItemStack(CryonContent.item("cryo-alloy"), 3000),
+                new ItemStack(Items.phaseFabric, 600),
+                new ItemStack(CryonContent.item("nano-material"), 400),
+                new ItemStack(Items.graphite, 2000),
+        });
+        if (cryonPlanet != null) t5universalAssembler.shownPlanets.add(cryonPlanet);
 
+        // T5 单位
+        UnitType eternal = Vars.content.unit("cryon-eternal");
+        UnitType syrinx  = Vars.content.unit("cryon-syrinx");
+        UnitType hydra   = Vars.content.unit("cryon-hydra");
+        Block cryoAlloyWallLarge = CryonContent.block("cryo-alloy-wall-large");
+
+        if (eternal != null && guardian != null && cryoAlloyWallLarge != null) {
+            t5universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = eternal;
+                time = 6000f;
+                requirements = Seq.with(
+                        new PayloadStack(guardian, 6),
+                        new PayloadStack(cryoAlloyWallLarge, 8)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Liquids.cryofluid, (30f / 60f))
+                };
+            }});
+        }
+
+        if (hydra != null && bolide != null && cryoAlloyWallLarge != null) {
+            t5universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = hydra;
+                time = 6000f;
+                requirements = Seq.with(
+                        new PayloadStack(bolide, 6),
+                        new PayloadStack(cryoAlloyWallLarge, 8)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Liquids.cryofluid, (30f / 60f))
+                };
+            }});
+        }
+
+        if (syrinx != null && natica != null && cryoAlloyWallLarge != null) {
+            t5universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = syrinx;
+                time = 6000f;
+                requirements = Seq.with(
+                        new PayloadStack(natica, 6),
+                        new PayloadStack(cryoAlloyWallLarge, 8)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Liquids.cryofluid, (30f / 60f))
+                };
+            }});
+        }
+
+        t5universalAssembler.initCapacities();
         //abilities
         UnitType comet = Vars.content.units().find(u -> u.name.equals("cryon-comet"));
         if (comet != null) {

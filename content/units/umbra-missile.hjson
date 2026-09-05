@@ -8,7 +8,7 @@ hidden: true
 speed: 6.5
 missileAccelTime: 15
 lifetime: 49
-health: 800             # 高血量，难以被拦截击落
+health: 800
 hitSize: 10
 
 rotateSpeed: 4.5

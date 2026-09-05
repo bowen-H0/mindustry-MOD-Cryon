@@ -821,7 +821,7 @@ public class ExampleJavaMod extends Mod {
             {
                 float brange = range = 220f;
 
-                quantumBullet = new BasicBulletType(11f, 58){{
+                quantumBullet = new BasicBulletType(11f, 65){{
                     width = 11f;
                     height = 16f;
                     lifetime = brange / speed;
@@ -1204,6 +1204,26 @@ public class ExampleJavaMod extends Mod {
         }
         if (umbra != null) {
             umbra.abilities.add(new SafeFluxBarrierAbility(50f, 100f, 20f,4,45f,600));
+        }
+        if (CryonContent.unit("vain") != null) {
+            ReflectShieldAbility weakShield = new ReflectShieldAbility();
+            weakShield.reflectRadius = 50f;
+            weakShield.reflectMaxDamage = 800f;
+            weakShield.shieldCooldown = 420f;
+            weakShield.reflectAngleMin = 100f;
+            weakShield.reflectAngleMax = 260f;
+
+            CryonContent.unit("vain").abilities.add(weakShield);
+        }
+        if (CryonContent.unit("roche") != null) {
+            ReflectShieldAbility hugeShield = new ReflectShieldAbility();
+            hugeShield.reflectRadius = 160f;       // 判定范围巨大，很难绕开
+            hugeShield.reflectMaxDamage = 25000f;  // 承受上限极高，非常抗打
+            hugeShield.shieldCooldown = 120f;
+            hugeShield.reflectAngleMin = 150f;     // 反弹角度集中，弹道更容易打回敌方主力方向
+            hugeShield.reflectAngleMax = 210f;
+
+            CryonContent.unit("roche").abilities.add(hugeShield);
         }
         // TechTree
         Events.on(ClientLoadEvent.class, e -> {

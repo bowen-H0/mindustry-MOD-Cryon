@@ -1,5 +1,4 @@
 planet: cryon
-sector: 30
+sector: 64
 alwaysUnlocked: false
-difficulty: 4
-
+difficulty: 7

@@ -1,0 +1,333 @@
+name: "roche"
+type: flying
+flying: true
+health: 200000
+armor: 26
+speed: 0.55
+rotateSpeed: 1.1
+hitSize: 112
+itemCapacity: 200
+targetAir: true
+targetGround: true
+faceTarget: false
+lowAltitude: true
+controller: flyingAI
+engineSize: 12
+engineOffset: 80
+
+weapons: [
+  {
+    name: roche-meltdown
+    x: 0
+    y: -10
+    reload: 0
+    
+    rotate: true
+    mirror: false
+    alternate: false
+    continuous: true
+    shootSound: beamMeltdown
+    shoot: {
+      firstShotDelay: 0
+    }
+    bullet: {
+      type: ContinuousLaserBulletType
+      damage: 40
+      length: 260
+      width: 9
+      
+      colors: [ffd9d9, ff5050, ffffff]
+    }
+  }
+
+  {
+    name: roche-meltdown
+    x: 34
+    y: -4
+    reload: 0
+    
+    rotate: true
+    mirror: true
+    alternate: false
+    continuous: true
+    shootSound: beamMeltdown
+    shoot: {
+      firstShotDelay: 0
+    }
+    bullet: {
+      type: ContinuousLaserBulletType
+      damage: 38
+      length: 240
+      width: 8
+      
+      colors: [ffd9d9, ff5050, ffffff]
+    }
+  }
+
+  {
+    name: roche-meltdown
+    x: 56
+    y: 4
+    reload: 0
+    
+    rotate: true
+    mirror: true
+    alternate: false
+    continuous: true
+    shootSound: beamMeltdown
+    shoot: {
+      firstShotDelay: 0
+    }
+    bullet: {
+      type: ContinuousLaserBulletType
+      damage: 36
+      length: 220
+      width: 8
+      
+      colors: [ffd9d9, ff5050, ffffff]
+    }
+  }
+
+  {
+    name: roche-mg
+    x: 24
+    y: 30
+    rotate: true
+    mirror: true
+    reload: 9
+    recoil: 1.5
+    shootY: 6
+    bullet: {
+      type: BasicBulletType
+      damage: 34
+      speed: 11
+      lifetime: 26
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 4
+      width: 5
+      height: 26
+      backColor: b3202a
+      frontColor: ffd9d9
+      trailColor: ff5050
+      trailWidth: 2.2
+      trailLength: 10
+      hitColor: ffb3b3
+      lightColor: ff5050
+      lightRadius: 26
+      lightOpacity: 0.6
+    }
+  }
+
+  {
+    name: roche-mg
+    x: 34
+    y: 22
+    rotate: true
+    mirror: true
+    reload: 9
+    recoil: 1.5
+    shootY: 6
+    bullet: {
+      type: BasicBulletType
+      damage: 34
+      speed: 11
+      lifetime: 26
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 4
+      width: 5
+      height: 26
+      backColor: b3202a
+      frontColor: ffd9d9
+      trailColor: ff5050
+      trailWidth: 2.2
+      trailLength: 10
+      hitColor: ffb3b3
+      lightColor: ff5050
+      lightRadius: 26
+      lightOpacity: 0.6
+    }
+  }
+
+  {
+    name: roche-mg
+    x: 44
+    y: 14
+    rotate: true
+    mirror: true
+    reload: 9
+    recoil: 1.5
+    shootY: 6
+    bullet: {
+      type: BasicBulletType
+      damage: 34
+      speed: 11
+      lifetime: 26
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 4
+      width: 5
+      height: 26
+      backColor: b3202a
+      frontColor: ffd9d9
+      trailColor: ff5050
+      trailWidth: 2.2
+      trailLength: 10
+      hitColor: ffb3b3
+      lightColor: ff5050
+      lightRadius: 26
+      lightOpacity: 0.6
+    }
+  }
+
+  {
+    name: roche-mg
+    x: 54
+    y: 6
+    rotate: true
+    mirror: true
+    reload: 9
+    recoil: 1.5
+    shootY: 6
+    bullet: {
+      type: BasicBulletType
+      damage: 34
+      speed: 11
+      lifetime: 26
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 4
+      width: 5
+      height: 26
+      backColor: b3202a
+      frontColor: ffd9d9
+      trailColor: ff5050
+      trailWidth: 2.2
+      trailLength: 10
+      hitColor: ffb3b3
+      lightColor: ff5050
+      lightRadius: 26
+      lightOpacity: 0.6
+    }
+  }
+
+  {
+    name: roche-mg
+    x: 64
+    y: -2
+    rotate: true
+    mirror: true
+    reload: 9
+    recoil: 1.5
+    shootY: 6
+    bullet: {
+      type: BasicBulletType
+      damage: 34
+      speed: 11
+      lifetime: 26
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 4
+      width: 5
+      height: 26
+      backColor: b3202a
+      frontColor: ffd9d9
+      trailColor: ff5050
+      trailWidth: 2.2
+      trailLength: 10
+      hitColor: ffb3b3
+      lightColor: ff5050
+      lightRadius: 26
+      lightOpacity: 0.6
+    }
+  }
+
+  {
+    name: roche-plasma-bolt
+    x: 70
+    y: -14
+    rotate: true
+    mirror: true
+    reload: 24
+    recoil: 2
+    shootY: 8
+    bullet: {
+      type: FlakBulletType
+      damage: 60
+      speed: 7.5
+      lifetime: 60
+      width: 10
+      height: 24
+      hitSize: 8
+      collidesGround: true
+      collidesAir: true
+      explodeRange: 30
+      splashDamage: 40
+      splashDamageRadius: 26
+      homingPower: 0.25
+      homingRange: 220
+      backColor: b3202a
+      frontColor: ffd9d9
+      hitColor: ffb3b3
+      trailColor: ff5050
+      trailWidth: 3
+      trailLength: 18
+      lightColor: ff5050
+      lightRadius: 40
+      lightOpacity: 0.6
+      shootEffect: shootBigSmoke
+      hitEffect: massiveExplosion
+      despawnEffect: massiveExplosion
+    }
+  }
+
+  {
+    name: roche-plasma-bolt
+    x: 78
+    y: -24
+    rotate: true
+    mirror: true
+    reload: 24
+    recoil: 2
+    shootY: 8
+    bullet: {
+      type: FlakBulletType
+      damage: 60
+      speed: 7.5
+      lifetime: 60
+      width: 10
+      height: 24
+      hitSize: 8
+      collidesGround: true
+      collidesAir: true
+      explodeRange: 30
+      splashDamage: 40
+      splashDamageRadius: 26
+      homingPower: 0.25
+      homingRange: 220
+      backColor: b3202a
+      frontColor: ffd9d9
+      hitColor: ffb3b3
+      trailColor: ff5050
+      trailWidth: 3
+      trailLength: 18
+      lightColor: ff5050
+      lightRadius: 40
+      lightOpacity: 0.6
+      shootEffect: shootBigSmoke
+      hitEffect: massiveExplosion
+      despawnEffect: massiveExplosion
+    }
+  }
+]

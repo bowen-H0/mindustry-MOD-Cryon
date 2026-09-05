@@ -1,28 +1,21 @@
 package example;
-
 import arc.util.*;
 import mindustry.Vars;
 import mindustry.content.*;
 import mindustry.maps.*;
 import mindustry.type.*;
-
 import static mindustry.content.Planets.*;
-
 public class CryonSectors {
-
     // 在这里声明你的 Sector
     // public static SectorPreset yourSector;
-
     public static void load() {
         Planet cryonPlanet = Vars.content.planet("cryon-cryon");
         if (cryonPlanet == null) {
             Log.warn("[CryonSectors] Cryon planet not found!");
             return;
         }
-
         registerSectors(cryonPlanet);
     }
-
     private static void registerSectors(Planet planet) {
         // ──────────────────────────────────────────────────────────
         // 示例：进攻图
@@ -34,7 +27,6 @@ public class CryonSectors {
         //     credit = "YourName";
         // }};
         // sector.generateEnemyBase = true;
-
         // ──────────────────────────────────────────────────────────
         // 示例：生存图
         // ──────────────────────────────────────────────────────────
@@ -45,16 +37,25 @@ public class CryonSectors {
         //     requireUnlock = false;
         //     credit = "YourName";
         // }};
-
         // ──────────────────────────────────────────────────────────
         // 扇区 38（进攻图）
         // ──────────────────────────────────────────────────────────
         Sector sector38 = planet.sectors.get(38);
         new SectorPreset("sector-38", planet, 38) {{
-            sector.threat=8f;
+            sector.threat=5f;
             requireUnlock = false;
         }};
         sector38.generateEnemyBase = true;
 
+        // ──────────────────────────────────────────────────────────
+        // 扇区 66（进攻图）：穹顶大桥
+        // ──────────────────────────────────────────────────────────
+        Sector sector66 = planet.sectors.get(66);
+        new SectorPreset("sector-66", planet, 66) {{
+            sector.threat = 8f;
+            requireUnlock = false;
+            credit = "LSK133";
+        }};
+        sector66.generateEnemyBase = true;
     }
 }

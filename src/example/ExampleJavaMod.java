@@ -1022,6 +1022,7 @@ public class ExampleJavaMod extends Mod {
         Item magnesium = CryonContent.item("magnesium");
         Item aluminum = CryonContent.item("aluminum");
         Planet cryonPlanet = Vars.content.planet("cryon-cryon");
+
         // generator
         if(cryonPlanet != null) {
             cryonPlanet.defaultEnv = Env.terrestrial;
@@ -1096,7 +1097,7 @@ public class ExampleJavaMod extends Mod {
                 unit = peak;
                 time = 2000f;
                 requirements = Seq.with(
-                        new PayloadStack(guardian, 2),
+                        new PayloadStack(buffer, 2),
                         new PayloadStack(wall, 4)
                 );
                 liquidReq = new LiquidStack[]{
@@ -1110,7 +1111,7 @@ public class ExampleJavaMod extends Mod {
                 unit = umbra;
                 time = 2000f;
                 requirements = Seq.with(
-                        new PayloadStack(bolide, 2),
+                        new PayloadStack(CryonContent.unit("comet"), 2),
                         new PayloadStack(wall, 5)
                 );
                 liquidReq = new LiquidStack[]{
@@ -1124,7 +1125,7 @@ public class ExampleJavaMod extends Mod {
                 unit = murex;
                 time = 2000f;
                 requirements = Seq.with(
-                        new PayloadStack(natica, 2),
+                        new PayloadStack(littorina, 2),
                         new PayloadStack(wall, 4)
                 );
                 liquidReq = new LiquidStack[]{
@@ -1207,12 +1208,12 @@ public class ExampleJavaMod extends Mod {
         UnitType hydra   = Vars.content.unit("cryon-hydra");
         Block cryoAlloyWallLarge = CryonContent.block("cryo-alloy-wall-large");
 
-        if (eternal != null && guardian != null && cryoAlloyWallLarge != null) {
+        if (eternal != null && peak != null && cryoAlloyWallLarge != null) {
             t5universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
                 unit = eternal;
                 time = 6000f;
                 requirements = Seq.with(
-                        new PayloadStack(guardian, 6),
+                        new PayloadStack(peak, 6),
                         new PayloadStack(cryoAlloyWallLarge, 8)
                 );
                 liquidReq = new LiquidStack[]{
@@ -1221,12 +1222,12 @@ public class ExampleJavaMod extends Mod {
             }});
         }
 
-        if (hydra != null && bolide != null && cryoAlloyWallLarge != null) {
+        if (hydra != null && umbra != null && cryoAlloyWallLarge != null) {
             t5universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
                 unit = hydra;
                 time = 6000f;
                 requirements = Seq.with(
-                        new PayloadStack(bolide, 6),
+                        new PayloadStack(umbra, 6),
                         new PayloadStack(cryoAlloyWallLarge, 8)
                 );
                 liquidReq = new LiquidStack[]{
@@ -1235,12 +1236,12 @@ public class ExampleJavaMod extends Mod {
             }});
         }
 
-        if (syrinx != null && natica != null && cryoAlloyWallLarge != null) {
+        if (syrinx != null && murex != null && cryoAlloyWallLarge != null) {
             t5universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
                 unit = syrinx;
                 time = 6000f;
                 requirements = Seq.with(
-                        new PayloadStack(natica, 6),
+                        new PayloadStack(murex, 6),
                         new PayloadStack(cryoAlloyWallLarge, 8)
                 );
                 liquidReq = new LiquidStack[]{

@@ -1,0 +1,196 @@
+name: Vain
+type: flying
+flying: true
+health: 21000
+armor: 13
+speed: 0.85
+rotateSpeed: 1.35
+hitSize: 68
+itemCapacity: 150
+targetAir: true
+targetGround: true
+faceTarget: false
+lowAltitude: true
+controller: flyingAI
+engineSize: 9
+engineOffset: 42
+engines: [
+  {
+    x: -25
+    y: -38
+    radius: 6
+    rotation: -90
+  }
+  {
+    x: 25
+    y: -38
+    radius: 6
+    rotation: -90
+  }
+]
+
+abilities: [
+  {
+    type: UnitSpawnAbility
+    unit: charonia
+    spawnTime: 3600
+    spawnX: -34
+    spawnY: -15
+    spawnEffect: spawn
+    parentizeEffects: true
+  }
+  {
+    type: UnitSpawnAbility
+    unit: charonia
+    spawnTime: 3600
+    spawnX: 34
+    spawnY: -15
+    spawnEffect: spawn
+    parentizeEffects: true
+  }
+]
+weapons: [
+      {
+        name: vain-energy-mg
+        x: 26
+        y: 10
+        rotate: true
+        mirror: true
+        reload: 10
+        recoil: 2
+        shake: 1
+        shootY: 8
+        shadow: 6
+        shoot: {
+          type: ShootAlternate
+          barrels: 2
+          shots: 1
+        }
+        bullet: {
+          type: BasicBulletType
+          damage: 22
+          speed: 9.5
+          lifetime: 28
+          collidesAir: true
+          collidesGround: true
+          pierce: true
+          pierceBuilding: true
+          pierceCap: 3
+          width: 3
+          height: 22
+          backColor: b3202a
+          frontColor: ffd9d9
+          trailWidth: 1.5
+          trailLength: 8
+          trailColor: ff5050
+          hitColor: ffb3b3
+          lightColor: ff5050
+          lightRadius: 24
+          lightOpacity: 0.6
+        }
+      }
+      {
+        name: vain-plasma-missile
+        x: 34
+        y: 0
+        rotate: true
+        mirror: true
+        reload: 100
+        recoil: 4
+        shake: 3
+        shootY: 10
+        shadow: 8
+        shoot: {
+          shots: 4
+          shotDelay: 5
+        }
+        bullet: {
+          type: FlakBulletType
+          damage: 130
+          speed: 6.2
+          lifetime: 55
+          width: 9
+          height: 24
+          hitSize: 8
+          collidesGround: true
+          collidesAir: true
+          explodeRange: 40
+          splashDamage: 95
+          splashDamageRadius: 38
+          backColor: 7a1010
+          frontColor: ffcccc
+          hitColor: ffb3b3
+          trailColor: ff4d4d
+          trailWidth: 3
+          trailLength: 22
+          lightColor: ff5050
+          lightRadius: 55
+          lightOpacity: 0.7
+          shootEffect: shootBigSmoke
+          hitEffect: massiveExplosion
+          despawnEffect: massiveExplosion
+          despawnSound: explosion
+          fragBullets: 4
+          fragVelocityMin: 0.3
+          fragBullet: {
+            type: MissileBulletType
+            damage: 0
+            speed: 3.9
+            lifetime: 65
+            homingPower: 0.15
+            weaveMag: 4
+            weaveScale: 4
+            keepVelocity: false
+            splashDamage: 18
+            splashDamageRadius: 24
+            backColor: 7a1010
+            frontColor: ffcccc
+            trailColor: ff4d4d
+            trailWidth: 2
+            trailLength: 18
+            trailChance: -1
+            lightColor: ff5050
+            lightRadius: 40
+            lightOpacity: 0.6
+            hitSound: none
+            despawnEffect: none
+            hitEffect: massiveExplosion
+          }
+        }
+      }
+  {
+    name: vain-aa-mg
+    x: 16
+    y: -24
+    rotate: true
+    mirror: true
+    reload: 4
+    recoil: 1
+    shake: 0.5
+    shootY: 5
+    shadow: 4
+    shoot: {
+      type: ShootAlternate
+      barrels: 2
+      shots: 3
+      shotDelay: 3
+    }
+    bullet: {
+      type: MissileBulletType
+      damage: 9
+      speed: 7.5
+      lifetime: 30
+      width: 4
+      height: 4
+      hitSize: 3
+      collidesAir: true
+      collidesGround: false
+      homingPower: 0.22
+      homingRange: 70
+      splashDamage: 6
+      splashDamageRadius: 12
+      hitEffect: hitSquaresColor
+      despawnEffect: hitSquaresColor
+    }
+  }
+]

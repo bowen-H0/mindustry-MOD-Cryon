@@ -372,6 +372,9 @@ public class CryonTechTree{
         addAuto(Kind.UNIT_BLOCK, "t2factory", "unit-projector");
         addAuto(Kind.UNIT_BLOCK, "t3universal-assembler", "t2factory");
         addAuto(Kind.UNIT_BLOCK, "t4universal-assembler", "t3universal-assembler");
+        addAuto(Kind.UNIT_BLOCK, "t5universal-assembler", "t4universal-assembler");
+
+
 
 
         addAuto(Kind.UNIT_BLOCK, "unit-projector", "core-pioneer");
@@ -391,7 +394,9 @@ public class CryonTechTree{
         add(Kind.UNIT, "sagitta", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
         add(Kind.UNIT, "blaze", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
         add(Kind.UNIT, "charonia", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
-
+        add(Kind.UNIT, "eternal", "t5universal-assembler", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("phase-fabric"), 4000, CryonContent.item("nano-material"), 2000, CryonContent.item("graphite"), 3000, CryonContent.item("silicon"), 5000));
+        add(Kind.UNIT, "syrinx", "t5universal-assembler", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("phase-fabric"), 4000, CryonContent.item("nano-material"), 2000, CryonContent.item("graphite"), 3000, CryonContent.item("silicon"), 5000));
+        add(Kind.UNIT, "hydra", "t5universal-assembler", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("phase-fabric"), 4000, CryonContent.item("nano-material"), 2000, CryonContent.item("graphite"), 3000, CryonContent.item("silicon"), 5000));
         // ---- SECTOR(全部 auto,前提条件后续手动补) ----
         addAuto(Kind.SECTOR, "cryon-fusion-bastion", "cryon-neutron-flux-zone");
         addAuto(Kind.SECTOR, "cryon-gravel-ice", "cryon-shattered-abyss");
@@ -412,6 +417,8 @@ public class CryonTechTree{
         addAuto(Kind.SECTOR, "stellar-observatory", "silent-tundra");
         addAuto(Kind.SECTOR, "exclusion-zone", "cryon-neutron-flux-zone");
         addAuto(Kind.SECTOR, "baryon-bastion", "exclusion-zone");
+        addAuto(Kind.SECTOR, "magnificent-rift", "cryon-sector-shattered-shoal");
+
 
         // ---- SECTOR 额外前提条件列表 ----
         sectorReq("cryon-ice-shoal",
@@ -451,6 +458,9 @@ public class CryonTechTree{
                 CryonContent.sector("titanium-fortress"));
         sectorReq("baryon-bastion",
                 CryonContent.sector("titanium-fortress"));
+        sectorReq("magnificent-rift",
+                CryonContent.sector("baryon-bastion"));
+
 
 
         // ---- SECTOR 占领门控表(方块/单位) ----
@@ -502,7 +512,8 @@ public class CryonTechTree{
                 "nano-material-weaver","quantum","surge-reactor","t4universal-assembler");
         sectorGate("silent-tundra",
                 "deluge");
-
+        sectorGate("magnificent-rift",
+                "t5universal-assembler");
     }
 
     // ================== 索引 ==================

@@ -5,6 +5,7 @@ size: 3
 health: 720
 category: crafting
 craftTime: 150
+itemCapacity: 50
 consumes: {
   power: 12.0
   items: [

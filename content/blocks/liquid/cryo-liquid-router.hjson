@@ -3,7 +3,7 @@ name: "凝化流体路由器"
 description: "将输入的流体或气体均匀分流到三个方向。"
 size: 1
 health: 30
-liquidCapacity: 20.0
+liquidCapacity: 40.0
 category: liquid
 requirements: [
   titanium/3

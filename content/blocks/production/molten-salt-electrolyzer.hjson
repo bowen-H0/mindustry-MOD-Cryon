@@ -10,14 +10,14 @@ hasItems: true
 itemCapacity: 10
 liquidCapacity: 30.0
 craftTime: 90.0
-
+liquidCapacity: 100
 consumes: {
   power: 2.5
   items: salt/2
 }
 
 outputItem: sodium/1
-outputLiquid: chlorine/0.4
+outputLiquid: chlorine/0.2
 
 requirements: [
   titanium/80

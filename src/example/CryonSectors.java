@@ -38,6 +38,16 @@ public class CryonSectors {
         //     credit = "YourName";
         // }};
         // ──────────────────────────────────────────────────────────
+        // 扇区 17（进攻图）
+        // ──────────────────────────────────────────────────────────
+        Sector sector17 = planet.sectors.get(17);
+        new SectorPreset("sector-17", planet, 17) {{
+            sector.threat = 10f;
+            requireUnlock = false;
+            credit = "Gary";
+        }};
+        sector17.generateEnemyBase = true;
+        // ──────────────────────────────────────────────────────────
         // 扇区 38（进攻图）
         // ──────────────────────────────────────────────────────────
         Sector sector38 = planet.sectors.get(38);
@@ -46,7 +56,6 @@ public class CryonSectors {
             requireUnlock = false;
         }};
         sector38.generateEnemyBase = true;
-
         // ──────────────────────────────────────────────────────────
         // 扇区 66（进攻图）：穹顶大桥
         // ──────────────────────────────────────────────────────────

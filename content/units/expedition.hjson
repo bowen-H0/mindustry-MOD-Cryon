@@ -2,6 +2,8 @@ type: flying
 flying: true
 name:"远征"
 health: 160
+fogRadius: 0
+controller: builderAI
 armor: 0
 speed: 3.0
 rotateSpeed: 8

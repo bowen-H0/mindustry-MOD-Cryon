@@ -206,6 +206,9 @@ public class CryonTechTree{
 
         addAuto(Kind.BLOCK, "cryo-alloy-wall", "charged-surge-wall-large");
         addAuto(Kind.BLOCK, "cryo-alloy-wall-large", "cryo-alloy-wall");
+        addAuto(Kind.BLOCK, "nano-wall-large", "charged-surge-wall-large");
+
+
 
 
 
@@ -418,6 +421,7 @@ public class CryonTechTree{
         addAuto(Kind.SECTOR, "exclusion-zone", "cryon-neutron-flux-zone");
         addAuto(Kind.SECTOR, "baryon-bastion", "exclusion-zone");
         addAuto(Kind.SECTOR, "magnificent-rift", "cryon-sector-shattered-shoal");
+        addAuto(Kind.SECTOR, "frost-highway", "magnificent-rift");
 
 
         // ---- SECTOR 额外前提条件列表 ----
@@ -665,6 +669,19 @@ public class CryonTechTree{
                 }
 
                 Seq<Objective> objs = new Seq<>();
+
+                if(e.parent != null){
+                    Entry parentEntry = byName.get(e.parent);
+                    if(parentEntry != null && parentEntry.kind == Kind.SECTOR){
+                        SectorPreset parentSector = CryonContent.sector(e.parent);
+                        if(parentSector != null){
+                            objs.add(new SectorComplete(parentSector));
+                        }else{
+                            Log.warn("[CryonTechTree] Parent sector not found: " + e.parent + " (required by " + e.name + ")");
+                        }
+                    }
+                }
+
                 Object[] reqs = sectorPrereqs.get(e.name);
                 if(reqs != null){
                     for(Object o : reqs){

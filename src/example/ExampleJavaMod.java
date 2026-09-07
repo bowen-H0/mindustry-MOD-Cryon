@@ -101,6 +101,7 @@ public class ExampleJavaMod extends Mod {
     public static ConstructorTurret aurora;
     public static ConstructorTurret quantum;
     public static ConsumeGenerator piezoGenerator;
+    public static NanoWall nanoWallLarge;
 
     // ══════════════════════════════════════════════════════════════
     //  loadContent
@@ -231,6 +232,11 @@ public class ExampleJavaMod extends Mod {
                 requirements(Category.power, with(Items.surgeAlloy, 60, Items.phaseFabric, 40, Items.graphite, 40,CryonContent.item("aluminum"),120));
             }
         };
+        nanoWallLarge = new NanoWall("nano-wall-large") {{
+            category = Category.defense;
+            buildVisibility = BuildVisibility.shown;
+            absorbLasers=true;
+        }};
         cryoElectrolyzer = new GenericCrafter("cryo-electrolyzer"){{
 
 
@@ -1055,7 +1061,11 @@ public class ExampleJavaMod extends Mod {
                 new ItemStack(Items.phaseFabric, 40),
                 new ItemStack(Items.silicon, 80),
         });
-
+        nanoWallLarge.requirements(Category.defense, with(
+                CryonContent.item("nano-material"), 48,
+                Items.surgeAlloy, 24,
+                CryonContent.item("nickel"), 32
+        ));
 
         if (cryonPlanet == null) Log.warn("[CryonCore] Cryon is not enabled.");
 

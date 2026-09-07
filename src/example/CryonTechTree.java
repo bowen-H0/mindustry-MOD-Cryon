@@ -331,6 +331,9 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "spark", "gem");
         addAuto(Kind.BLOCK, "spiral", "core-pioneer");
         addAuto(Kind.BLOCK, "titanium-drill", "melting-drill");
+        addAuto(Kind.BLOCK, "coagulation-drill", "melting-drill");
+
+
         addAuto(Kind.BLOCK, "torrent", "spiral");
 
         addAuto(Kind.BLOCK, "vacuum-bridge", "vacuum-conduit");

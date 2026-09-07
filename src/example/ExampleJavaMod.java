@@ -110,6 +110,9 @@ public class ExampleJavaMod extends Mod {
     public void loadContent() {
         new Drill("melting-drill") {{ }};
         new Drill("shattering-drill") {{ }};
+        new Drill("coagulation-drill") {{ }};
+
+
         fluxBarrier = new FluxBarrier("flux-barrier") {{
             size             = 3;
             category         = Category.effect;
@@ -906,7 +909,6 @@ public class ExampleJavaMod extends Mod {
         };
         OblivionUnit.load();
         DestroyerUnit.load();
-
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -1015,6 +1017,109 @@ public class ExampleJavaMod extends Mod {
         });
         NuclearReactor reactor = (NuclearReactor) CryonContent.block("surge-reactor");
         reactor.explodeEffect = giantArcExplosion;
+        ItemTurret railgun = (ItemTurret) CryonContent.block("railgun");
+        if (railgun != null) {
+            railgun.consumeLiquid(Liquids.nitrogen, 1.2f).boost();
+            railgun.init();
+
+            applyRailgunFx(railgun, Items.surgeAlloy, Pal.surgeAmmoBack, Pal.surgeAmmoFront);
+            applyRailgunFx(railgun, CryonContent.item("farstar-alloy"), Color.valueOf("e0c8ff"), Color.valueOf("ffffff"));
+            applyRailgunFx(railgun, CryonContent.item("cryo-alloy"), Color.valueOf("ffffff"), Color.valueOf("feb380"));
+        } else {
+            Log.warn("[CryonCore] railgun block not found, boost not applied");
+        }
+        PowerTurret criticalPoint = (PowerTurret) CryonContent.block("critical");
+        if(criticalPoint != null){
+            Color pink = Color.valueOf("ff4fa3");
+            Color white = Color.white;
+
+            BasicBulletType mainBullet = new BasicBulletType(8f, 1000f){{
+                sprite = "missile-large";
+                width = 12f;
+                height = 20f;
+                lifetime = 35f;
+                hitSize = 6f;
+
+                pierce = true;
+                pierceCap = 3;
+                pierceBuilding = true;
+                hitColor = backColor = trailColor = pink;
+                frontColor = white;
+                trailWidth = 4f;
+                trailLength = 9;
+                hitEffect = despawnEffect = Fx.massiveExplosion;
+                smokeEffect = Fx.shootSmokeTitan;
+
+                shootEffect = new ExplosionEffect(){{
+                    lifetime = 40f;
+                    waveStroke = 4f;
+                    waveColor = sparkColor = trailColor;
+                    waveRad = 15f;
+                    smokeSize = 5f;
+                    smokes = 8;
+                    smokeSizeBase = 0f;
+                    smokeColor = trailColor;
+                    sparks = 8;
+                    sparkRad = 40f;
+                    sparkLen = 4f;
+                    sparkStroke = 3f;
+                }};
+
+                int count = 6;
+                for(int j = 0; j < count; j++){
+                    int s = j;
+                    for(int i : Mathf.signs){
+                        float fin = 0.05f + (j + 1) / (float)count;
+                        float spd = speed;
+                        float life = lifetime / Mathf.lerp(fin, 1f, 0.5f);
+                        boolean show = j == 0 && i > 0;
+                        BasicBulletType sub = new BasicBulletType(spd * fin, 100f){{
+                            drag = 0.002f;
+                            width = 12f;
+                            height = 11f;
+                            lifetime = life + 5f;
+                            weaveRandom = false;
+                            hitSize = 5f;
+                            pierceCap = 2;
+                            pierce = true;
+                            showStats = show;
+                            pierceBuilding = true;
+                            hitColor = backColor = trailColor = pink;
+                            frontColor = white;
+                            trailWidth = 2.5f;
+                            trailLength = 7;
+                            weaveScale = (3f + s / 2f) / 1.2f;
+                            weaveMag = i * (4f - fin * 2f);
+
+                            splashDamage = 65f;
+                            splashDamageRadius = 30f;
+                            despawnEffect = new ExplosionEffect(){{
+                                lifetime = 50f;
+                                waveStroke = 4f;
+                                waveColor = sparkColor = trailColor;
+                                waveRad = 30f;
+                                smokeSize = 7f;
+                                smokes = 6;
+                                smokeSizeBase = 0f;
+                                smokeColor = trailColor;
+                                sparks = 5;
+                                sparkRad = 30f;
+                                sparkLen = 3f;
+                                sparkStroke = 1.5f;
+                            }};
+                        }};
+                        sub.load();
+                        spawnBullets.add(sub);
+                    }
+                }
+            }};
+
+            mainBullet.load();
+            criticalPoint.shootType = mainBullet;
+            criticalPoint.init();
+        } else {
+            Log.warn("[CryonCore] critical-point block not found, bullet not applied");
+        }
         UnitType peak  = Vars.content.unit("cryon-peak");
         UnitType umbra = Vars.content.unit("cryon-umbra");
         UnitType murex = Vars.content.unit("cryon-murex");
@@ -1411,5 +1516,28 @@ public class ExampleJavaMod extends Mod {
         boolean isRoot = TechTree.roots.contains(cur);
         Log.info("[TechDebug] '@' -> chain to top: @ | reaches a registered root: @",
                 contentName, chain.toString(" <- "), isRoot);
+    }
+    private void applyRailgunFx(ItemTurret turret, Item ammoItem, Color back, Color front){
+        if(ammoItem == null){
+            Log.warn("[CryonCore] railgun ammo item not found, skip fx");
+            return;
+        }
+        BulletType bulletBase = turret.ammoTypes.get(ammoItem);
+        if(bulletBase == null){
+            Log.warn("[CryonCore] railgun has no bullet type for @", ammoItem.name);
+            return;
+        }
+        if(!(bulletBase instanceof RailBulletType)){
+            Log.warn("[CryonCore] railgun ammo @ is not RailBulletType, skip fx", ammoItem.name);
+            return;
+        }
+        RailBulletType bullet = (RailBulletType) bulletBase;
+
+        bullet.shootEffect = CryonFx.railgunShoot(front, back);
+        bullet.hitEffect = CryonFx.railgunHit(front, back);
+        bullet.pierceEffect = CryonFx.railgunPierce(front, back);
+        bullet.despawnEffect = CryonFx.railgunDespawn(front, back);
+        bullet.pointEffect = CryonFx.railgunTrail(front, back);
+        bullet.hitColor = back;
     }
 }

@@ -1,0 +1,44 @@
+type: PowerTurret
+name: "临界"
+description: "消耗大量电力与氘元素，喷射毁灭性的临界能量弹。"
+category: turret
+size: 5
+health: 6500
+range: 260
+shootY: 12
+reload: 220
+inaccuracy: 1
+shootCone: 3
+rotateSpeed: 1.2
+recoil: 6
+shake: 5
+targetGround: true
+targetAir: true
+shootSound: shootConquer
+requirements: [
+  cryo-alloy/2200
+  nano-material/2150
+  quartz/3150
+  graphite/2100
+]
+consumes: {
+  power: 30000
+  liquids: [
+    {
+      liquid: deuterium
+      amount: 4
+    }
+  ]
+}
+shootType: {
+  type: BasicBulletType
+  speed: 8
+  damage: 500
+  lifetime: 35
+  width: 12
+  height: 20
+}
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}

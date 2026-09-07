@@ -1,0 +1,88 @@
+type: ItemTurret
+name: "磁轨"
+description: "使用冷冻液持续冷却轨道的重型轨道炮。"
+category: turret
+size: 5
+health: 3000
+buildTime: 180
+requirements: [
+  titanium/1000
+  silicon/1500
+  phase-fabric/750
+  surge-alloy/500
+  aluminum/5000
+  nano-material/200
+  nickel/2000
+  cryo-alloy/1000
+]
+range: 600
+inaccuracy: 0
+reload: 60
+shootCone: 2
+rotateSpeed: 2
+targetGround: true
+targetAir: true
+ammoPerShot: 10
+maxAmmo: 50
+liquidCapacity: 720
+shootSound: shootForeshadow
+recoil: 8
+consumes: {
+  power: 20000
+  liquids: [
+  {
+    liquid: cryofluid
+    amount: 3
+    }
+  ]
+}
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+ammoTypes: {
+  surge-alloy: {
+    type: RailBulletType
+    shootEffect: instShoot
+    hitEffect: instHit
+    pierceEffect: railHit
+    smokeEffect: smokeCloud
+    pointEffect: instTrail
+    despawnEffect: instBomb
+    length: 600
+    damage: 800
+    pierceDamageFactor: 1
+    fragBullets: 10
+    status: shocked
+    statusDuration: 50
+  }
+  farstar-alloy: {
+    type: RailBulletType
+    shootEffect: instShoot
+    hitEffect: instHit
+    pierceEffect: railHit
+    smokeEffect: smokeCloud
+    pointEffect: instTrail
+    despawnEffect: instBomb
+    length: 600
+    damage: 500
+    reloadMultiplier: 2
+    pierceDamageFactor: 1
+    status: freezing
+    statusDuration: 300
+  }
+  cryo-alloy: {
+    type: RailBulletType
+    shootEffect: instShoot
+    hitEffect: instHit
+    pierceEffect: railHit
+    smokeEffect: smokeCloud
+    pointEffect: instTrail
+    despawnEffect: instBomb
+    length: 600
+    damage: 1000
+    pierceDamageFactor: 1
+    fragBullets: 20
+    splashDamage: 40
+  }
+}

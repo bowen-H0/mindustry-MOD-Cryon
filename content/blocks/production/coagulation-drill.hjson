@@ -1,0 +1,33 @@
+//type: Drill
+name: "冰凝钻头"
+description: "内部的干冰在开采过程中持续为钻头降温，专门用来开采镁。"
+size: 2
+health: 80
+tier: 1
+drillTime: 202
+category: production
+hasPower: true
+consumes: {
+  power: 0.6
+}
+requirements: [
+  aluminum/22
+  magnesium/8
+  dry-ice/20
+]
+drillMultipliers: {
+  magnesium: 1.62
+}
+blockedItems: [
+  aluminum
+  crystal-sand
+  nickel
+  quartz
+  salt
+  titanium
+  dry-ice
+  scrap
+]
+liquidCapacity: 10
+itemCapacity: 10
+buildTime: 0.5

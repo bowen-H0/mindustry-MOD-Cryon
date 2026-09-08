@@ -28,7 +28,7 @@ liquidCapacity: 720
 shootSound: shootForeshadow
 recoil: 8
 consumes: {
-  power: 20000
+  power: 333.33
   liquids: [
   {
     liquid: cryofluid
@@ -84,5 +84,6 @@ ammoTypes: {
     pierceDamageFactor: 1
     fragBullets: 20
     splashDamage: 40
+    splashDamageRadius: 25
   }
 }

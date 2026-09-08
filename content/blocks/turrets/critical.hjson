@@ -22,7 +22,7 @@ requirements: [
   graphite/2100
 ]
 consumes: {
-  power: 30000
+  power: 500
   liquids: [
     {
       liquid: deuterium

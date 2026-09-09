@@ -366,6 +366,10 @@ public class CryonTechTree{
 
         addAuto(Kind.BLOCK, "vulcan", "torrent");
         addAuto(Kind.BLOCK, "aurora", "gem");
+        addAuto(Kind.BLOCK, "railgun", "aurora");
+        addAuto(Kind.BLOCK, "critical", "deluge");
+
+
         addAuto(Kind.BLOCK, "quantum", "vulcan");
         addAuto(Kind.BLOCK, "beacon", "gem");
 

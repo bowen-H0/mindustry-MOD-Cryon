@@ -1,15 +1,15 @@
 type: flying
 flying: true
-name: "远征"
-health: 260
+name: "远航"
+health: 520
 fogRadius: 0
 controller: builderAI
-armor: 3
+armor: 5
 speed: 3.0
 rotateSpeed: 8
 hitSize: 12
-itemCapacity: 30
-buildSpeed: 1.5
+itemCapacity: 50
+buildSpeed: 3.0
 buildBeamOffset: 3
 targetAir: true
 targetGround: true
@@ -18,25 +18,25 @@ faceTarget: true
 lowAltitude: false
 abilities: [
   {
-    type: StatusFieldAbility
-    effect: overclock
-    duration: 360
-    reload: 360
-    range: 60
+    type: ForceFieldAbility
+    radius: 30
+    regen: 0.3
+    max: 100
+    cooldown: 300
   }
   {
     type: EnergyFieldAbility
-    damage: 10
-    reload: 120
-    range: 40
-    healPercent: 2
+    damage: 20
+    reload: 100
+    range: 60
+    healPercent: 3
     hitUnits: true
     hitBuildings: true
     targetGround: true
     targetAir: true
-    maxTargets: 10
+    maxTargets: 25
     status: electrified
-    statusDuration: 180
+    statusDuration: 360
   }
 ]
 # 挖矿能力
@@ -55,32 +55,40 @@ engines: [
 weapons: [
   {
     mirror: true
-    reload: 10
-    x: 6
+    alternate: true
+    rotate: false
+
+    reload: 5
+    x: 8
     y: 2
 
     bullet: {
+      # 脉冲粒子束视觉效果
       type: BasicBulletType
-      damage: 12
-      speed: 4.5
-      lifetime: 30
+      damage: 10
+      speed: 8
+      lifetime: 35
       collidesAir: true
       collidesGround: true
 
-      pierce: false
-      healPercent : 5
-      collidesTeam : true
-      width: 5
-      height: 8
+      # 穿透效果设置
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 2
+
+      width: 2
+      height: 12
       backColor: a3feaf
       frontColor: ffffff
+      healPercent : 5
+      collidesTeam : true
     shootEffect: none
 
-      trailWidth: 1.5
+      trailWidth: 1
       trailLength: 4
       trailColor: a3feaf
-       buildingDamageMultiplier:0.1
-
+      buildingDamageMultiplier:0.1
     }
+
   }
 ]

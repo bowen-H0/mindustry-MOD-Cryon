@@ -1150,6 +1150,10 @@ public class ExampleJavaMod extends Mod {
                 r.ambientLight = Color.valueOf("03030dd9");  // 暗环境光
                 r.fire=false;
                 r.coreDestroyClear = true;
+                r.placeRangeCheck=false;
+                r.polygonCoreProtection=false;
+                r.unitPayloadsExplode = true;
+
 
 
 
@@ -1459,6 +1463,13 @@ public class ExampleJavaMod extends Mod {
 
 
         //SectorIdDebug.install();
+        if(cryonPlanet != null){
+            Log.info("[CryonDebug] hasGrid=@ sectorCount=@", cryonPlanet.hasGrid(), cryonPlanet.sectors.size);
+        }
+        //mindustry.ui.dialogs.PlanetDialog.debugSelect = true;
+        //mindustry.ui.dialogs.PlanetDialog.debugShowNumbers = true;
+
+
     }
 
 

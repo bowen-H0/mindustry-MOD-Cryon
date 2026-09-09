@@ -1,10 +1,10 @@
 type: flying
 flying: true
-name:"远征"
-health: 160
+name: "远征"
+health: 260
 fogRadius: 0
 controller: builderAI
-armor: 0
+armor: 3
 speed: 3.0
 rotateSpeed: 8
 hitSize: 12
@@ -14,7 +14,7 @@ buildBeamOffset: 3
 targetAir: true
 targetGround: true
 circleTarget: false
-faceTarget: false
+faceTarget: true
 lowAltitude: false
 abilities: [
   {
@@ -24,13 +24,24 @@ abilities: [
     reload: 360
     range: 60
   }
+  {
+    type: EnergyFieldAbility
+    damage: 10
+    reload: 120
+    range: 40
+    healPercent: 2
+    hitUnits: true
+    hitBuildings: true
+    targetGround: true
+    targetAir: true
+    maxTargets: 10
+    status: electrified
+    statusDuration: 180
+  }
 ]
 # 挖矿能力
 mineTier: 2
 mineSpeed: 3.5
-# 防护属性（不能被攻击）
-targetable: false
-hittable: false
 controller: flyingAI
 engineSize: 0
 engines: [
@@ -43,25 +54,33 @@ engines: [
 ]
 weapons: [
   {
-    type: RepairBeamWeapon
-    widthSinMag: 0.11
-    reload: 20
-    x: 0
-    y: 6.5
-    rotate: true
-    shootY: 0
-    beamWidth: 0.7
-    repairSpeed: 3.1
-    fractionRepairSpeed: 0.06
-    shootCone: 15
-    mirror: false
-    targetUnits: false
-    targetBuildings: true
-    autoTarget: false
-    controllable: true
+    mirror: true
+    reload: 10
+    x: 6
+    y: 2
+
     bullet: {
-      type: BulletType
-      maxRange: 60
+      type: BasicBulletType
+      damage: 12
+      speed: 4.5
+      lifetime: 30
+      collidesAir: true
+      collidesGround: true
+
+      pierce: false
+      healPercent : 5
+      collidesTeam : true
+      width: 5
+      height: 8
+      backColor: a3feaf
+      frontColor: ffffff
+    shootEffect: none
+
+      trailWidth: 1.5
+      trailLength: 4
+      trailColor: a3feaf
+       buildingDamageMultiplier:0.1
+
     }
   }
 ]

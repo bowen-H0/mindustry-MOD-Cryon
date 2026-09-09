@@ -4,7 +4,6 @@ description: "使用冷冻液持续冷却轨道的重型轨道炮。"
 category: turret
 size: 5
 health: 3000
-buildTime: 180
 requirements: [
   titanium/1000
   silicon/1500

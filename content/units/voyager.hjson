@@ -1,0 +1,94 @@
+type: flying
+flying: true
+name: "远航"
+health: 520
+fogRadius: 0
+controller: builderAI
+armor: 5
+speed: 3.0
+rotateSpeed: 8
+hitSize: 12
+itemCapacity: 50
+buildSpeed: 3.0
+buildBeamOffset: 3
+targetAir: true
+targetGround: true
+circleTarget: false
+faceTarget: true
+lowAltitude: false
+abilities: [
+  {
+    type: ForceFieldAbility
+    radius: 30
+    regen: 0.3
+    max: 100
+    cooldown: 300
+  }
+  {
+    type: EnergyFieldAbility
+    damage: 20
+    reload: 100
+    range: 60
+    healPercent: 3
+    hitUnits: true
+    hitBuildings: true
+    targetGround: true
+    targetAir: true
+    maxTargets: 25
+    status: electrified
+    statusDuration: 360
+  }
+]
+# 挖矿能力
+mineTier: 2
+mineSpeed: 3.5
+controller: flyingAI
+engineSize: 0
+engines: [
+  {
+    x: 0
+    y: -8
+    radius: 3.0
+    rotation: -90
+  }
+]
+weapons: [
+  {
+    mirror: true
+    alternate: true
+    rotate: false
+
+    reload: 5
+    x: 8
+    y: 2
+
+    bullet: {
+      # 脉冲粒子束视觉效果
+      type: BasicBulletType
+      damage: 10
+      speed: 8
+      lifetime: 35
+      collidesAir: true
+      collidesGround: true
+
+      # 穿透效果设置
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 2
+
+      width: 2
+      height: 12
+      backColor: a3feaf
+      frontColor: ffffff
+      healPercent : 5
+      collidesTeam : true
+    shootEffect: none
+
+      trailWidth: 1
+      trailLength: 4
+      trailColor: a3feaf
+      buildingDamageMultiplier:0.1
+    }
+
+  }
+]

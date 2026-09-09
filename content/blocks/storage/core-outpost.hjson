@@ -4,7 +4,7 @@ description: "次级核心。"
 size: 5
 health: 4200
 itemCapacity: 6000
-unitType: expedition
+unitType: voyager
 unitCapModifier: 60
 category: effect
 isFirstTier: false

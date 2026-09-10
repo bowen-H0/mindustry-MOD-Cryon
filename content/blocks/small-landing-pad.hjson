@@ -3,7 +3,7 @@ name: "小型着陆台"
 description: "接收扇区间运输的资源，接收货物时消耗电力与冷冻液进行冷却。"
 size: 3
 health: 220
-buildTime: 45.0
+
 category: effect
 requirements: [
   aluminum/300

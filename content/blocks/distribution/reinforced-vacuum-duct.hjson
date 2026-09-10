@@ -1,0 +1,12 @@
+type: Duct
+name: "强化真空管道"
+description: "超高速传输物品，管壁经过加固处理，更耐用。"
+size: 1
+health: 440
+speed: 3.0
+category: distribution
+requirements: [
+  nano-material/1
+]
+bridgeReplacement: vacuum-bridge
+junctionReplacement: vacuum-crosser

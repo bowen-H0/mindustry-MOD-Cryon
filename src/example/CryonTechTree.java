@@ -218,6 +218,9 @@ public class CryonTechTree{
 
 
         addAuto(Kind.BLOCK, "cryo-conduit", "core-pioneer");
+        addAuto(Kind.BLOCK, "reinforced-vacuum-duct", "cryo-conduit");
+
+
         addAuto(Kind.BLOCK, "cryo-constructor", "silicon-separator");
         addAuto(Kind.BLOCK, "cryo-container", "cryo-unloader");
 

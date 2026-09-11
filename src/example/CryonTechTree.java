@@ -218,7 +218,7 @@ public class CryonTechTree{
 
 
         addAuto(Kind.BLOCK, "cryo-conduit", "core-pioneer");
-        addAuto(Kind.BLOCK, "reinforced-vacuum-duct", "cryo-conduit");
+        addAuto(Kind.BLOCK, "reinforced-vacuum-duct", "vacuum-conduit");
 
 
         addAuto(Kind.BLOCK, "cryo-constructor", "silicon-separator");
@@ -299,7 +299,7 @@ public class CryonTechTree{
         addAuto(Kind.BLOCK, "isotope-separator", "cryo-electrolyzer");
         addAuto(Kind.BLOCK, "molten-salt-electrolyzer", "cryo-electrolyzer");
         addAuto(Kind.BLOCK, "fusion-casting-furnace", "molten-salt-electrolyzer");
-        addAuto(Kind.BLOCK, "sodium‑carbon‑fixer", "molten-salt-electrolyzer");
+        addAuto(Kind.BLOCK, "sodium-carbon-fixer", "molten-salt-electrolyzer");
 
 
 

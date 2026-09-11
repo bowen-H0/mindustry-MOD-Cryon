@@ -1,0 +1,24 @@
+parent: "aela"
+solarSystem: "aela"
+orbitRadius: 160
+radius: 1
+accessible: true
+alwaysUnlocked: true
+visible: true
+
+mesh: [
+  { type: NoiseMesh, planet: aurelia, divisions: 6, seed: 8, radius: 1.0, color1: 154a68ff, color2: 3a5c30ff, octaves: 4, persistence: 0.45, scale: 2.0, mag: 0.15 }
+  { type: HexSkyMesh, speed: 0.25, divisions: 4, radius: 0.14, color: ffffff30, octaves: 2, persistence: 0.35, scl: 2.2, thresh: 0.58, seed: 5 }
+]
+
+hasAtmosphere: true
+atmosphereRadIn: 0.02
+atmosphereRadOut: 0.15
+atmosphereColor: 6fa8dd55
+
+generator: PlanetGenerator
+iconColor: 154a68
+allowLaunchToNumbered: false
+startSector: 0
+sectorSize: 2
+defaultCore: "core-pioneer"

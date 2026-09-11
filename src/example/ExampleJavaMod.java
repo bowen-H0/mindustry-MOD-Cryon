@@ -569,6 +569,8 @@ public class ExampleJavaMod extends Mod {
             health = 900;
             armor = 6f;
             hasPower = true;
+            hasLiquids=false;
+
             consumePower(4f);
             consumeConstructor(4f);
             unitSort = (unit, x, y) -> {
@@ -636,6 +638,7 @@ public class ExampleJavaMod extends Mod {
             recoil=0;
             category        = Category.turret;
             buildVisibility = BuildVisibility.shown;
+            hasLiquids=false;
 
             researchCostMultiplier = 0.3f;
 
@@ -812,11 +815,8 @@ public class ExampleJavaMod extends Mod {
                 unitSort = UnitSorts.strongest;
                 envEnabled |= Env.space;
 
-                coolantMultiplier = 0.4f;
-                liquidCapacity = 60f;
                 scaledHealth = 150;
-
-                coolant = consumeCoolant(1f);
+                hasLiquids=false;
                 depositCooldown = 2.0f;
 
                 hasPower = true;
@@ -884,11 +884,10 @@ public class ExampleJavaMod extends Mod {
                 size = 4;
                 shootSound = Sounds.shootAlpha;
                 unitSort = UnitSorts.strongest;
-                coolantMultiplier = 0.5f;
-                liquidCapacity = 60f;
                 scaledHealth = 180;
-                coolant = consumeCoolant(1.2f);
                 depositCooldown = 1.5f;
+                hasLiquids=false;
+
                 hasPower = true;
                 consumePower(24f);
                 consumeConstructor(28f);

@@ -1,0 +1,30 @@
+parent: "aela"
+solarSystem: "aela"
+orbitRadius: 95
+radius: 1
+accessible: true
+alwaysUnlocked: true
+visible: true
+tidalLock: true
+
+mesh: [
+  { type: NoiseMesh, planet: aravis, divisions: 6, seed: 21, radius: 0.85, color1: 241708ff, color2: 180f05ff, octaves: 5, persistence: 0.6, scale: 1.2, mag: 0.8 }
+  { type: NoiseMesh, planet: aravis, divisions: 6, seed: 21, radius: 0.90, color1: 3a230cff, color2: 261808ff, octaves: 5, persistence: 0.6, scale: 1.2, mag: 0.8 }
+  { type: NoiseMesh, planet: aravis, divisions: 6, seed: 21, radius: 0.94, color1: 573912ff, color2: 3c2809ff, octaves: 5, persistence: 0.6, scale: 1.2, mag: 0.8 }
+  { type: NoiseMesh, planet: aravis, divisions: 6, seed: 21, radius: 0.97, color1: 78561fff, color2: 5c3f10ff, octaves: 5, persistence: 0.6, scale: 1.2, mag: 0.8 }
+  { type: NoiseMesh, planet: aravis, divisions: 6, seed: 21, radius: 0.99, color1: 8c6828ff, color2: 725112ff, octaves: 5, persistence: 0.6, scale: 1.2, mag: 0.8 }
+  { type: NoiseMesh, planet: aravis, divisions: 6, seed: 21, radius: 1.01, color1: 9a7838ff, color2: 856224ff, octaves: 4, persistence: 0.4, scale: 1.5, mag: 0.3 }
+  { type: HexSkyMesh, speed: 0.5, divisions: 5, radius: 0.15, color: 8a6a4055, octaves: 3, persistence: 0.4, scl: 2.0, thresh: 0.55, seed: 14 }
+]
+
+hasAtmosphere: true
+atmosphereRadIn: 0.02
+atmosphereRadOut: 0.15
+atmosphereColor: 8a6a4055
+
+generator: PlanetGenerator
+iconColor: 856224
+allowLaunchToNumbered: false
+startSector: 0
+sectorSize: 2
+defaultCore: "core-pioneer"

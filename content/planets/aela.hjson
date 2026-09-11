@@ -1,0 +1,34 @@
+generator: PlanetGenerator
+solarSystem: "aela"
+parent: "sun"
+orbitRadius: 8000
+
+radius: 20
+drawOrbit: false
+tidalLock: true
+accessible: false
+alwaysUnlocked: false
+visible: true
+
+bloom: true
+hasAtmosphere: false
+orbitSpacing: 8
+
+mesh: {
+  type: SunMesh
+  divisions: 5
+  octaves: 5
+  persistence: 0.5
+  scl: 1.2
+  pow: 1
+  mag: 0.6
+  colorScale: 1.3
+  colors: [
+    992200ff
+    cc3300ff
+    ff5500ff
+    ff8822ff
+    ffaa33ff
+    ffcc55ff
+  ]
+}

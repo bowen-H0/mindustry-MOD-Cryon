@@ -58,16 +58,13 @@ public abstract class ModPlanetTechTree {
     protected ObjectMap<String, Seq<String>> sectorGateReverse = new ObjectMap<>();
     protected ObjectMap<String, String> contentDirIndex = new ObjectMap<>();
     protected static boolean databaseTabsCleared = false;
+    protected static final ObjectMap<String, ObjectSet<String>> globalPlanetOwners = new ObjectMap<>();
 
 
     protected ModPlanetTechTree(String modName){
         this.modName = modName;
     }
 
-    // ================== 跨树共享的状态 ==================
-
-    /** 记录已经被 assignPlanetTabs 处理过的内容 id（全量扫描阶段用，避免重复扫描同一个内容） */
-    protected static final ObjectSet<String> globalProcessedNames = new ObjectSet<>();
 
     // ================== 可调参数（子类可覆盖不同数值） ==================
 
@@ -275,10 +272,51 @@ public abstract class ModPlanetTechTree {
     }
 
     private void markPlanet(UnlockableContent u, Planet targetPlanet){
-        if(u.shownPlanets == null) u.shownPlanets = new ObjectSet<>();
-        u.shownPlanets.add(targetPlanet);
-        u.databaseTabs.add(targetPlanet);
-        globalProcessedNames.add(u.name);
+        // 物品：查 CryonItems 白名单
+        if(u instanceof Item){
+            String shortName = stripModPrefix(u.name);
+            ObjectSet<String> planets = CryonItems.planetsOf(shortName);
+
+            if(planets != null && planets.size > 0){
+                for(String pid : planets){
+                    Planet p = Vars.content.planet(pid);
+                    if(p == null){
+                        Log.warn("[@] markPlanet: item @ 白名单里的星球 @ 不存在", modName, u.name, pid);
+                        continue;
+                    }
+                    if(u.uiIcon == null){
+                        Log.warn("[@] skip shownPlanets/databaseTabs for @ (item, uiIcon=null)", modName, u.name);
+                        continue;
+                    }
+                    ObjectSet<String> owners = globalPlanetOwners.get(u.name, ObjectSet::new);
+                    if(owners.add(p.name)){
+                        if(u.shownPlanets == null) u.shownPlanets = new ObjectSet<>();
+                        u.shownPlanets.add(p);
+                        u.databaseTabs.add(p);
+                    }
+                }
+                return;
+            }
+            // 白名单没登记就按原来的默认逻辑走
+        }
+
+        // 非物品，或物品没登记白名单：按目录/默认星球
+        String folder = contentDirIndex.get(stripModPrefix(u.name));
+        Planet resolved = planetForFolder(folder);
+        if(resolved == null) resolved = targetPlanet;
+        if(resolved == null) return;
+
+        if(u.uiIcon != null){
+            ObjectSet<String> owners = globalPlanetOwners.get(u.name, ObjectSet::new);
+            if(owners.add(resolved.name)){
+                if(u.shownPlanets == null) u.shownPlanets = new ObjectSet<>();
+                u.shownPlanets.add(resolved);
+                u.databaseTabs.add(resolved);
+            }
+        }else{
+            Log.warn("[@] skip shownPlanets/databaseTabs for @ (type=@, uiIcon=null)",
+                    modName, u.name, u.getClass().getSimpleName());
+        }
     }
 
     protected void buildChildrenOf(String name, Planet targetPlanet){
@@ -292,20 +330,27 @@ public abstract class ModPlanetTechTree {
     protected void indexContentDirs(){
         Mods.LoadedMod self = Vars.mods.locateMod(modName);
         if(self == null){
-            Log.err("[@] 找不到 mod '@',无法定位 content 目录", modName, modName);
+            Log.err("[@] Could not find mod '@'", modName, modName);
             return;
         }
 
         Fi contentRoot = self.root.child("content");
+        Log.info("[@] mod root = @, content root = @, exists = @",
+                modName, self.root.absolutePath(), contentRoot.absolutePath(), contentRoot.exists());
+
         if(!contentRoot.exists()){
-            Log.err("[@] 找不到 content 目录: @", modName, contentRoot.absolutePath());
+            Log.err("[@] Content directory not found: @", modName, contentRoot.absolutePath());
             return;
         }
 
         scanContentDir(contentRoot);
-        Log.info("[@] 已索引 @ 个内容文件的目录归属", modName, contentDirIndex.size);
-    }
+        Log.info("[@] Indexed directory assignments for @ content files", modName, contentDirIndex.size);
 
+        // 关键:把具体内容打出来,直接看 ferrum/aeolian-drill/core-conquest 这几个有没有被正确记录
+        for(String key : new String[]{"ferrum", "aeolian-drill", "core-conquest", "aeolian-sand", "red-sand"}){
+            Log.info("[@] contentDirIndex[@] = @", modName, key, contentDirIndex.get(key));
+        }
+    }
     protected void scanContentDir(Fi dir){
         for(Fi f : dir.list()){
             if(f.isDirectory()){
@@ -338,14 +383,51 @@ public abstract class ModPlanetTechTree {
     }
 
     protected void assignPlanetTabs(UnlockableContent u, Planet defaultPlanet){
+        // 物品：查 CryonItems 白名单
+        if(u instanceof Item){
+            String shortName = stripModPrefix(u.name);
+            ObjectSet<String> planets = CryonItems.planetsOf(shortName);
+
+            if(planets != null && planets.size > 0){
+                for(String pid : planets){
+                    Planet p = Vars.content.planet(pid);
+                    if(p == null){
+                        Log.warn("[@] assignPlanetTabs: item @ 白名单里的星球 @ 不存在", modName, u.name, pid);
+                        continue;
+                    }
+                    if(u.uiIcon == null){
+                        Log.warn("[@] skip shownPlanets/databaseTabs for @ (item, uiIcon=null)", modName, u.name);
+                        continue;
+                    }
+                    ObjectSet<String> owners = globalPlanetOwners.get(u.name, ObjectSet::new);
+                    if(owners.add(p.name)){
+                        if(u.shownPlanets == null) u.shownPlanets = new ObjectSet<>();
+                        u.shownPlanets.add(p);
+                        u.databaseTabs.add(p);
+                    }
+                }
+                return;
+            }
+            // 白名单没登记就按原来的默认逻辑走
+        }
+
+        // 非物品，或物品没登记白名单：按目录/默认星球
         String folder = contentDirIndex.get(stripModPrefix(u.name));
         Planet target = planetForFolder(folder);
         if(target == null) target = defaultPlanet;
         if(target == null) return;
 
-        if(u.shownPlanets == null) u.shownPlanets = new ObjectSet<>();
-        u.shownPlanets.add(target);
-        u.databaseTabs.add(target);
+        if(u.uiIcon != null){
+            ObjectSet<String> owners = globalPlanetOwners.get(u.name, ObjectSet::new);
+            if(owners.add(target.name)){
+                if(u.shownPlanets == null) u.shownPlanets = new ObjectSet<>();
+                u.shownPlanets.add(target);
+                u.databaseTabs.add(target);
+            }
+        }else{
+            Log.warn("[@] skip shownPlanets/databaseTabs for @ (type=@, uiIcon=null)",
+                    modName, u.name, u.getClass().getSimpleName());
+        }
     }
 
 
@@ -369,20 +451,8 @@ public abstract class ModPlanetTechTree {
     // ================== 入口 ==================
 
     public void run(){
-        // 全局只清一次
-        if(!databaseTabsCleared){
-            databaseTabsCleared = true;
-            int cleared = 0;
-            for(Seq<Content> seq : Vars.content.getContentMap()){
-                for(Content content : seq){
-                    if(content instanceof UnlockableContent u && u.name.startsWith(modName + "-")){
-                        u.databaseTabs.clear();
-                        cleared++;
-                    }
-                }
-            }
-            Log.info("[@] cleared databaseTabs of @ cryon- contents", modName, cleared);
-        }
+
+
 
         registerEntries();
         index();
@@ -412,25 +482,66 @@ public abstract class ModPlanetTechTree {
                 UnlockableContent u = node.content;
                 if(!u.name.startsWith(modName + "-")){
                     assignPlanetTabs(u, planet);
-                    globalProcessedNames.add(u.name);
                 }
             }
             stack.addAll(node.children);
         }
 
-        // ===== 全量 content 扫描：跳过已经处理过的（跨树共享的记录） =====
         for(Seq<Content> seq : Vars.content.getContentMap()){
             for(Content content : seq){
                 if(content instanceof UnlockableContent u
-                        && u.name.startsWith(modName + "-")
-                        && globalProcessedNames.add(u.name)){
-                    // add() 返回 true 说明是第一次遇到，才需要处理
-                    assignPlanetTabs(u, planet);
+                        && u.name.startsWith(modName + "-")){
+                    String folder = contentDirIndex.get(stripModPrefix(u.name));
+                    Planet resolved = planetForFolder(folder);
+                    // 只有目录明确指向当前树星球时才加
+                    if(resolved != null && resolved == planet){
+                        assignPlanetTabs(u, planet);
+                    }
                 }
             }
         }
 
         afterLoad(root, planet);
+
         Log.info("[@] Tech tree loaded", modName);
+    }
+    /** 全局清理，整个 mod 加载时只调一次，跟哪棵树无关 */
+    public static void globalCleanup(String modName){
+        if(databaseTabsCleared) return;
+        databaseTabsCleared = true;
+
+        int cleared = 0;
+        for(Seq<Content> seq : Vars.content.getContentMap()){
+            for(Content content : seq){
+                if(content instanceof UnlockableContent u && u.name.startsWith(modName + "-")){
+                    u.databaseTabs.clear();
+                    cleared++;
+                }
+            }
+        }
+        Log.info("[@] cleared databaseTabs of @ contents", modName, cleared);
+
+        int cleaned = 0;
+        for(Seq<Content> seq : Vars.content.getContentMap()){
+            for(Content content : seq){
+                if(content instanceof UnlockableContent u
+                        && u.name.startsWith(modName + "-")
+                        && u.shownPlanets != null
+                        && u.shownPlanets.size > 0){
+                    boolean hasForeign = false;
+                    for(Planet p : u.shownPlanets){
+                        if(p != null && !p.name.startsWith(modName + "-")){
+                            hasForeign = true;
+                            break;
+                        }
+                    }
+                    if(hasForeign){
+                        u.shownPlanets.clear();
+                        cleaned++;
+                    }
+                }
+            }
+        }
+        Log.info("[@] cleaned shownPlanets of @ contents", modName, cleaned);
     }
 }

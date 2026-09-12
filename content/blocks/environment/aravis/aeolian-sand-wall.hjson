@@ -1,0 +1,10 @@
+{
+  "type": "StaticWall",
+  "name": "aeolian-sand-wall",
+  "solid": true,
+  "destructible": false,
+  "size": 1,
+  "variants": 1,
+  "mapColor": "B8A06E"
+
+}

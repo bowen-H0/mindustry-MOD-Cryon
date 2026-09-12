@@ -1,0 +1,5 @@
+{
+  "type": "OreBlock",
+  "itemDrop": "ferrum",
+  "variants": 1
+}

@@ -1,0 +1,14 @@
+type: CoreBlock
+name: "征伐核心"
+description: "Aravis 星球的初级核心。"
+size: 3
+health: 1500
+itemCapacity: 3000
+unitType: expedition
+unitCapModifier: 16
+category: effect
+isFirstTier: true
+requirements: [
+  ferrum/700
+  copper/200
+]

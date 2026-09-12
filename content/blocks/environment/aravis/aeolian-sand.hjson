@@ -1,0 +1,9 @@
+{
+    "type": "Floor",
+    "name": "aeolian-sand",
+    "variants": 1,
+    "speedMultiplier": 1.0,
+    "mapColor": "9C9284",
+    "itemDrop": "sand",
+    playerUnmineable: true
+}

@@ -1,0 +1,10 @@
+{
+  "type": "StaticWall",
+  "name": "red-sand-wall",
+  "solid": true,
+  "destructible": false,
+  "size": 1,
+  "variants": 1,
+    "mapColor": "8c3f28"
+
+}

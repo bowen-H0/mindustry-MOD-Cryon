@@ -12,6 +12,7 @@ import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
+import mindustry.ctype.Content;
 import mindustry.ctype.ContentType;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType.*;
@@ -908,6 +909,7 @@ public class ExampleJavaMod extends Mod {
         };
         OblivionUnit.load();
         DestroyerUnit.load();
+        CryonItems.load();
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -1433,7 +1435,10 @@ public class ExampleJavaMod extends Mod {
         }
         // TechTree
         Events.on(ClientLoadEvent.class, e -> {
+            ModPlanetTechTree.globalCleanup("cryon");
+
             CryonTechTree.load();
+            AravisTechTree.load();
 
              TechNode root = TechTree.roots.find(
                     n -> n.content != null && n.content.name.equals("cryon-core-pioneer"));
@@ -1487,7 +1492,23 @@ public class ExampleJavaMod extends Mod {
         //mindustry.ui.dialogs.PlanetDialog.debugSelect = true;
         //mindustry.ui.dialogs.PlanetDialog.debugShowNumbers = true;
 
-
+        // ===== 安全检查:uiIcon 为 null 的内容会让 DatabaseDialog 崩 =====
+        arc.graphics.g2d.TextureRegion fallback = arc.Core.atlas.find("error");
+        int fixedIcons = 0;
+        for(Seq<Content> seq : Vars.content.getContentMap()){
+            for(Content content : seq){
+                if(content instanceof UnlockableContent u
+                        && u.uiIcon == null
+                        && !u.isHidden()
+                        && !u.hideDatabase){
+                    u.uiIcon = fallback;
+                    fixedIcons++;
+                    Log.warn("[cryon] safety: replaced null uiIcon for '@' (type=@)",
+                            u.name, u.getClass().getSimpleName());
+                }
+            }
+        }
+        Log.info("[cryon] safety: replaced @ null uiIcons", fixedIcons);
     }
 
 

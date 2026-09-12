@@ -33,9 +33,9 @@ Gary
 This mod is currently in testing.
 '''
 #the mod version
-version: 22.6.0
+version: 22.7.0
 #the minimum game build required to run this mod
-minGameVersion: 159
+minGameVersion: 160
 
 #this is a java mod
 java: true

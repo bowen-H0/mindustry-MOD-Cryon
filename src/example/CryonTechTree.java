@@ -1,5 +1,6 @@
 package example;
 
+import arc.Core;
 import arc.util.Log;
 import arc.util.Time;
 import mindustry.Vars;
@@ -415,7 +416,10 @@ public class CryonTechTree extends ModPlanetTechTree {
     @Override protected Block findBlock(String name){ return CryonContent.block(name); }
     @Override protected UnitType findUnit(String name){ return CryonContent.unit(name); }
     @Override protected SectorPreset findSector(String name){ return CryonContent.sector(name); }
-
+    @Override
+    protected String rootNodeName(){
+        return Core.bundle.get("planet.cryon-cryon.name");
+    }
     @Override protected Block rootBlock(){ return CryonContent.block("core-pioneer"); }
     @Override protected Planet rootPlanet(){ return Vars.content.planet("cryon-cryon"); }
 

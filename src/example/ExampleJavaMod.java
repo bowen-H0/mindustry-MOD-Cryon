@@ -1132,6 +1132,7 @@ public class ExampleJavaMod extends Mod {
         Item magnesium = CryonContent.item("magnesium");
         Item aluminum = CryonContent.item("aluminum");
         Planet cryonPlanet = Vars.content.planet("cryon-cryon");
+        Planet aravisPlanet = Vars.content.planet("cryon-aravis");
 
         // generator
         if(cryonPlanet != null) {
@@ -1153,6 +1154,24 @@ public class ExampleJavaMod extends Mod {
                 r.polygonCoreProtection=false;
                 r.unitPayloadsExplode = true;
 
+
+
+
+
+            };
+
+        }
+        if(aravisPlanet != null) {
+            aravisPlanet.defaultEnv = Env.terrestrial;
+            aravisPlanet.ruleSetter = r -> {
+                r.lighting = true;
+                r.ambientLight = Color.valueOf("f4bf0032");
+                r.fire=true;
+                r.coreDestroyClear = true;
+                r.placeRangeCheck=false;
+                r.polygonCoreProtection=false;
+                r.unitPayloadsExplode = true;
+                r.waveTeam=Team.malis;
 
 
 

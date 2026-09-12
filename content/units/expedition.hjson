@@ -42,7 +42,6 @@ abilities: [
 # 挖矿能力
 mineTier: 2
 mineSpeed: 3.5
-controller: flyingAI
 engineSize: 0
 engines: [
   {

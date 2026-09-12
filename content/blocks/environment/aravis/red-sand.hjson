@@ -1,0 +1,9 @@
+{
+    "type": "Floor",
+    "name": "red-sand",
+    "variants": 1,
+    "speedMultiplier": 1.0,
+    "mapColor": "e67b4c",
+    "itemDrop": "sand",
+    playerUnmineable: true
+}

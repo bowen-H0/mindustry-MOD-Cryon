@@ -1,0 +1,14 @@
+type: Drill
+name: "风蚀钻头"
+description: "初始钻头。"
+size: 2
+health: 80
+tier: 1
+drillTime: 600
+category: production
+hasPower: false
+requirements: [
+  ferrum/30
+]
+liquidCapacity: 10
+itemCapacity: 10

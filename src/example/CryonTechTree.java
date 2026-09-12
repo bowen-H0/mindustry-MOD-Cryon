@@ -1,144 +1,25 @@
 package example;
 
-import arc.struct.*;
 import arc.util.Log;
 import arc.util.Time;
-import example.CryonContent;
 import mindustry.Vars;
-import mindustry.content.Planets;
-import mindustry.content.TechTree;
-import mindustry.ctype.*;
-import mindustry.game.Objectives.*;
-import mindustry.type.*;
-import mindustry.world.*;
-import mindustry.world.blocks.storage.CoreBlock;
-import mindustry.world.consumers.*;
 import mindustry.content.TechTree.TechNode;
+import mindustry.type.SectorPreset;
+import mindustry.type.*;
+import mindustry.world.Block;
+import mindustry.world.blocks.storage.CoreBlock;
 
 import static mindustry.Vars.schematics;
 import static mindustry.Vars.universe;
-import static mindustry.content.TechTree.*;
 
-public class CryonTechTree{
+public class CryonTechTree extends ModPlanetTechTree {
 
-    // ================== 可调参数 ==================
-
-    /** 建筑标记 auto 时,每深一级科技树,材料成本额外增加的比例 */
-    static final float DEPTH_COST_STEP = 1.50f;
-
-    /** 物品/液体标记 auto 时的基础花费数量(乘以深度倍率) */
-    static final int ITEM_AUTO_BASE = 30;
-
-    // ================== 深度计算 ==================
-
-    static int nextDepth(){
-        TechNode ctx = context();
-        return ctx == null ? 0 : ctx.depth + 1;
+    public CryonTechTree(){
+        super("cryon");
     }
 
-    static float depthMultiplier(){
-        return 1f + nextDepth() * DEPTH_COST_STEP;
-    }
-
-    // ================== 自动花费 / 自动前提 ==================
-
-    static ItemStack[] scaledBlockCost(Block block){
-        float mult = depthMultiplier();
-        ItemStack[] base = block.requirements;
-        ItemStack[] scaled = new ItemStack[base.length];
-        for(int i = 0; i < base.length; i++){
-            scaled[i] = new ItemStack(base[i].item, Math.max(1, Math.round(base[i].amount * mult)));
-        }
-        return scaled;
-    }
-
-    static Seq<Objective> autoObjectives(Block block){
-        Seq<Objective> objs = new Seq<>();
-        ObjectSet<Item> seenItems = new ObjectSet<>();
-        ObjectSet<Liquid> seenLiquids = new ObjectSet<>();
-
-        for(ItemStack stack : block.requirements){
-            if(seenItems.add(stack.item)){
-                objs.add(new Research(stack.item));
-            }
-        }
-
-        for(Consume c : block.consumers){
-            if(c instanceof ConsumeItems ci){
-                for(ItemStack stack : ci.items){
-                    if(seenItems.add(stack.item)){
-                        objs.add(new Research(stack.item));
-                    }
-                }
-            }else if(c instanceof ConsumeLiquid cl){
-                if(seenLiquids.add(cl.liquid)){
-                    objs.add(new Research(cl.liquid));
-                }
-            }
-            else if(c instanceof ConsumeLiquids cls){
-                for(LiquidStack stack : cls.liquids){
-                    if(seenLiquids.add(stack.liquid)){
-                        objs.add(new Research(stack.liquid));
-                    }
-                }
-            }
-        }
-        return objs;
-    }
-
-    // ================== 数据表定义 ==================
-
-    enum Kind{ ITEM, LIQUID, BLOCK, UNIT_BLOCK, UNIT, SECTOR }
-
-    static class Entry {
-        Kind kind;
-        String name;
-        String parent;
-        ItemStack[] manualReqs;
-        Object[] prereqs;
-
-        Entry(Kind kind, String name, String parent, ItemStack[] manualReqs) {
-            this.kind = kind;
-            this.name = name;
-            this.parent = parent;
-            this.manualReqs = manualReqs;
-        }
-    }
-    static Seq<Entry> entries = new Seq<>();
-    static ObjectMap<String, Entry> byName = new ObjectMap<>();
-    static ObjectMap<String, Seq<Entry>> childrenOf = new ObjectMap<>();
-    static ObjectMap<String, Object[]> sectorPrereqs = new ObjectMap<>();
-
-        static void add(Kind kind, String name, String parent, ItemStack... reqs){
-        entries.add(new Entry(kind, name, parent, reqs.length == 0 && kind != Kind.UNIT ? null : reqs));
-    }
-        static void sectorReq(String sectorName, Object... prereqItems){
-            sectorPrereqs.put(sectorName, prereqItems);
-        }
-    /** 原始表:sector -> [被这个 sector 门控的内容名]  */
-    static ObjectMap<String, String[]> sectorGateTable = new ObjectMap<>();
-
-    /** 反向索引:内容名 -> 需要先占领哪些 sector(自动生成,不要手填) */
-    static ObjectMap<String, Seq<String>> sectorGateReverse = new ObjectMap<>();
-
-    static void sectorGate(String sectorName, String... gatedNames){
-        sectorGateTable.put(sectorName, gatedNames);
-    }
-
-    /** 明确标 auto 的重载,避免和"空数组"混淆 */
-    static void addAuto(Kind kind, String name, String parent){
-        entries.add(new Entry(kind, name, parent, null));
-    }
-
-    static ItemStack[] r(Object... pairs){
-        ItemStack[] arr = new ItemStack[pairs.length / 2];
-        for(int i = 0; i < arr.length; i++){
-            arr[i] = new ItemStack((Item)pairs[i * 2], (Integer)pairs[i * 2 + 1]);
-        }
-        return arr;
-    }
-
-    static{
+    @Override
+    protected void registerEntries(){
         // ---- ITEM(全部 auto) ----
         addAuto(Kind.ITEM, "aluminum", "core-pioneer");
         addAuto(Kind.ITEM, "crystal-sand", "magnesium");
@@ -529,282 +410,31 @@ public class CryonTechTree{
         sectorGate("magnificent-rift",
                 "t5universal-assembler");
     }
+    @Override protected Item findItem(String name){ return CryonContent.item(name); }
+    @Override protected Liquid findLiquid(String name){ return CryonContent.liquid(name); }
+    @Override protected Block findBlock(String name){ return CryonContent.block(name); }
+    @Override protected UnitType findUnit(String name){ return CryonContent.unit(name); }
+    @Override protected SectorPreset findSector(String name){ return CryonContent.sector(name); }
 
-    // ================== 索引 ==================
+    @Override protected Block rootBlock(){ return CryonContent.block("core-pioneer"); }
+    @Override protected Planet rootPlanet(){ return Vars.content.planet("cryon-cryon"); }
 
-    static void index(){
-        for(Entry e : entries) byName.put(e.name, e);
-        for(Entry e : entries){
-            if(e.parent != null){
-                childrenOf.get(e.parent, Seq::new).add(e);
-            }
-        }
-
-        // 生成 sectorGate 反向索引
-        for(var entry : sectorGateTable){
-            String sectorName = entry.key;
-            for(String gatedName : entry.value){
-                sectorGateReverse.get(gatedName, Seq::new).add(sectorName);
-            }
-        }
-    }
-    static Seq<Objective> sectorGateObjectives(String name){
-        Seq<Objective> objs = new Seq<>();
-        Seq<String> sectors = sectorGateReverse.get(name);
-        if(sectors == null) return objs;
-        for(String sectorName : sectors){
-            SectorPreset preset = CryonContent.sector(sectorName);
-            if(preset == null){
-                Log.warn("[CryonTechTree] sectorGate: sector not found: " + sectorName);
-                continue;
-            }
-            objs.add(new SectorComplete(preset));
-        }
-        return objs;
-    }
-
-    // ================== 自动物品花费 ==================
-
-    static ItemStack[] autoItemCost(String parentName){
-        Entry parentEntry = byName.get(parentName);
-        if(parentEntry == null || parentEntry.kind != Kind.ITEM) return new ItemStack[]{};
-        Item parentItem = CryonContent.item(parentEntry.name);
-        int amount = Math.round(ITEM_AUTO_BASE * depthMultiplier());
-        return new ItemStack[]{ new ItemStack(parentItem, amount) };
-    }
-
-    // ================== 递归建树 ==================
-
-    static void buildNode(Entry e){
-        Planet cryonPlanet = Vars.content.planet("cryon-cryon");
-
-        switch(e.kind){
-            case ITEM -> {
-                Item item = CryonContent.item(e.name);
-                if (item == null) {
-                    Log.warn("[CryonTechTree] Item not found: " + e.name + ", skipping");
-                    return;
-                }
-                TechNode node;
-                if(e.manualReqs != null){
-                    node = node(item, e.manualReqs, () -> buildChildrenOf(e.name));
-                }else{
-                    // auto:不消耗材料研究,而是要求玩家先生产出该物品本身
-                    Seq<Objective> objs = Seq.with(new Produce(item));
-                    node = node(item, new ItemStack[]{}, objs, () -> buildChildrenOf(e.name));
-                }
-
-                // 设置 shownPlanets
-                if (item.name.startsWith("cryon-")) {
-                    // 如果是 cryon 前缀，直接覆盖
-                    item.shownPlanets = ObjectSet.with(cryonPlanet);
-                } else {
-                    // 如果不是 cryon 前缀，添加 cryon
-                    if (item.shownPlanets == null) {
-                        item.shownPlanets = new ObjectSet<>();
-                    }
-                    item.shownPlanets.add(cryonPlanet);
-                }
-            }
-            case LIQUID -> {
-                Liquid liquid = CryonContent.liquid(e.name);
-                if (liquid == null) {
-                    Log.warn("[CryonTechTree] Liquid not found: " + e.name + ", skipping");
-                    return;
-                }
-                Seq<Objective> objs = Seq.with(new Produce(liquid));
-                TechNode node = node(liquid, new ItemStack[]{}, objs, () -> buildChildrenOf(e.name));
-
-                if (liquid.name.startsWith("cryon-")) {
-                    liquid.shownPlanets = ObjectSet.with(cryonPlanet);
-                } else {
-                    if (liquid.shownPlanets == null) {
-                        liquid.shownPlanets = new ObjectSet<>();
-                    }
-                    liquid.shownPlanets.add(cryonPlanet);
-                }
-            }
-            case BLOCK, UNIT_BLOCK -> {
-                Block block = CryonContent.block(e.name);
-                if (block == null) {
-                    Log.warn("[CryonTechTree] Block not found: " + e.name + ", skipping");
-                    return;
-                }
-                Seq<Objective> gateObjs = sectorGateObjectives(e.name);
-
-                TechNode node;
-                if(e.manualReqs != null){
-                    Seq<Objective> objs = autoObjectives(block);
-                    objs.addAll(gateObjs);
-                    node = node(block, e.manualReqs, objs, () -> buildChildrenOf(e.name));
-                }else{
-                    Seq<Objective> objs = autoObjectives(block);
-                    objs.addAll(gateObjs);
-                    node = node(block, scaledBlockCost(block), objs, () -> buildChildrenOf(e.name));
-                }
-
-                if (block.name.startsWith("cryon-")) {
-                    block.shownPlanets = ObjectSet.with(cryonPlanet);
-                } else {
-                    if (block.shownPlanets == null) {
-                        block.shownPlanets = new ObjectSet<>();
-                    }
-                    block.shownPlanets.add(cryonPlanet);
-                }
-            }
-            case UNIT -> {
-                UnitType unit = CryonContent.unit(e.name);
-                if (unit == null) {
-                    Log.warn("[CryonTechTree] Unit not found: " + e.name + ", skipping");
-                    return;
-                }
-                Seq<Objective> objs = sectorGateObjectives(e.name);
-                TechNode node = node(unit, e.manualReqs, objs, () -> buildChildrenOf(e.name));
-
-
-                if (unit.name.startsWith("cryon-")) {
-                    unit.shownPlanets = ObjectSet.with(cryonPlanet);
-                } else {
-                    if (unit.shownPlanets == null) {
-                        unit.shownPlanets = new ObjectSet<>();
-                    }
-                    unit.shownPlanets.add(cryonPlanet);
-                }
-            }
-            case SECTOR -> {
-                SectorPreset sector = CryonContent.sector(e.name);
-                if (sector == null) {
-                    Log.warn("[CryonTechTree] Sector not found: " + e.name + ", skipping");
-                    return;
-                }
-
-                Seq<Objective> objs = new Seq<>();
-
-                if(e.parent != null){
-                    Entry parentEntry = byName.get(e.parent);
-                    if(parentEntry != null && parentEntry.kind == Kind.SECTOR){
-                        SectorPreset parentSector = CryonContent.sector(e.parent);
-                        if(parentSector != null){
-                            objs.add(new SectorComplete(parentSector));
-                        }else{
-                            Log.warn("[CryonTechTree] Parent sector not found: " + e.parent + " (required by " + e.name + ")");
-                        }
-                    }
-                }
-
-                Object[] reqs = sectorPrereqs.get(e.name);
-                if(reqs != null){
-                    for(Object o : reqs){
-                        if(o instanceof Item item) objs.add(new Research(item));
-                        else if(o instanceof Liquid liquid) objs.add(new Research(liquid));
-                        else if(o instanceof Block block) objs.add(new Research(block));
-                        else if(o instanceof UnitType unit) objs.add(new Research(unit));
-                        else if(o instanceof SectorPreset preset) objs.add(new SectorComplete(preset));
-                    }
-                }
-
-                TechNode node = node(sector, new ItemStack[]{}, objs, () -> buildChildrenOf(e.name));
-
-                if (sector.name.startsWith("cryon-")) {
-                    sector.shownPlanets = ObjectSet.with(cryonPlanet);
-                } else {
-                    if (sector.shownPlanets == null) {
-                        sector.shownPlanets = new ObjectSet<>();
-                    }
-                    sector.shownPlanets.add(cryonPlanet);
-                }
-            }
-        }
-    }
-
-    static void buildChildrenOf(String name){
-        Seq<Entry> children = childrenOf.get(name);
-        if(children == null) return;
-        for(Entry c : children) buildNode(c);
-    }
-
-    // ================== 入口 ==================
-
-
-    public static void load(){
-        index();
-
-        Planet cryonPlanet = Vars.content.planet("cryon-cryon");
-        Block core = CryonContent.block("core-pioneer");
-
-        if (core == null) {
-            Log.err("[CryonTechTree] core-pioneer not found!");
-            return;
-        }
-
-        var root = nodeRoot("cryon", core, true, () -> {
-            buildChildrenOf("core-pioneer");
-        });
-        core.alwaysUnlocked = true;
-        root.planet = cryonPlanet;
-        cryonPlanet.techTree = root;
-
-        core.shownPlanets = ObjectSet.with(cryonPlanet);
-
-        // 统一处理所有 cryon- 前缀的内容
-        for (Seq<Content> seq : Vars.content.getContentMap()) {
-            for (Content content : seq) {
-                if (content instanceof UnlockableContent u && u.name.startsWith("cryon-")) {
-                    u.shownPlanets = ObjectSet.with(cryonPlanet);
-                    // 清理 databaseTabs，只保留 cryon-cryon
-                    u.databaseTabs.clear();
-                    u.databaseTabs.add(cryonPlanet);
-                }
-            }
-        }
-            // 使用栈遍历所有子节点
-        Seq<TechNode> stack = Seq.with(root);
-        while (!stack.isEmpty()) {
-            TechNode node = stack.pop();
-            if (node.content != null) {
-                UnlockableContent u = node.content;
-                if (!u.name.startsWith("cryon-")) {
-                    if (u.shownPlanets == null) {
-                        u.shownPlanets = new ObjectSet<>();
-                    }
-                    u.shownPlanets.add(cryonPlanet);
-                    u.databaseTabs.add(cryonPlanet);
-                }
-            }
-            stack.addAll(node.children);
-        }
-
-
-
-        /* 隐藏小行星
-        for (Planet p : Vars.content.planets()) {
-            if (p != cryonPlanet && p != Planets.serpulo && p != Planets.erekir && p != Planets.sun) {
-                p.hideDatabase = true;
-                p.databaseTabs.clear();
-            }
-        }*/
-
-        // 清理 cryon 自身的 databaseTabs
-        //cryonPlanet.databaseTabs.clear();
+    @Override
+    protected void afterLoad(TechNode root, Planet planet){
         Time.runTask(10f, () -> {
             Log.info("[CryonTechTree] Refreshing loadout cache...");
-
-            // 重新加载 schematics
             schematics.load();
-
-            // 强制刷新所有核心的 loadout
             for(Block block : Vars.content.blocks()){
-                if(block instanceof CoreBlock schematics_core){
-                    // 这会触发重新从配置文件读取
-                    universe.getLoadout(schematics_core);
+                if(block instanceof CoreBlock core){
+                    universe.getLoadout(core);
                 }
             }
-
             Log.info("[CryonTechTree] Loadout refresh complete");
         });
+    }
 
-        Log.info("[CryonTechTree] Tech tree loaded");
-        //DebugUnlock.enabled = true;
-        //DebugUnlock.apply();
+    /** 保留原来的调用方式：CryonTechTree.load() */
+    public static void load(){
+        new CryonTechTree().run();
     }
 }

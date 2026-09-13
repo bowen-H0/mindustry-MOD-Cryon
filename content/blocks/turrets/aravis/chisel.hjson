@@ -1,0 +1,42 @@
+type: ItemTurret
+name: "凿击"
+description: "重型单管炮塔。"
+size: 3
+health: 3600
+range: 210
+reload: 90
+inaccuracy: 1
+targetAir: false
+targetGround: true
+maxAmmo: 20
+ammoUseEffect: casing3
+shootX: 0
+shootY: 6
+recoils: 1
+recoil: 6
+shake: 4
+ammoTypes: {
+  copper: {
+    type: ArtilleryBulletType
+    damage: 260
+    speed: 3.8
+    lifetime: 55
+    width: 14
+    height: 18
+    splashDamage: 140
+    splashDamageRadius: 45
+    hitEffect: massiveExplosion
+    despawnEffect: massiveExplosion
+    backColor: 8a7355
+    frontColor: e8dcc4
+    trailEffect: artilleryTrail
+    trailChance: 0.3
+    knockback: 2.5
+    buildingDamageMultiplier: 1.2
+  }
+}
+category: turret
+requirements: [
+  copper/260
+  ferrum/240
+]

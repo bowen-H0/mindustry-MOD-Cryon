@@ -1,0 +1,41 @@
+type: mech
+speed: 0.55
+flying: false
+health: 520
+armor: 9
+hitSize: 13
+outlineColor: 5c4d33
+mechLegColor: 8a7355
+faceTarget: true
+
+weapons: [
+  {
+    name: obsidianum-grenade-launcher
+    x: 6
+    y: 0
+    mirror: true
+    rotate: false
+    shootCone: 4
+    reload: 30
+    recoil: 3
+    inaccuracy: 6
+    shake: 2.5
+    bullet: {
+      type: ArtilleryBulletType
+      damage: 26
+      speed: 3.6
+      lifetime: 20
+      width: 8
+      height: 10
+      collidesAir: false
+      collidesGround: true
+      splashDamage: 45
+      splashDamageRadius: 24
+      hitEffect: explosion
+      despawnEffect: explosion
+      trailEffect: artilleryTrail
+      trailChance: 0.2
+      status: burning
+    }
+  }
+]

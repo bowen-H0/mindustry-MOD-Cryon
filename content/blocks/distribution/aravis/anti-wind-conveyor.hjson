@@ -1,0 +1,11 @@
+type: StackConveyor
+name: "抗风传送带"
+description: "能在强风天气下正常运作的基础传送带。"
+size: 1
+health: 60
+speed: 0.03
+itemCapacity: 4
+category: distribution
+requirements: [
+  ferrum/1
+]

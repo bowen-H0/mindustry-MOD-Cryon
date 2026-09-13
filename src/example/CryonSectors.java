@@ -66,5 +66,15 @@ public class CryonSectors {
             credit = "LSK133";
         }};
         sector66.generateEnemyBase = true;
+        // ──────────────────────────────────────────────────────────
+        // 扇区 59（进攻图）
+        // ──────────────────────────────────────────────────────────
+        Sector sector59 = planet.sectors.get(59);
+        new SectorPreset("sector-59", planet, 59) {{
+            sector.threat = 12f;
+            requireUnlock = false;
+            credit = "LSK133";
+        }};
+        sector59.generateEnemyBase = true;
     }
 }

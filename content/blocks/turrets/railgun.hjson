@@ -11,8 +11,7 @@ requirements: [
   surge-alloy/500
   aluminum/5000
   nano-material/200
-  nickel/2000
-  cryo-alloy/1000
+  cryo-alloy/200
 ]
 range: 600
 inaccuracy: 0
@@ -79,7 +78,7 @@ ammoTypes: {
     pointEffect: instTrail
     despawnEffect: instBomb
     length: 600
-    damage: 1000
+    damage: 1400
     pierceDamageFactor: 1
     fragBullets: 20
     splashDamage: 40

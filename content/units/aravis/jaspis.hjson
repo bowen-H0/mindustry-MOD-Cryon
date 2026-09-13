@@ -1,0 +1,40 @@
+type: mech
+speed: 0.6
+flying: false
+health: 360
+armor: 6
+hitSize: 10
+outlineColor: 5c4d33
+mechLegColor: 8a7355
+faceTarget: true
+
+weapons: [
+  {
+    name: jaspis-heavy-mg
+    x: 4
+    y: 0
+    mirror: true
+    rotate: false
+    shootCone: 4
+    reload: 8
+    shootSound: shoot
+    recoil: 1.5
+    shake: 0.5
+    inaccuracy: 1
+    bullet: {
+      type: BasicBulletType
+      damage: 11
+      speed: 5.5
+      lifetime: 24
+      width: 3
+      height: 8
+      collidesAir: true
+      collidesGround: true
+      pierce: false
+      backColor: 8a7355
+      frontColor: e8dcc4
+      hitEffect: hitBulletSmall
+      despawnEffect: hitBulletSmall
+    }
+  }
+]

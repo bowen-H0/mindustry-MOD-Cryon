@@ -1,0 +1,44 @@
+type: mech
+speed: 0.5
+flying: false
+health: 820
+armor: 12
+hitSize: 16
+outlineColor: 5c4d33
+mechLegColor: 8a7355
+faceTarget: true
+stepSound:mechStepSmall
+
+weapons: [
+  {
+    name: nitrum-flame-cannon
+    x: 5
+    y: 0.5
+    reload: 0
+    rotate: false
+    mirror: true
+    alternate: false
+    continuous: true
+    shoot: {
+      firstShotDelay: 0
+    }
+    shootStatusDuration:60
+    shootStatus:slow
+    shootSound: shootSublimate
+
+    bullet: {
+      type: ContinuousFlameBulletType
+      damage: 50
+      length: 130
+      ammoMultiplier: 1.4
+      knockback: 1.5
+      pierceCap: 3
+      buildingDamageMultiplier: 0.4
+      timescaleDamage: true
+      colors: ["eb7a3299", "f5893dcc", "ff5e1fff", "ff8c42", "ffe0b3"]
+      flareColor: "ff6a1a"
+      hitEffect:fireHit
+
+    }
+  }
+]

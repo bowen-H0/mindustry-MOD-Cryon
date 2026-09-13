@@ -175,6 +175,8 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "aegis-barrier", "flux-barrier");
 
         addAuto(Kind.BLOCK, "gem", "spiral");
+        addAuto(Kind.BLOCK, "meteor", "spiral");
+
         addAuto(Kind.BLOCK, "heating-furnace", "cryo-electric-heater");
         addAuto(Kind.BLOCK, "hydrothermal-generator", "shattering-drill");
 
@@ -257,6 +259,9 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "quantum", "vulcan");
         addAuto(Kind.BLOCK, "beacon", "gem");
+        addAuto(Kind.BLOCK, "kismet", "beacon");
+
+
 
 
 

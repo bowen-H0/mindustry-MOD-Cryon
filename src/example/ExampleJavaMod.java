@@ -868,7 +868,6 @@ public class ExampleJavaMod extends Mod {
 
                     splashDamage = 25f;
                     splashDamageRadius = 15f;
-
                     hitShake = 2f;
                     statusDuration = 30f;
                 }};

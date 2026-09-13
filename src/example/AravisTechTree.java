@@ -19,14 +19,29 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "core-conquest", null);
 
         // ---- BLOCK ----
+        addAuto(Kind.BLOCK, "anti-wind-conveyor", "core-conquest");
+
+
         addAuto(Kind.BLOCK, "aeolian-drill", "core-conquest");
+
+
+        addAuto(Kind.BLOCK, "chisel", "core-conquest");
+        addAuto(Kind.BLOCK, "iron-wall", "chisel");
+        addAuto(Kind.BLOCK, "iron-wall-large", "iron-wall");
+
 
         // ---- ITEM ----
         addAuto(Kind.ITEM, "ferrum", "core-conquest");
+        addAuto(Kind.ITEM, "copper", "ferrum");
+
+
 
 
 
         // ---- SECTOR ----
+        addAuto(Kind.SECTOR, "landing", "core-conquest");
+
+
     }
 
     @Override protected Item findItem(String name){ return CryonContent.item(name); }

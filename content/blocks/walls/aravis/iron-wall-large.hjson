@@ -1,0 +1,9 @@
+type: Wall
+name: 大型铁墙
+description: "由铁制成的防御方块，结构稳固，耐久优秀。"
+health: 1520
+size: 2
+requirements: [
+  ferrum/24
+]
+category: defense

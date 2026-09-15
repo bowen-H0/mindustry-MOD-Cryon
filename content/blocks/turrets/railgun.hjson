@@ -30,7 +30,7 @@ consumes: {
   liquids: [
   {
     liquid: cryofluid
-    amount: 3
+    amount: 1
     }
   ]
 }

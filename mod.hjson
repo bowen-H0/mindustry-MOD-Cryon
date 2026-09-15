@@ -8,7 +8,7 @@ name: "cryon"
 author: "Bowen-H0"
 
 #the fully qualified main class of the mod
-main: "example.ExampleJavaMod"
+main: "cryon.CryonJavaMod"
 
 #the mod description as seen in the mod dialog
 
@@ -33,7 +33,7 @@ Gary
 This mod is currently in testing.
 '''
 #the mod version
-version: 22.8.0
+version: 22.9.0
 #the minimum game build required to run this mod
 minGameVersion: 160
 

@@ -109,30 +109,5 @@ weapons: [
       despawnEffect: none
       shootEffect: shootSmall
     }
-  },
-  {
-    name: salus-meltdown-weapon
-    type: Weapon
-    x: 8    
-    y: 5
-    reload: 0
-    rotate: false
-    mirror: true       
-    alternate: false
-    continuous: true   
-    shootSound: beamMeltdown
-    shoot: {
-      firstShotDelay: 0
-    }
-    bullet: {
-      type: ContinuousLaserBulletType
-      damage: 2
-      length: 130      
-      width: 3         
-      incendChance: 0
-      incendSpread: 0
-      incendAmount: 0
-      colors: [8ca9f4, 5c7cf2, ffffff]
-    }
   }
 ]

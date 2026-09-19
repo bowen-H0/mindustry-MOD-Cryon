@@ -25,13 +25,10 @@ import cryon.Type.*;
 import cryon.Type.Constructor.*;
 import mindustry.Vars;
 import mindustry.ai.types.BuilderAI;
-import mindustry.content.Fx;
-import mindustry.content.Items;
-import mindustry.content.Liquids;
+import mindustry.content.*;
 import mindustry.ctype.Content;
 import mindustry.ctype.UnlockableContent;
 import mindustry.game.EventType.*;
-import mindustry.content.TechTree;
 import mindustry.content.TechTree.TechNode;
 import mindustry.mod.*;
 import mindustry.type.*;
@@ -104,6 +101,11 @@ public class CryonJavaMod extends Mod {
     public static WindTurbine windTurbine;
 
     public static UnitType exotic;
+    public static UnitType libration;
+    public static UnitType lagrange;
+
+
+
     // ══════════════════════════════════════════════════════════════
     //  loadContent
     // ══════════════════════════════════════════════════════════════
@@ -1042,6 +1044,219 @@ public class CryonJavaMod extends Mod {
                     }}
             );
         }};
+        libration = new UnitType("libration") {{
+            constructor = PayloadUnit::create;   // 保持和 exotic 一样能运货
+
+            flying = true;
+            health = 8000f;
+            armor = 12f;
+            speed = 2.8f;
+            accel = 0.06f;
+            drag = 0.04f;
+            rotateSpeed = 4.5f;
+            hitSize = 36f;
+            itemCapacity = 200;
+            buildSpeed = 4.5f;
+            buildBeamOffset = 10f;
+
+            targetAir = true;
+            targetGround = true;
+            circleTarget = false;
+            faceTarget = true;
+            lowAltitude = true;
+            aiController = BuilderAI::new;
+
+            mineTier = 4;
+            mineSpeed = 9f;
+            mineItems = Seq.with(
+                    CryonContent.item("aluminum"),
+                    CryonContent.item("crystal-sand"),
+                    CryonContent.item("magnesium"),
+                    CryonContent.item("dry-ice"),
+                    Items.titanium,
+                    Items.graphite,
+                    CryonContent.item("nickel"),
+                    CryonContent.item("salt"),
+                    Items.scrap
+            );
+
+            payloadCapacity = (3 * 3) * tilePayload;   // exotic 是 2x2，这里 3x3
+
+            engineSize = 0f;
+            engines.add(
+                    new UnitEngine(0f, -20f, 9f, -90f),
+                    new UnitEngine(-12f, -16f, 5f, -90f),
+                    new UnitEngine(12f, -16f, 5f, -90f)
+            );
+
+            weapons.add(
+                    // 正中间的脉冲激光
+                    new Weapon("cryon-libration-pulse") {{
+                        mirror = false;
+                        rotate = false;          // 固定朝前,靠机身转向瞄准
+                        x = 0f;
+                        y = 8f;
+                        shootY = 12f;
+                        reload = 45f;
+                        shootCone = 8f;
+                        inaccuracy = 0f;
+                        recoil = 3f;
+                        shake = 3f;
+                        shootSound = Sounds.shootLaser;
+
+                        // 一次连发 3 道脉冲
+                        shoot = new ShootPattern() {{
+                            shots = 3;
+                            shotDelay = 6f;
+                        }};
+
+                        bullet = new LaserBulletType(220f) {{
+                            length = 320f;
+                            width = 26f;
+                            lifetime = 22f;
+                            colors = new Color[]{
+                                    Color.valueOf("7dffa0").a(0.4f),
+                                    Color.valueOf("b6ffb0"),
+                                    Color.white
+                            };
+                            hitColor = Color.valueOf("b6ffb0");
+                            sideAngle = 25f;
+                            sideWidth = 1.2f;
+                            sideLength = 60f;
+                            hitEffect = Fx.none;
+                            shootEffect = Fx.none;
+                            chargeEffect = Fx.none;
+                            healPercent = 8f;
+                            collidesTeam = true;
+                            lightning = 2;
+                            lightningLength = 10;
+                            lightningDamage = 40f;
+                            lightningColor = Color.valueOf("b6ffb0");
+                        }};
+                    }}
+            );
+        }};
+        // 超长蓄力的充能特效：持续时间要和 firstShotDelay 一致
+        Effect lagrangeCharge = new Effect(300f, 200f, e -> {
+            Color c = Color.valueOf("b6ffb0");
+
+            // 炮口中心的能量球，随蓄力逐渐变大
+            Draw.color(c, Color.white, e.fin());
+            Fill.circle(e.x, e.y, 4f + 18f * e.fin() * e.fin());
+
+            // 收缩的能量环
+            Draw.color(c);
+            stroke(1f + 3f * e.fin());
+            Lines.circle(e.x, e.y, 60f * e.fout());
+            Lines.circle(e.x, e.y, 30f * e.fout() * e.fout());
+            // 向中心汇聚的光刺
+            randLenVectors(e.id, 14, 90f * e.fout(), (x, y) -> {
+                Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y) + 180f, 4f + 10f * e.fin());
+            });
+
+            Drawf.light(e.x, e.y, 60f + 120f * e.fin(), c, 0.8f * e.fin());
+            Draw.reset();
+        }).followParent(true).rotWithParent(true);
+
+        lagrange = new UnitType("lagrange") {{
+            constructor = PayloadUnit::create;
+
+            flying = true;
+            health = 20000f;
+            armor = 20f;
+            speed = 2.2f;
+            accel = 0.05f;
+            drag = 0.05f;
+            rotateSpeed = 2.8f;
+            hitSize = 56f;
+            itemCapacity = 400;
+            buildSpeed = 8f;
+            buildBeamOffset = 16f;
+
+            targetAir = true;
+            targetGround = true;
+            circleTarget = false;
+            faceTarget = true;
+            lowAltitude = true;
+            aiController = BuilderAI::new;
+
+            mineTier = 5;
+            mineSpeed = 14f;
+            mineItems = Seq.with(
+                    CryonContent.item("aluminum"),
+                    CryonContent.item("crystal-sand"),
+                    CryonContent.item("magnesium"),
+                    CryonContent.item("dry-ice"),
+                    Items.titanium,
+                    Items.graphite,
+                    CryonContent.item("nickel"),
+                    CryonContent.item("salt"),
+                    Items.scrap
+            );
+
+            payloadCapacity = (4 * 4) * tilePayload;   // libration 3x3 -> 4x4
+
+            engineSize = 0f;
+            engines.add(
+                    new UnitEngine(0f, -34f, 14f, -90f),
+                    new UnitEngine(-20f, -28f, 8f, -90f),
+                    new UnitEngine(20f, -28f, 8f, -90f)
+            );
+            engines.add(
+                    new UnitEngine(-32f, -18f, 6f, -90f),
+                    new UnitEngine(32f, -18f, 6f, -90f)
+            );
+
+            weapons.add(
+                    // 正中间的超大激光
+                    new Weapon("cryon-lagrange-laser") {{
+                        mirror = false;
+                        rotate = false;
+                        x = 0f;
+                        y = 14f;
+                        shootY = 20f;
+                        reload = 480f;             // 8 秒一次
+                        shootCone = 4f;
+                        inaccuracy = 0f;
+                        recoil = 8f;
+                        shake = 10f;
+                        shootSound = Sounds.shootCorvus;
+
+                        // 超长蓄力：5 秒
+                        shoot = new ShootPattern() {{
+                            shots = 1;
+                            firstShotDelay = 300f;
+                        }};
+                        shootStatus = StatusEffects.unmoving;
+                        shootStatusDuration = 300f + 60f;
+
+                        bullet = new LaserBulletType(4000f) {{
+                            length = 700f;
+                            width = 90f;
+                            lifetime = 60f;
+                            colors = new Color[]{
+                                    Color.valueOf("7dffa0").a(0.4f),
+                                    Color.valueOf("b6ffb0"),
+                                    Color.white
+                            };
+                            hitColor = Color.valueOf("b6ffb0");
+                            sideAngle = 30f;
+                            sideWidth = 2f;
+                            sideLength = 120f;
+                            largeHit = true;
+                            hitShake = 12f;
+                            hitEffect = Fx.hitLancer;
+                            shootEffect = Fx.lancerLaserShoot;
+                            chargeEffect = lagrangeCharge;
+
+                            healPercent = 15f;
+                            collidesTeam = true;
+
+                            buildingDamageMultiplier = 0.8f;
+                        }};
+                    }}
+            );
+        }};
         OblivionUnit.load();
         DestroyerUnit.load();
     }
@@ -1409,6 +1624,19 @@ public class CryonJavaMod extends Mod {
                 };
             }});
         }
+        if (exotic != null) {
+            t3universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = exotic;
+                time = 2000f;
+                requirements = Seq.with(
+                        new PayloadStack(CryonContent.unit("nadir"), 2),
+                        new PayloadStack(wall, 4)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Vars.content.liquid("hydrogen"), (15f/60f))
+                };
+            }});
+        }
         t3universalAssembler.initCapacities();
 
         t4universalAssembler.requirements(Category.units, BuildVisibility.shown, new ItemStack[]{
@@ -1468,6 +1696,19 @@ public class CryonJavaMod extends Mod {
                 };
             }});
         }
+        if (libration != null) {
+            t4universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = libration;
+                time = 4000f;
+                requirements = Seq.with(
+                        new PayloadStack(CryonContent.unit("apex"), 2),
+                        new PayloadStack(chargedWall, 5)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Vars.content.liquid("nitrogen"), (20f/60f))
+                };
+            }});
+        }
 
         t4universalAssembler.initCapacities();
         t5universalAssembler.requirements(Category.units, BuildVisibility.shown, new ItemStack[]{
@@ -1518,6 +1759,19 @@ public class CryonJavaMod extends Mod {
                 time = 6000f;
                 requirements = Seq.with(
                         new PayloadStack(murex, 6),
+                        new PayloadStack(cryoAlloyWallLarge, 8)
+                );
+                liquidReq = new LiquidStack[]{
+                        new LiquidStack(Liquids.cryofluid, (30f / 60f))
+                };
+            }});
+        }
+        if (lagrange != null && exotic != null && cryoAlloyWallLarge != null) {
+            t5universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{
+                unit = lagrange;
+                time = 6000f;
+                requirements = Seq.with(
+                        new PayloadStack(exotic, 6),
                         new PayloadStack(cryoAlloyWallLarge, 8)
                 );
                 liquidReq = new LiquidStack[]{

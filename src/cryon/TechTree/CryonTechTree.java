@@ -283,19 +283,30 @@ public class CryonTechTree extends ModPlanetTechTree {
         add(Kind.UNIT, "bolide", "t2factory", r(CryonContent.item("titanium"), 300, CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 300));
         add(Kind.UNIT, "buffer", "unit-projector", r(CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 50));
         add(Kind.UNIT, "comet", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
+        add(Kind.UNIT, "nadir", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
+
+        add(Kind.UNIT, "apex", "t2factory", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
         add(Kind.UNIT, "guardian", "t2factory", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
+
         add(Kind.UNIT, "littorina", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 60));
         add(Kind.UNIT, "murex", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+        add(Kind.UNIT, "exotic", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+
         add(Kind.UNIT, "natica", "t2factory", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
         add(Kind.UNIT, "peak", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
         add(Kind.UNIT, "salus", "mechanical-assembler", r(CryonContent.item("titanium"), 2400, CryonContent.item("farstar-alloy"), 2600, CryonContent.item("silicon"), 2300));
         add(Kind.UNIT, "umbra", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
         add(Kind.UNIT, "sagitta", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
         add(Kind.UNIT, "blaze", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
+        add(Kind.UNIT, "libration", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
+
+
         add(Kind.UNIT, "charonia", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
         add(Kind.UNIT, "eternal", "t5universal-assembler", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("phase-fabric"), 4000, CryonContent.item("nano-material"), 2000, CryonContent.item("graphite"), 3000, CryonContent.item("silicon"), 5000));
         add(Kind.UNIT, "syrinx", "t5universal-assembler", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("phase-fabric"), 4000, CryonContent.item("nano-material"), 2000, CryonContent.item("graphite"), 3000, CryonContent.item("silicon"), 5000));
         add(Kind.UNIT, "hydra", "t5universal-assembler", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("phase-fabric"), 4000, CryonContent.item("nano-material"), 2000, CryonContent.item("graphite"), 3000, CryonContent.item("silicon"), 5000));
+        add(Kind.UNIT, "lagrange", "t5universal-assembler", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("phase-fabric"), 4000, CryonContent.item("nano-material"), 2000, CryonContent.item("graphite"), 3000, CryonContent.item("silicon"), 5000));
+
         // ---- SECTOR(全部 auto,前提条件后续手动补) ----
         addAuto(Kind.SECTOR, "cryon-fusion-bastion", "cryon-neutron-flux-zone");
         addAuto(Kind.SECTOR, "cryon-gravel-ice", "cryon-shattered-abyss");

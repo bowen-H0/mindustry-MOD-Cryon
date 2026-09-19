@@ -4,7 +4,6 @@
 #define OUTER_REACH 1.45
 #define LENS_STRENGTH 0.13
 #define DISPERSION 0.18
-#define RIPPLE 0.012
 #define RIM_WIDTH 0.028
 #define RIM_GLOW 0.55
 #define EDGE_DARKEN 0.18
@@ -37,7 +36,7 @@ void main(){
         if(i >= u_count) break;
 
         vec2 c = u_bh[i].xy;
-        float R = u_bh[i].z;
+        float R = max(u_bh[i].z, 0.001);
         float health = 1.0 - u_bh[i].w;
 
         vec2 d = p - c;
@@ -45,13 +44,18 @@ void main(){
         float t = r / R;
         if(t >= OUTER_REACH) continue;
 
-        vec2 dir = d / max(r, 0.001);
+        alpha = max(alpha, 1.0 - smoothstep(OUTER_REACH * 0.9, OUTER_REACH, t));
+
+        if(r < 0.001) continue;
+
+        vec2 dir = d / r;
+        float ang = atan(d.y, d.x);
 
         float rise = smoothstep(INNER_CLEAR, 1.0, t);
         float fall = 1.0 - smoothstep(1.0, OUTER_REACH, t);
         float bump = rise * fall;
 
-        float wob = 1.0 + RIPPLE * 0.0 + sin(atan(d.y, d.x) * 4.0 + u_time * 0.8) * 0.06;
+        float wob = 1.0 + sin(ang * 4.0 + u_time * 0.8) * 0.06;
         float disp = R * LENS_STRENGTH * bump * wob;
 
         sampR -= dir * disp * (1.0 + DISPERSION);
@@ -59,16 +63,13 @@ void main(){
         sampB -= dir * disp * (1.0 - DISPERSION);
 
         float x = (t - 1.0) / RIM_WIDTH;
-        float line = exp(-x * x);
+        float line = exp(-min(x * x, 30.0));
         rim += line * (0.4 + 0.6 * health);
 
-        float ang = atan(d.y, d.x);
         float sweep = pow(0.5 + 0.5 * sin(ang * 2.0 - u_time * 0.9), 4.0);
         arc += line * sweep * health;
 
         darken = max(darken, smoothstep(0.7, 1.0, t) * (1.0 - smoothstep(1.0, 1.1, t)));
-
-        alpha = max(alpha, 1.0 - smoothstep(OUTER_REACH * 0.9, OUTER_REACH, t));
     }
 
     if(alpha <= 0.001){

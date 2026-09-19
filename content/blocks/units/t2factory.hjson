@@ -24,7 +24,9 @@
   upgrades: [
     [buffer, guardian],
     [littorina, natica],
-    [comet, bolide]
+    [comet, bolide],
+    [nadir, apex]
+
   ]
   constructTime: 1200
 }

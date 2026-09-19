@@ -40,6 +40,15 @@
         silicon/20
         graphite/5
       ]
-    }
+    },
+    {
+          unit: nadir
+          time: 2400
+          requirements: [
+            magnesium/20
+            silicon/20
+            graphite/5
+          ]
+        }
   ]
 }

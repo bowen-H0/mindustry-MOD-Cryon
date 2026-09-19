@@ -79,6 +79,8 @@ public class ReflectShieldRenderer {
             Pixmap pm = new Pixmap(w, h);
             sceneTex = new Texture(pm);
             pm.dispose();
+            sceneTex.bind();
+            Gl.texImage2D(Gl.texture2d, 0, Gl.rgb, w, h, 0, Gl.rgb, Gl.unsignedByte, null);
             sceneTex.setFilter(Texture.TextureFilter.linear);
             sceneTex.setWrap(Texture.TextureWrap.clampToEdge);
         }
@@ -114,6 +116,7 @@ public class ReflectShieldRenderer {
         Draw.drawRange(ReflectShieldAbility.layerReflectShield, 1f,
                 () -> {
                     if(count == 0) return;
+                    Draw.flush();
                     sceneTex.bind();
                     Gl.copyTexSubImage2D(Gl.texture2d, 0, 0, 0, 0, 0, sceneTex.width, sceneTex.height);
                     lensBuffer.begin(Color.clear);

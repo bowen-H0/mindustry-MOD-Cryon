@@ -1,0 +1,245 @@
+type: legs
+name: 典则
+speed: 0.45
+health: 25000
+armor: 24
+hitSize: 72
+legCount: 8
+legLength: 80
+legBaseOffset: 18
+legMoveSpace: 1.8
+legSpeed: 0.85
+legExtension: -4
+legStraightness: 0.5
+legGroupSize: 2
+legContinuousMove: true
+outlineColor: 38404B
+mechLegColor: 606bb9
+abilities: [
+  {
+    type: ShieldRegenFieldAbility
+    amount: 100
+    max: 800
+    reload: 40
+    range: 300
+  }
+]
+weapons: [
+  {
+    name: salus-meltdown-weapon
+    type: Weapon
+    x: 14
+    y: 16
+    shootY: 12
+    rotate: false
+    mirror: true
+    alternate: false
+    reload: 240
+    recoil: 0
+    continuous: true
+    shootSound: beamMeltdown
+    shootStatus: slow
+    shootStatusDuration: 200
+    shoot: {
+      firstShotDelay: 30
+    }
+    bullet: {
+      type: ContinuousLaserBulletType
+      damage: 300
+      length: 110
+      width: 16
+      lifetime: 180
+      largeHit: true
+      incendChance: 0
+      incendSpread: 0
+      incendAmount: 0
+      shake: 3
+      colors: [8ca9f4, 5c7cf2, ffffff]
+    }
+  }
+  {
+    type: PointDefenseWeapon
+    name: cryon-point-defense
+    rotate: true
+    x: 6
+    y: -12
+    reload: 5
+    targetInterval: 5
+    targetSwitchInterval: 8
+    recoil: 0.8
+    bullet: {
+      shootSound: shootLaser
+      shootEffect: sparkShoot
+      hitEffect: pointHit
+      maxRange: 240
+      damage: 150
+      hitColor: F47B76
+    }
+  }
+  {
+    type: PointDefenseWeapon
+    name: cryon-point-defense
+    rotate: true
+    x: 12
+    y: -12
+    reload: 5
+    targetInterval: 5
+    targetSwitchInterval: 8
+    recoil: 0.8
+    bullet: {
+      shootSound: shootLaser
+      shootEffect: sparkShoot
+      hitEffect: pointHit
+      maxRange: 240
+      damage: 150
+      hitColor: F47B76
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 28
+    y: 8
+    reload: 8
+    rotate: true
+    mirror: true
+    bullet: {
+      type: SapBulletType
+      sapStrength: 1.6
+      length: 130
+      damage: 60
+      width: 1.0
+      knockback: -1.2
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 34
+    y: -4
+    reload: 8
+    rotate: true
+    mirror: true
+    bullet: {
+      type: SapBulletType
+      sapStrength: 1.6
+      length: 130
+      damage: 60
+      width: 1.0
+      knockback: -1.2
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 30
+    y: -16
+    reload: 8
+    rotate: true
+    mirror: true
+    bullet: {
+      type: SapBulletType
+      sapStrength: 1.6
+      length: 130
+      damage: 60
+      width: 1.0
+      knockback: -1.2
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 22
+    y: -26
+    reload: 8
+    rotate: true
+    mirror: true
+    bullet: {
+      type: SapBulletType
+      sapStrength: 1.6
+      length: 130
+      damage: 60
+      width: 1.0
+      knockback: -1.2
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 18
+    y: 22
+    reload: 5
+    rotate: true
+    mirror: true
+    bullet: {
+      type: SapBulletType
+      sapStrength: 1.2
+      length: 90
+      damage: 35
+      width: 0.7
+      knockback: -0.8
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 24
+    y: 0
+    reload: 5
+    rotate: true
+    mirror: true
+    bullet: {
+      type: SapBulletType
+      sapStrength: 1.2
+      length: 90
+      damage: 35
+      width: 0.7
+      knockback: -0.8
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  }
+  {
+    name: salus-mount
+    type: Weapon
+    x: 16
+    y: -20
+    reload: 5
+    rotate: true
+    mirror: true
+    bullet: {
+      type: SapBulletType
+      sapStrength: 1.2
+      length: 90
+      damage: 35
+      width: 0.7
+      knockback: -0.8
+      color: bf92f9
+      hitColor: bf92f9
+      despawnEffect: none
+      shootEffect: shootSmall
+    }
+  }
+]

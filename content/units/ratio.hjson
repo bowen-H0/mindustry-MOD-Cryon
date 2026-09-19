@@ -1,17 +1,17 @@
 type: legs
-name: Salus
+name: 规约
 # 基础属性
-speed: 0.55
-health: 1200
-armor: 4
-hitSize: 32
+speed: 0.5
+health: 10000
+armor: 16
+hitSize: 56
 # 腿部核心参数
 legCount: 6
-legLength: 38
-legBaseOffset: 10
+legLength: 60
+legBaseOffset: 14
 legMoveSpace: 1.8
-legSpeed: 0.6
-legExtension: -2
+legSpeed: 0.85
+legExtension: -3
 legStraightness: 0.5
 legGroupSize: 2
 legContinuousMove: true
@@ -20,36 +20,42 @@ mechLegColor: 606bb9
 abilities: [
   {
     type: ShieldRegenFieldAbility
-    amount: 5
-    max: 50
-    reload: 60
-    range: 80
+    amount: 60
+    max: 400
+    reload: 45
+    range: 220
   }
 ]
 weapons: [
   {
-    name: salus-weapon
+    name: salus-meltdown-weapon
     type: Weapon
-    x: 0              
-    y: 11
+    x: 0
+    y: 14
+    shootY: 12
     rotate: false
     mirror: false
-    reload: 35
-    alternate: true
-    ejectEffect: casing1
-    shootSound: shootFuse
+    reload: 260
+    recoil: 0
+    continuous: true
+    shootSound: beamMeltdown
+    shootStatus: slow
+    shootStatusDuration: 220
     shoot: {
-      type: ShootSpread
-      shots: 5
-      spread: 25
+      firstShotDelay: 40
     }
     bullet: {
-      type: ShrapnelBulletType
-      length: 160
-      damage: 30
-      width: 18
-      toColor: ffffff
-      serrations: 4
+      type: ContinuousLaserBulletType
+      damage: 60
+      length: 320
+      width: 14
+      lifetime: 180
+      largeHit: true
+      incendChance: 0
+      incendSpread: 0
+      incendAmount: 0
+      shake: 2
+      colors: [8ca9f4, 5c7cf2, ffffff]
     }
   }
   {
@@ -58,16 +64,16 @@ weapons: [
     rotate: true
     x: 5
     y: -9
-    reload: 9
-    targetInterval: 9
-    targetSwitchInterval: 12
-    recoil: 0.5
+    reload: 6
+    targetInterval: 6
+    targetSwitchInterval: 9
+    recoil: 0.8
     bullet: {
       shootSound: shootLaser
       shootEffect: sparkShoot
       hitEffect: pointHit
-      maxRange: 100
-      damage: 38
+      maxRange: 200
+      damage: 100
       hitColor: F47B76
     }
   }
@@ -77,33 +83,34 @@ weapons: [
     rotate: true
     x: 10
     y: -9
-    reload: 9
-    targetInterval: 9
-    targetSwitchInterval: 12
-    recoil: 0.5
+    reload: 6
+    targetInterval: 6
+    targetSwitchInterval: 9
+    recoil: 0.8
     bullet: {
       shootSound: shootLaser
       shootEffect: sparkShoot
       hitEffect: pointHit
-      maxRange: 100
-      damage: 38
+      maxRange: 200
+      damage: 100
       hitColor: F47B76
     }
   }
   {
     name: salus-mount
     type: Weapon
-    x: 14
+    x: 20
     y: -4
-    reload: 18
+    reload: 10
     rotate: true
     mirror: true
     bullet: {
       type: SapBulletType
-      sapStrength: 0.8
-      length: 50
-      width: 0.4
-      knockback: -0.65
+      sapStrength: 1.4
+      length: 100
+      damage: 45
+      width: 0.8
+      knockback: -1.0
       color: bf92f9
       hitColor: bf92f9
       despawnEffect: none

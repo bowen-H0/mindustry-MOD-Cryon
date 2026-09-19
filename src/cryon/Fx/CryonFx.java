@@ -10,6 +10,8 @@ import mindustry.graphics.Drawf;
 import static arc.graphics.g2d.Draw.color;
 import static arc.graphics.g2d.Lines.stroke;
 import static arc.math.Angles.randLenVectors;
+import arc.graphics.g2d.Draw;
+import arc.math.Interp;
 
 /** Cryon 轨道炮特效集合，硬朗高冲击力风格，支持双色自定义。 */
 public class CryonFx {
@@ -125,4 +127,89 @@ public class CryonFx {
             Drawf.light(e.x, e.y, 30f * e.fout(), back, 0.4f * e.fout());
         });
     }
+    /** 反弹盾专用爆炸：先内爆收束，再向外爆发。e.rotation 传入护盾半径 */
+    public static final Effect reflectShieldExplosion = new Effect(50f, 700f, e -> {
+        float R = Math.max(e.rotation, 20f);
+        Color front = Color.valueOf("d8f1ff");
+        Color back = Color.valueOf("4aa3ff");
+
+        float split = 0.3f;
+
+        if(e.fin() < split){
+            float in = Interp.pow2In.apply(e.fin() / split);
+
+            color(back, front, in);
+            stroke(2f + in * 3f);
+            Lines.circle(e.x, e.y, R * (1f - in * 0.85f));
+
+            color(front);
+            stroke(1.5f);
+            for(int i = 0; i < 20; i++){
+                float ang = 360f / 20f * i + Mathf.randomSeedRange(e.id + i, 8f);
+                float r0 = R * (1.3f - in * 1.1f);
+                float r1 = r0 + R * 0.25f * (1f - in);
+                Lines.line(
+                        e.x + Mathf.cosDeg(ang) * r0, e.y + Mathf.sinDeg(ang) * r0,
+                        e.x + Mathf.cosDeg(ang) * r1, e.y + Mathf.sinDeg(ang) * r1);
+            }
+
+            color(front);
+            Draw.alpha(0.25f + in * 0.5f);
+            Fill.circle(e.x, e.y, R * 0.12f * (1f + in));
+            Draw.alpha(1f);
+        }else{
+            float o = (e.fin() - split) / (1f - split);
+            float oe = Interp.pow3Out.apply(o);
+            float fade = 1f - o;
+
+            color(Color.white, front, o);
+            Draw.alpha(fade);
+            Fill.circle(e.x, e.y, R * 0.45f * fade);
+            Draw.alpha(1f);
+
+            color(back, front, fade);
+            stroke(fade * 6f + 0.3f);
+            Lines.circle(e.x, e.y, R * (0.2f + oe * 1.9f));
+
+            float o2 = Mathf.clamp((o - 0.15f) / 0.85f);
+            if(o2 > 0f){
+                float oe2 = Interp.pow3Out.apply(o2);
+                color(front);
+                stroke((1f - o2) * 3f + 0.2f);
+                Lines.circle(e.x, e.y, R * (0.2f + oe2 * 1.3f));
+            }
+
+            for(int i = 0; i < 2; i++){
+                color(i == 0 ? back : front);
+                float m = i == 0 ? 1f : 0.55f;
+                for(int j = 0; j < 12; j++){
+                    float rot = 360f / 12f * j + Mathf.randomSeedRange(e.id + j, 12f);
+                    float len = R * (0.7f + Mathf.randomSeed(e.id + j * 3, 0f, 0.7f)) * m;
+                    float w = 12f * fade * m;
+                    Drawf.tri(e.x, e.y, w, len * oe, rot);
+                    Drawf.tri(e.x, e.y, w, 8f * m * fade, rot + 180f);
+                }
+            }
+
+            color(front);
+            for(int i = 0; i < 26; i++){
+                float ang = Mathf.randomSeed(e.id + i * 5, 0f, 360f);
+                float dist = R * (0.5f + Mathf.randomSeed(e.id + i * 7, 0f, 1.4f)) * oe;
+                float px = e.x + Mathf.cosDeg(ang) * dist;
+                float py = e.y + Mathf.sinDeg(ang) * dist;
+                Fill.square(px, py, (2f + Mathf.randomSeed(e.id + i * 9, 0f, 3f)) * fade, ang + o * 180f);
+            }
+
+            color(back);
+            stroke(fade * 1.6f);
+            for(int i = 0; i < 18; i++){
+                float ang = Mathf.randomSeed(e.id + i * 13, 0f, 360f);
+                float r0 = R * (0.8f + oe * 0.9f);
+                Lines.lineAngle(e.x + Mathf.cosDeg(ang) * r0, e.y + Mathf.sinDeg(ang) * r0, ang, (10f + Mathf.randomSeed(e.id + i * 17, 0f, 18f)) * fade);
+            }
+        }
+
+        Draw.reset();
+        Drawf.light(e.x, e.y, R * 3f * (1f - Math.abs(e.fin() - split) * 0.8f), back, 0.9f * e.fout());
+    });
 }

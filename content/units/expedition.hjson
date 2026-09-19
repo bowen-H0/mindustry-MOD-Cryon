@@ -16,6 +16,8 @@ targetGround: true
 circleTarget: false
 faceTarget: true
 lowAltitude: false
+mineItems: [aluminum, crystal-sand, magnesium, dry-ice,titanium, graphite, nickel, salt, scrap]
+
 abilities: [
   {
     type: StatusFieldAbility

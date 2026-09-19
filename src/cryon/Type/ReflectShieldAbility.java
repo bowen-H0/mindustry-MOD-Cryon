@@ -3,17 +3,21 @@ package cryon.Type;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
-import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.struct.IntMap;
 import arc.util.Time;
+import arc.util.Tmp;
+import cryon.Features.ReflectShieldRenderer;
 import mindustry.content.Fx;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.*;
-
+import mindustry.graphics.Layer;
+import cryon.Fx.CryonFx;
 //AI-generated
 //独立的“紫盾”反弹护盾能力：持续反弹范围内的敌方子弹，累计承受伤害达到上限后护盾破裂并进入冷却
 public class ReflectShieldAbility extends Ability {
+
+    public static final float layerReflectShield = Layer.shields + 30f;
 
     /** 护盾反弹判定半径 */
     public float reflectRadius = 80f;
@@ -89,25 +93,16 @@ public class ReflectShieldAbility extends Ability {
     private void shieldBreak(Unit unit, float[] d) {
         d[0] = 0f;
         d[1] = shieldCooldown;
-        Fx.shieldBreak.at(unit.x, unit.y, unit.rotation, Color.white, unit);
+        CryonFx.reflectShieldExplosion.at(unit.x, unit.y, reflectRadius);
     }
 
     @Override
     public void draw(Unit unit) {
         float[] d = getData(unit);
+        if (d[1] > 0f) return;
 
-        if (d[1] > 0f) return; // 冷却中不绘制
-
-        float progress = d[0] / reflectMaxDamage;
-        float pulse = Mathf.sin(Time.time, 25f, 1f) * 0.12f + 0.88f;
-
-        Draw.z(75f);
-        Lines.stroke(2f + (1f - progress) * 2f, Color.valueOf("cc44ff"));
-        Draw.alpha(0.6f * pulse);
-        Lines.circle(unit.x, unit.y, reflectRadius);
-        Draw.alpha(0.12f * (1f - progress) * pulse);
-        Fill.circle(unit.x, unit.y, reflectRadius);
-        Draw.reset();
+        float progress = Mathf.clamp(d[0] / reflectMaxDamage);
+        ReflectShieldRenderer.submit(unit.x, unit.y, reflectRadius, progress);
     }
 
     @Override

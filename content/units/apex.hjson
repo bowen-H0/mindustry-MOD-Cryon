@@ -1,0 +1,114 @@
+type: flying
+flying: true
+name: "天穹"
+health: 350
+controller: builderAI
+armor: 3
+speed: 3.0
+rotateSpeed: 8
+hitSize: 16
+itemCapacity: 45
+buildSpeed: 1.8
+buildBeamOffset: 4.5
+targetAir: true
+targetGround: true
+circleTarget: false
+faceTarget: true
+lowAltitude: false
+
+# 挖矿能力
+mineTier: 2
+mineSpeed: 4
+mineItems: [aluminum, crystal-sand, magnesium, dry-ice, titanium, graphite, nickel, salt, scrap]
+
+engineSize: 0
+engines: [
+  {
+    x: 0
+    y: -9
+    radius: 4.2
+    rotation: -90
+  }
+]
+
+weapons: [
+  {
+    mirror: true
+    reload: 15
+    x: 8
+    y: 2
+    shootCone: 12
+
+    bullet: {
+      type: FlakBulletType
+      damage: 10
+      speed: 6
+      lifetime: 12
+      width: 12
+      height: 20
+      hitSize: 5
+      ammoMultiplier: 2
+      buildingDamageMultiplier: 1
+      knockback: 2
+      homingPower: 0.17
+      homingDelay: 8
+      homingRange: 40
+      explodeRange: 20
+      explodeDelay: 0
+      flakInterval: 20
+      healPercent: 10
+      backColor: "b6ffb0"
+      frontColor: "ffffff"
+      hitColor: "d4ffcc"
+      trailColor: "7dffa0"
+      trailWidth: 3.0
+      trailLength: 10
+      shootEffect: shootBigColor
+      smokeEffect: shootSmokeSquareSparse
+      hitEffect: hitSquaresColor
+      despawnEffect: hitSquaresColor
+      despawnShake: 2
+      status: electrified
+      statusDuration: 5
+
+      intervalBullet: {
+        type: LightningBulletType
+        lightningColor: "9dffb0"
+        lightningCone: 15
+        lightningLength: 10
+        lightningLengthRand: 4
+        damage: 5
+      }
+      bulletInterval: 20
+      intervalBullets: 1
+      intervalRandomSpread: 0
+      intervalSpread: 0
+
+      fragBullet: {
+        type: LaserBulletType
+        damage: 5
+        width: 12
+        length: 50
+        lifetime: 14
+        sideAngle: 175
+        sideWidth: 1
+        sideLength: 18
+        pierceCap: 2
+        buildingDamageMultiplier: 1
+        hitEffect: hitLancer
+        colors: [
+          "22ff6266"
+          "6dffaa"
+          "ffffff"
+        ]
+      }
+      fragBullets: 2
+      fragSpread: 0
+      fragRandomSpread: 0
+      fragVelocityMin: 1
+      fragVelocityMax: 1
+      fragLifeMin: 1
+      fragOnHit: false
+    }
+  }
+]

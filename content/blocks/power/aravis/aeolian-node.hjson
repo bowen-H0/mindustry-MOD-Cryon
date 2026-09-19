@@ -5,10 +5,6 @@ size: 1
 health: 140
 category: power
 range: 5
-laser: beam-laser
-laserEnd: beam-laser-end
-laserColor1: "ffffffff"
-laserColor2: "ffd9c2ff"
 pulseScl: 7.0
 pulseMag: 0.05
 laserWidth: 0.4

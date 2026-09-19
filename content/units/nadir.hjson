@@ -1,0 +1,31 @@
+type: flying
+flying: true
+name: "星光"
+health: 200
+controller: builderAI
+armor: 2
+speed: 3.2
+rotateSpeed: 9
+hitSize: 10
+itemCapacity: 30
+buildSpeed: 1.5
+buildBeamOffset: 3
+targetAir: true
+targetGround: true
+circleTarget: false
+faceTarget: true
+lowAltitude: false
+
+# 挖矿能力
+mineTier: 2
+mineSpeed: 3.5
+mineItems: [aluminum, crystal-sand, magnesium, dry-ice, titanium, graphite, nickel, salt, scrap]
+engineSize: 0
+engines: [
+  {
+    x: 0
+    y: -7
+    radius: 3.0
+    rotation: -90
+  }
+]

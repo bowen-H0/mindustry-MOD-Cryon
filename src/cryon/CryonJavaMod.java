@@ -12,10 +12,7 @@ import cryon.Content.CryonItems;
 import cryon.Content.CryonSectors;
 import cryon.Content.DestroyerUnit;
 import cryon.Content.OblivionUnit;
-import cryon.Features.ConsumeItemCharge;
-import cryon.Features.CryonContent;
-import cryon.Features.FluxShieldRenderer;
-import cryon.Features.FluxShieldShader;
+import cryon.Features.*;
 import cryon.Fx.CryonFx;
 import cryon.Generator.CryonPlanetGenerator;
 import cryon.Injector.DeuteriumReactorInjector;
@@ -27,6 +24,7 @@ import cryon.TechTree.ModPlanetTechTree;
 import cryon.Type.*;
 import cryon.Type.Constructor.*;
 import mindustry.Vars;
+import mindustry.ai.types.BuilderAI;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -37,6 +35,7 @@ import mindustry.content.TechTree;
 import mindustry.content.TechTree.TechNode;
 import mindustry.mod.*;
 import mindustry.type.*;
+import mindustry.type.weapons.RepairBeamWeapon;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
 import mindustry.world.meta.*;
@@ -62,6 +61,7 @@ import static arc.graphics.g2d.Lines.stroke;
 import static arc.math.Angles.randLenVectors;
 import static arc.math.Mathf.rand;
 import static arc.scene.actions.Actions.color;
+import static mindustry.Vars.tilePayload;
 import static mindustry.type.ItemStack.*;
 import static mindustry.world.meta.StatValues.ammo;
 
@@ -103,6 +103,7 @@ public class CryonJavaMod extends Mod {
     public static StackRouter stackRouter;
     public static WindTurbine windTurbine;
 
+    public static UnitType exotic;
     // ══════════════════════════════════════════════════════════════
     //  loadContent
     // ══════════════════════════════════════════════════════════════
@@ -835,7 +836,6 @@ public class CryonJavaMod extends Mod {
                         Items.surgeAlloy, 150,
                         Items.phaseFabric, 600,
                         CryonContent.item("aluminum"), 550
-
                 ));
             }
         };
@@ -978,6 +978,70 @@ public class CryonJavaMod extends Mod {
                     CryonItems.ferrum, 150
             ));
         }};
+        exotic = new UnitType("exotic") {{
+            constructor = PayloadUnit::create;   // 运货关键
+
+            flying = true;
+            health = 600f;
+            armor = 5f;
+            speed = 2.6f;
+            rotateSpeed = 6f;
+            hitSize = 18f;
+            itemCapacity = 60;
+            buildSpeed = 2.2f;
+            buildBeamOffset = 5.5f;
+
+            targetAir = true;
+            targetGround = true;
+            circleTarget = false;
+            faceTarget = true;
+            lowAltitude = true;
+            aiController = BuilderAI::new;
+            mineTier = 3;
+            mineSpeed = 5f;
+            mineItems = Seq.with(
+                    CryonContent.item("aluminum"),
+                    CryonContent.item("crystal-sand"),
+                    CryonContent.item("magnesium"),
+                    CryonContent.item("dry-ice"),
+                    Items.titanium,
+                    Items.graphite,
+                    CryonContent.item("nickel"),
+                    CryonContent.item("salt"),
+                    Items.scrap
+            );
+
+            payloadCapacity = (2 * 2) * tilePayload;
+
+            engineSize = 0f;
+            engines.add(new UnitEngine(0f, -10f, 5.2f, -90f));
+
+            weapons.add(
+                    new Weapon("cryon-exotic-gun") {{
+                        mirror = true; reload = 6f; x = 10f; y = 3f;
+                        shootCone = 10f; inaccuracy = 2f;
+                        bullet = new BasicBulletType(8f, 12f) {{
+                            lifetime = 20f;
+                            collidesAir = true; collidesGround = true;
+                            healPercent = 6f; collidesTeam = true;
+                            homingPower = 0.1f; homingRange = 60f;
+                            width = 5f; height = 9f;
+                            backColor = Color.valueOf("b6ffb0");
+                            frontColor = Color.white;
+                            trailColor = Color.valueOf("7dffa0");
+                            trailWidth = 1.8f; trailLength = 5;
+                            shootEffect = Fx.none;
+                            hitEffect = Fx.hitSquaresColor;
+                            despawnEffect = Fx.hitSquaresColor;
+                        }};
+                    }},
+                    new RepairBeamWeapon("cryon-exotic-repair") {{
+                        x = 6f; y = -4f; shootY = 6f;
+                        beamWidth = 0.9f; mirror = true; repairSpeed = 0.9f;
+                        bullet = new BulletType() {{ maxRange = 90f; }};
+                    }}
+            );
+        }};
         OblivionUnit.load();
         DestroyerUnit.load();
     }
@@ -988,6 +1052,7 @@ public class CryonJavaMod extends Mod {
     @Override
     public void init() {
         CryonSectors.load();
+        CrossModSupport.install();
         Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
         if(exist == null){
             Mods.LoadedMod self = Vars.mods.locateMod("cryon");
@@ -1484,10 +1549,11 @@ public class CryonJavaMod extends Mod {
         }
         if (umbra != null) {
             umbra.abilities.add(new SafeFluxBarrierAbility(50f, 100f, 20f,4,45f,600));
+
         }
         if (CryonContent.unit("vain") != null) {
             ReflectShieldAbility weakShield = new ReflectShieldAbility();
-            weakShield.reflectRadius = 50f;
+            weakShield.reflectRadius = 80f;
             weakShield.reflectMaxDamage = 800f;
             weakShield.shieldCooldown = 420f;
             weakShield.reflectAngleMin = 100f;
@@ -1497,10 +1563,11 @@ public class CryonJavaMod extends Mod {
         }
         if (CryonContent.unit("roche") != null) {
             ReflectShieldAbility hugeShield = new ReflectShieldAbility();
-            hugeShield.reflectRadius = 160f;       // 判定范围巨大，很难绕开
-            hugeShield.reflectMaxDamage = 25000f;  // 承受上限极高，非常抗打
+            hugeShield.reflectRadius = 160f;
+            hugeShield.reflectMaxDamage = 25000f;
             hugeShield.shieldCooldown = 120f;
-            hugeShield.reflectAngleMin = 150f;     // 反弹角度集中，弹道更容易打回敌方主力方向
+            hugeShield.reflectAngleMin = 150f;
+
             hugeShield.reflectAngleMax = 210f;
 
             CryonContent.unit("roche").abilities.add(hugeShield);
@@ -1542,6 +1609,7 @@ public class CryonJavaMod extends Mod {
         });
         Events.run(Trigger.draw, () -> {
             FluxShieldRenderer.drawFluxShields();
+            ReflectShieldRenderer.drawReflectShields();
         });
         // 添加渲染钩子 - 绘制链接
         Events.run(Trigger.draw, () -> {

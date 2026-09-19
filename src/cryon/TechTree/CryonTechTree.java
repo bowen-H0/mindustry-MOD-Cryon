@@ -11,8 +11,7 @@ import mindustry.type.*;
 import mindustry.world.Block;
 import mindustry.world.blocks.storage.CoreBlock;
 
-import static mindustry.Vars.schematics;
-import static mindustry.Vars.universe;
+import static mindustry.Vars.*;
 
 public class CryonTechTree extends ModPlanetTechTree {
 
@@ -42,7 +41,6 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.ITEM, "sodium", "salt");
         addAuto(Kind.ITEM, "cryo-alloy", "sodium");
-
 
 
 
@@ -320,6 +318,8 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.SECTOR, "baryon-bastion", "exclusion-zone");
         addAuto(Kind.SECTOR, "magnificent-rift", "cryon-sector-shattered-shoal");
         addAuto(Kind.SECTOR, "frost-highway", "magnificent-rift");
+        addAuto(Kind.SECTOR, "twilight-icefield", "magnificent-rift");
+        addAuto(Kind.SECTOR, "desolate-plain", "twilight-icefield");
 
 
         // ---- SECTOR 额外前提条件列表 ----

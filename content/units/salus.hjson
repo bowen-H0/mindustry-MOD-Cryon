@@ -115,10 +115,10 @@ weapons: [
     type: Weapon
     x: 8    
     y: 5
-    reload: 0          # 设为 0 实现无冷却一直照射
+    reload: 0
     rotate: false
     mirror: true       
-    alternate: false   # 关键：设置为 false，让左右两门副炮同时一起开火
+    alternate: false
     continuous: true   
     shootSound: beamMeltdown
     shoot: {
@@ -126,15 +126,12 @@ weapons: [
     }
     bullet: {
       type: ContinuousLaserBulletType
-      damage: 8        # 因为变成了每帧都在无缝滋水的绝对持续伤害，适当降低单帧伤害以平衡秒伤
+      damage: 2
       length: 130      
       width: 3         
-      lifetime: 10     # 极短的生存周期配合 0 冷却，可以死死粘在机体上无缝延伸
-      # 移除所有燃烧与熔化属性，变为纯粹的高能粒子切割
       incendChance: 0
       incendSpread: 0
       incendAmount: 0
-      # 视觉效果全面翻新：由内而外的纯净亮蓝色与烈焰白
       colors: [8ca9f4, 5c7cf2, ffffff]
     }
   }

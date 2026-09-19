@@ -117,7 +117,7 @@ weapons: [
     y: 5
     reload: 0
     rotate: false
-    mirror: true       
+    mirror: true
     alternate: false
     continuous: true   
     shootSound: beamMeltdown
@@ -126,10 +126,9 @@ weapons: [
     }
     bullet: {
       type: ContinuousLaserBulletType
-      damage: 18
+      damage: 5
       length: 160      
       width: 5         
-      lifetime: 10
       incendChance: 0
       incendSpread: 0
       incendAmount: 0

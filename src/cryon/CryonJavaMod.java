@@ -1020,9 +1020,9 @@ public class CryonJavaMod extends Mod {
 
             weapons.add(
                     new Weapon("cryon-exotic-gun") {{
-                        mirror = true; reload = 6f; x = 10f; y = 3f;
+                        mirror = true; reload = 6f; x = 4f; y = 3f;
                         shootCone = 10f; inaccuracy = 2f;
-                        bullet = new BasicBulletType(8f, 12f) {{
+                        bullet = new BasicBulletType(8f, 6f) {{
                             lifetime = 20f;
                             collidesAir = true; collidesGround = true;
                             healPercent = 6f; collidesTeam = true;
@@ -1057,7 +1057,7 @@ public class CryonJavaMod extends Mod {
             hitSize = 36f;
             itemCapacity = 200;
             buildSpeed = 4.5f;
-            buildBeamOffset = 10f;
+            buildBeamOffset = 4f;
 
             targetAir = true;
             targetGround = true;
@@ -1079,14 +1079,14 @@ public class CryonJavaMod extends Mod {
                     CryonContent.item("salt"),
                     Items.scrap
             );
-
+            mineBeamOffset = 4f;
             payloadCapacity = (3 * 3) * tilePayload;   // exotic 是 2x2，这里 3x3
 
             engineSize = 0f;
             engines.add(
-                    new UnitEngine(0f, -20f, 9f, -90f),
-                    new UnitEngine(-12f, -16f, 5f, -90f),
-                    new UnitEngine(12f, -16f, 5f, -90f)
+                    new UnitEngine(0f, -22f, 9f, -90f),
+                    new UnitEngine(-12f, -18f, 5f, -90f),
+                    new UnitEngine(12f, -18f, 5f, -90f)
             );
 
             weapons.add(
@@ -1095,7 +1095,7 @@ public class CryonJavaMod extends Mod {
                         mirror = false;
                         rotate = false;          // 固定朝前,靠机身转向瞄准
                         x = 0f;
-                        y = 8f;
+                        y = 4f;
                         shootY = 12f;
                         reload = 45f;
                         shootCone = 8f;
@@ -1110,7 +1110,7 @@ public class CryonJavaMod extends Mod {
                             shotDelay = 6f;
                         }};
 
-                        bullet = new LaserBulletType(220f) {{
+                        bullet = new LaserBulletType(20f) {{
                             length = 320f;
                             width = 26f;
                             lifetime = 22f;
@@ -1136,20 +1136,17 @@ public class CryonJavaMod extends Mod {
                     }}
             );
         }};
-        // 超长蓄力的充能特效：持续时间要和 firstShotDelay 一致
-        Effect lagrangeCharge = new Effect(300f, 200f, e -> {
+        Effect lagrangeCharge = new Effect(60f, 200f, e -> {
             Color c = Color.valueOf("b6ffb0");
 
-            // 炮口中心的能量球，随蓄力逐渐变大
             Draw.color(c, Color.white, e.fin());
             Fill.circle(e.x, e.y, 4f + 18f * e.fin() * e.fin());
 
-            // 收缩的能量环
             Draw.color(c);
             stroke(1f + 3f * e.fin());
             Lines.circle(e.x, e.y, 60f * e.fout());
             Lines.circle(e.x, e.y, 30f * e.fout() * e.fout());
-            // 向中心汇聚的光刺
+
             randLenVectors(e.id, 14, 90f * e.fout(), (x, y) -> {
                 Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y) + 180f, 4f + 10f * e.fin());
             });
@@ -1181,6 +1178,7 @@ public class CryonJavaMod extends Mod {
             aiController = BuilderAI::new;
 
             mineTier = 5;
+            mineBeamOffset = 16f;
             mineSpeed = 14f;
             mineItems = Seq.with(
                     CryonContent.item("aluminum"),
@@ -1197,14 +1195,15 @@ public class CryonJavaMod extends Mod {
             payloadCapacity = (4 * 4) * tilePayload;   // libration 3x3 -> 4x4
 
             engineSize = 0f;
+            float posY=-42;
             engines.add(
-                    new UnitEngine(0f, -34f, 14f, -90f),
-                    new UnitEngine(-20f, -28f, 8f, -90f),
-                    new UnitEngine(20f, -28f, 8f, -90f)
+                    new UnitEngine(0f, posY, 14f, -90f),
+                    new UnitEngine(-20f, posY-4, 8f, -90f),
+                    new UnitEngine(20f, posY-4, 8f, -90f)
             );
             engines.add(
-                    new UnitEngine(-32f, -18f, 6f, -90f),
-                    new UnitEngine(32f, -18f, 6f, -90f)
+                    new UnitEngine(-32f, posY+2, 6f, -90f),
+                    new UnitEngine(32f, posY+2, 6f, -90f)
             );
 
             weapons.add(
@@ -1222,15 +1221,14 @@ public class CryonJavaMod extends Mod {
                         shake = 10f;
                         shootSound = Sounds.shootCorvus;
 
-                        // 超长蓄力：5 秒
                         shoot = new ShootPattern() {{
                             shots = 1;
-                            firstShotDelay = 300f;
+                            firstShotDelay = 60f;
                         }};
                         shootStatus = StatusEffects.unmoving;
-                        shootStatusDuration = 300f + 60f;
+                        shootStatusDuration = 60f + 60f;
 
-                        bullet = new LaserBulletType(4000f) {{
+                        bullet = new LaserBulletType(200f) {{
                             length = 700f;
                             width = 90f;
                             lifetime = 60f;

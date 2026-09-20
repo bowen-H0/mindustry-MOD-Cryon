@@ -96,6 +96,9 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "core-pioneer", null); // 根节点,单独处理
         addAuto(Kind.BLOCK, "core-outpost", "core-pioneer");
+        addAuto(Kind.BLOCK, "core-depth", "core-outpost");
+
+
 
 
         addAuto(Kind.BLOCK, "cryo-conduit", "core-pioneer");
@@ -329,8 +332,11 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.SECTOR, "baryon-bastion", "exclusion-zone");
         addAuto(Kind.SECTOR, "magnificent-rift", "cryon-sector-shattered-shoal");
         addAuto(Kind.SECTOR, "frost-highway", "magnificent-rift");
+        addAuto(Kind.SECTOR, "industrial-ruins", "frost-highway");
+
         addAuto(Kind.SECTOR, "twilight-icefield", "magnificent-rift");
         addAuto(Kind.SECTOR, "desolate-plain", "twilight-icefield");
+
 
 
         // ---- SECTOR 额外前提条件列表 ----

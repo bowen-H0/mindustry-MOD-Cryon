@@ -1,5 +1,5 @@
 #the mod name as displayed in-game
-displayName: "Cryon"
+displayName: "Project Farstar (Cryon)"
 
 #the internal name of your mod
 name: "cryon"
@@ -13,27 +13,50 @@ main: "cryon.CryonJavaMod"
 #the mod description as seen in the mod dialog
 
 description: '''
-[#7ec8e3]Cryon[] adds a brand new frozen planet to the game.
+[#7ec8e3]Project Farstar[] (formerly [#7ec8e3]Cryon Mod[]) is an expansion that takes you to brand new planets.
 
-You can carry resources to other sectors, just like in [accent]Serpulo[].
+The first planet, [#7ec8e3]Cryon[], is a frozen world. You can carry resources to other sectors, just like in [accent]Serpulo[].
 
 Over [accent]100+[] new pieces of content! Including new ores, new machines, and new units.
 
-Current development progress: [accent]T1 ~ T3 tech[] is complete. The campaign is currently being tested.
+[accent]Development progress:[]
+- [#7ec8e3]Cryon[]: main campaign is [accent]complete[], and more content is still in development.
+- [accent]Aravis[]: new planet, [accent]in development[].
+
 
 [accent]Thanks for playing this mod!
 Feel free to report issues or suggest ideas: [lightgray]github bowen-H0[]
 
 Supported languages: [cyan]English[] / [cyan]中文[]
 
+[accent]Note:[] This mod was renamed from "Cryon Mod" to "Project Farstar". Your saves are safe.
+
+[#7ec8e3]远星计划[]（原名 [#7ec8e3]Cryon Mod[]）是一个带你前往全新星球的拓展模组。
+
+第一颗星球 [#7ec8e3]Cryon[] 是一个冰封世界。和 [accent]塞普罗[] 一样,你可以把资源带到其他区块。
+
+超过 [accent]100+[] 种全新内容!包括新的矿石、新的机器和新的单位。
+
+[accent]开发进度:[]
+- [#7ec8e3]Cryon[]:主线战役[accent]已完成[],更多内容仍在开发中。
+- [accent]Aravis[]:全新星球,[accent]开发中[]。
+
+
+[accent]感谢你游玩本模组!
+欢迎反馈问题或提出建议:[lightgray]github bowen-H0[]
+
+支持语言:[cyan]English[] / [cyan]中文[]
+
+[accent]注意:[]本模组已从 "Cryon Mod" 更名为 "Project Farstar"。你的存档不会受到影响。
+
+
 Contributors:
 LSK133
 Gary
 
-This mod is currently in testing.
 '''
 #the mod version
-version: 23.1.0
+version: 23.2.0
 #the minimum game build required to run this mod
 minGameVersion: 160
 

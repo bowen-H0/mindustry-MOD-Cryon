@@ -41,7 +41,7 @@ weapons: [
 
     bullet: {
       type: FlakBulletType
-      damage: 10
+      damage: 15
       speed: 6
       lifetime: 12
       width: 12
@@ -77,7 +77,7 @@ weapons: [
         lightningCone: 15
         lightningLength: 10
         lightningLengthRand: 4
-        damage: 5
+        damage: 2
       }
       bulletInterval: 20
       intervalBullets: 1
@@ -86,7 +86,7 @@ weapons: [
 
       fragBullet: {
         type: LaserBulletType
-        damage: 5
+        damage: 2
         width: 12
         length: 50
         lifetime: 14

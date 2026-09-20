@@ -1,0 +1,157 @@
+type: flying
+flying: true
+name: "凌际"
+health: 680
+fogRadius: 0
+controller: builderAI
+armor: 9
+speed: 3.2
+rotateSpeed: 6
+hitSize: 20
+itemCapacity: 120
+buildSpeed: 4.5
+buildBeamOffset: 4
+targetAir: true
+targetGround: true
+circleTarget: false
+faceTarget: true
+lowAltitude: false
+mineItems: [aluminum, crystal-sand, magnesium, dry-ice, titanium, graphite, nickel, salt, scrap, thorium]
+
+abilities: [
+  {
+    type: ForceFieldAbility
+    radius: 60
+    regen: 0.8
+    max: 300
+    cooldown: 360
+  }
+  {
+    type: EnergyFieldAbility
+    damage: 25
+    reload: 60
+    range: 110
+    healPercent: 4
+    hitUnits: true
+    hitBuildings: true
+    targetGround: true
+    targetAir: true
+    maxTargets: 30
+    status: electrified
+    statusDuration: 360
+    color: 6fe88a
+  }
+  {
+    type: ShieldRegenFieldAbility
+    amount: 25
+    max: 200
+    reload: 120
+    range: 100
+  }
+]
+
+mineTier: 4
+mineSpeed: 5.5
+engineSize: 0
+engines: [
+  { x: 0, y: -12, radius: 4.5, rotation: -90 }
+  { x: 8, y: -9, radius: 3.0, rotation: -90 }
+  { x: -8, y: -9, radius: 3.0, rotation: -90 }
+]
+
+weapons: [
+  {
+    name: "transliminal-pulse"
+    mirror: true
+    alternate: true
+    rotate: false
+    reload: 6
+    x: 6
+    y: 2
+    shootSound: none
+    bullet: {
+      type: BasicBulletType
+      damage: 8
+      speed: 9
+      lifetime: 35
+      collidesAir: true
+      collidesGround: true
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 3
+      width: 3
+      height: 14
+      backColor: a3feaf
+      frontColor: ffffff
+      healPercent: 6
+      collidesTeam: true
+      shootEffect: none
+      trailWidth: 1.5
+      trailLength: 6
+      trailColor: a3feaf
+      buildingDamageMultiplier: 0.1
+    }
+  }
+  {
+    name: "transliminal-rift"
+    mirror: false
+    rotate: true
+    rotateSpeed: 12
+    x: 0
+    y: 6
+    reload: 90
+    recoil: 4
+    shootCone: 360
+    shootSound: none
+    shoot: {
+      shots: 3
+      shotDelay: 8
+    }
+    bullet: {
+      type: BasicBulletType
+      damage: 5
+      splashDamage: 20
+      splashDamageRadius: 56
+      speed: 4.5
+      lifetime: 70
+      width: 16
+      height: 16
+      shrinkY: 0
+      backColor: 6fe88a
+      frontColor: ffffff
+      collidesAir: true
+      collidesGround: true
+      homingPower: 0.06
+      homingRange: 140
+      status: electrified
+      statusDuration: 180
+      trailWidth: 4
+      trailLength: 14
+      trailColor: 6fe88a
+      buildingDamageMultiplier: 0.1
+
+      lightning: 2
+      lightningLength: 12
+      lightningDamage: 8
+      lightningColor: 6fe88a
+      healPercent: 10
+      fragBullets: 4
+      fragRandomSpread: 360
+      fragBullet: {
+        type: BasicBulletType
+        damage: 5
+        speed: 5
+        lifetime: 20
+        width: 3
+        height: 10
+        pierce: true
+        pierceCap: 2
+        backColor: a3feaf
+        frontColor: ffffff
+        collidesTeam: true
+        healPercent: 3
+        buildingDamageMultiplier: 0.1
+      }
+    }
+  }
+]

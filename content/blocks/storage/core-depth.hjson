@@ -1,0 +1,17 @@
+type: CoreBlock
+name: "纵深核心"
+description: "终极核心。"
+size: 6
+health: 7500
+armor: 6
+itemCapacity: 12000
+unitType: transliminal
+unitCapModifier: 100
+category: effect
+isFirstTier: false
+requirements: [
+	titanium/4000
+	nickel/1500
+	silicon/2000
+	graphite/1500
+]

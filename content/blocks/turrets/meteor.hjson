@@ -4,7 +4,7 @@ description: "专精防空炮塔。"
 size: 4
 health: 900
 range: 320
-reload: 90
+reload: 30
 inaccuracy: 0
 targetAir: true
 targetGround: false

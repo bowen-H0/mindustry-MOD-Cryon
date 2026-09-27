@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "钛水冷凝机"
 description: "制取冷冻液。"
 size: 2

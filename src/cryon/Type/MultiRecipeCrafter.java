@@ -2,6 +2,9 @@ package cryon.Type;
 
 import arc.graphics.g2d.*;
 import arc.math.*;
+import arc.scene.style.TextureRegionDrawable;
+import arc.scene.ui.ImageButton;
+import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
@@ -22,10 +25,9 @@ import static mindustry.Vars.*;
  *
  * 支持多配方的通用工厂：
  * - 面板（database/stats）里会列出全部配方的输入输出，方便玩家查阅。
- * - 不提供悬浮点选 UI，配方完全靠"喂什么原料"自动判定、自动切换。
- * - 只要工厂当前存货为空（items.empty()），喂入任意一种被配方使用的物品，
- *   就会自动切换/锁定到对应配方；存货没清空前不会切换到别的配方，
- *   避免不同配方的原料互相污染。
+ * - 配方通过点击方块弹出的配置 UI 手动选择（不再靠喂料自动判定）。
+ * - 未选择配方前（currentRecipe == -1），不接受任何物品输入。
+ * - 配方一旦选定就一直锁定，直到玩家在配置 UI 里手动切换到另一个配方。
  */
 public class MultiRecipeCrafter extends GenericCrafter {
 
@@ -37,12 +39,21 @@ public class MultiRecipeCrafter extends GenericCrafter {
 
     public MultiRecipeCrafter(String name) {
         super(name);
-        configurable = false; //不需要玩家手动选配方,不会弹悬浮UI
+        configurable = true;   // 改动：需要弹出配置 UI，必须允许配置
+        saveConfig = true;     // 存档要记住玩家选的配方
     }
 
     @Override
     public void init() {
-        //动态消耗：当前配方需要什么，就消耗什么
+        config(Integer.class, (MultiRecipeCrafterBuild build, Integer value) -> {
+            if (value == null) return;
+            if (value != -1 && (value < 0 || value >= recipes.size)) return;
+            if (build.currentRecipe != value) {
+                build.currentRecipe = value;
+                build.progress = 0f;
+            }
+        });
+
         consume(consItemDyn = new ConsumeItemDynamic((MultiRecipeCrafterBuild build) ->
                 build.currentRecipe == -1 || build.recipe().itemReq == null
                         ? ItemStack.empty
@@ -54,6 +65,13 @@ public class MultiRecipeCrafter extends GenericCrafter {
                         : build.recipe().liquidReq));
 
         super.init();
+    }
+
+    /** 配方的代表图标：优先用第一个产出物品，没有产出就用第一个输入物品 */
+    protected Item representativeItem(CraftRecipe r) {
+        if (r.outputItems != null && r.outputItems.length > 0) return r.outputItems[0].item;
+        if (r.itemReq != null && r.itemReq.length > 0) return r.itemReq[0].item;
+        return null;
     }
 
     /** 面板里展示全部配方的输入输出，替代基类只显示单一 outputItems 的逻辑 */
@@ -105,37 +123,23 @@ public class MultiRecipeCrafter extends GenericCrafter {
     }
 
     public class MultiRecipeCrafterBuild extends GenericCrafterBuild {
-        /** -1 表示尚未锁定配方,等待原料输入来判定 */
+        /** -1 表示尚未选择配方，此时不接受任何物品输入 */
         public int currentRecipe = -1;
 
         public CraftRecipe recipe() {
             return currentRecipe == -1 ? null : recipes.get(currentRecipe);
         }
 
-        /** 根据物品反查它属于哪个配方的输入 */
-        protected int findRecipeFor(Item item) {
-            return recipes.indexOf(r -> r.itemReq != null && Structs.contains(r.itemReq, s -> s.item == item));
-        }
-
         @Override
         public boolean acceptItem(Building source, Item item) {
-            int match = findRecipeFor(item);
-            if (match == -1) return false; //没有任何配方用得到这个物品
+            // 改动：未选配方前，一律拒绝任何物品
+            if (currentRecipe == -1) return false;
 
-            if (currentRecipe == -1) {
-                //空闲状态,直接锁定这个配方
-                if (!items.empty()) return false; //理论上不该出现:没锁定配方但有残留物品
-                currentRecipe = match;
-            } else if (currentRecipe != match) {
-                //喂的是别的配方的原料
-                if (items.empty()) {
-                    //当前配方已经清空,允许切换
-                    currentRecipe = match;
-                    progress = 0f;
-                } else {
-                    return false; //拒绝混料
-                }
-            }
+            CraftRecipe r = recipe();
+            if (r.itemReq == null) return false;
+
+            boolean usedByRecipe = Structs.contains(r.itemReq, s -> s.item == item);
+            if (!usedByRecipe) return false; // 只接受当前锁定配方需要的物品
 
             return items.get(item) < getMaximumAccepted(item);
         }
@@ -195,10 +199,8 @@ public class MultiRecipeCrafter extends GenericCrafter {
 
             dumpOutputs();
 
-            //工厂彻底清空后,解除配方锁定,等待下一次原料自动判定
-            if (currentRecipe != -1 && items.empty() && (liquids == null || liquids.currentAmount() <= 0.0001f)) {
-                currentRecipe = -1;
-            }
+            // 改动：去掉"清空存货就自动解锁配方"的逻辑
+            // 配方现在完全由玩家在配置 UI 里手动决定，不再被库存状态自动重置
         }
 
         @Override
@@ -249,12 +251,49 @@ public class MultiRecipeCrafter extends GenericCrafter {
             }
         }
 
+        // 改动：新增配置面板，点击方块后弹出，展示每个配方的代表图标供玩家选择
+        @Override
+        public void buildConfiguration(Table table) {
+            if (recipes.isEmpty()) return;
+
+            table.table(Styles.black6, t -> {
+                t.defaults().size(42f).pad(2f);
+
+                int cols = Math.max(1, (int) Math.sqrt(recipes.size) + 1);
+                int i = 0;
+                for (CraftRecipe r : recipes) {
+                    int index = i;
+                    Item icon = representativeItem(r);
+
+                    ImageButton b = t.button(
+                            icon == null ? Icon.cancel : new TextureRegionDrawable(icon.uiIcon),
+                            Styles.clearNoneTogglei,
+                            32f,
+                            () -> configure(index)
+                    ).get();
+                    b.update(() -> b.setChecked(currentRecipe == index));
+
+                    i++;
+                    if (i % cols == 0) t.row();
+                }
+            });
+        }
+
         @Override
         public Object senseObject(LAccess sensor) {
             if (sensor == LAccess.config) return currentRecipe == -1 ? null : recipe().outputItems != null ? recipe().outputItems[0].item : null;
             return super.senseObject(sensor);
         }
 
+
+        @Override
+        public Object config() {
+            return currentRecipe;
+        }
+        @Override
+        public byte version() {
+            return 1;
+        }
         @Override
         public void write(Writes write) {
             super.write(write);
@@ -264,7 +303,11 @@ public class MultiRecipeCrafter extends GenericCrafter {
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            currentRecipe = read.s();
+            if (revision >= 1) {
+                currentRecipe = read.s();
+            } else {
+                currentRecipe = -1;
+            }
         }
     }
 

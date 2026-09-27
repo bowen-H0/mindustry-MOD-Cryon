@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "氮气分离器"
 description: "消耗大量电力，从大气分离出氮气。"
 size: 2

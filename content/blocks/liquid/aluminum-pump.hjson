@@ -3,7 +3,7 @@ name: "aluminum-pump"
 description: "xxx"
 size: 1
 health: 100
-category: production
+category: liquid
 hasPower: false
 hasLiquids: true
 hasItems: false

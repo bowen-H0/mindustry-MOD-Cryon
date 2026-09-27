@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "碳捕合器"
 description: "利用金属钠捕捉空气中的二氧化碳，通过反应使碳稳定生成石墨，完成碳的固化。"
 size: 2

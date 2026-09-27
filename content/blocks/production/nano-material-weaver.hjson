@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "纳米编织器"
 description: "编织出纳米材料。"
 size: 2

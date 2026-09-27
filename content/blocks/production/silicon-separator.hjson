@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "硅分离器"
 description: "消耗电力，从晶砂提取出硅"
 size: 2

@@ -28,7 +28,7 @@ public class CryonItems{
     public static Item aluminum, magnesium, titanium, scrap, silicon,
             graphite, quartz, salt, sodium, crystalSand,
             dryIce, cryoAlloy, farstarAlloy, nickel, neutronite,
-            phaseFabric, surgeAlloy, nanoMaterial, ferrum;
+            phaseFabric, surgeAlloy, nanoMaterial, ferrum,steel,hardSteel;
 
     // ================== 白名单 ==================
 
@@ -99,6 +99,8 @@ public class CryonItems{
 
         // ---- Aravis 本星物品 ----
         ferrum = item("ferrum", "8C8C8C", 1, 0f, 0f, 0f, 0f);
+        steel = item("steel", "a7a9ae", 4, 0f, 0f, 0f, 0f);
+        hardSteel=item("hard-steel", "71797e", 4, 0f, 0f, 0f, 0f);
 
         // ================== 白名单登记 ==================
         planet("aluminum", "cryon-cryon");
@@ -121,6 +123,9 @@ public class CryonItems{
         planet("nano-material", "cryon-cryon");
 
         planet("ferrum", "cryon-aravis");
+        planet("steel", "cryon-aravis");
+        planet("hard-steel", "cryon-aravis");
+
 
     }
 

@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "熔盐电解槽"
 description: "通过电解熔融盐生成钠和氯气。"
 size: 3

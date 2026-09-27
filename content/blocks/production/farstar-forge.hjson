@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "远星合金制造厂"
 description: "制造出远星合金。"
 size: 3
@@ -26,7 +26,7 @@ drawer: {
     }
     {
       type: DrawFlame
-      flameColor: "ffef99"
+      flameColor: "99d1ff"
     }
   ]
 }

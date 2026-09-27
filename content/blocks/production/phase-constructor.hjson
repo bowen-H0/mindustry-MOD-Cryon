@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "相位构造器"
 description: "消耗大量电力，制造出相织布。"
 size: 3

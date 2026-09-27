@@ -9,7 +9,7 @@ missileAccelTime: 15
 lifetime: 160
 health: 8
 hitSize: 5
-rotateSpeed: 3.2
+rotateSpeed: 6.2
 autoFindTarget: true
 homingDelay: 6
 faceTarget: true

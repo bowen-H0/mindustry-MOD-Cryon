@@ -1,4 +1,4 @@
-type: Separator
+//type: Separator
 name: "废料热裂解机"
 description: "消耗电力将废料进行分离。"
 size: 3

@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "干冰升华器"
 description: "产生冷却液。"
 size: 2

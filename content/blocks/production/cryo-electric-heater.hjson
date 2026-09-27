@@ -1,4 +1,4 @@
-type: HeatProducer
+//type: HeatProducer
 name: "凝化电热制机"
 description: "消耗电生产热量。"
 size: 2

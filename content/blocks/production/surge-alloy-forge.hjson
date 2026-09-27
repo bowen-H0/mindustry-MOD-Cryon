@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "巨浪合金制造厂"
 description: "制造出巨浪合金。"
 size: 3
@@ -28,7 +28,7 @@ drawer: {
     }
     {
       type: DrawFlame
-      flameColor: "99d1ff"
+      flameColor: "ffef99"
     }
   ]
 }

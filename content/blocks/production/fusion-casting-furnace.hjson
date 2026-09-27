@@ -1,4 +1,4 @@
-type: HeatCrafter
+//type: HeatCrafter
 name: "熔合铸造炉"
 description: "消耗石墨、石英与钠，在高温下熔铸出克莱合金。"
 size: 2

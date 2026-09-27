@@ -1,4 +1,4 @@
-type: GenericCrafter
+//type: GenericCrafter
 name: "镁能转化炉"
 description: "通过电力催化镁与干冰的反应，将其还原为石墨。"
 size: 2
@@ -18,3 +18,15 @@ requirements: [
   magnesium/15
   silicon/30
 ]
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawFlame
+      flameColor: "ffef99"
+    }
+  ]
+}

@@ -212,4 +212,29 @@ public class CryonFx {
         Draw.reset();
         Drawf.light(e.x, e.y, R * 3f * (1f - Math.abs(e.fin() - split) * 0.8f), back, 0.9f * e.fout());
     });
+    // 伽马瓦解射线的 3 秒蓄力特效(红色、向炮口汇聚)
+    public static final Effect gammaCharge = new Effect(190f, 700f, e -> {
+        Color c = Color.valueOf("ff2a2a");
+        float fin = e.fin(), fout = e.fout();
+
+        // 中心能量球,越蓄越大、越白
+        Draw.color(c, Color.white, fin * fin);
+        Fill.circle(e.x, e.y, 6f + 40f * fin * fin);
+        Draw.color(Color.white);
+        Fill.circle(e.x, e.y, 3f + 18f * fin * fin * fin);
+
+        // 两圈向内收缩的光环
+        Draw.color(c);
+        stroke(1.5f + 5f * fin);
+        Lines.circle(e.x, e.y, 140f * fout);
+        Lines.circle(e.x, e.y, 70f * fout * fout);
+
+        // 四周向中心汇聚的光刺
+        randLenVectors(e.id, 24, 200f * fout, (x, y) -> {
+            Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y) + 180f, 6f + 20f * fin);
+        });
+
+        Drawf.light(e.x, e.y, 100f + 260f * fin, c, 0.9f * fin);
+        Draw.reset();
+    }).followParent(true).rotWithParent(true);
 }

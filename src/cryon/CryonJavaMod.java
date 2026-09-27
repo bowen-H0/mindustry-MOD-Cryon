@@ -2,10 +2,10 @@ package cryon;
 
 import arc.*;
 import arc.files.Fi;
+import arc.graphics.Blending;
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Fill;
-import arc.graphics.g2d.Lines;
+import arc.graphics.g2d.*;
+import arc.scene.style.TextureRegionDrawable;
 import arc.util.*;
 import arc.struct.Seq;
 import cryon.Content.CryonItems;
@@ -25,9 +25,11 @@ import cryon.Type.*;
 import cryon.Type.Constructor.*;
 import mindustry.Vars;
 import mindustry.ai.types.BuilderAI;
+import mindustry.ai.types.FlyingAI;
 import mindustry.content.*;
 import mindustry.ctype.Content;
 import mindustry.ctype.UnlockableContent;
+import mindustry.entities.abilities.ShieldRegenFieldAbility;
 import mindustry.game.EventType.*;
 import mindustry.content.TechTree.TechNode;
 import mindustry.mod.*;
@@ -35,6 +37,10 @@ import mindustry.type.*;
 import mindustry.type.weapons.RepairBeamWeapon;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
+import mindustry.world.blocks.heat.HeatConductor;
+import mindustry.world.blocks.heat.HeatProducer;
+import mindustry.world.blocks.payloads.Constructor;
+import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.meta.*;
 import arc.math.*;
 import arc.struct.*;
@@ -59,6 +65,7 @@ import static arc.math.Angles.randLenVectors;
 import static arc.math.Mathf.rand;
 import static arc.scene.actions.Actions.color;
 import static mindustry.Vars.tilePayload;
+import static mindustry.graphics.Layer.plans;
 import static mindustry.type.ItemStack.*;
 import static mindustry.world.meta.StatValues.ammo;
 
@@ -99,10 +106,14 @@ public class CryonJavaMod extends Mod {
 
     public static StackRouter stackRouter;
     public static WindTurbine windTurbine;
+    public static MultiRecipeCrafter metallurgicalFurnace;
+
+
 
     public static UnitType exotic;
     public static UnitType libration;
     public static UnitType lagrange;
+    public static UnitType roche;
 
 
 
@@ -112,6 +123,7 @@ public class CryonJavaMod extends Mod {
     @Override
     public void loadContent() {
         CryonItems.load();
+
 
         new Drill("melting-drill") {{ }};
         new Drill("shattering-drill") {{ }};
@@ -245,60 +257,7 @@ public class CryonJavaMod extends Mod {
             buildVisibility = BuildVisibility.shown;
             absorbLasers=true;
         }};
-        cryoElectrolyzer = new GenericCrafter("cryo-electrolyzer"){{
 
-
-            size = 3;
-            health = 240;
-            craftTime = 60f;
-            rotate = true;
-            invertFlip = true;
-            group = BlockGroup.liquids;
-
-            itemCapacity = 0;
-            liquidCapacity = 30f;
-
-            consumeLiquid(Liquids.water, 2f);
-            consumePower(1.5f);
-
-            outputLiquids = LiquidStack.with(
-                    Liquids.hydrogen, 2f,
-                    Liquids.ozone, 1.2f
-            );
-            liquidOutputDirections = new int[]{1, 3};
-
-            ambientSound = Sounds.loopElectricHum;
-            ambientSoundVolume = 0.08f;
-
-            regionRotated1 = 3;
-
-            drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawLiquidTile(Liquids.water, 2f),
-                    new DrawBubbles(Color.valueOf("7693e3")){{
-                        sides = 10;
-                        recurrence = 3f;
-                        spread = 6;
-                        radius = 1.5f;
-                        amount = 20;
-                    }},
-                    new DrawRegion(),
-                    new DrawLiquidOutputs(),
-                    new DrawGlowRegion(){{
-                        alpha = 0.7f;
-                        color = Color.valueOf("c4bdf3");
-                        glowIntensity = 0.3f;
-                        glowScale = 6f;
-                    }}
-            );
-
-        }
-            @Override
-            public void init() {
-                super.init();
-                requirements(Category.crafting, with(CryonContent.item("aluminum"), 60, Items.silicon, 40, Items.graphite, 40));
-            }
-        };
         constructorDrill = new ConstructorDrill("constructor-drill") {{
             requirements(Category.production, new ItemStack[]{
                     new ItemStack(Items.phaseFabric, 20),
@@ -926,7 +885,7 @@ public class CryonJavaMod extends Mod {
                 ));
             }};
 
-        MultiRecipeCrafter metallurgicalFurnace = new MultiRecipeCrafter("metallurgical-furnace") {{
+        metallurgicalFurnace = new MultiRecipeCrafter("metallurgical-furnace") {{
             size = 2;
             health = 400;
             category = Category.crafting;
@@ -961,6 +920,26 @@ public class CryonJavaMod extends Mod {
                     },
                     30f
             ));
+            recipes.add(new CraftRecipe(
+                    new ItemStack[]{
+                            new ItemStack(Items.coal, 1),
+                            new ItemStack(CryonItems.ferrum, 3)
+                    },
+                    new ItemStack[]{
+                            new ItemStack(CryonItems.steel, 2)
+                    },
+                    60f
+            ));
+            recipes.add(new CraftRecipe(
+                    new ItemStack[]{
+                            new ItemStack(Items.coal, 2),
+                            new ItemStack(CryonItems.ferrum, 5)
+                    },
+                    new ItemStack[]{
+                            new ItemStack(CryonItems.hardSteel, 2)
+                    },
+                    120f
+            ));
 
             drawer = new DrawMulti(
                     new DrawDefault(),
@@ -980,7 +959,36 @@ public class CryonJavaMod extends Mod {
                     CryonItems.ferrum, 150
             ));
         }};
-        exotic = new UnitType("exotic") {{
+        //tank
+        new UnitType("buffer") {{ }};
+        new UnitType("guardian") {{ }};
+        new UnitType("peak") {{ }};
+        new UnitType("blaze") {{ }};
+        new UnitType("eternal") {{ }};
+        //mech
+        new UnitType("comet") {{ }};
+        new UnitType("bolide") {{ }};
+        new UnitType("umbra") {{ }};
+        new UnitType("sagitta") {{ }};
+        new UnitType("hydra") {{ }};
+        //legs
+        new UnitType("benignitas") {{ }};
+        new UnitType("salus") {{ }};
+        new UnitType("propugno") {{ }};
+        new UnitType("ratio") {{ }};
+        new UnitType("veritas") {{ }};
+        //air
+        new UnitType("littorina") {{ }};
+        new UnitType("natica") {{ }};
+        new UnitType("murex") {{ }};
+        new UnitType("charonia") {{ }};
+        new UnitType("syrinx") {{ }};
+        //air support
+        new UnitType("nadir") {{ }};
+
+        new UnitType("apex") {{ }};
+
+    exotic = new UnitType("exotic") {{
             constructor = PayloadUnit::create;   // 运货关键
 
             flying = true;
@@ -1255,6 +1263,260 @@ public class CryonJavaMod extends Mod {
                     }}
             );
         }};
+        new UnitType("vain") {{ }};
+        roche = new UnitType("roche") {{
+            constructor = UnitEntity::create;
+            aiController = FlyingAI::new;
+
+            flying = true;
+            health = 200000f;
+            armor = 26f;
+            speed = 0.55f;
+            rotateSpeed = 1.1f;
+            hitSize = 112f;
+            itemCapacity = 200;
+            targetAir = true;
+            targetGround = true;
+            faceTarget = true;
+            lowAltitude = true;
+            engineSize = 16f;
+            engineOffset = 80f;
+            engines.add(
+                    new UnitEngine( 56f, -42f, 16f, -90f),
+                    new UnitEngine(-56f, -42f, 16f, -90f)
+            );
+
+            ReflectShieldAbility hugeShield = new ReflectShieldAbility();
+            hugeShield.reflectRadius = 160f;
+            hugeShield.reflectMaxDamage = 25000f;
+            hugeShield.shieldCooldown = 120f;
+            hugeShield.reflectAngleMin = 150f;
+            hugeShield.reflectAngleMax = 210f;
+            abilities.add(hugeShield);
+            abilities.add(new ShieldRegenFieldAbility(
+                    1500f,
+                    40000f,
+                    60f,
+                    480f
+            ));
+            abilities.add(new RocheFieldAbility(
+                    600f,
+                    180f,
+                    420f
+            ));
+            weapons.add(new Weapon("cryon-roche-meltdown") {{
+                x = 0f;
+                y = 40f;
+                mirror = false;
+                rotate = false;
+                continuous = true;
+                parentizeEffects = true;
+                reload = 720f;
+                recoil = 0f;
+                shake = 6f;
+                shootY = 3f;
+                shoot.firstShotDelay = 180f;
+                chargeSound = Sounds.chargeCorvus;
+                shootSound = Sounds.shootMeltdown;
+                cooldownTime = 300f;
+
+                bullet = new ContinuousLaserBulletType(150f) {{
+                    length = 380f;
+                    width = 64f;
+                    lifetime = 300f;
+                    drawSize = 2000f;
+                    largeHit = true;
+                    shake = 4f;
+                    hitShake = 6f;
+                    hitColor = Color.valueOf("ff3030");
+                    hitEffect = Fx.hitMeltdown;
+                    despawnEffect = Fx.smokeCloud;
+                    smokeEffect = Fx.none;
+                    chargeEffect = CryonFx.gammaCharge;
+
+                    incendChance = 0.4f;
+                    incendSpread = 12f;
+                    incendAmount = 1;
+
+                    colors = new Color[]{
+                            Color.valueOf("ff0000").a(0.25f),
+                            Color.valueOf("ff2020").a(0.55f),
+                            Color.valueOf("ff6a6a"),
+                            Color.white
+                    };
+                }};
+
+                shootStatus = StatusEffects.slow;
+                shootStatusDuration = bullet.lifetime + shoot.firstShotDelay;
+            }});
+
+            // ---------- 5 组穿透机枪----------
+            float[][] mgPos = {{34f, 30f}, {44f, 22f}, {54f, 14f}, {64f, 6f}, {74f, -2f}};
+            for(float[] p : mgPos){
+                weapons.add(new Weapon("cryon-roche-mg") {{
+                    x = p[0];
+                    y = p[1];
+                    rotate = true;
+                    mirror = true;
+                    reload = 9f;
+                    recoil = 1.5f;
+                    shootY = 6f;
+                    bullet = new BasicBulletType(11f, 34f) {{
+                        lifetime = 26f;
+                        collidesAir = true;
+                        collidesGround = true;
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 4;
+                        width = 5f;
+                        height = 26f;
+                        backColor = Color.valueOf("b3202a");
+                        frontColor = Color.valueOf("ffd9d9");
+                        trailColor = Color.valueOf("ff5050");
+                        trailWidth = 2.2f;
+                        trailLength = 10;
+                        hitColor = Color.valueOf("ffb3b3");
+                        lightColor = Color.valueOf("ff5050");
+                        lightRadius = 26f;
+                        lightOpacity = 0.6f;
+                    }};
+                }});
+            }
+
+            // ---------- 一对赤红色轨道炮 ----------
+            Color railBack = Color.valueOf("ff1e3c");   // 赤红
+            Color railFront = Color.valueOf("ffe3e3");
+
+            weapons.add(new Weapon("cryon-roche-railgun") {{
+                x = 34f;
+                y = 10f;
+                rotate = true;
+                rotateSpeed = 3f;
+                mirror = true;
+                alternate = true;
+                reload = 180f;
+                recoil = 8f;
+                shake = 5f;
+                shootY = 16f;
+                cooldownTime = 120f;
+                shootSound = Sounds.shootForeshadow;
+
+                bullet = new RailBulletType() {{
+                    length = 760f;
+                    damage = 900f;
+                    pierceDamageFactor = 0.3f;   // 每穿透一个目标伤害衰减
+                    pointEffectSpace = 20f;
+                    hitShake = 6f;
+                    hitColor = railBack;
+                    collidesAir = true;
+                    collidesGround = true;
+
+                    shootEffect   = CryonFx.railgunShoot(railFront, railBack);
+                    hitEffect     = CryonFx.railgunHit(railFront, railBack);
+                    pierceEffect  = CryonFx.railgunPierce(railFront, railBack);
+                    despawnEffect = CryonFx.railgunDespawn(railFront, railBack);
+                    pointEffect   = CryonFx.railgunTrail(railFront, railBack);
+                }};
+            }});
+
+        }};
+
+        // craft
+        new GenericCrafter("silicon-separator") {{ }};
+        new GenericCrafter("magnesium-converter") {{ }};
+        new GenericCrafter("electric-arc-graphitizer") {{ }};
+        cryoElectrolyzer = new GenericCrafter("cryo-electrolyzer"){{
+
+
+            size = 3;
+            health = 240;
+            craftTime = 60f;
+            rotate = true;
+            invertFlip = true;
+            group = BlockGroup.liquids;
+
+            itemCapacity = 0;
+            liquidCapacity = 30f;
+
+            consumeLiquid(Liquids.water, 2f);
+            consumePower(1.5f);
+
+            outputLiquids = LiquidStack.with(
+                    Liquids.hydrogen, 2f,
+                    Liquids.ozone, 1.2f
+            );
+            liquidOutputDirections = new int[]{1, 3};
+
+            ambientSound = Sounds.loopElectricHum;
+            ambientSoundVolume = 0.08f;
+
+            regionRotated1 = 3;
+
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(Liquids.water, 2f),
+                    new DrawBubbles(Color.valueOf("7693e3")){{
+                        sides = 10;
+                        recurrence = 3f;
+                        spread = 6;
+                        radius = 1.5f;
+                        amount = 20;
+                    }},
+                    new DrawRegion(),
+                    new DrawLiquidOutputs(),
+                    new DrawGlowRegion(){{
+                        alpha = 0.7f;
+                        color = Color.valueOf("c4bdf3");
+                        glowIntensity = 0.3f;
+                        glowScale = 6f;
+                    }}
+            );
+
+        }
+            @Override
+            public void init() {
+                super.init();
+                requirements(Category.crafting, with(CryonContent.item("aluminum"), 60, Items.silicon, 40, Items.graphite, 40));
+            }
+        };
+        new GenericCrafter("nitrogen-separator") {{ }};
+        //forge
+        new GenericCrafter("farstar-forge") {{ }};
+        new GenericCrafter("surge-alloy-forge") {{ }};
+
+        new GenericCrafter("nano-material-weaver") {{ }};
+        new HeatCrafter("fusion-casting-furnace") {{ }};
+
+        //cooling
+        new GenericCrafter("dry-ice-sublimator") {{ }};
+        new GenericCrafter("titanium-water-condenser") {{ }};
+        //phase
+        new HeatCrafter("quartz-reactor") {{ }};
+        new GenericCrafter("neutron-activator") {{ }};
+        new GenericCrafter("phase-constructor") {{ }};
+        //salt
+        new GenericCrafter("molten-salt-electrolyzer") {{ }};
+
+        new GenericCrafter("sodium-carbon-fixer") {{ }};
+        //other
+        new Separator("scrap-pyrolyzer") {{ }};
+
+        //heat
+        new HeatConductor("cryo-heat-redirector") {{ }};
+        new HeatProducer("cryo-electric-heater") {{ }};
+        new HeatProducer("heating-furnace") {{ }};
+
+
+
+
+
+
+
+
+
+
+
+
         OblivionUnit.load();
         DestroyerUnit.load();
     }
@@ -1512,7 +1774,7 @@ public class CryonJavaMod extends Mod {
 
         }
         if(aravisPlanet != null) {
-            cryonPlanet.updateLighting = false;
+            aravisPlanet.updateLighting = false;
 
             aravisPlanet.defaultEnv = Env.terrestrial;
             aravisPlanet.ruleSetter = r -> {
@@ -1813,17 +2075,7 @@ public class CryonJavaMod extends Mod {
 
             CryonContent.unit("vain").abilities.add(weakShield);
         }
-        if (CryonContent.unit("roche") != null) {
-            ReflectShieldAbility hugeShield = new ReflectShieldAbility();
-            hugeShield.reflectRadius = 160f;
-            hugeShield.reflectMaxDamage = 25000f;
-            hugeShield.shieldCooldown = 120f;
-            hugeShield.reflectAngleMin = 150f;
 
-            hugeShield.reflectAngleMax = 210f;
-
-            CryonContent.unit("roche").abilities.add(hugeShield);
-        }
         // TechTree
         Events.on(ClientLoadEvent.class, e -> {
             ModPlanetTechTree.globalCleanup("cryon");
@@ -1862,10 +2114,12 @@ public class CryonJavaMod extends Mod {
         Events.run(Trigger.draw, () -> {
             FluxShieldRenderer.drawFluxShields();
             ReflectShieldRenderer.drawReflectShields();
+            RocheFieldAbility.drawAll();
         });
         // 添加渲染钩子 - 绘制链接
         Events.run(Trigger.draw, () -> {
             KismetBulletType.drawLinks();
+
         });
 
         // 添加更新钩子 - 清理无效链接
@@ -1982,4 +2236,5 @@ public class CryonJavaMod extends Mod {
         bullet.pointEffect = CryonFx.railgunTrail(front, back);
         bullet.hitColor = back;
     }
+
 }

@@ -1,4 +1,4 @@
-type: HeatCrafter
+//type: HeatCrafter
 name: "石英反应釜"
 description: "消耗硅和臭氧，在高温下生产石英。"
 size: 2

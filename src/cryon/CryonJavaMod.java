@@ -1118,7 +1118,7 @@ public class CryonJavaMod extends Mod {
                             shotDelay = 6f;
                         }};
 
-                        bullet = new LaserBulletType(20f) {{
+                        bullet = new LaserBulletType(45f) {{
                             length = 320f;
                             width = 26f;
                             lifetime = 22f;
@@ -1236,7 +1236,7 @@ public class CryonJavaMod extends Mod {
                         shootStatus = StatusEffects.unmoving;
                         shootStatusDuration = 60f + 60f;
 
-                        bullet = new LaserBulletType(200f) {{
+                        bullet = new LaserBulletType(250f) {{
                             length = 700f;
                             width = 90f;
                             lifetime = 60f;
@@ -1258,7 +1258,6 @@ public class CryonJavaMod extends Mod {
                             healPercent = 15f;
                             collidesTeam = true;
 
-                            buildingDamageMultiplier = 0.8f;
                         }};
                     }}
             );

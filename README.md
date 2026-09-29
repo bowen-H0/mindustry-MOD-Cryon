@@ -10,6 +10,10 @@ Alpha test version: contains bugs, mechanics subject to change.
 - **Language**: Java
 - **Status**: In development / testing
 - **Purpose**: Modify the Cryon content to implement the functionality.
+## Contributors
+- LSK133: Map
+- Gary: Map
+
 
 # Build
 

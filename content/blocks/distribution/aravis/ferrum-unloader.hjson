@@ -1,0 +1,13 @@
+{
+  type: Unloader
+  name: 铁卸载器
+  description: 从容器中卸载指定物品。
+  size: 1
+  category: distribution
+  speed: 6.5
+  requirements:
+  [
+    ferrum/25
+    silicon/30
+  ]
+}

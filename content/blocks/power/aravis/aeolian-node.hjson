@@ -4,7 +4,7 @@ description: "节点之间传输电力。"
 size: 1
 health: 140
 category: power
-range: 5
+range: 7
 pulseScl: 7.0
 pulseMag: 0.05
 laserWidth: 0.4

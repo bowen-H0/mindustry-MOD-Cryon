@@ -1,0 +1,12 @@
+type: DuctBridge
+name: "锰桥"
+description: "通过锰管道，跨越地形或其他结构传输物品。"
+size: 1
+health: 55
+speed: 4.0
+range: 4
+category: distribution
+requirements: [
+  ferrum/9
+  manganese/3
+]

@@ -1,0 +1,12 @@
+type: Sorter
+name: "锰反向分类器"
+description: "分类物品。"
+size: 1
+health: 50
+category: distribution
+invert: true
+requirements: [
+  ferrum/4
+  manganese/1
+  silicon/2
+]

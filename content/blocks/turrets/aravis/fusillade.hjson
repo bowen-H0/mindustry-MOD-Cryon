@@ -1,0 +1,39 @@
+type: ItemTurret
+name: "连珠"
+description: "近程速射炮塔。"
+size: 2
+health: 2900
+range: 110
+reload: 6
+inaccuracy: 3
+velocityRnd: 0.1
+recoil: 1
+shake: 0.3
+shootY: 4
+targetAir: true
+targetGround: true
+maxAmmo: 40
+ammoPerShot: 1
+ammoUseEffect: casing1
+shoot: {
+  type: ShootSpread
+  shots: 5
+  spread: 15
+}
+ammoTypes: {
+  copper: {
+    type: BasicBulletType
+    damage: 12
+    speed: 5
+    lifetime: 22
+    width: 6
+    height: 9
+    ammoMultiplier: 4
+    knockback: 0.3
+  }
+}
+category: turret
+requirements: [
+  ferrum/160
+  copper/140
+]

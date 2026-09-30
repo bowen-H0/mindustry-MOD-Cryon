@@ -1,0 +1,13 @@
+type: Duct
+name: "锰管道"
+description: "使用锰合金管壁传输物品。"
+size: 1
+health: 45
+speed: 4.0
+category: distribution
+requirements: [
+  ferrum/1
+  manganese/1
+]
+bridgeReplacement: manganese-bridge
+junctionReplacement: manganese-crosser

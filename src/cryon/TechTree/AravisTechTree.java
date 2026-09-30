@@ -1,6 +1,7 @@
 package cryon.TechTree;
 
 import arc.Core;
+import cryon.Content.CryonItems;
 import cryon.Features.CryonContent;
 import mindustry.Vars;
 import mindustry.ctype.Content;
@@ -31,9 +32,17 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "metallurgical-furnace", "aeolian-drill");
 
 
-        addAuto(Kind.BLOCK, "chisel", "core-conquest");
-        addAuto(Kind.BLOCK, "iron-wall", "chisel");
+        addAuto(Kind.BLOCK, "fusillade", "core-conquest");
+        addAuto(Kind.BLOCK, "chisel", "fusillade");
+
+        addAuto(Kind.BLOCK, "iron-wall", "fusillade");
         addAuto(Kind.BLOCK, "iron-wall-large", "iron-wall");
+        addAuto(Kind.BLOCK, "mech-unit-factory", "core-conquest");
+        add(Kind.UNIT, "jaspis", "mech-unit-factory",r(CryonItems.hardSteel, 60, CryonContent.item("silicon"), 100, CryonItems.ferrum, 100));
+
+
+
+
 
 
         // ---- ITEM ----
@@ -41,9 +50,19 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.ITEM, "copper", "ferrum");
         addAuto(Kind.ITEM, "lead", "copper");
 
+        addAuto(Kind.ITEM, "manganese", "ferrum");
+        addAuto(Kind.ITEM, "armor-alloy", "manganese");
+
+
+
         addAuto(Kind.ITEM, "sand", "ferrum");
+        addAuto(Kind.ITEM, "av-red-sand", "sand");
+
+
 
         addAuto(Kind.ITEM, "coal", "ferrum");
+        addAuto(Kind.ITEM, "silicon", "coal");
+
 
 
 

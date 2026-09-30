@@ -1,0 +1,27 @@
+type: Reconstructor
+name: "机甲单位重构厂"
+description: "将机甲单位升级为更高一阶的机甲。"
+size: 3
+health: 800
+hasPower: true
+hasItems: true
+consumes: {
+  power: 3.0
+  items: {
+    items: [
+      silicon/40
+      armor-alloy/30
+    ]
+  }
+}
+constructTime: 600
+upgrades: [
+  [jaspis, obsidianum]
+]
+category: units
+buildVisibility: shown
+requirements: [
+  ferrum/120
+  armor-alloy/80
+  silicon/90
+]

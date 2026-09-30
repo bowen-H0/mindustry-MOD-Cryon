@@ -3,12 +3,13 @@ name: "风蚀钻头"
 description: "初始钻头。"
 size: 2
 health: 80
-tier: 1
+tier: 2
 drillTime: 600
 category: production
 hasPower: false
 requirements: [
   ferrum/30
 ]
+blockedItems: []
 liquidCapacity: 10
 itemCapacity: 10

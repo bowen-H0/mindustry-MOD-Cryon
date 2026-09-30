@@ -1,0 +1,30 @@
+{
+  type: UnitFactory
+  name: "机甲单位工厂"
+  description: "消耗资源，制造出机甲单位。"
+  size: 3
+  health: 500
+  hasPower: true
+  hasItems: true
+  consumes: {
+    power: 3.0
+  }
+  requirements: [
+    ferrum/100
+    steel/60
+    silicon/80
+  ]
+  category: units
+  buildVisibility: shown
+  plans: [
+    {
+      unit: jaspis
+      time: 2400
+      requirements: [
+        silicon/30
+        hard-steel/20
+        ferrum/30
+      ]
+    }
+  ]
+}

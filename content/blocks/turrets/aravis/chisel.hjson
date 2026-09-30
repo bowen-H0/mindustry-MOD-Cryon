@@ -23,7 +23,7 @@ ammoTypes: {
     lifetime: 55
     width: 14
     height: 18
-    splashDamage: 140
+    splashDamage: 60
     splashDamageRadius: 45
     hitEffect: massiveExplosion
     despawnEffect: massiveExplosion
@@ -37,6 +37,8 @@ ammoTypes: {
 }
 category: turret
 requirements: [
-  copper/260
+  lead/260
   ferrum/240
+  steel/200
+
 ]

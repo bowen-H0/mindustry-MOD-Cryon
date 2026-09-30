@@ -28,7 +28,7 @@ public class CryonItems{
     public static Item aluminum, magnesium, titanium, scrap, silicon,
             graphite, quartz, salt, sodium, crystalSand,
             dryIce, cryoAlloy, farstarAlloy, nickel, neutronite,
-            phaseFabric, surgeAlloy, nanoMaterial, ferrum,steel,hardSteel;
+            phaseFabric, surgeAlloy, nanoMaterial, ferrum,steel,hardSteel,redSand, manganese, armorAlloy;
 
     // ================== 白名单 ==================
 
@@ -86,28 +86,30 @@ public class CryonItems{
         // ---- Cryon 本星物品 ----
         aluminum = item("aluminum", "c8d4e0", 1, 0.05f, 0.1f, 0.6f, 0f);
         magnesium = item("magnesium", "e3e3e3", 1, 0.85f, 2.2f, 0.8f, 0f);
-        quartz = item("quartz", "f5f5f5", 2, 0f, 0f, 0.1f, 0f);
+        quartz = item("quartz", "f5f5f5", 0, 0f, 0f, 0.1f, 0f);
         salt = item("salt", "ffffff", 1, 0f, 0f, 0.05f, 0f);
-        sodium = item("sodium", "f0f0f0", 1, 0.6f, 3.0f, 0.7f, 0f);
+        sodium = item("sodium", "f0f0f0", 0, 0.6f, 3.0f, 0.7f, 0f);
         crystalSand = item("crystal-sand", "4F473C", 1, 0f, 0f, 0.1f, 0f);
         dryIce = item("dry-ice", "c8eeff", 1, 0.7f, 0f, 0.1f, 0f);
-        cryoAlloy = item("cryo-alloy", "d13b3b", 6, 0f, 0f, 0f, 0f);
-        farstarAlloy = item("farstar-alloy", "d0a0ff", 3, 0f, 0f, 0.6f, 0f);
+        cryoAlloy = item("cryo-alloy", "d13b3b", 0, 0f, 0f, 0f, 0f);
+        farstarAlloy = item("farstar-alloy", "d0a0ff", 0, 0f, 0f, 0.6f, 0f);
         nickel = item("nickel", "e3decfff", 3, 0f, 0f, 0f, 0f);
-        neutronite = item("neutronite", "90c8ffff", 3, 0.1f, 0f, 0.1f, 0.9f);
-        nanoMaterial = item("nano-material", "4CE68C", 2, 0f, 0.15f, 0f, 0.3f);
+        neutronite = item("neutronite", "90c8ffff", 0, 0.1f, 0f, 0.1f, 0.9f);
+        nanoMaterial = item("nano-material", "4CE68C", 0, 0f, 0.15f, 0f, 0.3f);
 
         // ---- Aravis 本星物品 ----
         ferrum = item("ferrum", "8C8C8C", 1, 0f, 0f, 0f, 0f);
         steel = item("steel", "a7a9ae", 4, 0f, 0f, 0f, 0f);
         hardSteel=item("hard-steel", "71797e", 4, 0f, 0f, 0f, 0f);
-
+        redSand = item("av-red-sand", "c1563a", 1);
+        manganese = item("manganese", "b8a9c9", 1);
+        armorAlloy = item("armor-alloy", "5f6b7a", 0);
         // ================== 白名单登记 ==================
         planet("aluminum", "cryon-cryon");
         planet("magnesium", "cryon-cryon");
         planet("titanium", "cryon-cryon");
         planet("scrap", "cryon-cryon");
-        planet("silicon", "cryon-cryon");
+        planet("silicon", "cryon-cryon","cryon-aravis");
         planet("graphite", "cryon-cryon");
         planet("quartz", "cryon-cryon");
         planet("salt", "cryon-cryon");
@@ -125,6 +127,9 @@ public class CryonItems{
         planet("ferrum", "cryon-aravis");
         planet("steel", "cryon-aravis");
         planet("hard-steel", "cryon-aravis");
+        planet("av-red-sand", "cryon-aravis");
+        planet("manganese", "cryon-aravis");
+        planet("armor-alloy", "cryon-aravis");
 
 
     }

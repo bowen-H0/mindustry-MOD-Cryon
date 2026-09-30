@@ -1,0 +1,8 @@
+{
+  type: Floor
+  name: "sandy-loam"
+  variants: 1
+  speedMultiplier: 1.0
+  mapColor: "a8855c"
+  playerUnmineable: true
+}

@@ -1,0 +1,69 @@
+type: ItemTurret
+name: "始祖"
+description: "重型火焰喷射塔。以煤炭为燃料，喷出大范围的强力火焰，灼烧并穿透前方所有敌人。"
+size: 3
+health: 2400
+range: 110
+reload: 5
+inaccuracy: 4
+shootCone: 30
+rotateSpeed: 6
+shootY: 10
+recoil: 0.5
+shake: 0.2
+targetAir: true
+targetGround: true
+maxAmmo: 30
+ammoPerShot: 1
+ammoUseEffect: none
+shootSound: none
+loopSound: loopFire
+loopSoundVolume: 0.8
+shoot: {
+  type: ShootSpread
+  shots: 2
+  spread: 6
+}
+ammoTypes: {
+  coal: {
+    type: BulletType
+    damage: 28
+    speed: 4.4
+    lifetime: 23
+    hitSize: 9
+    ammoMultiplier: 3
+    pierce: true
+    pierceBuilding: true
+    pierceCap: 6
+    collidesAir: true
+    hittable: false
+    keepVelocity: false
+    knockback: 0.1
+    buildingDamageMultiplier: 0.6
+    status: burning
+    statusDuration: 360
+    shootEffect: none
+    smokeEffect: none
+    hitEffect: hitFlameSmall
+    despawnEffect: none
+    trailEffect: {
+      type: ParticleEffect
+      particles: 2
+      lifetime: 20
+      baseLength: 0
+      length: 6
+      sizeFrom: 8
+      sizeTo: 0
+      colorFrom: "ffdd55"
+      colorTo: "ff4411"
+    }
+    trailChance: 1
+  }
+}
+category: turret
+requirements: [
+  armor-alloy/100
+  silicon/120
+  lead/150
+  copper/200
+]

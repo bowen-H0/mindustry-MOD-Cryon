@@ -4,7 +4,7 @@ description: "Aravis 星球的初级核心。"
 size: 3
 health: 1500
 itemCapacity: 3000
-unitType: expedition
+unitType: alpha
 unitCapModifier: 16
 category: effect
 isFirstTier: true

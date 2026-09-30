@@ -1,0 +1,69 @@
+type: ItemTurret
+name: "飞矢"
+description: "高精度重型炮塔。发射高速穿甲弹，射速适中，单发伤害极高。"
+size: 3
+health: 1800
+range: 180
+reload: 45
+inaccuracy: 0
+velocityRnd: 0
+shootCone: 3
+rotateSpeed: 5
+shootY: 8
+recoil: 4
+shake: 2
+targetAir: true
+targetGround: true
+maxAmmo: 20
+ammoPerShot: 1
+ammoUseEffect: casing2
+ammoTypes: {
+  ferrum: {
+    type: BasicBulletType
+    damage: 90
+    speed: 12
+    lifetime: 15
+    width: 8
+    height: 22
+    pierceCap: 2
+    pierceBuilding: false
+    ammoMultiplier: 2
+    knockback: 1
+    hitEffect: hitBulletColor
+    despawnEffect: hitBulletColor
+    shootEffect: shootBig
+    smokeEffect: shootBigSmoke
+    backColor: "8c8c8c"
+    frontColor: "ffffff"
+    trailColor: "bfbfbf"
+    trailWidth: 1.5
+    trailLength: 8
+  }
+  steel: {
+    type: BasicBulletType
+    damage: 130
+    speed: 13
+    lifetime: 13
+    width: 9
+    height: 24
+    pierceCap: 3
+    pierceBuilding: false
+    ammoMultiplier: 2
+    knockback: 1.5
+    hitEffect: hitBulletColor
+    despawnEffect: hitBulletColor
+    shootEffect: shootBig
+    smokeEffect: shootBigSmoke
+    backColor: "a7a9ae"
+    frontColor: "ffffff"
+    trailColor: "d0d2d6"
+    trailWidth: 1.8
+    trailLength: 10
+  }
+}
+category: turret
+requirements: [
+  ferrum/160
+  armor-alloy/120
+  silicon/80
+]

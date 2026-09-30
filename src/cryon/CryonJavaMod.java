@@ -940,6 +940,17 @@ public class CryonJavaMod extends Mod {
                     },
                     120f
             ));
+            recipes.add(new CraftRecipe(
+                    new ItemStack[]{
+                            new ItemStack(CryonItems.steel, 3),
+                            new ItemStack(CryonItems.manganese, 2),
+                            new ItemStack(Items.coal, 2)
+                    },
+                    new ItemStack[]{
+                            new ItemStack(CryonItems.armorAlloy, 1)
+                    },
+                    180f
+            ));
 
             drawer = new DrawMulti(
                     new DrawDefault(),

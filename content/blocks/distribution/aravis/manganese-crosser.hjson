@@ -1,0 +1,13 @@
+type: Junction
+name: "锰交叉器"
+description: "允许两条交叉的锰管道互不干扰地传输物品。"
+size: 1
+health: 45
+speed: 4.0
+capacity: 6
+hasPower: false
+category: distribution
+requirements: [
+  ferrum/4
+  manganese/2
+]

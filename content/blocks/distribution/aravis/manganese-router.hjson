@@ -1,0 +1,11 @@
+type: Router
+name: "锰路由器"
+description: "通过锰管道路由物品。"
+size: 1
+health: 45
+speed: 4.0
+category: distribution
+requirements: [
+  ferrum/6
+  manganese/2
+]

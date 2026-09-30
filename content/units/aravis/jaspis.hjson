@@ -1,7 +1,7 @@
 type: mech
 speed: 0.6
 flying: false
-health: 360
+health: 560
 armor: 6
 hitSize: 10
 outlineColor: 5c4d33

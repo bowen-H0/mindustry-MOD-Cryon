@@ -1,0 +1,11 @@
+type: OverflowGate
+name: "锰反向溢流门"
+description: "通过锰管道分流物品。物品不足时优先向此方向输送。"
+size: 1
+health: 60
+category: distribution
+invert: true
+requirements: [
+  ferrum/6
+  manganese/2
+]

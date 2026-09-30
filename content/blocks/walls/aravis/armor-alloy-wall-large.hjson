@@ -1,0 +1,9 @@
+type: Wall
+name: 大型装甲合金墙
+description: "由装甲合金制成的防御方块，装甲厚重，耐久极高。"
+health: 2500
+size: 2
+requirements: [
+  armor-alloy/24
+]
+category: defense

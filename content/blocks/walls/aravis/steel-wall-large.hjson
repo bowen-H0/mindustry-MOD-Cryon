@@ -1,0 +1,9 @@
+type: Wall
+name: 大型钢墙
+description: "由钢制成的防御方块，强度高，耐久出色。"
+health: 1800
+size: 2
+requirements: [
+  steel/24
+]
+category: defense

@@ -1,0 +1,8 @@
+{
+  type: Floor
+  name: "violherba-repens"
+  variants: 2
+  speedMultiplier: 1.0
+  mapColor: "967bb6"
+  playerUnmineable: true
+}

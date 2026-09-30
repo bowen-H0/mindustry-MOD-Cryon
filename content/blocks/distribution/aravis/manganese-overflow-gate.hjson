@@ -1,0 +1,10 @@
+type: OverflowGate
+name: "锰溢流门"
+description: "通过锰管道分流多余物品。物品过量时优先向此方向溢出。"
+size: 1
+health: 60
+category: distribution
+requirements: [
+  ferrum/6
+  manganese/2
+]

@@ -1,0 +1,8 @@
+{
+  type: Floor
+  name: "caerustella-parva"
+  variants: 2
+  speedMultiplier: 1.0
+  mapColor: "e0f2ff"
+  playerUnmineable: true
+}

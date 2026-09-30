@@ -4,6 +4,6 @@
     "variants": 1,
     "speedMultiplier": 1.0,
     "mapColor": "e67b4c",
-    "itemDrop": "sand",
+    "itemDrop": "av-red-sand",
     playerUnmineable: true
 }

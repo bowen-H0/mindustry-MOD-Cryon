@@ -24,21 +24,53 @@ public class AravisTechTree extends ModPlanetTechTree {
         // ---- BLOCK ----
         addAuto(Kind.BLOCK, "anti-wind-conveyor", "core-conquest");
         addAuto(Kind.BLOCK, "stack-router", "anti-wind-conveyor");
+        addAuto(Kind.BLOCK, "ferrum-unloader", "anti-wind-conveyor");
+        addAuto(Kind.BLOCK, "manganese-duct", "anti-wind-conveyor");
+        addAuto(Kind.BLOCK, "manganese-crosser", "manganese-duct");
+        addAuto(Kind.BLOCK, "manganese-bridge", "manganese-duct");
+
+
+
+        addAuto(Kind.BLOCK, "manganese-router", "manganese-crosser");
+
+        addAuto(Kind.BLOCK, "manganese-sorter", "manganese-crosser");
+        addAuto(Kind.BLOCK, "manganese-inverted-sorter", "manganese-sorter");
+
+
+        addAuto(Kind.BLOCK, "manganese-overflow-gate", "manganese-crosser");
+        addAuto(Kind.BLOCK, "manganese-underflow-gate", "manganese-overflow-gate");
+
+
+
+
+
 
 
         addAuto(Kind.BLOCK, "aeolian-drill", "core-conquest");
         addAuto(Kind.BLOCK, "aeolian-node", "aeolian-drill");
         addAuto(Kind.BLOCK, "wind-turbine", "aeolian-node");
+        addAuto(Kind.BLOCK, "aeolian-solar-panel", "wind-turbine");
+
         addAuto(Kind.BLOCK, "metallurgical-furnace", "aeolian-drill");
 
 
         addAuto(Kind.BLOCK, "fusillade", "core-conquest");
         addAuto(Kind.BLOCK, "chisel", "fusillade");
+        addAuto(Kind.BLOCK, "volans", "fusillade");
+
+        addAuto(Kind.BLOCK, "arche", "fusillade");
+
 
         addAuto(Kind.BLOCK, "iron-wall", "fusillade");
         addAuto(Kind.BLOCK, "iron-wall-large", "iron-wall");
+
         addAuto(Kind.BLOCK, "mech-unit-factory", "core-conquest");
+        addAuto(Kind.BLOCK, "mech-unit-reconstructor", "mech-unit-factory");
+
+
         add(Kind.UNIT, "jaspis", "mech-unit-factory",r(CryonItems.hardSteel, 60, CryonContent.item("silicon"), 100, CryonItems.ferrum, 100));
+        add(Kind.UNIT, "obsidianum", "mech-unit-reconstructor",r(CryonItems.armorAlloy, 160, CryonContent.item("silicon"), 200, CryonContent.item("lead"), 200));
+
 
 
 
@@ -51,6 +83,9 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.ITEM, "lead", "copper");
 
         addAuto(Kind.ITEM, "manganese", "ferrum");
+        addAuto(Kind.ITEM, "steel", "ferrum");
+        addAuto(Kind.ITEM, "hard-steel", "steel");
+
         addAuto(Kind.ITEM, "armor-alloy", "manganese");
 
 
@@ -70,6 +105,12 @@ public class AravisTechTree extends ModPlanetTechTree {
 
         // ---- SECTOR ----
         addAuto(Kind.SECTOR, "landing", "core-conquest");
+        addAuto(Kind.SECTOR, "extension", "landing");
+        addAuto(Kind.SECTOR, "ridge", "extension");
+        addAuto(Kind.SECTOR, "checkpoint", "ridge");
+
+
+
 
 
     }

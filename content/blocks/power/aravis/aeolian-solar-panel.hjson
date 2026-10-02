@@ -3,7 +3,7 @@ name: "风蚀太阳能板"
 description: "太阳能板，光电转化效率更高。"
 size: 3
 health: 360
-powerProduction: 2.8
+powerProduction: 1.8
 category: power
 buildVisibility: shown
 requirements: [

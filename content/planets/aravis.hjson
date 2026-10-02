@@ -27,4 +27,4 @@ iconColor: 856224
 allowLaunchToNumbered: false
 startSector: 0
 sectorSize: 2
-defaultCore: "core-pioneer"
+defaultCore: "core-conquest"

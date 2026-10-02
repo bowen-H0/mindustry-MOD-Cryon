@@ -1,7 +1,5 @@
 # Cryon
 
-> This mod does not require any dependencies.
-
 Alpha test version: contains bugs, mechanics subject to change.
 
 ## Overview

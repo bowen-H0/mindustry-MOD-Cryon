@@ -971,11 +971,11 @@ public class CryonJavaMod extends Mod {
             ));
         }};
         //tank
-        new UnitType("buffer") {{ }};
-        new UnitType("guardian") {{ }};
-        new UnitType("peak") {{ }};
-        new UnitType("blaze") {{ }};
-        new UnitType("eternal") {{ }};
+        //new UnitType("buffer") {{ }};
+        //new UnitType("guardian") {{ }};
+        //new UnitType("peak") {{ }};
+        //new UnitType("blaze") {{ }};
+        //new UnitType("eternal") {{ }};
         //mech
         new UnitType("comet") {{ }};
         new UnitType("bolide") {{ }};
@@ -983,11 +983,11 @@ public class CryonJavaMod extends Mod {
         new UnitType("sagitta") {{ }};
         new UnitType("hydra") {{ }};
         //legs
-        new UnitType("benignitas") {{ }};
-        new UnitType("salus") {{ }};
-        new UnitType("propugno") {{ }};
-        new UnitType("ratio") {{ }};
-        new UnitType("veritas") {{ }};
+        //new UnitType("benignitas") {{ }};
+        //new UnitType("salus") {{ }};
+        //new UnitType("propugno") {{ }};
+        //new UnitType("ratio") {{ }};
+        //new UnitType("veritas") {{ }};
         //air
         new UnitType("littorina") {{ }};
         new UnitType("natica") {{ }};
@@ -1537,7 +1537,6 @@ public class CryonJavaMod extends Mod {
     @Override
     public void init() {
         CryonSectors.load();
-        CrossModSupport.install();
         Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
         if(exist == null){
             Mods.LoadedMod self = Vars.mods.locateMod("cryon");
@@ -1785,6 +1784,7 @@ public class CryonJavaMod extends Mod {
         }
         if(aravisPlanet != null) {
             aravisPlanet.updateLighting = false;
+            aravisPlanet.clearSectorOnLose = true;
 
             aravisPlanet.defaultEnv = Env.terrestrial;
             aravisPlanet.ruleSetter = r -> {

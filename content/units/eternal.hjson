@@ -3,33 +3,42 @@ name: "永璨"
 health: 45000
 armor: 32
 speed: 0.45
-hitSize: 68
+hitSize: 46
 omniMovement: false
 targetAir: true
 targetGround: true
 itemCapacity: 100
 faceTarget: true
-rotateSpeed: 2.2
+rotateSpeed: 1.7
 treadPullOffset: 8
-crushDamage: 15
+crushDamage: 3
 treadRects: [
   {
-    x: -110.5
-    y: 50.5
-    width: 68
-    height: 95
+    x: -88.5
+    y: -92
+    width: 56
+    height: 184
   }
   {
-    x: -115.5
-    y: -95.5
-    width: 35
-    height: 22
+    x: 32.5
+    y: -92
+    width: 56
+    height: 184
   }
+]
+abilities: [
   {
-    x: -70.5
-    y: -135.5
-    width: 48
-    height: 24
+    type: ShieldArcAbility
+    region: cryon-eternal-shield
+    radius: 70
+    angle: 100
+    regen: 1.5
+    cooldown: 600
+    max: 12000
+    y: -30
+    width: 10
+    whenShooting: false
+    chanceDeflect: 1
   }
 ]
 weapons: [
@@ -37,12 +46,17 @@ weapons: [
     name: eternal-mega-laser
     x: 0
     y: 0
+    rotateSpeed: 0.8
+    recoil: 12
+    shake: 8
     rotate: true
     mirror: false
     reload: 35
     shootCone: 5
     shadow: 12
     shootY: 30
+    shootSound: shootLancer
+
     bullet: {
       type: LaserBulletType
       damage: 1250
@@ -56,10 +70,9 @@ weapons: [
       hitEffect: hitLancer
       despawnEffect: none
       colors: [
-        ffffff
-        88ffff
         44ccff
-        0066ff
+        88ffff
+        ffffff
       ]
       fragBullet: {
         type: BasicBulletType
@@ -83,6 +96,8 @@ weapons: [
         trailLength: 12
         hitEffect: scatheExplosion
         despawnEffect: scatheExplosion
+        hitSound: explosionQuad
+        despawnSound: explosionQuad
         despawnShake: 4
         fragBullet: {
           type: LaserBulletType
@@ -95,6 +110,8 @@ weapons: [
           collidesGround: true
           hitEffect: hitLancer
           despawnEffect: none
+
+
           colors: [
             ffffff
             88ffff
@@ -111,7 +128,7 @@ weapons: [
         fragOnHit: false
       }
       fragBullets: 6
-      fragSpread: 25
+      fragSpread: 10
       fragRandomSpread: 8
       fragVelocityMin: 0.95
       fragVelocityMax: 1.05

@@ -35,13 +35,13 @@
 
       shoot: {
         type: ShootSpread
-        shots: 16       
+        shots: 6
         spread: 22.5    
       }
 
       bullet: {
         type: LaserBulletType
-        damage: 80
+        damage: 60
         length: 30
         width: 16       
         lifetime: 30    

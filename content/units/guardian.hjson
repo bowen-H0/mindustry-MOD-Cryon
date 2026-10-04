@@ -8,19 +8,19 @@ faceTarget: false
 targetAir: true
 targetGround: true
 itemCapacity: 30
-rotateSpeed: 3.5
+rotateSpeed: 1.33
 treadPullOffset: 3
 treadRects: [
   {
-    x: -36
-    y: -38
-    width: 18
+    x: -38
+    y: -39
+    width: 20
     height: 76
   }
   {
     x: 18
-    y: -38
-    width: 18
+    y: -39
+    width: 20
     height: 76
   }
 ]
@@ -29,6 +29,9 @@ weapons: [
     name: cryon-buffer-weapon
     x: -6
     y: 4
+    shootY: 7
+    rotateSpeed:3.5
+
     rotate: true
     mirror: true
     reload: 12
@@ -57,6 +60,9 @@ weapons: [
     rotate: true
     mirror: false
     reload: 240
+    shootY: 7
+    rotateSpeed:1.4
+
     shootSound: shootLancer
     shootCone: 15
     shadow: 6

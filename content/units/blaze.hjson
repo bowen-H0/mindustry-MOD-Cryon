@@ -3,46 +3,41 @@ name:"煌阳"
 health: 10000
 armor: 18
 speed: 0.37
-hitSize: 45
+hitSize: 28
 omniMovement: false
 targetAir: true
 targetGround: true
 itemCapacity: 30
 faceTarget: true
-rotateSpeed: 3.5
+rotateSpeed: 0.88
 treadPullOffset: 5
-crushDamage: 5
+crushDamage: 2.6
 treadRects: [
   {
-    x: -88.5
-    y: 36.5
-    width: 56
-    height: 73
+    x: -61.5
+    y: -65.5
+    width: 28
+    height: 130
   }
   {
-    x: -91.5
-    y: -73.5
-    width: 29
-    height: 17
-  }
-  {
-    x: -56.5
-    y: -106.5
-    width: 39
-    height: 19
+    x: 34.5
+    y: -65.5
+    width: 28
+    height: 130
   }
 ]
 weapons: [
   {
     name: blaze-eruption
-    x: -15
-    y: -15
+    x: -10
+    y: 10
     rotate: true
     mirror: true
     reload: 18
     shootSound: shoot
     shootCone: 40
     shadow: 4
+    rotateSpeed:3.5
     shoot: {
       type: ShootSpread
       shots: 4
@@ -105,7 +100,10 @@ weapons: [
     name: blaze-mega-laser
     x: 0
     y: 0
-    shootY: 20
+    recoil: 8
+    shake: 6
+    rotateSpeed:1.2
+    shootY: 21
     rotate: true
     mirror: false
     reload: 90

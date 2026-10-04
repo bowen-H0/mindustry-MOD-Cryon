@@ -5,5 +5,6 @@ health: 3800
 size: 2
 requirements: [
   titanium/24
+  aluminum/2
 ]
 category: defense

@@ -1,4 +1,4 @@
-type: mech
+type: legs
 name: "天冠"
 
 # ---- 基础属性 (T5 数值) ----
@@ -10,16 +10,25 @@ hitSize: 32
 faceTarget: true
 
 # ---- 外观颜色 ----
-outlineColor: 787886
-mechLegColor: 787886
+outlineColor: 44413c
+mechLegColor: 44413c
+
+# ---- 腿部核心参数 (小步幅) ----
+legCount: 6
+legLength: 20
+legBaseOffset: 8
+legMoveSpace: 1.0
+legExtension: -4
+legForwardScl: 0.6
+legStraightness: 0.5
+legGroupSize: 2
+legSpeed: 0.6
+legContinuousMove: true
+hovering: true
 
 # ---- 辅助与建造功能 ----
 buildSpeed: 1.6
-canBoost: true
-boostMultiplier: 1.4
 buildBeamOffset: 6
-engineOffset: 12
-engineSize: 7
 
 abilities: [
   {
@@ -27,131 +36,41 @@ abilities: [
     range: 110
     amount: 22
     reload: 70
-  }
+  },
+  {
+      type: ShieldArcAbility
+      radius: 60
+      angle: 120
+      angleOffset: 0
+      regen: 1.5
+      cooldown: 480
+      max: 9000
+      y: 12
+      width: 8
+      whenShooting: true
+      chanceDeflect: 1
+    }
+
 ]
-
 weapons: [
-  # 1. 核心主炮 (正前方 1 门)
+  # 侧双 doom 导弹 (左右对称，共 2 门)
   {
-    name: bolide-missile-mount
+    name: hydra-side-missile-mount
     top: true
-    x: 0
-    y: 14
-    rotate: true
-    mirror: false
-    reload: 150
-    shootCone: 15
-    shootSound: shootMissile
-
-    shootWarmupSpeed: 0.05
-    minWarmup: 0.9
-
-    parts: [
-      { type: RegionPart, suffix: "-left", progress: reload, moveX: -6, moveY: 0 }
-      { type: RegionPart, suffix: "-right", progress: reload, moveX: 6, moveY: 0 }
-    ]
-
-    bullet: {
-      instantDisappear: true
-      damage: 0
-      spawnUnit: doom-missile
-      shootEffect: {
-        type: MultiEffect
-        effects: [
-          { type: ParticleEffect, line: false, particles: 8, lifetime: 110, sizeFrom: 20, sizeTo: 0, length: 50, cone: 360, colorFrom: "8a4212ff", colorTo: "8a421200" }
-          { type: ParticleEffect, line: false, particles: 18, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 55, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
-        ]
-      }
-    }
-  },
-
-  # 2 & 3. 护卫副炮 (左右内侧对称，共 2 门)
-  {
-    name: bolide-missile-mount
-    top: true
-    x: 8
-    y: 10
-    rotate: true
+    x: 14
+    y: 2
+    rotate: false
     mirror: true
+    alternate: true
     reload: 150
     shootCone: 15
     shootSound: shootMissile
-
+    shootY: 10
+    recoil: 15
+    shake: 12
     shootWarmupSpeed: 0.05
     minWarmup: 0.9
 
-    parts: [
-      { type: RegionPart, suffix: "-left", progress: reload, moveX: -6, moveY: 0 }
-      { type: RegionPart, suffix: "-right", progress: reload, moveX: 6, moveY: 0 }
-    ]
-
-    bullet: {
-      instantDisappear: true
-      damage: 0
-      spawnUnit: doom-missile
-      shootEffect: {
-        type: MultiEffect
-        effects: [
-          { type: ParticleEffect, line: false, particles: 8, lifetime: 110, sizeFrom: 20, sizeTo: 0, length: 50, cone: 360, colorFrom: "8a4212ff", colorTo: "8a421200" }
-          { type: ParticleEffect, line: false, particles: 18, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 55, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
-        ]
-      }
-    }
-  },
-
-  # 4 & 5. 侧翼主炮 (左右外侧对称，共 2 门)
-  {
-    name: bolide-missile-mount
-    top: true
-    x: 16
-    y: 4
-    rotate: true
-    mirror: true
-    reload: 150
-    shootCone: 15
-    shootSound: shootMissile
-
-    shootWarmupSpeed: 0.05
-    minWarmup: 0.9
-
-    parts: [
-      { type: RegionPart, suffix: "-left", progress: reload, moveX: -6, moveY: 0 }
-      { type: RegionPart, suffix: "-right", progress: reload, moveX: 6, moveY: 0 }
-    ]
-
-    bullet: {
-      instantDisappear: true
-      damage: 0
-      spawnUnit: plasma-nuclear-missile
-      shootEffect: {
-        type: MultiEffect
-        effects: [
-          { type: ParticleEffect, line: false, particles: 8, lifetime: 110, sizeFrom: 20, sizeTo: 0, length: 50, cone: 360, colorFrom: "8a4212ff", colorTo: "8a421200" }
-          { type: ParticleEffect, line: false, particles: 18, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 55, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
-        ]
-      }
-    }
-  },
-
-  # 6 & 7. 阵列尾炮 (左右最外侧对称，共 2 门)
-  {
-    name: bolide-missile-mount
-    top: true
-    x: 20
-    y: -4
-    rotate: true
-    mirror: true
-    reload: 150
-    shootCone: 15
-    shootSound: shootMissile
-
-    shootWarmupSpeed: 0.05
-    minWarmup: 0.9
-
-    parts: [
-      { type: RegionPart, suffix: "-left", progress: reload, moveX: -6, moveY: 0 }
-      { type: RegionPart, suffix: "-right", progress: reload, moveX: 6, moveY: 0 }
-    ]
 
     bullet: {
       instantDisappear: true

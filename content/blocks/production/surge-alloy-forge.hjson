@@ -13,12 +13,12 @@ liquidCapacity: 100.0
 consumes: {
   power: 20.0
   items: [
-    titanium/20
-    silicon/20
-    aluminum/20
-    nickel/20
+    titanium/4
+    nickel/2
+    silicon/8
+    aluminum/10
   ]
-  liquid: tritium/0.1
+  liquid: tritium/0.0125
 }
 drawer: {
   type: DrawMulti
@@ -34,8 +34,8 @@ drawer: {
 }
 outputItem: surge-alloy/6
 requirements: [
-  titanium/2000
-  aluminum/1500
-  nickel/1200
-  silicon/1000
+  titanium/400
+  aluminum/300
+  nickel/240
+  silicon/200
 ]

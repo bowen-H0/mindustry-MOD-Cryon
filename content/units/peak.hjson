@@ -8,21 +8,21 @@ omniMovement: false
 targetAir: true
 targetGround: true
 itemCapacity: 30
-faceTarget:true
-rotateSpeed: 3.5
+faceTarget:false
+rotateSpeed: 1.33
 treadPullOffset: 5
 treadRects: [
   {
     x: -44
-    y: -22
-    width: 30
-    height: 75
+    y: -53
+    width: 44
+    height: 105
   }
   {
-    x: -16
+    x: 0
     y: -53
-    width: 17
-    height: 60
+    width: 44
+    height: 105
   }
 ]
 weapons: [
@@ -30,6 +30,9 @@ weapons: [
     name: cryon-buffer-weapon
     x: -6
     y: -10
+    shootY: 7
+    rotateSpeed:3.5
+
     rotate: true
     mirror: true
     reload: 12
@@ -55,6 +58,10 @@ weapons: [
     name: guardian-laser-weapon
     x: 6
     y: 4
+    shootY: 7
+    rotateSpeed:1.4
+
+
     rotate: true
     mirror: true
     reload: 240
@@ -79,27 +86,30 @@ weapons: [
     name: peak-cannon-weapon
     x: 0
     y: -4
-    rotate: false
+    shootY: 12
+    rotateSpeed:1.5
+
+    rotate: true
     mirror: false
-    reload: 60                     # 原代码中已改为 1秒/发（60帧）
+    reload: 60
     shootCone: 15
     shadow: 6
-    recoil: 5                      # 保持大后坐力
-    shake: 3                       # 震动稍微降低，从钍堆炸毁感回归重炮轰鸣感
+    recoil: 5
+    shake: 3
     bullet: {
       type: ArtilleryBulletType    
-      collidesAir: false           # 绝对不打空军（只对地）
-      collidesGround: true         # 完美对地
-      collidesTiles: true          # 建筑物毁灭者
-      speed: 4                     
+      collidesAir: false
+      collidesGround: true
+      collidesTiles: true
+      speed: 4
       lifetime: 40
       width: 16
       height: 22                   
       backColor: ffa64d
       frontColor: ffffff
-      damage: 150                  
-      splashDamage: 380            # 毁灭性对地溅射伤害
-      splashDamageRadius: 80       # 保持 10 格整的大范围毁灭圈
+      damage: 150
+      splashDamage: 380
+      splashDamageRadius: 80
       hitEffect: massiveExplosion  
       despawnEffect: massiveExplosion
       trailEffect: artilleryTrail  

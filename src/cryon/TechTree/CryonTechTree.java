@@ -214,6 +214,8 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "silicon-separator", "hydrothermal-generator");
 
         addAuto(Kind.BLOCK, "slag-extractor", "hydrothermal-generator");
+        addAuto(Kind.BLOCK, "item-shredder", "hydrothermal-generator");
+
 
         addAuto(Kind.BLOCK, "slag-power-generator", "magnesium-generator");
 

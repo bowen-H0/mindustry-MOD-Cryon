@@ -6,8 +6,8 @@ health: 800
 armor: 4
 hitSize: 18
 faceTarget:true
-outlineColor: a9a9b4
-mechLegColor: a9a9b4
+outlineColor: 44413c
+mechLegColor: 44413c
 buildSpeed: 0.8
 canBoost: true
 boostMultiplier: 1.2
@@ -88,5 +88,40 @@ weapons: [
         ]
       }
     }
-  }
+  },
+    {
+      name: umbra-side-missile
+      x: 9
+      y: 0
+      mirror: true
+      alternate: true
+      top: false
+      rotate: false
+      rotateSpeed: 8
+      reload: 45
+      shootCone: 20
+      inaccuracy: 4
+      shootSound: missile
+      bullet: {
+        type: MissileBulletType
+        speed: 3.2
+        lifetime: 30
+        damage: 20
+        splashDamage: 35
+        splashDamageRadius: 30
+        width: 8
+        height: 12
+        homingPower: 0.08
+        homingRange: 120
+        frontColor: ffffff
+        backColor: ffa64d
+        trailColor: ffa64d
+        trailLength: 10
+        trailWidth: 1.6
+        shootEffect: shootSmall
+        smokeEffect: shootSmallSmoke
+        hitEffect: blastExplosion
+        despawnEffect: blastExplosion
+      }
+    }
 ]

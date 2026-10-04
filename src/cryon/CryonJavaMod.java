@@ -114,6 +114,9 @@ public class CryonJavaMod extends Mod {
     public static UnitType libration;
     public static UnitType lagrange;
     public static UnitType roche;
+    public static UnitType threshold;
+
+
 
 
 
@@ -977,11 +980,11 @@ public class CryonJavaMod extends Mod {
         //new UnitType("blaze") {{ }};
         //new UnitType("eternal") {{ }};
         //mech
-        new UnitType("comet") {{ }};
-        new UnitType("bolide") {{ }};
-        new UnitType("umbra") {{ }};
-        new UnitType("sagitta") {{ }};
-        new UnitType("hydra") {{ }};
+        //new UnitType("comet") {{ }};
+        //new UnitType("bolide") {{ }};
+        //new UnitType("umbra") {{ }};
+        //new UnitType("sagitta") {{ }};
+        //new UnitType("hydra") {{ }};
         //legs
         //new UnitType("benignitas") {{ }};
         //new UnitType("salus") {{ }};
@@ -989,15 +992,15 @@ public class CryonJavaMod extends Mod {
         //new UnitType("ratio") {{ }};
         //new UnitType("veritas") {{ }};
         //air
-        new UnitType("littorina") {{ }};
-        new UnitType("natica") {{ }};
-        new UnitType("murex") {{ }};
-        new UnitType("charonia") {{ }};
-        new UnitType("syrinx") {{ }};
+        //new UnitType("littorina") {{ }};
+        //new UnitType("natica") {{ }};
+        //new UnitType("murex") {{ }};
+        //new UnitType("charonia") {{ }};
+        //new UnitType("syrinx") {{ }};
         //air support
-        new UnitType("nadir") {{ }};
+        //new UnitType("nadir") {{ }};
 
-        new UnitType("apex") {{ }};
+        //new UnitType("apex") {{ }};
 
     exotic = new UnitType("exotic") {{
             constructor = PayloadUnit::create;   // 运货关键
@@ -1123,6 +1126,7 @@ public class CryonJavaMod extends Mod {
                         shake = 3f;
                         shootSound = Sounds.shootLaser;
 
+
                         // 一次连发 3 道脉冲
                         shoot = new ShootPattern() {{
                             shots = 3;
@@ -1143,6 +1147,7 @@ public class CryonJavaMod extends Mod {
                             sideWidth = 1.2f;
                             sideLength = 60f;
                             hitEffect = Fx.none;
+
                             shootEffect = Fx.none;
                             chargeEffect = Fx.none;
                             healPercent = 8f;
@@ -1429,6 +1434,89 @@ public class CryonJavaMod extends Mod {
                 }};
             }});
 
+        }};
+        threshold = new UnitType("threshold") {{
+            constructor = UnitEntity::create;
+            aiController = FlyingAI::new;
+
+            flying = true;
+            health = 150000f;          // roche 为 200000,更脆
+            armor = 22f;
+            speed = 0.58f;
+            rotateSpeed = 1.2f;
+            hitSize = 104f;
+            itemCapacity = 200;
+            targetAir = true;
+            targetGround = true;
+            faceTarget = true;
+            lowAltitude = true;
+            engineSize = 15f;
+            engineOffset = 76f;
+            engineColor = Color.valueOf("ffa31a");
+            engines.add(
+                    new UnitEngine( 52f, -40f, 15f, -90f),
+                    new UnitEngine(-52f, -40f, 15f, -90f)
+            );
+
+            ReflectShieldAbility shield = new ReflectShieldAbility();
+            shield.reflectRadius = 150f;
+            shield.reflectMaxDamage = 20000f;
+            shield.shieldCooldown = 120f;
+            shield.reflectAngleMin = 150f;
+            shield.reflectAngleMax = 210f;
+            abilities.add(shield);
+            abilities.add(new ShieldRegenFieldAbility(1200f, 30000f, 60f, 480f));
+            abilities.add(new ThresholdFieldAbility(380f, 600f, 10f));
+
+            // ---------- 主武器:黑洞炮 ----------
+            weapons.add(new Weapon("cryon-threshold-singularity") {{
+                x = 0f;
+                y = 38f;
+                mirror = false;
+                rotate = false;
+                reload = 1100f;
+                recoil = 4f;
+                shake = 8f;
+                shootY = 6f;
+                shoot.firstShotDelay = 100f;
+                chargeSound = Sounds.chargeCorvus;
+                shootSound = Sounds.shootForeshadow;
+                cooldownTime = 200f;
+
+                bullet = new BlackHoleBulletType(1.3f, 420f) {{
+                    startRadius = 8f;
+                    maxRadius = 130f;
+                    tickDamage = 500f;
+                    damageInterval = 6f;
+                    explodeRadius = 340f;
+                    explodeDamage = 40000f;
+                    chargeEffect = Fx.lancerLaserCharge;
+                }};
+            }});
+
+
+            // ---------- 一对布雷炮 ----------
+            weapons.add(new Weapon("cryon-vain-plasma-missile") {{
+                x = 46f;
+                y = 6f;
+                rotate = true;
+                rotateSpeed = 4f;
+                mirror = true;
+                alternate = true;
+                reload = 45f;
+                recoil = 4f;
+                shootY = 10f;
+                inaccuracy = 12f;
+                shootSound = Sounds.shootQuad;
+
+                bullet = new MineBulletType(8f, 1800f, 110f) {{
+                    lifetime = 480f;
+                    drag = 0.03f;          // 飞行约 266 单位后停下
+                    rangeOverride = 260f;
+                    armTime = 40f;
+                    triggerRadius = 48f;
+                }};
+            }});
         }};
 
         // craft

@@ -8,20 +8,20 @@ faceTarget: false
 targetAir: true
 targetGround: true
 itemCapacity: 10
-rotateSpeed: 3.5
+rotateSpeed: 1.58
 treadPullOffset: 2
 treadRects: [
   {
     x: -25
-    y: -25
+    y: -27
     width: 14
-    height: 50
+    height: 49
   }
   {
     x: 11
-    y: -25
+    y: -27
     width: 14
-    height: 50
+    height: 49
   }
 ]
 weapons: [
@@ -33,6 +33,10 @@ weapons: [
     mirror: false
     reload: 18
     shootSound: shoot
+    shootY: 7
+    rotateSpeed:3.5
+
+
     bullet: {
       type: BasicBulletType
       damage: 13

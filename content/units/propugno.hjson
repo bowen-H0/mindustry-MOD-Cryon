@@ -30,7 +30,7 @@ weapons: [
   {
     name: salus-weapon
     type: Weapon
-    x: 0              
+    x: 0
     y: 11
     rotate: false
     mirror: false

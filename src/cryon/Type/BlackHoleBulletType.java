@@ -131,7 +131,14 @@ public class BlackHoleBulletType extends BulletType{
         Draw.z(Layer.bullet + 5f);
 
         Draw.blend(Blending.additive);
-        Fill.light(b.x, b.y, 48, r * 2.2f, Tmp.c1.set(color).a(0.5f), Tmp.c2.set(color).a(0f));
+        // 中空外晕:用柔和的圆环代替实心径向光晕,中心保持透明
+        Draw.color(color);
+        Draw.alpha(0.12f);
+        Lines.stroke(r * 0.55f);
+        Lines.circle(b.x, b.y, r * 1.05f);
+        Draw.alpha(0.22f);
+        Lines.stroke(r * 0.28f);
+        Lines.circle(b.x, b.y, r * 1.02f);
         for(int i = 0; i < 3; i++){
             Draw.color(i == 0 ? goldColor : color);
             Draw.alpha(0.9f - i * 0.2f);
@@ -140,9 +147,6 @@ public class BlackHoleBulletType extends BulletType{
             Lines.arc(b.x, b.y, r * (1.2f + 0.14f * i), 0.3f + 0.1f * i, Time.time * (5f - i * 1.3f) + i * 120f + 180f);
         }
         Draw.blend();
-
-        Draw.color(Color.black);
-        Fill.circle(b.x, b.y, r);
 
         Draw.blend(Blending.additive);
         Draw.color(goldColor);

@@ -1442,7 +1442,7 @@ public class CryonJavaMod extends Mod {
             flying = true;
             health = 150000f;          // roche 为 200000,更脆
             armor = 22f;
-            speed = 0.58f;
+            speed = 0.70f;
             rotateSpeed = 1.2f;
             hitSize = 104f;
             itemCapacity = 200;
@@ -1450,13 +1450,8 @@ public class CryonJavaMod extends Mod {
             targetGround = true;
             faceTarget = true;
             lowAltitude = true;
-            engineSize = 15f;
+            engineSize = 20f;
             engineOffset = 76f;
-            engineColor = Color.valueOf("ffa31a");
-            engines.add(
-                    new UnitEngine( 52f, -40f, 15f, -90f),
-                    new UnitEngine(-52f, -40f, 15f, -90f)
-            );
 
             ReflectShieldAbility shield = new ReflectShieldAbility();
             shield.reflectRadius = 150f;
@@ -1471,7 +1466,7 @@ public class CryonJavaMod extends Mod {
             // ---------- 主武器:黑洞炮 ----------
             weapons.add(new Weapon("cryon-threshold-singularity") {{
                 x = 0f;
-                y = 38f;
+                y = 0f;
                 mirror = false;
                 rotate = false;
                 reload = 1100f;
@@ -1486,19 +1481,19 @@ public class CryonJavaMod extends Mod {
                 bullet = new BlackHoleBulletType(1.3f, 420f) {{
                     startRadius = 8f;
                     maxRadius = 130f;
-                    tickDamage = 500f;
+                    tickDamage = 200f;
                     damageInterval = 6f;
-                    explodeRadius = 340f;
-                    explodeDamage = 40000f;
-                    chargeEffect = Fx.lancerLaserCharge;
+                    explodeRadius = 200f;
+                    explodeDamage = 4000f;
+                    chargeEffect = Fx.none;
                 }};
             }});
 
 
             // ---------- 一对布雷炮 ----------
-            weapons.add(new Weapon("cryon-vain-plasma-missile") {{
-                x = 46f;
-                y = 6f;
+            weapons.add(new Weapon("cryon-threshold-mine") {{
+                x = 40f;
+                y = 0f;
                 rotate = true;
                 rotateSpeed = 4f;
                 mirror = true;

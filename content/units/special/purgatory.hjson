@@ -1,0 +1,100 @@
+type: mech
+name: "炼狱"
+description: "超巨型机甲。双持巨型喷火器喷出遮天蔽日的火墙，将前方的一切化为灰烬。"
+speed: 1.25
+flying: false
+health: 8000000
+armor: 1000
+hitSize: 600
+rotateSpeed: 0.8
+canDrown: false
+hovering: true
+faceTarget: true
+outlineColor: 2b1a14
+mechLegColor: 6b3b25
+mechStepParticles: true
+stepShake: 3
+mechFrontSway: 0.6
+mechSideSway: 0.4
+drownTimeMultiplier: 0
+stepSound:mechStep
+immunities: [burning, melting, slow, wet, freezing, sapped]
+
+abilities: [
+  {
+    type: ShieldRegenFieldAbility
+    amount: 500
+    max: 10000
+    reload: 45
+    range: 1
+  }
+]
+
+weapons: [
+  {
+    name: purgatory-flamethrower
+    x: 270
+    y: 60
+    mirror: true
+    rotate: false
+    alternate: true
+    shootCone: 25
+    reload: 3
+    shootY: 180
+    recoil: 4
+    shake: 2
+    inaccuracy: 6
+    shootSound: flame
+    ejectEffect: none
+    shoot: {
+      type: ShootSpread
+      shots: 5
+      spread: 7
+    }
+    bullet: {
+      type: BulletType
+      damage: 8000
+      speed: 8
+      lifetime: 90
+      hitSize: 70
+      drawSize: 800
+      pierce: true
+      pierceBuilding: true
+      pierceCap: 50
+      collidesAir: true
+      collidesGround: true
+      hittable: false
+      keepVelocity: false
+      knockback: 0.4
+      buildingDamageMultiplier: 0.8
+      status: burning
+      statusDuration: 600
+      shootEffect: none
+      smokeEffect: none
+      hitEffect: {
+        type: ParticleEffect
+        particles: 6
+        lifetime: 40
+        length: 60
+        baseLength: 0
+        sizeFrom: 30
+        sizeTo: 0
+        colorFrom: "ffaa33"
+        colorTo: "551100"
+      }
+      despawnEffect: none
+      trailEffect: {
+        type: ParticleEffect
+        particles: 4
+        lifetime: 40
+        baseLength: 0
+        length: 70
+        sizeFrom: 60
+        sizeTo: 0
+        colorFrom: "ffdd55"
+        colorTo: "ff3300"
+      }
+      trailChance: 1
+    }
+  }
+]

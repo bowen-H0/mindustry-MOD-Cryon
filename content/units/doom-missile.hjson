@@ -35,7 +35,7 @@
 
       shoot: {
         type: ShootSpread
-        shots: 6
+        shots: 16
         spread: 22.5    
       }
 

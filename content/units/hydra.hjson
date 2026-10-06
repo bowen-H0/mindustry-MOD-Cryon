@@ -53,15 +53,14 @@ abilities: [
 
 ]
 weapons: [
-  # 侧双 doom 导弹 (左右对称，共 2 门)
+  # 中间一门 doom 导弹（单门，居中）
   {
-    name: hydra-side-missile-mount
+    name: hydra-doom-missile-mount
     top: true
-    x: 14
-    y: 2
+    x: 0
+    y: 0
     rotate: false
-    mirror: true
-    alternate: true
+    mirror: false
     reload: 150
     shootCone: 15
     shootSound: shootMissile
@@ -70,12 +69,11 @@ weapons: [
     shake: 12
     shootWarmupSpeed: 0.05
     minWarmup: 0.9
-
-
     bullet: {
       instantDisappear: true
       damage: 0
       spawnUnit: doom-missile
+      range: 320
       shootEffect: {
         type: MultiEffect
         effects: [
@@ -83,6 +81,72 @@ weapons: [
           { type: ParticleEffect, line: false, particles: 18, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 55, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
         ]
       }
+    }
+  },
+
+  # 两门 umbra 导弹（左右对称）
+  {
+    name: sagitta-missile-mount
+    top: true
+    x: 12
+    y: 6
+    rotate: true
+    mirror: true
+    alternate: true
+    reload: 150
+    shootCone: 15
+    shootSound: shootMissile
+    shootWarmupSpeed: 0.05
+    minWarmup: 0.9
+    bullet: {
+      instantDisappear: true
+      damage: 0
+      spawnUnit: umbra-missile
+      range: 320
+      shootEffect: {
+        type: MultiEffect
+        effects: [
+          { type: ParticleEffect, line: false, particles: 6, lifetime: 100, sizeFrom: 18, sizeTo: 0, length: 45, cone: 360, colorFrom: "8a4212ff", colorTo: "8a421200" }
+          { type: ParticleEffect, line: false, particles: 15, lifetime: 25, sizeFrom: 12, sizeTo: 2, length: 50, cone: 15, colorFrom: ffa64d, colorTo: ff4d00, rotWithParent: true, baseRotation: 180 }
+        ]
+      }
+    }
+  },
+
+  # 两门蜂巢（高速连发小导弹，左右对称）
+  {
+    name: hydra-hive-mount
+    top: true
+    x: 18
+    y: -4
+    rotate: true
+    rotateSpeed: 10
+    mirror: true
+    alternate: true
+    reload: 5
+    shootCone: 25
+    inaccuracy: 8
+    shootSound: missile
+    bullet: {
+      type: MissileBulletType
+      speed: 5
+      lifetime: 64
+      damage: 14
+      splashDamage: 30
+      splashDamageRadius: 26
+      width: 6
+      height: 9
+      homingPower: 0.1
+      homingRange: 140
+      frontColor: ffffff
+      backColor: ffa64d
+      trailColor: ffa64d
+      trailLength: 8
+      trailWidth: 1.2
+      shootEffect: shootSmall
+      smokeEffect: shootSmallSmoke
+      hitEffect: blastExplosion
+      despawnEffect: blastExplosion
     }
   }
 ]

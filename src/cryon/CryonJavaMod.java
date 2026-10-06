@@ -30,6 +30,7 @@ import mindustry.content.*;
 import mindustry.ctype.Content;
 import mindustry.ctype.UnlockableContent;
 import mindustry.entities.abilities.ShieldRegenFieldAbility;
+import mindustry.entities.units.WeaponMount;
 import mindustry.game.EventType.*;
 import mindustry.content.TechTree.TechNode;
 import mindustry.mod.*;
@@ -1490,7 +1491,8 @@ public class CryonJavaMod extends Mod {
             }});
 
 
-            // ---------- 一对布雷炮 ----------
+            final Rand mineRand = new Rand();
+
             weapons.add(new Weapon("cryon-threshold-mine") {{
                 x = 40f;
                 y = 0f;
@@ -1502,16 +1504,36 @@ public class CryonJavaMod extends Mod {
                 recoil = 4f;
                 shootY = 10f;
                 inaccuracy = 12f;
+                shootCone = 30f;
                 shootSound = Sounds.shootQuad;
 
                 bullet = new MineBulletType(8f, 1800f, 110f) {{
                     lifetime = 480f;
-                    drag = 0.03f;          // 飞行约 266 单位后停下
+                    drag = 0.03f;
                     rangeOverride = 260f;
                     armTime = 40f;
                     triggerRadius = 48f;
                 }};
-            }});
+            }
+                @Override
+                public void update(Unit unit, WeaponMount mount){
+                    // 玩家操控时保持原样
+                    if(!unit.isPlayer()){
+                        // 每 60 tick 换一个随机方向和距离，同一时间段内保持不变，炮管有时间转过去
+                        int bucket = (int)(Time.time / 60f);
+                        mineRand.setSeed(unit.id * 31L + (mount.side ? 1 : 0) * 7919L + bucket * 104729L);
+
+                        float ang = mineRand.random(360f);
+                        float dst = mineRand.random(80f, 250f);
+
+                        mount.aimX = unit.x + Angles.trnsx(ang, dst);
+                        mount.aimY = unit.y + Angles.trnsy(ang, dst);
+                        mount.shoot = true;
+                        mount.rotate = true;
+                    }
+                    super.update(unit, mount);
+                }
+            });
         }};
 
         // craft

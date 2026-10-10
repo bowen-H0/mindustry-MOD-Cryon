@@ -49,7 +49,7 @@ jobs:
       - name: Rename jar to cryon-mod.jar
         run: |
           ls -la build/libs/
-          mv build/libs/mindustry-MOD-Java.jar build/libs/cryon-mod.jar
+          mv build/libs/mindustry-MOD-Cryon.jar build/libs/cryon-mod.jar
           ls -la build/libs/
 
       - name: Create Release

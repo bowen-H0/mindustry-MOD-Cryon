@@ -18,6 +18,7 @@ import cryon.Generator.CryonPlanetGenerator;
 import cryon.Injector.DeuteriumReactorInjector;
 import cryon.Injector.HeatBoostTurret;
 import cryon.Injector.MeltingDrillInjector;
+import cryon.Script.*;
 import cryon.TechTree.AravisTechTree;
 import cryon.TechTree.CryonTechTree;
 import cryon.TechTree.ModPlanetTechTree;
@@ -74,6 +75,7 @@ import static mindustry.world.meta.StatValues.ammo;
 public class CryonJavaMod extends Mod {
 
 
+
     public CryonJavaMod() {}
 
     public static FluxBarrier fluxBarrier;
@@ -89,6 +91,8 @@ public class CryonJavaMod extends Mod {
     public static ConstructorNode constructorNode;
     public static GenericConstructorSource waveEmitter;
     public static GenericConstructorSource waveReactor;
+
+    public static JavaProcessor javaProcessor;
 
 
     public static GenericCrafter cryoElectrolyzer;
@@ -955,6 +959,18 @@ public class CryonJavaMod extends Mod {
                     },
                     180f
             ));
+            recipes.add(new CraftRecipe(
+                    new ItemStack[]{
+                            new ItemStack(CryonItems.armorAlloy, 2),
+                            new ItemStack(Items.coal, 4),
+                            new ItemStack(CryonItems.manganese, 2),
+                            new ItemStack(CryonItems.nickel, 3)
+                    },
+                    new ItemStack[]{
+                            new ItemStack(CryonItems.ashesAlloy, 2)
+                    },
+                    240f
+            ));
 
             drawer = new DrawMulti(
                     new DrawDefault(),
@@ -1634,6 +1650,23 @@ public class CryonJavaMod extends Mod {
 
         OblivionUnit.load();
         DestroyerUnit.load();
+        ScriptRegistry.register("example", "示例脚本", ExampleScript::new);
+        ScriptRegistry.register("astro_observatory", "天文观测", AstroObservatoryScript::new);
+
+        ScriptRegistry.register("orbital_strike", "轨道打击", OrbitalStrikeScript::new);
+        ScriptRegistry.register("nuke_strike", "核弹打击", NukeStrikeScript::new);
+
+
+
+        javaProcessor = new JavaProcessor("java-processor") {{
+            requirements(Category.logic, BuildVisibility.sandboxOnly, with());
+            health=99999999;
+            canOverdrive = false;
+            targetable = false;
+            forceDark = true;
+            privileged = true;
+            size = 1;
+        }};
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -1860,6 +1893,14 @@ public class CryonJavaMod extends Mod {
         Planet cryonPlanet = Vars.content.planet("cryon-cryon");
         Planet aravisPlanet = Vars.content.planet("cryon-aravis");
 
+
+        if(peak != null)     peak.abilities.add(new IgnoreDamageAbility(0.25f));
+        if(buffer != null)   buffer.abilities.add(new IgnoreDamageAbility(0.1f));
+        if(guardian != null) guardian.abilities.add(new IgnoreDamageAbility(0.2f));
+        CryonContent.unit("blaze").abilities.add(new IgnoreDamageAbility(0.25f));
+
+        CryonContent.unit("eternal").abilities.add(new IgnoreDamageAbility(0.3f));
+
         // generator
         if(cryonPlanet != null) {
             cryonPlanet.defaultEnv = Env.terrestrial;
@@ -1902,7 +1943,7 @@ public class CryonJavaMod extends Mod {
                 r.unitPayloadsExplode = true;
                 r.waveTeam=Team.malis;
                 r.fog=true;
-                r.solarMultiplier=5.0f;
+                r.solarMultiplier=1.0f;
 
             };
 

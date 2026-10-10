@@ -1,0 +1,69 @@
+type: ItemTurret
+name: "凿岩"
+description: "重型破甲炮塔。发射镍芯钻弹,射速极慢。"
+size: 3
+health: 2000
+range: 190
+reload: 90
+inaccuracy: 2
+shootCone: 4
+rotateSpeed: 3
+shootY: 9
+recoil: 6
+shake: 4
+targetAir: false
+targetGround: true
+maxAmmo: 12
+ammoPerShot: 2
+ammoUseEffect: casing3
+ammoTypes: {
+  nickel: {
+    type: ArtilleryBulletType
+    speed: 3
+    lifetime: 63
+    damage: 0
+    splashDamage: 220
+    splashDamageRadius: 40
+    buildingDamageMultiplier: 0.6
+    collidesTiles: false
+    collidesGround: true
+    scaleLife: true
+    width: 14
+    height: 14
+    ammoMultiplier: 1
+    knockback: 1.5
+    status: blasted
+    statusDuration: 120
+    backColor: "8fa3ad"
+    frontColor: "ffffff"
+    trailColor: "b5c6cf"
+    trailWidth: 3
+    trailLength: 12
+    hitEffect: massiveExplosion
+    despawnEffect: massiveExplosion
+    shootEffect: shootBig
+    smokeEffect: shootBigSmoke
+    fragBullets: 6
+    fragRandomSpread: 360
+    fragVelocityMin: 0.6
+    fragBullet: {
+      type: BasicBulletType
+      damage: 40
+      speed: 4
+      lifetime: 18
+      width: 6
+      height: 12
+      pierceCap: 3
+      backColor: "8fa3ad"
+      frontColor: "ffffff"
+      hitEffect: hitBulletColor
+      despawnEffect: hitBulletColor
+    }
+  }
+}
+category: turret
+requirements: [
+  nickel/250
+  silicon/380
+  armor-alloy/260
+]

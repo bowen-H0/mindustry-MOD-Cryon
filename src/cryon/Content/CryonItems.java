@@ -25,10 +25,8 @@ public class CryonItems{
 
     // ================== 物品声明 ==================
 
-    public static Item aluminum, magnesium, titanium, scrap, silicon,
-            graphite, quartz, salt, sodium, crystalSand,
-            dryIce, cryoAlloy, farstarAlloy, nickel, neutronite,
-            phaseFabric, surgeAlloy, nanoMaterial, ferrum,steel,hardSteel,redSand, manganese, armorAlloy;
+    public static Item aluminum, magnesium, quartz, salt, sodium, crystalSand,
+            dryIce, cryoAlloy, farstarAlloy, nickel, neutronite, nanoMaterial, ferrum,steel,hardSteel,redSand, manganese, armorAlloy,ashesAlloy;
 
     // ================== 白名单 ==================
 
@@ -104,6 +102,7 @@ public class CryonItems{
         redSand = item("av-red-sand", "c1563a", 1);
         manganese = item("manganese", "b8a9c9", 1);
         armorAlloy = item("armor-alloy", "5f6b7a", 0);
+        ashesAlloy= item("ashes-alloy", "c4513a", 0);
         // ================== 白名单登记 ==================
         planet("aluminum", "cryon-cryon");
         planet("magnesium", "cryon-cryon");
@@ -118,7 +117,7 @@ public class CryonItems{
         planet("dry-ice", "cryon-cryon");
         planet("cryo-alloy", "cryon-cryon");
         planet("farstar-alloy", "cryon-cryon");
-        planet("nickel", "cryon-cryon");
+        planet("nickel", "cryon-cryon","cryon-aravis");
         planet("neutronite", "cryon-cryon");
         planet("phase-fabric", "cryon-cryon");
         planet("surge-alloy", "cryon-cryon");

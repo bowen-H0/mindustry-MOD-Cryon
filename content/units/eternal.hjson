@@ -76,7 +76,7 @@ weapons: [
       ]
       fragBullet: {
         type: BasicBulletType
-        damage: 45
+        damage: 35
         speed: 12
         lifetime: 18
         width: 14
@@ -101,7 +101,7 @@ weapons: [
         despawnShake: 4
         fragBullet: {
           type: LaserBulletType
-          damage: 50
+          damage: 35
           width: 16
           length: 90
           lifetime: 18

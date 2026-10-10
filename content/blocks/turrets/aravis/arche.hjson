@@ -1,6 +1,6 @@
 type: ItemTurret
 name: "始祖"
-description: "重型火焰喷射塔。以煤炭为燃料，喷出大范围的强力火焰，灼烧并穿透前方所有敌人。"
+description: "重型火焰喷射塔。灼烧并穿透前方所有敌人。"
 size: 3
 health: 2400
 range: 110
@@ -62,8 +62,8 @@ ammoTypes: {
 }
 category: turret
 requirements: [
-  armor-alloy/100
-  silicon/120
-  lead/150
-  copper/200
+  armor-alloy/200
+  silicon/220
+  lead/350
+  copper/400
 ]

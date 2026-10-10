@@ -87,6 +87,8 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.ITEM, "hard-steel", "steel");
 
         addAuto(Kind.ITEM, "armor-alloy", "manganese");
+        addAuto(Kind.ITEM, "ashes-alloy", "armor-alloy");
+
 
 
 
@@ -97,6 +99,9 @@ public class AravisTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.ITEM, "coal", "ferrum");
         addAuto(Kind.ITEM, "silicon", "coal");
+
+        addAuto(Kind.ITEM, "nickel", "manganese");
+
 
 
 

@@ -63,7 +63,7 @@ ammoTypes: {
 }
 category: turret
 requirements: [
-  ferrum/160
-  armor-alloy/120
-  silicon/80
+  ferrum/360
+  armor-alloy/420
+  silicon/380
 ]

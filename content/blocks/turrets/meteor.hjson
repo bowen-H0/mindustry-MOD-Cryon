@@ -1,24 +1,50 @@
 type: ItemTurret
 name: "陨星"
-description: "专精防空炮塔。"
+description: "专精防空炮塔。连续齐射大量追踪导弹。"
 size: 4
 health: 900
 range: 320
-reload: 30
-inaccuracy: 0
+reload: 40
+inaccuracy: 8
 targetAir: true
 targetGround: false
 maxAmmo: 20
+shoot: {
+  type: ShootAlternate
+  shots: 8
+  shotDelay: 4
+  spread: 6
+  barrels: 4
+}
 drawer: {
   type: DrawTurret
   basePrefix: cryon-
 }
+shootY: 10
 ammoTypes: {
   titanium: {
-    type: BasicBulletType
-    instantDisappear: true
-    damage: 0
-    spawnUnit: meteor-missile
+    type: MissileBulletType
+    speed: 4
+    lifetime: 85
+    damage: 12
+    width: 8
+    height: 8
+    shrinkY: 0
+    homingPower: 0.1
+    homingRange: 100
+    weaveScale: 8
+    weaveMag: 2
+    collidesGround: false
+    splashDamage: 30
+    splashDamageRadius: 30
+    ammoMultiplier: 4
+    backColor: ffd37f
+    frontColor: ffffff
+    trailColor: ffd37f
+    trailLength: 8
+    trailWidth: 1.5
+    hitEffect: blastExplosion
+    despawnEffect: blastExplosion
   }
 }
 category: turret

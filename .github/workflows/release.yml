@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up PATH
+        run: |
+          echo "${ANDROID_HOME}/build-tools/34.0.0" >> $GITHUB_PATH
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Read version from mod.hjson
+        id: version
+        run: |
+          VERSION=$(grep -E '^[[:space:]]*version[[:space:]]*:' mod.hjson \
+                    | head -n 1 \
+                    | sed -E 's/.*version[[:space:]]*:[[:space:]]*//' \
+                    | tr -d '"' \
+                    | tr -d "'" \
+                    | xargs)
+          if [ -z "$VERSION" ]; then
+            echo "❌ 无法从 mod.hjson 读取版本号"
+            exit 1
+          fi
+          TAG="v$VERSION"
+          echo "读取到版本: $VERSION"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build mod jar
+        run: |
+          chmod +x ./gradlew
+          ./gradlew deploy
+
+      - name: Rename jar to cryon-mod.jar
+        run: |
+          ls -la build/libs/
+          mv build/libs/mindustry-MOD-Java.jar build/libs/cryon-mod.jar
+          ls -la build/libs/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          body: |
+            Alpha test version: contains bugs, mechanics subject to change.
+          files: build/libs/cryon-mod.jar
+          draft: false
+          prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

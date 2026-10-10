@@ -1,0 +1,21 @@
+type: Drill
+name: "拓展钻头"
+description: "进阶钻头。需要电力驱动,可用水加速。"
+size: 3
+health: 320
+tier: 3
+drillTime: 400
+category: production
+hasPower: true
+consumes: {
+  power: 1.1
+}
+requirements: [
+  armor-alloy/140
+  silicon/240
+  copper/140
+]
+blockedItems: []
+liquidCapacity: 20
+itemCapacity: 20
+liquidBoostIntensity: 1.6

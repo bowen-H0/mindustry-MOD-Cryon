@@ -1,0 +1,13 @@
+type: SolarGenerator
+name: "大型风蚀太阳能板"
+description: "风蚀太阳能板的大型版本。采用更大的集光面积和多层光电转换层,单块输出可观,适合大规模基地的稳定供电。"
+size: 5
+health: 900
+powerProduction: 3.0
+category: power
+buildVisibility: shown
+requirements: [
+  ashes-alloy/480
+  silicon/560
+  copper/420
+]

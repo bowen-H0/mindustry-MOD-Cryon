@@ -15,6 +15,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.consumers.*;
 import mindustry.world.meta.*;
 
@@ -41,10 +42,12 @@ public class MultiRecipeCrafter extends GenericCrafter {
         super(name);
         configurable = true;   // 改动：需要弹出配置 UI，必须允许配置
         saveConfig = true;     // 存档要记住玩家选的配方
+
     }
 
     @Override
     public void init() {
+
         config(Integer.class, (MultiRecipeCrafterBuild build, Integer value) -> {
             if (value == null) return;
             if (value != -1 && (value < 0 || value >= recipes.size)) return;
@@ -82,7 +85,10 @@ public class MultiRecipeCrafter extends GenericCrafter {
         stats.add(Stat.output, table -> {
             table.row();
             for (CraftRecipe r : recipes) {
+                if (!recipeVisible(r)) continue;
                 table.table(Styles.grayPanel, t -> {
+
+
                     t.table(in -> {
                         int len = 0;
                         if (r.itemReq != null) {
@@ -120,6 +126,20 @@ public class MultiRecipeCrafter extends GenericCrafter {
                 table.row();
             }
         });
+    }
+    /** 配方所需的原材料(物品、液体)全部已解锁才显示(战役外恒为 true) */
+    protected boolean recipeVisible(CraftRecipe r) {
+        if (r.itemReq != null) {
+            for (ItemStack s : r.itemReq) {
+                if (!s.item.unlockedNow()) return false;
+            }
+        }
+        if (r.liquidReq != null) {
+            for (LiquidStack s : r.liquidReq) {
+                if (!s.liquid.unlockedNow()) return false;
+            }
+        }
+        return true;
     }
 
     public class MultiRecipeCrafterBuild extends GenericCrafterBuild {
@@ -251,18 +271,23 @@ public class MultiRecipeCrafter extends GenericCrafter {
             }
         }
 
-        // 改动：新增配置面板，点击方块后弹出，展示每个配方的代表图标供玩家选择
         @Override
         public void buildConfiguration(Table table) {
-            if (recipes.isEmpty()) return;
+            int visible = 0;
+            for (CraftRecipe r : recipes) if (recipeVisible(r)) visible++;
+            if (visible == 0) return;
 
+            final int shown = visible;
             table.table(Styles.black6, t -> {
                 t.defaults().size(42f).pad(2f);
 
-                int cols = Math.max(1, (int) Math.sqrt(recipes.size) + 1);
-                int i = 0;
-                for (CraftRecipe r : recipes) {
-                    int index = i;
+                int cols = Math.max(1, (int) Math.sqrt(shown) + 1);
+                int count = 0;
+                for (int i = 0; i < recipes.size; i++) {
+                    CraftRecipe r = recipes.get(i);
+                    if (!recipeVisible(r)) continue;
+
+                    int index = i;   // 真实下标
                     Item icon = representativeItem(r);
 
                     ImageButton b = t.button(
@@ -273,8 +298,7 @@ public class MultiRecipeCrafter extends GenericCrafter {
                     ).get();
                     b.update(() -> b.setChecked(currentRecipe == index));
 
-                    i++;
-                    if (i % cols == 0) t.row();
+                    if (++count % cols == 0) t.row();
                 }
             });
         }
@@ -284,6 +308,7 @@ public class MultiRecipeCrafter extends GenericCrafter {
             if (sensor == LAccess.config) return currentRecipe == -1 ? null : recipe().outputItems != null ? recipe().outputItems[0].item : null;
             return super.senseObject(sensor);
         }
+
 
 
         @Override
@@ -311,7 +336,6 @@ public class MultiRecipeCrafter extends GenericCrafter {
         }
     }
 
-    /** 单条配方：输入物品/液体，输出物品/液体，独立的制作耗时 */
     public static class CraftRecipe {
         public ItemStack[] itemReq;
         public LiquidStack[] liquidReq;

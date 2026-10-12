@@ -36,6 +36,7 @@ import mindustry.game.EventType.*;
 import mindustry.content.TechTree.TechNode;
 import mindustry.mod.*;
 import mindustry.type.*;
+import mindustry.type.weapons.PointDefenseWeapon;
 import mindustry.type.weapons.RepairBeamWeapon;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
@@ -1636,7 +1637,165 @@ public class CryonJavaMod extends Mod {
         new HeatConductor("cryo-heat-redirector") {{ }};
         new HeatProducer("cryo-electric-heater") {{ }};
         new HeatProducer("heating-furnace") {{ }};
+        //  HYPERION CLASS DREADNOUGHT
+        UnitType hyperion = new UnitType("hyperion") {{
+            constructor = UnitEntity::create;
+            aiController = FlyingAI::new;
 
+            flying = true;
+            health = 500000f;
+            armor = 30f;
+            speed = 0.25f;
+            rotateSpeed = 0.6f;
+            hitSize = 200.f;
+            itemCapacity = 5000;
+
+            targetAir = true;
+            targetGround = true;
+            faceTarget = false;
+            lowAltitude = true;
+
+            engineSize = 0f;
+            engineOffset = 200f;
+            float eY = -160f;
+            engines.add(
+                    new UnitEngine(  0f, eY,        30f, -90f),   // 中央主引擎
+                    new UnitEngine(-50f, eY+20,  10f, -90f),   // 左内
+                    new UnitEngine( 50f, eY+20,  10f, -90f)  // 右内
+            );
+
+
+            // ---------- 武器系统 ----------
+            Color hyperionBack  = Color.valueOf("4fa8ff");   // 科技蓝
+            Color hyperionFront = Color.valueOf("e6f4ff");
+
+
+
+            int pdPerSide = 12;
+            for(int i = 0; i < pdPerSide; i++){
+                float t = i / (float)(pdPerSide - 1);       // 0 → 1
+                float py = Mathf.lerp(100f, -100f, t);      // +100 → -100 线性
+                float px = 20f;
+
+                weapons.add(new PointDefenseWeapon("cryon-hyperion-pd") {{
+                    x = px;
+                    y = py;
+                    mirror = true;
+                    rotate = true;
+                    rotateSpeed = 12f;
+                    reload = 4f;
+                    recoil = 0.3f;
+                    shootY = 4f;
+                    shootCone = 60f;
+                    inaccuracy = 3f;
+                    shootSound = Sounds.shootLaser;
+
+                    color = hyperionBack;
+
+                    bullet = new PointBulletType() {{
+                        damage = 80f;
+                        maxRange = 200f;
+                        lifetime = 20f;
+                        collidesAir = true;
+                        collidesGround = false;
+                        speed = 0f;
+                        trailColor = hyperionBack;
+                        trailWidth = 1.5f;
+                        trailLength = 6;
+                        hitColor = hyperionFront;
+                        lightColor = hyperionBack;
+                        lightRadius = 20f;
+                        lightOpacity = 0.5f;
+                        hitEffect = Fx.hitLaserBlast;
+                        despawnEffect = Fx.none;
+                        shootEffect = Fx.none;
+                        smokeEffect = Fx.none;
+                    }};
+                }});
+            }
+            float[][] vlsPos = {{-30f, 0}, {30f, 0}, {-30f, -40}, {30f, -40}};
+            for(float[] p : vlsPos){
+                weapons.add(new Weapon("cryon-hyperion-vls") {{
+                    x = p[0];
+                    y = p[1];
+                    mirror = false;
+                    rotate = true;
+                    rotateSpeed = 3f;
+                    reload = 240f;          // 4 秒一轮
+                    recoil = 2f;
+                    shootY = 12f;
+                    inaccuracy = 8f;
+                    shootCone = 40f;
+                    shootSound = Sounds.shootMissileLong;
+
+                    shoot = new ShootPattern() {{
+                        shots = 12;         // 12 发齐射 × 4 组 = 48
+                        shotDelay = 3f;
+                        firstShotDelay = 0f;
+                    }};
+
+                    bullet = new BasicBulletType(9f, 260f) {{
+                        lifetime = 90f;
+                        collidesAir = true;
+                        collidesGround = true;
+                        homingPower = 0.08f;
+                        homingRange = 320f;
+                        width = 8f;
+                        height = 18f;
+                        backColor = hyperionBack;
+                        frontColor = hyperionFront;
+                        trailColor = hyperionBack;
+                        trailWidth = 3f;
+                        trailLength = 14;
+                        hitColor = hyperionFront;
+                        lightColor = hyperionBack;
+                        lightRadius = 40f;
+                        lightOpacity = 0.6f;
+
+                        splashDamage = 120f;
+                        splashDamageRadius = 60f;
+                        hitEffect = despawnEffect = Fx.massiveExplosion;
+                        shootEffect = Fx.shootSmokeTitan;
+                    }};
+                }});
+            }
+            float[][] railPos = {{0f, 50f}, {-40f, -70f}, {40f, -70f}};
+            for(float[] p : railPos){
+                weapons.add(new Weapon("cryon-hyperion-railgun") {{
+                    x = p[0];
+                    y = p[1];
+                    mirror = false;         // 手动摆位,不做镜像
+                    rotate = true;
+                    rotateSpeed = 1.2f;
+                    reload = 900f;          // 15 秒一发
+                    recoil = 14f;
+                    shake = 12f;
+                    shootY = 40f;
+                    cooldownTime = 300f;
+                    shootSound = Sounds.shootCorvus;
+
+                    bullet = new RailBulletType() {{
+                        length = 1600f;              // 覆盖大半个屏幕
+                        damage = 6000f;              // 主炮级伤害
+                        pierceDamageFactor = 0.5f;
+                        pointEffectSpace = 24f;
+                        hitShake = 14f;
+                        hitColor = hyperionBack;
+                        collidesAir = true;
+                        collidesGround = true;
+                        pierceBuilding = true;
+
+                        shootEffect   = CryonFx.railgunShoot(hyperionFront, hyperionBack);
+                        hitEffect     = CryonFx.railgunHit(hyperionFront, hyperionBack);
+                        pierceEffect  = CryonFx.railgunPierce(hyperionFront, hyperionBack);
+                        despawnEffect = CryonFx.railgunDespawn(hyperionFront, hyperionBack);
+                        pointEffect   = CryonFx.railgunTrail(hyperionFront, hyperionBack);
+                    }};
+                }});
+            }
+
+
+        }};
 
 
 

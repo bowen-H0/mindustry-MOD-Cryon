@@ -54,6 +54,8 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.LIQUID, "water", "dry-ice");
         addAuto(Kind.LIQUID, "cryofluid", "water");
         addAuto(Kind.LIQUID, "chlorine", "water");
+        addAuto(Kind.LIQUID, "hot-steam", "water");
+        addAuto(Kind.LIQUID, "cold-steam", "water");
 
 
         // ---- BLOCK ----
@@ -265,6 +267,24 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "beacon", "gem");
         addAuto(Kind.BLOCK, "kismet", "beacon");
 
+        addAuto(Kind.BLOCK, "fuel-rod", "hydrothermal-generator");
+
+        addAuto(Kind.BLOCK, "moderator-rod", "fuel-rod");
+        addAuto(Kind.BLOCK, "neutron-reflector", "fuel-rod");
+        addAuto(Kind.BLOCK, "control-rod", "fuel-rod");
+
+        addAuto(Kind.BLOCK, "neutron-source", "control-rod");
+        addAuto(Kind.BLOCK, "reactor-controller", "control-rod");
+
+        addAuto(Kind.BLOCK, "reactor-feeder", "fuel-rod");
+
+        addAuto(Kind.BLOCK, "heat-pipe", "fuel-rod");
+        addAuto(Kind.BLOCK, "heat-pipe-router", "heat-pipe");
+
+        addAuto(Kind.BLOCK, "stirling-generator", "heat-pipe");
+        addAuto(Kind.BLOCK, "steam-turbine", "heat-pipe");
+
+        addAuto(Kind.BLOCK, "condenser", "steam-turbine");
 
 
 
@@ -335,6 +355,8 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.SECTOR, "magnificent-rift", "cryon-sector-shattered-shoal");
         addAuto(Kind.SECTOR, "frost-highway", "magnificent-rift");
         addAuto(Kind.SECTOR, "industrial-ruins", "frost-highway");
+        addAuto(Kind.SECTOR, "outer-belt", "industrial-ruins");
+
 
         addAuto(Kind.SECTOR, "twilight-icefield", "magnificent-rift");
         addAuto(Kind.SECTOR, "desolate-plain", "twilight-icefield");

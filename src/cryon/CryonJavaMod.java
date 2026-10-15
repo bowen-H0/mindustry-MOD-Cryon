@@ -122,6 +122,18 @@ public class CryonJavaMod extends Mod {
     public static UnitType roche;
     public static UnitType threshold;
 
+    public static RBMKReactor.ReactorPart fuelRod;
+    public static RBMKReactor.ReactorPart moderator;
+    public static RBMKReactor.ReactorPart reflector;
+    public static RBMKReactor.ReactorPart control;
+    public static RBMKReactor.ReactorPart source;
+    public static RBMKReactor.StirlingGenerator stirling;
+    public static RBMKReactor.ReactorFeeder reactorFeeder;
+    public static RBMKReactor.ReactorController reactorController;
+
+
+
+
 
 
 
@@ -1793,11 +1805,113 @@ public class CryonJavaMod extends Mod {
                     }};
                 }});
             }
+            
 
 
         }};
+        // 注意：CryonItems.load() 必须在这段代码之前执行，否则 CryonItems.xxx 为 null
 
+        fuelRod = new RBMKReactor.ReactorPart("fuel-rod", RBMKReactor.Kind.fuel){{
+            requirements(Category.power, with(
+                    CryonItems.neutronite, 10,
+                    CryonItems.aluminum, 15,
+                    Items.graphite, 10
+            ));
+        }};
 
+        moderator = new RBMKReactor.ReactorPart("moderator-rod", RBMKReactor.Kind.moderator){{
+            requirements(Category.power, with(
+                    Items.graphite, 20,
+                    CryonItems.aluminum, 10
+            ));
+        }};
+
+        reflector = new RBMKReactor.ReactorPart("neutron-reflector", RBMKReactor.Kind.reflector){{
+            requirements(Category.power, with(
+                    CryonItems.nickel, 15,
+                    Items.graphite, 10,
+                    CryonItems.quartz, 10
+            ));
+        }};
+
+        control = new RBMKReactor.ReactorPart("control-rod", RBMKReactor.Kind.control){{
+            requirements(Category.power, with(
+                    CryonItems.nickel, 15,
+                    CryonItems.magnesium, 10,
+                    Items.silicon, 10
+            ));
+        }};
+
+        source = new RBMKReactor.ReactorPart("neutron-source", RBMKReactor.Kind.source){{
+            requirements(Category.power, with(
+                    CryonItems.neutronite, 15,
+                    Items.silicon, 15,
+                    CryonItems.nickel, 10
+            ));
+        }};
+
+        stirling = new RBMKReactor.StirlingGenerator("stirling-generator"){{
+            requirements(Category.power, with(
+                    CryonItems.aluminum, 30,
+                    CryonItems.nickel, 20,
+                    Items.silicon, 15,
+                    Items.graphite, 15
+            ));
+            powerProduction = 5f;
+        }};
+
+        reactorFeeder = new RBMKReactor.ReactorFeeder("reactor-feeder"){{
+            requirements(Category.power, with(
+                    CryonItems.aluminum, 25,
+                    CryonItems.nickel, 15,
+                    Items.silicon, 20
+            ));
+        }};
+
+        reactorController = new RBMKReactor.ReactorController("reactor-controller"){{
+            requirements(Category.power, with(
+                    Items.silicon, 40,
+                    CryonItems.nanoMaterial, 15,
+                    CryonItems.farstarAlloy, 10,
+                    CryonItems.nickel, 20
+            ));
+        }};
+
+        // 液体（必须在 Condenser / SteamTurbine 之前）
+        RBMKFluid.loadLiquids();
+
+        // 方块
+        RBMKFluid.HeatPipe heatPipe = new RBMKFluid.HeatPipe("heat-pipe"){{
+            requirements(Category.power, with(
+                    CryonItems.aluminum, 2,
+                    Items.graphite, 1
+            ));
+        }};
+
+        RBMKFluid.HeatPipeRouter heatPipeRouter = new RBMKFluid.HeatPipeRouter("heat-pipe-router"){{
+            requirements(Category.power, with(
+                    CryonItems.aluminum, 4,
+                    Items.graphite, 2,
+                    CryonItems.nickel, 1
+            ));
+        }};
+
+        RBMKFluid.Condenser condenser = new RBMKFluid.Condenser("condenser"){{
+            requirements(Category.power, with(
+                    CryonItems.aluminum, 30,
+                    CryonItems.dryIce, 20,
+                    CryonItems.nickel, 15
+            ));
+        }};
+
+        RBMKFluid.SteamTurbine steamTurbine = new RBMKFluid.SteamTurbine("steam-turbine"){{
+            requirements(Category.power, with(
+                    CryonItems.nickel, 40,
+                    CryonItems.aluminum, 30,
+                    CryonItems.farstarAlloy, 10,
+                    Items.silicon, 25
+            ));
+        }};
 
 
 

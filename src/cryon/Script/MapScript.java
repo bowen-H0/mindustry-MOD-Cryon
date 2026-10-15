@@ -4,7 +4,7 @@ import arc.scene.ui.layout.Table;
 import arc.util.io.*;
 import cryon.Type.JavaProcessor.JavaProcessorBuild;
 import mindustry.game.Team;
-
+import arc.audio.Sound;
 /**
  * Java 处理器脚本基类。
  * 继承它、重写需要的方法，然后在 ScriptRegistry 里注册，
@@ -13,6 +13,11 @@ import mindustry.game.Team;
 public abstract class MapScript {
     /** 所属的处理器建筑（attach 之后可用） */
     public JavaProcessorBuild build;
+
+    /** 播放定点音效（带空值保护） */
+    public static void snd(Sound s, float x, float y, float volume, float pitch) {
+        if(s != null) s.at(x, y, pitch, volume);
+    }
 
     /** 由处理器调用：绑定建筑并初始化 */
     public final void attach(JavaProcessorBuild build) {

@@ -1,5 +1,6 @@
 package cryon.Script;
 
+import arc.audio.Sound;
 import arc.graphics.Color;
 import arc.math.Interp;
 import arc.math.Mathf;
@@ -65,6 +66,13 @@ public class NukeStrikeScript extends MapScript {
     private int buildPtr;
     private final IntSet hitUnits = new IntSet();
 
+    private int lastBeep = -1;
+    private float rumbleTimer;
+
+    /** 全局音效：不受距离衰减，联机时只在有画面的端播放 */
+    private static void snd2D(Sound s, float volume, float pitch) {
+        if(s != null && !headless) s.play(volume, pitch, 0f);
+    }
     @Override
     protected void init() {
         alive = true;
@@ -170,17 +178,29 @@ public class NukeStrikeScript extends MapScript {
                         if(!noTarget){
                             phase = LOCK;
                             Effect.shake(3f, 20f, tx, ty);
+                            snd(Sounds.loopThoriumReactor, tx, ty, 1.2f, 0.7f);
+
                         }
                     }
                 }
             }
             case LOCK -> {
                 remaining -= d;
+                int sec = (int)Math.ceil(remaining / 60f);
+                if(sec <= 10 && sec > 0 && sec != lastBeep){
+                    lastBeep = sec;
+                    float p = 1f + (10 - sec) * 0.08f;
+                    snd(Sounds.click, x(), y(), 1f, p);
+                    snd2D(Sounds.click, 0.6f, p);
+                }
                 if(remaining <= 0f){
                     remaining = 0f;
                     phase = FALL;
                     fallTimer = 0f;
+                    snd(Sounds.shootMissileLarge, tx, ty, 1.5f, 0.5f);
+                    snd2D(Sounds.shootMissileLarge, 0.9f, 0.5f);
                 }
+
             }
             case FALL -> {
                 fallTimer += d;
@@ -202,10 +222,14 @@ public class NukeStrikeScript extends MapScript {
         blastTimer = 0f;
         waveR = 0f;
         buildPtr = 0;
+        rumbleTimer = 0f;
         hitUnits.clear();
         blastBuildings.clear();
 
         Effect.shake(25f, 120f, tx, ty);
+        snd2D(Sounds.explosionReactor, 1f, 0.5f);
+        snd2D(Sounds.shockwaveTower, 1f, 0.6f);
+
 
         // 收集范围内所有会受影响的建筑，按距离排序，随冲击波推进依次结算
         for(TeamData data : state.teams.present){
@@ -367,5 +391,6 @@ public class NukeStrikeScript extends MapScript {
         // 爆炸/坠落的中间态不存档：坠落重来，爆炸中读档视为已完成
         if(phase == FALL) fallTimer = 0f;
         if(phase == BLAST) phase = DONE;
+        lastBeep = -1;
     }
 }

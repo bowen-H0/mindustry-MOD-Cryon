@@ -10,7 +10,6 @@ import mindustry.entities.Effect;
 import mindustry.game.Team;
 import mindustry.game.Teams.TeamData;
 import mindustry.gen.*;
-
 import static mindustry.Vars.*;
 
 /**
@@ -25,7 +24,7 @@ public class OrbitalStrikeScript extends MapScript {
     public static final int TRACK = 0, LOCK = 1, STRIKE = 2, COOLDOWN = 3;
     static final String[] phaseNames = {"追踪中", "已锁定", "打击中", "冷却"};
     static final Color chartColor = Color.valueOf("5ad7ff");
-
+    private int pulseCount;
     // ---- 可调参数 ----
     public float range = 400f;          // 射程：只会瞄准处理器此距离内的目标（世界单位，8 = 1 格）
     public float radius = 90f;          // 打击半径（世界单位，8 = 1 格）
@@ -132,6 +131,7 @@ public class OrbitalStrikeScript extends MapScript {
                     rx = x();
                     ry = y();
                     needsInit = false;
+                    snd(Sounds.chargeLancer, x(), y(), 0.8f, 1f);
                 }
                 reticleAlpha = Mathf.approachDelta(reticleAlpha, 1f, 0.05f);
                 rx = Mathf.lerpDelta(rx, tgt.getX(), 0.045f);
@@ -141,6 +141,7 @@ public class OrbitalStrikeScript extends MapScript {
                     phase = LOCK;
                     timer = 0f;
                     OrbitalFx.mark.at(rx, ry, radius);
+                    snd(Sounds.shootArc, rx, ry, 1f, 1.3f);
                 }
             }
             case LOCK -> {
@@ -152,6 +153,7 @@ public class OrbitalStrikeScript extends MapScript {
                     pulseTimer = 0f;
                     OrbitalFx.impact.at(rx, ry, radius);
                     Effect.shake(8f, 40f, rx, ry);
+                    snd(Sounds.explosionTitan, rx, ry, 1.2f, 0.8f);
                 }
             }
             case STRIKE -> {
@@ -182,8 +184,11 @@ public class OrbitalStrikeScript extends MapScript {
 
     /** 光束伤害脉冲：只伤害其他阵营中 targetable 的单位和建筑 */
     private void pulse() {
-        Effect.shake(2.5f, 5f, rx, ry);
-        if(net.client()) return;
+            Effect.shake(2.5f, 5f, rx, ry);
+            if(++pulseCount % 4 == 0){
+                snd(Sounds.explosion, rx, ry, 0.6f, Mathf.random(0.8f, 1.2f));   // 新增
+            }
+            if(net.client()) return;
 
         final Team own = build.team;
         final float r = radius;

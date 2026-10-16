@@ -9,6 +9,8 @@ import arc.scene.style.TextureRegionDrawable;
 import arc.util.*;
 import arc.struct.Seq;
 import cryon.Content.CryonItems;
+import cryon.Content.AravisEnvironment;
+import cryon.Content.CryonEnvironment;
 import cryon.Content.CryonSectors;
 import cryon.Content.DestroyerUnit;
 import cryon.Content.OblivionUnit;
@@ -144,6 +146,7 @@ public class CryonJavaMod extends Mod {
     @Override
     public void loadContent() {
         CryonItems.load();
+        AravisEnvironment.load();
 
 
         new Drill("melting-drill") {{ }};
@@ -1947,6 +1950,7 @@ public class CryonJavaMod extends Mod {
     // ══════════════════════════════════════════════════════════════
     @Override
     public void init() {
+        CryonEnvironment.init();
         CryonSectors.load();
         Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
         if(exist == null){
@@ -2189,6 +2193,7 @@ public class CryonJavaMod extends Mod {
                 r.lighting = true;  // 启用光照
                 r.ambientLight = Color.valueOf("03030dd9");  // 暗环境光
                 r.fire=false;
+                CryonEnvironment.applyWeather(r);
                 r.coreDestroyClear = true;
                 r.placeRangeCheck=false;
                 r.polygonCoreProtection=false;
@@ -2217,6 +2222,7 @@ public class CryonJavaMod extends Mod {
                 r.waveTeam=Team.malis;
                 r.fog=true;
                 r.solarMultiplier=1.0f;
+                AravisEnvironment.applyWeather(r);
 
             };
 

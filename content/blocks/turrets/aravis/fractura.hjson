@@ -1,0 +1,56 @@
+type: ItemTurret
+name: "破碎"
+description: "高级镍弹散射炮塔。齐射穿甲弹丸，拦截逼近的地面重装单位。"
+size: 3
+health: 2200
+range: 176
+reload: 60
+inaccuracy: 3
+shootCone: 8
+rotateSpeed: 3
+shootY: 9
+recoil: 5
+shake: 3
+targetAir: false
+targetGround: true
+maxAmmo: 24
+ammoPerShot: 3
+consumeAmmoOnce: true
+ammoUseEffect: casing3
+shoot: {
+  type: ShootSpread
+  shots: 5
+  spread: 5
+}
+ammoTypes: {
+  nickel: {
+    type: BasicBulletType
+    speed: 7
+    lifetime: 26
+    damage: 70
+    width: 8
+    height: 16
+    ammoMultiplier: 3
+    collidesAir: false
+    pierce: true
+    pierceBuilding: true
+    pierceCap: 2
+    buildingDamageMultiplier: 0.6
+    knockback: 1.2
+    backColor: "8fa3ad"
+    frontColor: "ffffff"
+    trailColor: "b5c6cf"
+    trailWidth: 1.5
+    trailLength: 5
+    hitEffect: hitBulletSmall
+    despawnEffect: hitBulletSmall
+    shootEffect: shootBig
+    smokeEffect: shootBigSmoke
+  }
+}
+category: turret
+requirements: [
+  nickel/250
+  silicon/380
+  armor-alloy/260
+]

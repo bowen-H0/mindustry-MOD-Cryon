@@ -17,6 +17,7 @@ public class AgitatorBlock extends Block {
     public float range = 200f;
     public float healthThreshold = 0.3f;
     public float convertCooldown = 120f;
+    public float targetSearchInterval = 15f;
     public Color effectColor = Color.valueOf("f4ba6e");
 
     public AgitatorBlock(String name) {
@@ -38,6 +39,15 @@ public class AgitatorBlock extends Block {
 
         public float cooldownTimer = 0f;
         public float chargeProgress = 0f;
+        private float searchTimer;
+        private Unit searchResult;
+        private final arc.func.Cons<Unit> targetFinder = u -> {
+            if(u.team != team && u.isValid() && u.within(x, y, range)
+                    && u.health <= u.maxHealth * healthThreshold
+                    && (searchResult == null || u.id < searchResult.id)){
+                searchResult = u;
+            }
+        };
 
         @Override
         public void updateTile() {
@@ -51,6 +61,9 @@ public class AgitatorBlock extends Block {
 
             if (cooldownTimer > 0f) return;
 
+            searchTimer -= Time.delta;
+            if(searchTimer > 0f) return;
+            searchTimer = targetSearchInterval;
             Unit target = findTarget();
             if (target != null) {
                 convertUnit(target);
@@ -60,17 +73,9 @@ public class AgitatorBlock extends Block {
         }
 
         protected Unit findTarget() {
-            Unit result = null;
-            for (Unit u : Groups.unit) {
-                if (u.team != team
-                        && u.isValid()
-                        && u.dst(x, y) <= range
-                        && (u.health / u.maxHealth) <= healthThreshold) {
-                    result = u;
-                    break;
-                }
-            }
-            return result;
+            searchResult = null;
+            Groups.unit.intersect(x - range, y - range, range * 2f, range * 2f, targetFinder);
+            return searchResult;
         }
 
         protected void convertUnit(Unit target) {

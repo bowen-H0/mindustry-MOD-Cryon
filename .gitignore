@@ -158,3 +158,6 @@ android/libs/
 
 # Local story notes
 /docs/story.md
+
+# Local agent instructions
+/AGENTS.md

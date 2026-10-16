@@ -4,6 +4,7 @@ import arc.files.Fi;
 import arc.struct.*;
 import arc.util.Log;
 import cryon.Content.CryonItems;
+import cryon.Features.LoadTiming;
 import mindustry.Vars;
 import mindustry.content.TechTree.TechNode;
 import mindustry.ctype.Content;
@@ -452,12 +453,17 @@ public abstract class ModPlanetTechTree {
     // ================== 入口 ==================
 
     public void run(){
+        LoadTiming.measure(getClass().getSimpleName() + " total", this::runTimed);
+    }
+
+    private void runTimed(){
 
 
 
-        registerEntries();
-        index();
-        indexContentDirs();
+        String timingPrefix = getClass().getSimpleName();
+        LoadTiming.measure(timingPrefix + " / register entries", this::registerEntries);
+        LoadTiming.measure(timingPrefix + " / index entries", this::index);
+        LoadTiming.measure(timingPrefix + " / scan content directories", this::indexContentDirs);
 
         Planet planet = rootPlanet();
         Block core = rootBlock();

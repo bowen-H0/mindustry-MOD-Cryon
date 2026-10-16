@@ -239,6 +239,7 @@ public class SafeFluxBarrierAbility extends Ability {
 
         float r = radscl * radius;
         if (r <= 0.001f) return;
+        cryon.Features.FluxShieldRenderer.drawFluxShields();
 
         Draw.color(unit.type.shieldColor(unit), Color.white, Mathf.clamp(hit));
 
@@ -260,6 +261,7 @@ public class SafeFluxBarrierAbility extends Ability {
 
     protected void drawBrokenIndicator(Unit unit) {
         if (brokenCooldown <= 0f) return;
+        cryon.Features.FluxShieldRenderer.drawFluxShields();
 
         float progress  = 1f - Mathf.clamp(brokenTimer / brokenCooldown); // 0 → 1
         float pulse     = (Mathf.sin(Time.time * 0.15f) * 0.5f + 0.5f) * 0.4f + 0.1f;

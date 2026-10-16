@@ -49,6 +49,7 @@ public class JavaProcessor extends Block {
 
         public void setScript(String id) {
             if (id == null) id = "";
+            if (scriptLocked() && !id.equals(scriptId)) return;
             if (id.equals(scriptId) && (script != null || id.isEmpty())) return;
             disposeScript();
             scriptId = id;
@@ -79,8 +80,17 @@ public class JavaProcessor extends Block {
             if (script != null && !failed) safe(script::update);
         }
 
+        public boolean scriptLocked(){
+            return cryon.Story.IntrusionMap.active()
+                    && (script instanceof VirusIntrusionScript || script instanceof cryon.Script.OrbitalStrikeScript);
+        }
+
         @Override
         public void buildConfiguration(Table table) {
+            if(scriptLocked()){
+                script.buildUI(table);
+                return;
+            }
             table.table(Styles.black6, t -> {
                 t.defaults().pad(4f);
                 t.button(Icon.list, Styles.cleari, 40f, this::showSelectDialog).size(48f);

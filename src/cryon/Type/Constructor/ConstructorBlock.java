@@ -51,8 +51,12 @@ public class ConstructorBlock extends Block {
         public float constructorProduced() { return 0f; }
         public float constructorConsumed() { return 0f; }
 
+        private final Seq<Building> linkBuffer = new Seq<>();
+
+        /** Borrowed buffer; valid until the next call on this building. */
         public Seq<Building> constructorLinks() {
-            Seq<Building> out = new Seq<>();
+            Seq<Building> out = linkBuffer;
+            out.clear();
             for (int i = 0; i < constructorLinkPositions.size; i++) {
                 var b = Vars.world.build(constructorLinkPositions.get(i));
                 if (b != null) out.add(b);

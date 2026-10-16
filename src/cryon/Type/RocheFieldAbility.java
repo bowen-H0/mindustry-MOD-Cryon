@@ -137,86 +137,17 @@ public class RocheFieldAbility extends Ability{
     }
 
     @Override
-    public void draw(Unit unit){
-        super.draw(unit);
-
-        Draw.z(layer);
-        Draw.blend(Blending.additive);   // 叠加混合,发光才够刺眼
-
-        // ===== 范围圈 =====
-        if(drawRing){
-            float charge = Mathf.clamp(timer / reload);
-            float a = 0.4f + Mathf.absin(Time.time, 30f, 0.1f) + flash * 0.2f;
-
-            // 外圈柔光 + 细亮线
-            Draw.color(color);
-            Draw.alpha(a * 0.3f);
-            Lines.stroke(7f);
-            Lines.circle(unit.x, unit.y, range);
-            Draw.alpha(a);
-            Lines.stroke(1.5f);
-            Lines.circle(unit.x, unit.y, range);
-
-            // 下一次脉冲的蓄力进度弧
-            Draw.color(Color.white);
-            Draw.alpha(0.8f);
-            Lines.stroke(2.5f);
-            Lines.arc(unit.x, unit.y, range, charge, 90f);
-
-            // 脉冲触发后从中心扩散到边缘的环
-            if(wave > 0f){
-                Draw.color(color);
-                Draw.alpha(wave * 0.8f);
-                Lines.stroke(4f * wave + 1f);
-                Lines.circle(unit.x, unit.y, range * (1f - wave));
-            }
-        }
-
-        // ===== 三颗星 =====
-        for(int i = 0; i < stars; i++){
-            starPos(unit, i);
-            float sx = tmp.x, sy = tmp.y;
-            float pulse = 1f + Mathf.absin(Time.time + i * 25f, 9f, 0.15f) + flash * 0.5f;
-            float r = coreRadius * pulse;
-
-            // 大范围红色外晕(径向渐变)
-            Fill.light(sx, sy, 40, r * glowScale,
-                    Tmp.c1.set(color).a(0.5f), Tmp.c2.set(color).a(0f));
-            // 中层亮晕
-            Fill.light(sx, sy, 32, r * glowScale * 0.4f,
-                    Tmp.c1.set(Color.white).a(0.7f), Tmp.c2.set(color).a(0f));
-
-            // 光锥:角度写死,永远水平/垂直,不随公转或机体转动
-            float len = spikeLength * pulse;
-            for(int k = 0; k < 4; k++){
-                float ang = k * 90f;                       // 0 右 / 90 上 / 180 左 / 270 下
-                float l = (k % 2 == 0) ? len : len * verticalScale;
-                spike(sx, sy, ang, l, r * 1.2f);
-            }
-            for(int k = 0; k < 4; k++){
-                spike(sx, sy, 45f + k * 90f, len * diagScale, r * 0.8f);   // 固定的斜向短锥
-            }
-
-            // 核心:白热球
-            Fill.light(sx, sy, 28, r * 2.4f,
-                    Tmp.c1.set(Color.white).a(1f), Tmp.c2.set(color).a(0f));
-            Draw.color(Color.white);
-            Fill.circle(sx, sy, r * 0.9f);
-
-            Drawf.light(sx, sy, spikeLength * 2.5f, color, 0.9f);
-        }
-
-        Draw.blend();
-        Draw.reset();
+    public void init(mindustry.type.UnitType type){
+        super.init(type);
+        // Keep orbiting stars visible when the hull is just outside the camera.
+        float extent = Math.max(range, range * orbitRatio + spikeLength * 1.3f);
+        extent = Math.max(extent, Mathf.dst(centerOffsetX, centerOffsetY) + centerSpike * 1.3f);
+        type.clipSize = Math.max(type.clipSize, extent * 2f);
     }
 
-    /** 每帧对所有带此能力的单位调用一次 */
-    public static void drawAll(){
-        Groups.unit.each(u -> {
-            for(Ability a : u.abilities){
-                if(a instanceof RocheFieldAbility r) r.drawOverlay(u);
-            }
-        });
+    @Override
+    public void draw(Unit unit){
+        drawOverlay(unit);
     }
 
     /** 画一颗星。光锥角度写死,不自转。 */

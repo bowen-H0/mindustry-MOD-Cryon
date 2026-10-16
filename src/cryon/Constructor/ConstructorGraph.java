@@ -11,6 +11,8 @@ public class ConstructorGraph {
 
     public final Seq<Building> buildings = new Seq<>(false);
 
+    private Building updater;
+
     private float lastProduced;
     private float lastConsumed;
     private float satisfaction = 1f;
@@ -40,12 +42,14 @@ public class ConstructorGraph {
     public void addBuilding(Building b) {
         if (b instanceof ConstructorBlock.ConstructorBuild cb && !buildings.contains(b)) {
             buildings.add(b);
+            considerUpdater(b);
             cb.constructorGraph = this;
         }
     }
 
     public void removeBuilding(Building b) {
         buildings.remove(b);
+        if(updater == b) updater = null;
         if (b instanceof ConstructorBlock.ConstructorBuild cb && cb.constructorGraph == this) {
             cb.constructorGraph = null;
         }
@@ -59,8 +63,21 @@ public class ConstructorGraph {
                 cb.constructorGraph = this;
             }
             if (!buildings.contains(b)) buildings.add(b);
+            considerUpdater(b);
         }
         other.buildings.clear();
+    }
+
+    private void considerUpdater(Building b){
+        if(b instanceof cryon.Type.Constructor.ConstructorNode.ConstructorNodeBuild
+                && (updater == null || b.id < updater.id)) updater = b;
+    }
+
+    public boolean isUpdater(Building b){
+        if(updater == null){
+            for(Building member : buildings) considerUpdater(member);
+        }
+        return updater == b;
     }
 
     public void reflow(Building root) {

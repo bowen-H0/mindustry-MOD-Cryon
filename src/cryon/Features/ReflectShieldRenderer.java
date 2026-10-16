@@ -3,9 +3,9 @@ package cryon.Features;
 import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.Gl;
-import arc.graphics.Pixmap;
 import arc.graphics.Texture;
 import arc.graphics.gl.FrameBuffer;
+import arc.graphics.gl.GLOnlyTextureData;
 import arc.graphics.gl.Shader;
 import arc.graphics.g2d.Draw;
 import arc.scene.ui.layout.Scl;
@@ -26,13 +26,9 @@ public class ReflectShieldRenderer {
     private static final float[] data = new float[MAX * 4];
     private static int count = 0;
 
-    private static float lastLog = -9999f;
-    private static int called = 0;
-    private static int submitted = 0;
-    private static int executed = 0;
-
     public static void submit(float x, float y, float radius, float progress){
-        submitted++;
+        if(lensFailed) return;
+        if(count == 0) drawReflectShields();
         if(count >= MAX) return;
         int i = count * 4;
         data[i] = x;
@@ -76,11 +72,8 @@ public class ReflectShieldRenderer {
 
         if(sceneTex == null || sceneTex.width != w || sceneTex.height != h){
             if(sceneTex != null) sceneTex.dispose();
-            Pixmap pm = new Pixmap(w, h);
-            sceneTex = new Texture(pm);
-            pm.dispose();
-            sceneTex.bind();
-            Gl.texImage2D(Gl.texture2d, 0, Gl.rgb, w, h, 0, Gl.rgb, Gl.unsignedByte, null);
+            // GPU storage only: no full-screen CPU Pixmap or duplicate upload.
+            sceneTex = new Texture(new GLOnlyTextureData(w, h, 0, Gl.rgb, Gl.rgb, Gl.unsignedByte));
             sceneTex.setFilter(Texture.TextureFilter.linear);
             sceneTex.setWrap(Texture.TextureWrap.clampToEdge);
         }
@@ -88,34 +81,20 @@ public class ReflectShieldRenderer {
 
     public static void drawReflectShields() {
 
-        called++;
-        if(called == 1) Log.info("[ReflectShield] layers: flux=@ reflect=@ shields=@",
-                cryon.Type.FluxBarrier.layerFluxShield,
-                ReflectShieldAbility.layerReflectShield,
-                mindustry.graphics.Layer.shields);
-
-        if(lensFailed){
-            count = 0;
-            return;
-        }
-
-        if(lensShader == null){
-            try{
-                lensShader = new LensShader();
-                Log.info("[ReflectShield] shader compiled OK");
-            }catch(Throwable t){
-                lensFailed = true;
-                count = 0;
-                Log.err("[ReflectShield] shader FAILED to compile", t);
-                return;
-            }
-        }
-
-        ensureResources();
-
         Draw.drawRange(ReflectShieldAbility.layerReflectShield, 1f,
                 () -> {
                     if(count == 0) return;
+                    if(lensShader == null){
+                        try{
+                            lensShader = new LensShader();
+                        }catch(Throwable t){
+                            lensFailed = true;
+                            count = 0;
+                            Log.err("[ReflectShield] shader FAILED to compile", t);
+                            return;
+                        }
+                    }
+                    ensureResources();
                     Draw.flush();
                     sceneTex.bind();
                     Gl.copyTexSubImage2D(Gl.texture2d, 0, 0, 0, 0, 0, sceneTex.width, sceneTex.height);
@@ -123,7 +102,6 @@ public class ReflectShieldRenderer {
                 },
                 () -> {
                     if(count == 0) return;
-                    executed++;
                     lensBuffer.end();
                     lensBuffer.blit(lensShader);
                     count = 0;

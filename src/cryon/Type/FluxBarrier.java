@@ -376,6 +376,7 @@ public class FluxBarrier extends Block{
                 float radius = realRadius();
 
                 if(radius > 0.001f){
+                    cryon.Features.FluxShieldRenderer.drawFluxShields();
                     Draw.color(team.color, Color.white, Mathf.clamp(hit));
 
                     if(renderer.animateShields){

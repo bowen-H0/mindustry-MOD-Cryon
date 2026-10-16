@@ -1,12 +1,12 @@
 type: PowerTurret
 name: "临界"
-description: "消耗大量电力与氘元素，喷射毁灭性的临界能量弹。"
+description: "消耗大量电力与氘元素，发射高穿透临界能量弹，伴随交织的副弹，对目标及周围敌人造成毁灭性打击。"
 category: turret
 size: 5
 health: 6500
-range: 260
+range: 300
 shootY: 12
-reload: 220
+reload: 120
 inaccuracy: 1
 shootCone: 3
 rotateSpeed: 1.2
@@ -33,8 +33,8 @@ consumes: {
 shootType: {
   type: BasicBulletType
   speed: 8
-  damage: 500
-  lifetime: 35
+  damage: 24000
+  lifetime: 40
   width: 12
   height: 20
 }

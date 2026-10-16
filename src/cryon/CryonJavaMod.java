@@ -145,6 +145,11 @@ public class CryonJavaMod extends Mod {
     // ══════════════════════════════════════════════════════════════
     @Override
     public void loadContent() {
+        LoadTiming.measure("loadContent total", this::loadContentTimed);
+    }
+
+    private void loadContentTimed() {
+        cryon.Story.IntrusionContent.load();
         CryonItems.load();
         AravisEnvironment.load();
 
@@ -1924,8 +1929,9 @@ public class CryonJavaMod extends Mod {
 
 
 
-        OblivionUnit.load();
-        DestroyerUnit.load();
+        LoadTiming.measure("loadContent / OblivionUnit", OblivionUnit::load);
+        LoadTiming.measure("loadContent / DestroyerUnit", DestroyerUnit::load);
+        ScriptRegistry.register("virus-intrusion", "病毒入侵（锁定关卡）", VirusIntrusionScript::new);
         ScriptRegistry.register("example", "示例脚本", ExampleScript::new);
         ScriptRegistry.register("astro_observatory", "天文观测", AstroObservatoryScript::new);
 
@@ -1950,8 +1956,13 @@ public class CryonJavaMod extends Mod {
     // ══════════════════════════════════════════════════════════════
     @Override
     public void init() {
-        CryonEnvironment.init();
-        CryonSectors.load();
+        LoadTiming.measure("init total", this::initTimed);
+    }
+
+    private void initTimed() {
+        cryon.Story.DesolateIntrusion.install();
+        LoadTiming.measure("init / environment", CryonEnvironment::init);
+        LoadTiming.measure("init / sectors", CryonSectors::load);
         Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
         if(exist == null){
             Mods.LoadedMod self = Vars.mods.locateMod("cryon");
@@ -2068,15 +2079,17 @@ public class CryonJavaMod extends Mod {
             Color pink = Color.valueOf("ff4fa3");
             Color white = Color.white;
 
-            BasicBulletType mainBullet = new BasicBulletType(8f, 1000f){{
+            BasicBulletType mainBullet = new BasicBulletType(8f, 24000f){{
                 sprite = "missile-large";
                 width = 12f;
                 height = 20f;
-                lifetime = 35f;
+                lifetime = 40f;
                 hitSize = 6f;
 
                 pierce = true;
-                pierceCap = 3;
+                pierceCap = 5;
+                splashDamage = 2400f;
+                splashDamageRadius = 48f;
                 pierceBuilding = true;
                 hitColor = backColor = trailColor = pink;
                 frontColor = white;
@@ -2108,14 +2121,14 @@ public class CryonJavaMod extends Mod {
                         float spd = speed;
                         float life = lifetime / Mathf.lerp(fin, 1f, 0.5f);
                         boolean show = j == 0 && i > 0;
-                        BasicBulletType sub = new BasicBulletType(spd * fin, 100f){{
+                        BasicBulletType sub = new BasicBulletType(spd * fin, 600f){{
                             drag = 0.002f;
                             width = 12f;
                             height = 11f;
                             lifetime = life + 5f;
                             weaveRandom = false;
                             hitSize = 5f;
-                            pierceCap = 2;
+                            pierceCap = 3;
                             pierce = true;
                             showStats = show;
                             pierceBuilding = true;
@@ -2126,8 +2139,8 @@ public class CryonJavaMod extends Mod {
                             weaveScale = (3f + s / 2f) / 1.2f;
                             weaveMag = i * (4f - fin * 2f);
 
-                            splashDamage = 65f;
-                            splashDamageRadius = 30f;
+                            splashDamage = 300f;
+                            splashDamageRadius = 36f;
                             despawnEffect = new ExplosionEffect(){{
                                 lifetime = 50f;
                                 waveStroke = 4f;
@@ -2513,7 +2526,7 @@ public class CryonJavaMod extends Mod {
 
         // TechTree
         Events.on(ClientLoadEvent.class, e -> {
-            ModPlanetTechTree.globalCleanup("cryon");
+            LoadTiming.measure("ClientLoad / tech tree cleanup", () -> ModPlanetTechTree.globalCleanup("cryon"));
 
             CryonTechTree.load();
             AravisTechTree.load();
@@ -2541,16 +2554,6 @@ public class CryonJavaMod extends Mod {
 
         MeltingDrillInjector.inject("cryon-melting-drill",5f,0.05f, 60f, 150f);
         DeuteriumReactorInjector.inject("cryon-deuterium-reactor", "cryon-tritium", 0.125f);
-        Events.on(ClientLoadEvent.class, e -> {
-            if (fluxBarrier.fluxShader == null) {
-                fluxBarrier.fluxShader = new FluxShieldShader();
-            }
-        });
-        Events.run(Trigger.draw, () -> {
-            FluxShieldRenderer.drawFluxShields();
-            ReflectShieldRenderer.drawReflectShields();
-            RocheFieldAbility.drawAll();
-        });
         // 添加渲染钩子 - 绘制链接
         Events.run(Trigger.draw, () -> {
             KismetBulletType.drawLinks();

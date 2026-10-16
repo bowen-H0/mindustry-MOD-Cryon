@@ -166,6 +166,7 @@ public class FluxBarrierAbility extends Ability {
     public void draw(Unit unit) {
         float r = radscl * radius;
         if (r <= 0.001f) return;
+        cryon.Features.FluxShieldRenderer.drawFluxShields();
 
         Draw.color(unit.type.shieldColor(unit), Color.white, Mathf.clamp(hit));
 

@@ -183,15 +183,8 @@ public class ConstructorNode extends ConstructorBlock {
                 updateDirections();
             }
 
-            if(constructorGraph != null){
-                boolean master = true;
-                for(var b : constructorGraph.buildings){
-                    if(b instanceof ConstructorNodeBuild other && other.id < this.id){
-                        master = false;
-                        break;
-                    }
-                }
-                if(master) constructorGraph.update();
+            if(constructorGraph != null && constructorGraph.isUpdater(this)){
+                constructorGraph.update();
             }
         }
         @Override

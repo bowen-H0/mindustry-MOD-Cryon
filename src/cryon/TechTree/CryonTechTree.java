@@ -474,12 +474,14 @@ public class CryonTechTree extends ModPlanetTechTree {
     protected void afterLoad(TechNode root, Planet planet){
         Time.runTask(10f, () -> {
             Log.info("[CryonTechTree] Refreshing loadout cache...");
-            schematics.load();
-            for(Block block : Vars.content.blocks()){
-                if(block instanceof CoreBlock core){
-                    universe.getLoadout(core);
+            cryon.Features.LoadTiming.measure("deferred / schematics and loadout cache", () -> {
+                schematics.load();
+                for(Block block : Vars.content.blocks()){
+                    if(block instanceof CoreBlock core){
+                        universe.getLoadout(core);
+                    }
                 }
-            }
+            });
             Log.info("[CryonTechTree] Loadout refresh complete");
         });
     }

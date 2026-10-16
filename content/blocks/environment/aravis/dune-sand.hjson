@@ -1,0 +1,6 @@
+type: Floor
+variants: 2
+speedMultiplier: 1
+mapColor: "9c9284"
+itemDrop: sand
+playerUnmineable: true

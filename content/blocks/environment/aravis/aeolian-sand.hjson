@@ -1,7 +1,7 @@
 {
     "type": "Floor",
     "name": "aeolian-sand",
-    "variants": 1,
+    "variants": 2,
     "speedMultiplier": 1.0,
     "mapColor": "9C9284",
     "itemDrop": "sand",

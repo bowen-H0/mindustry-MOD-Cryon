@@ -4,7 +4,7 @@ orbitRadius: 160
 radius: 1
 accessible: true
 alwaysUnlocked: true
-visible: true
+visible: false
 
 mesh: [
   { type: NoiseMesh, planet: aurelia, divisions: 6, seed: 8, radius: 1.0, color1: 154a68ff, color2: 3a5c30ff, octaves: 4, persistence: 0.45, scale: 2.0, mag: 0.15 }

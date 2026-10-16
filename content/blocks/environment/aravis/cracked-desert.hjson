@@ -1,0 +1,5 @@
+type: Floor
+variants: 1
+speedMultiplier: 1
+mapColor: "8d7056"
+playerUnmineable: true

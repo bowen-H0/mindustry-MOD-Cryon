@@ -9,6 +9,7 @@ import mindustry.gen.Groups;
 import mindustry.gen.Unit;
 import arc.Events;
 import arc.graphics.Color;
+import arc.graphics.Blending;
 import arc.graphics.Texture.TextureFilter;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -33,6 +34,8 @@ public final class IntrusionRenderer {
     private static final Color enemyColor = Color.valueOf("ff986b");
     private static final Color friendlyColor = Color.valueOf("b4d8c6");
     private static final Color bossColor = Color.valueOf("ed827c");
+    private static final Color glowColor = new Color();
+    private static final Color coreColor = new Color();
     private static float markerPixel;
     private static final Cons<Bullet> bulletMarker = bullet -> {
         if(bullet.team == state.rules.waveTeam){
@@ -131,32 +134,47 @@ public final class IntrusionRenderer {
         }
         Unit gamma = script.controlledGamma();
         if(gamma != null && !gamma.dead){
-            // A stable hollow ring keeps the player readable without covering its center.
+            // Slightly wider decorative energy ring; it does not represent the hitbox.
             float stroke = Math.max(1.3f, markerPixel * 2f);
-            float radius = Math.max(gamma.hitSize * 0.85f, markerPixel * 9f);
-            Draw.color(Color.black);
-            Lines.stroke(stroke + markerPixel * 2f);
-            Lines.circle(gamma.x, gamma.y, radius);
-            Draw.color(gammaColor);
-            Lines.stroke(stroke);
-            Lines.circle(gamma.x, gamma.y, radius);
-            Lines.stroke(1f);
+            float radius = Math.max(gamma.hitSize * 1.05f, markerPixel * 11f);
+            energyRing(gamma.x, gamma.y, radius, stroke, gammaColor);
         }
         Draw.reset();
     }
 
     private static void point(float x, float y, float radius, Color color){
-        // Continuous phosphor target with a dark outline and a slow expanding ripple.
-        // Marker dimensions stay readable at distant zoom without changing hitboxes.
-        float phase = (Time.time / 120f) % 1f;
-        Draw.color(Color.black);
-        Fill.circle(x, y, radius + markerPixel * 0.8f);
+        // Soft radial glow plus a bright core makes each marker look emissive.
+        Draw.blend(Blending.additive);
+        glowColor.set(color).a(0.55f);
+        Fill.light(x, y, 24, radius * 3f, glowColor, Color.clear);
         Draw.color(color);
-        Fill.circle(x, y, radius);
-        Draw.alpha((1f - phase) * 0.55f);
-        Lines.stroke(Math.max(markerPixel, radius * 0.18f));
-        Lines.circle(x, y, radius * (1.25f + phase * 0.9f));
-        Draw.color();
+        Fill.circle(x, y, radius * 0.8f);
+        coreColor.set(color).lerp(Color.white, 0.55f);
+        Draw.color(coreColor);
+        Fill.circle(x, y, radius * 0.4f);
+        Draw.blend();
+        Draw.reset();
+    }
+
+    private static void energyRing(float x, float y, float radius, float stroke, Color color){
+        Draw.blend(Blending.additive);
+        // Layer translucent strokes from broad to narrow for a soft halo on both edges.
+        for(int i = 0; i < 8; i++){
+            float spread = (8 - i) / 8f;
+            Draw.color(color);
+            Draw.alpha(0.025f + i * 0.006f);
+            Lines.stroke(stroke * (1f + spread * 5f));
+            Lines.circle(x, y, radius);
+        }
+        Draw.color(color);
+        Lines.stroke(stroke);
+        Lines.circle(x, y, radius);
+        coreColor.set(color).lerp(Color.white, 0.65f);
+        Draw.color(coreColor);
+        Lines.stroke(stroke * 0.45f);
+        Lines.circle(x, y, radius);
+        Draw.blend();
+        Draw.reset();
         Lines.stroke(1f);
     }
 

@@ -1,20 +1,14 @@
 package cryon.Story;
 
 import arc.Core;
-import arc.func.Cons;
-import arc.math.Angles;
-import cryon.Script.VirusIntrusionScript;
-import mindustry.gen.Bullet;
 import mindustry.gen.Groups;
-import mindustry.gen.Unit;
 import arc.Events;
 import arc.graphics.Color;
 import arc.graphics.Blending;
+import arc.graphics.Gl;
 import arc.graphics.Texture.TextureFilter;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
-import arc.graphics.g2d.Lines;
-import arc.util.Time;
 import arc.graphics.gl.FrameBuffer;
 import arc.graphics.gl.Shader;
 import arc.util.Log;
@@ -23,27 +17,20 @@ import mindustry.graphics.Layer;
 
 import static mindustry.Vars.*;
 
-/** World-only CRT scanline postprocess; scene UI is drawn afterwards and stays crisp. */
+/** World-only point-structure postprocess; scene UI is drawn afterwards and stays crisp. */
 public final class IntrusionRenderer {
     private static FrameBuffer buffer;
-    private static Shader shader;
+    private static final FrameBuffer[] combatBuffers = new FrameBuffer[4];
+    private static Shader shader, combatShader;
     private static boolean installed, failed;
-    // Keep bullet edges readable while reducing framebuffer pixels/memory to about 56%.
     private static final float renderScale = 0.75f;
-    private static final Color gammaColor = Color.valueOf("ffe1a3");
-    private static final Color enemyColor = Color.valueOf("ff986b");
-    private static final Color friendlyColor = Color.valueOf("b4d8c6");
-    private static final Color bossColor = Color.valueOf("ed827c");
-    private static final Color glowColor = new Color();
-    private static final Color coreColor = new Color();
-    private static float markerPixel;
-    private static final Cons<Bullet> bulletMarker = bullet -> {
-        if(bullet.team == state.rules.waveTeam){
-            point(bullet.x, bullet.y, Math.max(2.8f, markerPixel * 3.2f), enemyColor);
-        }else if(bullet.team == state.rules.defaultTeam){
-            point(bullet.x, bullet.y, Math.max(1.6f, markerPixel * 2.2f), friendlyColor);
-        }
+    // Player, enemy, enemy bullets, player bullets.
+    private static final Color[] combatColors = {
+        Color.valueOf("ffd454"), Color.valueOf("e95750"),
+        Color.valueOf("be78ed"), Color.valueOf("579eff")
     };
+    private static final Blending combatBlending = new Blending(Gl.one, Gl.oneMinusSrcAlpha);
+    private static int combatIndex;
 
     private IntrusionRenderer() {}
 
@@ -65,7 +52,7 @@ public final class IntrusionRenderer {
 
     private static void draw(){
         if(!active()){
-            if(buffer != null || shader != null) dispose();
+            if(buffer != null || combatBuffers[0] != null || shader != null) dispose();
             return;
         }
         if(!failed){
@@ -74,20 +61,77 @@ public final class IntrusionRenderer {
             }catch(Exception error){
                 dispose();
                 failed = true;
-                Log.err("[CryonIntrusion] CRT shader unavailable; keeping map boundary mask.", error);
+                Log.err("[CryonIntrusion] Point shader unavailable; keeping map boundary mask.", error);
             }
         }
         if(!failed){
             Draw.draw(Layer.min - 1f, () -> buffer.begin(Color.black));
+            // Divert native combat draws out of the background; redraw by team below.
+            captureCombat(Layer.flyingUnitLow, 0.5f);
+            captureCombat(Layer.flyingUnit, 0.5f);
+            // Bloom begins at bullet - 0.02; stay strictly inside its buffer lifetime.
+            captureCombat(Layer.bullet, 0.01f);
+            // Keep native lightning/charge effects in the combat color layers too.
+            captureCombat(Layer.effect, 0.01f);
             Draw.draw(Layer.max + 1f, () -> {
+                eachEffect(effect -> {
+                    if(defaultEffectLayer(effect) && !combatEffect(effect)) effect.draw();
+                });
                 buffer.end();
                 buffer.blit(shader);
+                drawCombatLayers();
             });
         }
-        // Full-resolution recognition marks bypass the scene color compression.
-        Draw.draw(Layer.max + 1.5f, IntrusionRenderer::drawRecognitionMarks);
         // Independent of the shader: the plastanium walls and everything outside the combat rectangle are blacked out.
         Draw.draw(Layer.max + 2f, IntrusionRenderer::maskOutsideMap);
+    }
+
+    private static void captureCombat(float layer, float radius){
+        Draw.drawRange(layer, radius,
+                () -> combatBuffers[0].begin(Color.clear),
+                () -> combatBuffers[0].end());
+    }
+
+    private static void drawCombatLayers(){
+        for(int i = 0; i < combatBuffers.length; i++){
+            final int index = i;
+            FrameBuffer target = combatBuffers[i];
+            target.begin(Color.clear);
+            if(i < 2){
+                Groups.unit.each(unit -> {
+                    if(unit.team == (index == 0 ? state.rules.defaultTeam : state.rules.waveTeam)) unit.draw();
+                });
+            }else{
+                Groups.bullet.each(bullet -> {
+                    if(bullet.team == (index == 2 ? state.rules.waveTeam : state.rules.defaultTeam)) bullet.draw();
+                });
+            }
+            if(i >= 2){
+                eachEffect(effect -> {
+                    if(defaultEffectLayer(effect) && combatEffect(effect)
+                            && (effect.color.equals(combatColors[2]) ? index == 2 : index == 3)) effect.draw();
+                });
+            }
+            Draw.reset();
+            target.end();
+            combatIndex = i;
+            combatBlending.apply();
+            target.blit(combatShader);
+            Blending.normal.apply();
+        }
+    }
+
+    private static void eachEffect(arc.func.Cons<mindustry.gen.EffectState> consumer){
+        Groups.draw.each(drawable -> {
+            if(drawable instanceof mindustry.gen.EffectState) consumer.get((mindustry.gen.EffectState)drawable);
+        });
+    }
+    private static boolean defaultEffectLayer(mindustry.gen.EffectState effect){
+        return Math.abs(effect.effect.layer - Layer.effect) < 0.01f;
+    }
+    private static boolean combatEffect(mindustry.gen.EffectState effect){
+        return effect.effect == mindustry.content.Fx.lightning || effect.effect == mindustry.content.Fx.lightningCharge
+                || effect.effect == mindustry.content.Fx.lancerLaserCharge;
     }
 
     private static void ensureResources(){
@@ -95,7 +139,6 @@ public final class IntrusionRenderer {
             shader = new Shader(tree.get("shaders/screenspace.vert"), tree.get("shaders/intrusion-wireframe.frag")){
                 @Override public void apply(){
                     setUniformi("u_texture", 0);
-                    setUniformf("u_time", Time.time / 60f);
                     setUniformf("u_pixel", 1f / buffer.getWidth(), 1f / buffer.getHeight());
                     setUniformf("u_origin", Core.camera.position.x - Core.camera.width / 2f,
                             Core.camera.position.y - Core.camera.height / 2f);
@@ -104,6 +147,30 @@ public final class IntrusionRenderer {
                             IntrusionMap.visibleMaxX, IntrusionMap.visibleMaxY);
                 }
             };
+        }
+        if(combatShader == null){
+            combatShader = new Shader(tree.get("shaders/screenspace.vert"), tree.get("shaders/intrusion-combat.frag")){
+                @Override public void apply(){
+                    FrameBuffer target = combatBuffers[combatIndex];
+                    setUniformi("u_texture", 0);
+                    setUniformf("u_pixel", 1f / target.getWidth(), 1f / target.getHeight());
+                    setUniformf("u_origin", Core.camera.position.x - Core.camera.width / 2f,
+                            Core.camera.position.y - Core.camera.height / 2f);
+                    setUniformf("u_worldsize", Core.camera.width, Core.camera.height);
+                    setUniformf("u_tint", combatColors[combatIndex].r, combatColors[combatIndex].g, combatColors[combatIndex].b);
+                }
+            };
+        }
+        int unitWidth = Math.max(2, Core.graphics.getWidth());
+        int unitHeight = Math.max(2, Core.graphics.getHeight());
+        for(int i = 0; i < combatBuffers.length; i++){
+            if(combatBuffers[i] == null){
+                combatBuffers[i] = new FrameBuffer(unitWidth, unitHeight);
+                combatBuffers[i].getTexture().setFilter(TextureFilter.linear);
+            }else if(combatBuffers[i].getWidth() != unitWidth || combatBuffers[i].getHeight() != unitHeight){
+                combatBuffers[i].resize(unitWidth, unitHeight);
+                combatBuffers[i].getTexture().setFilter(TextureFilter.linear);
+            }
         }
         int width = Math.max(2, Math.round(Core.graphics.getWidth() * renderScale));
         int height = Math.max(2, Math.round(Core.graphics.getHeight() * renderScale));
@@ -114,68 +181,6 @@ public final class IntrusionRenderer {
             buffer.resize(width, height);
             buffer.getTexture().setFilter(TextureFilter.linear);
         }
-    }
-
-    private static void drawRecognitionMarks(){
-        VirusIntrusionScript script = VirusIntrusionScript.current();
-        if(script == null || script.disarmed() || script.finished()) return;
-        markerPixel = Core.camera.width / Math.max(1, Core.graphics.getWidth());
-        float x0 = Core.camera.position.x - Core.camera.width / 2f;
-        float y0 = Core.camera.position.y - Core.camera.height / 2f;
-        Groups.bullet.intersect(x0 - 8f, y0 - 8f, Core.camera.width + 16f, Core.camera.height + 16f, bulletMarker);
-        Unit boss = script.virusNode();
-        if(boss != null && !boss.dead){
-            float radius = Math.max(25f, boss.hitSize * 0.8f);
-            for(int i = 0; i < 12; i++){
-                float angle = i * 30f;
-                point(boss.x + Angles.trnsx(angle, radius), boss.y + Angles.trnsy(angle, radius),
-                        Math.max(2.2f, markerPixel * 2.8f), bossColor);
-            }
-        }
-        Unit gamma = script.controlledGamma();
-        if(gamma != null && !gamma.dead){
-            // Slightly wider decorative energy ring; it does not represent the hitbox.
-            float stroke = Math.max(1.3f, markerPixel * 2f);
-            float radius = Math.max(gamma.hitSize * 1.05f, markerPixel * 11f);
-            energyRing(gamma.x, gamma.y, radius, stroke, gammaColor);
-        }
-        Draw.reset();
-    }
-
-    private static void point(float x, float y, float radius, Color color){
-        // Soft radial glow plus a bright core makes each marker look emissive.
-        Draw.blend(Blending.additive);
-        glowColor.set(color).a(0.55f);
-        Fill.light(x, y, 24, radius * 3f, glowColor, Color.clear);
-        Draw.color(color);
-        Fill.circle(x, y, radius * 0.8f);
-        coreColor.set(color).lerp(Color.white, 0.55f);
-        Draw.color(coreColor);
-        Fill.circle(x, y, radius * 0.4f);
-        Draw.blend();
-        Draw.reset();
-    }
-
-    private static void energyRing(float x, float y, float radius, float stroke, Color color){
-        Draw.blend(Blending.additive);
-        // Layer translucent strokes from broad to narrow for a soft halo on both edges.
-        for(int i = 0; i < 8; i++){
-            float spread = (8 - i) / 8f;
-            Draw.color(color);
-            Draw.alpha(0.025f + i * 0.006f);
-            Lines.stroke(stroke * (1f + spread * 5f));
-            Lines.circle(x, y, radius);
-        }
-        Draw.color(color);
-        Lines.stroke(stroke);
-        Lines.circle(x, y, radius);
-        coreColor.set(color).lerp(Color.white, 0.65f);
-        Draw.color(coreColor);
-        Lines.stroke(stroke * 0.45f);
-        Lines.circle(x, y, radius);
-        Draw.blend();
-        Draw.reset();
-        Lines.stroke(1f);
     }
 
     private static void maskOutsideMap(){
@@ -199,6 +204,10 @@ public final class IntrusionRenderer {
 
     private static void dispose(){
         if(buffer != null){ buffer.dispose(); buffer = null; }
+        for(int i = 0; i < combatBuffers.length; i++){
+            if(combatBuffers[i] != null){ combatBuffers[i].dispose(); combatBuffers[i] = null; }
+        }
+        if(combatShader != null){ combatShader.dispose(); combatShader = null; }
         if(shader != null){ shader.dispose(); shader = null; }
         failed = false;
     }

@@ -32,17 +32,17 @@ public final class IntrusionAttackCheck {
             Unit gamma = Vars.player.unit();
             float aim = Angles.angle(IntrusionMap.nodeX, IntrusionMap.nodeY, gamma.x, gamma.y);
             clock(script, VirusIntrusionScript.introTicks);
-            for(int tick = 0; tick < 22; tick++) processor.updateTile();
+            for(int tick = 0; tick < 28; tick++) processor.updateTile();
             check(Groups.bullet.size() == 3, "mode 1 must fire exactly three consecutive shots");
             Groups.bullet.each(b -> check(distance(b.rotation(), aim) <= 3.01f, "mode 1 spread exceeds three degrees"));
             for(int tick = 0; tick < 40; tick++) processor.updateTile();
             check(Groups.bullet.size() == 3, "mode 1 lacks a pause between bursts");
             clock(script, VirusIntrusionScript.introTicks + VirusIntrusionScript.attackModeTicks);
             processor.updateTile();
-            check(script.phase() == 1 && Groups.bullet.size() == 9, "mode 2 is not a sparse nine-shot fan");
+            check(script.phase() == 1 && Groups.bullet.size() == 7, "mode 2 is not a sparse seven-shot fan");
             final int[] index = {0};
             Groups.bullet.each(b -> {
-                float expected = aim - 90f + index[0]++ * 22.5f;
+                float expected = aim - 90f + index[0]++ * 30f;
                 check(distance(b.rotation(), expected) < 0.1f, "mode 2 angle: actual=" + b.rotation() + " expected=" + expected);
             });
             clock(script, VirusIntrusionScript.introTicks + VirusIntrusionScript.attackModeTicks * 2f);
@@ -68,7 +68,7 @@ public final class IntrusionAttackCheck {
             check(script.phase() == 2, "attack mode lost on save load");
             // Mindustry does not save transient bullets; verify the restored firing schedule instead.
             Time.delta = 1f;
-            for(int tick = 0; tick < 100; tick++) processor.updateTile();
+            for(int tick = 0; tick < 120; tick++) processor.updateTile();
             check(Groups.bullet.contains(b -> b.type == IntrusionContent.seeker), "restored mode does not resume seeker fire");
             for(int mode = 0; mode < 7; mode++){
                 clock(script, VirusIntrusionScript.introTicks + mode * VirusIntrusionScript.attackModeTicks);

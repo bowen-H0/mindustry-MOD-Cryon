@@ -55,6 +55,15 @@ public class IntrusionMapCheck {
         IntrusionContent.load();
         CryonJavaMod.javaProcessor = new JavaProcessor("java-processor");
         CryonJavaMod.javaProcessor.privileged = true;
+        // Parse the actual playable unit so checks cover its real weapons and abilities.
+        for(String name : new String[]{"aluminum", "crystal-sand", "magnesium", "dry-ice", "nickel", "salt"}){
+            new mindustry.type.Item(name);
+        }
+        Vars.content.setCurrentMod(null);
+        mindustry.mod.ContentParser parser = new mindustry.mod.ContentParser();
+        Fi unitFile = new Fi("content/units/transliminal.hjson");
+        parser.parse(mod, "transliminal", unitFile.readString(), unitFile, mindustry.ctype.ContentType.unit);
+        parser.finishParsing();
         Vars.content.setCurrentMod(null);
         ScriptRegistry.register("virus-intrusion", "Virus", VirusIntrusionScript::new);
         Vars.content.init();
@@ -62,7 +71,10 @@ public class IntrusionMapCheck {
         Vars.player = Player.create();
         Vars.player.team(Team.sharded);
         IntrusionMap.generate();
-        check(Vars.world.width() == 112 && Vars.world.height() == 144, "wrong map dimensions");
+        check(Vars.world.width() == 144 && Vars.world.height() == 144, "wrong map dimensions");
+        check(IntrusionMap.nodeX == (Vars.world.width() - 1) * 4f
+                && IntrusionMap.nodeY == (Vars.world.height() - 1) * 4f, "Boss is not at map center");
+        check(IntrusionMap.right - IntrusionMap.left == IntrusionMap.top - IntrusionMap.bottom, "arena not square");
         JavaProcessorBuild processor = (JavaProcessorBuild)Vars.world.build(56, 7);
         check(processor.script instanceof VirusIntrusionScript && processor.scriptLocked(), "missing locked script");
         processor.setScript("");
@@ -153,9 +165,9 @@ public class IntrusionMapCheck {
         Core.scene.getViewport().setWorldSize(720, 1280);
         hud.act(1f / 60f);
         check(hud.getWidth() == 720 && hud.getHeight() == 1280, "HUD does not follow screen resizing");
-        check(IntrusionMap.visibleMinX > 14 * 8f + 4f && IntrusionMap.visibleMaxX < 98 * 8f - 4f,
+        check(IntrusionMap.visibleMinX > (IntrusionMap.left - 2) * 8f + 4f && IntrusionMap.visibleMaxX < (IntrusionMap.right + 2) * 8f - 4f,
                 "side plastanium walls not inside black mask");
-        check(IntrusionMap.visibleMinY > 22 * 8f + 4f && IntrusionMap.visibleMaxY < 130 * 8f - 4f,
+        check(IntrusionMap.visibleMinY > (IntrusionMap.bottom - 2) * 8f + 4f && IntrusionMap.visibleMaxY < (IntrusionMap.top + 2) * 8f - 4f,
                 "top/bottom plastanium walls not inside black mask");
         System.out.println("PASS: native map export, rule lock, processor lock, Gamma control, real enemy bullets, save/load roundtrip, Gamma firing/damage, native victory/defeat, world snapshot restoration, HUD dimensions/resizing, wall mask bounds");
         System.out.println("Map: " + exported.absolutePath());

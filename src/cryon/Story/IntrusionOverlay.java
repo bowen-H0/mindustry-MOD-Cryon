@@ -5,6 +5,8 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
+import arc.graphics.g2d.GlyphLayout;
+import arc.math.geom.Rect;
 import arc.math.Mathf;
 import arc.scene.Element;
 import arc.scene.event.Touchable;
@@ -22,6 +24,8 @@ public final class IntrusionOverlay extends Element {
     private final Color glitchColor = Color.valueOf("582c32");
     private float trailingHealth = 1f, disarmTime;
     private boolean wasDisarmed;
+    private final Rect combatPanel = new Rect();
+    private final GlyphLayout lineLayout = new GlyphLayout();
     private static final String[] corruption = {
         "[ 0x43525558 / AUTH:?? / LINK_LOST ]",
         "[ SYS::CTRL 00 A7 -- -- / CRC:FAIL ]",
@@ -71,18 +75,18 @@ public final class IntrusionOverlay extends Element {
     @Override public void draw(){
         VirusIntrusionScript script = VirusIntrusionScript.current();
         if(script == null) return;
-        if(script.disarmed() || script.finished()){
+        if(script.transforming() || script.disarmed() || script.finished()){
             // No white/full-screen flashes or map fade-through: the disarmed screen stays black.
             Draw.color(Color.black);
             Fill.crect(0f, 0f, getWidth(), getHeight());
             Draw.reset();
-            float elapsed = script.finished() ? script.endingSeconds() : disarmTime;
+            float elapsed = script.finished() ? script.endingSeconds() : script.transforming() ? script.transformSeconds() : disarmTime;
             float period = script.finished() ? 1.5f : 2f;
-            int count = script.finished() ? 2 : 6;
+            int count = script.finished() ? 2 : script.transforming() ? 3 : 6;
             int index = Math.min(count - 1, (int)(elapsed / period));
             float localTime = elapsed - index * period;
             String key = script.finished() ? (script.won() ? "success-" : "failure-") + (index + 1)
-                    : "message-" + (index + 1);
+                    : (script.transforming() ? "transform-" : "message-") + (index + 1);
             String full = Core.bundle.get("cryon.intrusion." + key);
             int chars = Math.min(full.length(), Math.max(0, (int)(localTime * 40f)));
             float fade = Math.min(Mathf.clamp(localTime / 0.2f), Mathf.clamp((period - localTime) / 0.25f));
@@ -92,17 +96,6 @@ public final class IntrusionOverlay extends Element {
             drawCorruption(elapsed);
         }else{
             drawBossBar(script);
-            label(Core.bundle.format("cryon.intrusion.native-hud", Math.max(0, (int)script.health()),
-                    Math.max(0, (int)(script.nodeHealth() * 100f)), (int)Math.ceil(script.remainingSeconds())),
-                    getHeight() - Scl.scl(78f), textColor, 1f, 0.8f);
-            if(script.orbitalSupportActive()){
-                label(Core.bundle.get("cryon.intrusion.orbital-support"),
-                        getHeight() - Scl.scl(102f), textColor, 1f, 0.8f);
-            }
-            if(script.recoveryActive()){
-                label(Core.bundle.get("cryon.intrusion.recovery"),
-                        getHeight() - Scl.scl(126f), textColor, 1f, 0.8f);
-            }
         }
         Draw.reset();
     }
@@ -118,12 +111,38 @@ public final class IntrusionOverlay extends Element {
         }
     }
 
+    /** Compact panel below native HUD controls; safeInset is expressed in scene coordinates. */
+    public static void combatBounds(Rect out, float width, float height, boolean mobile, float safeInset){
+        float margin = safeInset + Scl.scl(16f);
+        float panelWidth = Math.max(1f, Math.min(Scl.scl(340f), width - margin * 2f));
+        float panelHeight = Math.min(Scl.scl(56f), height * 0.28f);
+        float x = (width - panelWidth) / 2f;
+        float topGap = Scl.scl(mobile ? 160f : 64f);
+        if(mobile && width > height && height < Scl.scl(480f)
+                && width - Scl.scl(320f) - margin * 2f >= Scl.scl(96f)){
+            // Short landscape screens: use the space right of the native unit panel,
+            // so moving the bar down cannot cover the player at screen center.
+            panelWidth = Math.max(1f, Math.min(panelWidth, width - Scl.scl(320f) - margin * 2f));
+            x = width - margin - panelWidth;
+            topGap = Scl.scl(68f);
+        }
+        float inset = Math.min(Math.max(0f, height - panelHeight - Scl.scl(16f)), safeInset + topGap);
+        out.set(x, height - inset - panelHeight, panelWidth, panelHeight);
+    }
+
     private void drawBossBar(VirusIntrusionScript script){
-        float width = Math.max(1f, Math.min(Scl.scl(600f), getWidth() - Scl.scl(32f)));
-        float height = Scl.scl(12f), x = (getWidth() - width) / 2f;
-        float y = getHeight() - Scl.scl(49f);
-        Draw.color(Color.black);
-        Fill.crect(x - Scl.scl(8f), y - Scl.scl(6f), width + Scl.scl(16f), height + Scl.scl(37f));
+        // Insets are physical pixels. Conservatively reserve the largest edge inset for cutouts.
+        float safe = 0f;
+        int[] insets = Core.graphics.getSafeInsets();
+        if(insets != null) for(int inset : insets) safe = Math.max(safe, inset);
+        safe *= getHeight() / Math.max(1, Core.graphics.getHeight());
+        combatBounds(combatPanel, getWidth(), getHeight(), mindustry.Vars.mobile, safe);
+        float unit = combatPanel.height / 56f;
+        float x = combatPanel.x + unit * 12f, width = Math.max(1f, combatPanel.width - unit * 24f);
+        float top = combatPanel.y + combatPanel.height;
+        float y = top - unit * 31f, height = unit * 6f;
+        Draw.color(Color.black, 0.85f);
+        Fill.crect(combatPanel.x, combatPanel.y, combatPanel.width, combatPanel.height);
         Draw.color(borderColor);
         Fill.crect(x, y, width * Math.max(trailingHealth, script.nodeHealth()), height);
         Draw.color(bossColor);
@@ -131,13 +150,29 @@ public final class IntrusionOverlay extends Element {
         Draw.color(textColor);
         Lines.stroke(Scl.scl(1f));
         Lines.rect(x, y, width, height);
-        Draw.color(borderColor);
-        for(int i = 1; i <= 2; i++) Lines.line(x + width * i / 3f, y, x + width * i / 3f, y + height);
+        Lines.line(x + width * 0.5f, y, x + width * 0.5f, y + height);
         Draw.reset();
-        label(Core.bundle.format("cryon.intrusion.boss-bar", (int)Math.ceil(script.nodeHealthValue()),
-                (int)Math.ceil(script.nodeMaxHealth()), script.phase() + 1),
-                getHeight() - Scl.scl(15f), textColor, 1f, 0.9f);
+        combatLine(Core.bundle.format("cryon.intrusion.compact-boss", (int)Math.ceil(script.nodeHealth() * 100f),
+                script.enraged() ? "II" : "I"), x, top - unit * 5f, width, 0.8f * unit / Scl.scl());
+        String attack = Core.bundle.get("cryon.intrusion." + (script.enraged() ? "short-rage-" : "mode-") + script.phase());
+        combatLine(Core.bundle.format("cryon.intrusion.compact-status", (int)Math.ceil(script.health()),
+                (int)Math.ceil(script.remainingSeconds()), attack), x, top - unit * 37f, width, 0.7f * unit / Scl.scl());
         Lines.stroke(1f);
+    }
+
+    private void combatLine(String value, float x, float y, float width, float scale){
+        float oldX = Fonts.outline.getData().scaleX, oldY = Fonts.outline.getData().scaleY;
+        boolean oldMarkup = Fonts.outline.getData().markupEnabled;
+        Fonts.outline.getData().markupEnabled = false;
+        Fonts.outline.getData().setScale(Scl.scl(scale));
+        lineLayout.setText(Fonts.outline, value);
+        if(lineLayout.width > width) Fonts.outline.getData().setScale(Scl.scl(scale) * width / lineLayout.width);
+        Fonts.outline.setColor(textColor);
+        // Combat labels always stay on one line; narrative text keeps its own wrapped layout.
+        Fonts.outline.draw(value, x, y, width, Align.center, false);
+        Fonts.outline.getData().markupEnabled = oldMarkup;
+        Fonts.outline.getData().setScale(oldX, oldY);
+        Fonts.outline.setColor(Color.white);
     }
 
     private void label(String value, float y, Color color, float alpha, float scale){

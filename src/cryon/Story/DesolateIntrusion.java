@@ -34,6 +34,7 @@ public final class DesolateIntrusion {
         if(installed) return;
         installed = true;
         IntrusionRenderer.install();
+        IntrusionMusic.install();
         Events.on(ClientLoadEvent.class, event -> {
             if(headless) return;
             ui.settings.addCategory(Core.bundle.get("cryon.intrusion.settings"), table -> {

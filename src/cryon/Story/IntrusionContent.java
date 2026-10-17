@@ -13,12 +13,30 @@ public final class IntrusionContent {
     public static Floor gridFloor;
     public static UnitType virus;
     public static BasicBulletType packet, seeker;
+    public static mindustry.entities.bullet.LaserBulletType[] ringLasers;
+    public static mindustry.entities.bullet.LightningBulletType chainLightning;
 
     public static void load(){
+        ringLasers = new mindustry.entities.bullet.LaserBulletType[3];
+        for(int i = 0; i < ringLasers.length; i++){
+            mindustry.entities.bullet.LaserBulletType laser = new mindustry.entities.bullet.LaserBulletType(16f);
+            laser.length = 2f * (140f + i * 100f) * arc.math.Mathf.sinDeg(5f);
+            laser.width = 6f;
+            laser.sideLength = 0f;
+            laser.lifetime = 18f;
+            laser.colors = new Color[]{Color.valueOf("be78ed66"), Color.valueOf("be78ed"), Color.white};
+            ringLasers[i] = laser;
+        }
+        chainLightning = new mindustry.entities.bullet.LightningBulletType();
+        chainLightning.damage = 28f;
+        chainLightning.lightningLength = 60;
+        chainLightning.lightningLengthRand = 8;
+        chainLightning.lightningColor = Color.valueOf("be78ed");
         gridFloor = new Floor("intrusion-grid", 0);
         gridFloor.mapColor = Color.valueOf("09282f");
         gridFloor.buildVisibility = BuildVisibility.hidden;
         virus = new UnitType("intrusion-virus"){{
+            hidden = true;
             constructor = UnitEntity::create;
             aiController = () -> new AIController(){
                 @Override public void updateUnit(){ unit.vel.setZero(); }
@@ -26,7 +44,7 @@ public final class IntrusionContent {
             flying = true;
             speed = 0f;
             drag = 1f;
-            health = 15000f;
+            health = 10000f;
             armor = 0f;
             hitSize = 38f;
             itemCapacity = 0;
@@ -56,7 +74,7 @@ public final class IntrusionContent {
             @Override public void updateHoming(mindustry.gen.Bullet bullet){
                 if(bullet.time < homingDelay) return;
                 cryon.Script.VirusIntrusionScript script = cryon.Script.VirusIntrusionScript.current();
-                mindustry.gen.Unit target = script == null ? null : script.controlledGamma();
+                mindustry.gen.Unit target = script == null ? null : script.controlledPlayer();
                 if(target == null || target.dead || !target.isAdded()) return;
                 float angle = arc.math.Angles.moveToward(bullet.rotation(), bullet.angleTo(target),
                         1.4f * arc.util.Time.delta);

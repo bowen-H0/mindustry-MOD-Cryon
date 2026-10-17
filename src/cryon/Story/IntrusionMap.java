@@ -16,12 +16,12 @@ import static mindustry.Vars.*;
 /** Deterministic, editor-compatible native Mindustry map. */
 public final class IntrusionMap {
     public static final String mapKey = "cryon-intrusion-map";
-    public static final int width = 112, height = 144;
-    public static final int left = 16, right = 96, bottom = 24, top = 128;
+    public static final int width = 144, height = 144;
+    public static final int left = 24, right = 119, bottom = 24, top = 119;
     public static final float visibleMinX = (left - 0.5f) * 8f, visibleMinY = (bottom - 0.5f) * 8f;
     public static final float visibleMaxX = (right + 0.5f) * 8f, visibleMaxY = (top + 0.5f) * 8f;
-    public static final float playerX = 56 * 8f, playerY = 42 * 8f;
-    public static final float nodeX = 56 * 8f, nodeY = 106 * 8f;
+    public static final float playerX = (width - 1) * 4f, playerY = 42 * 8f;
+    public static final float nodeX = (width - 1) * 4f, nodeY = (height - 1) * 4f;
 
     public static boolean active(){ return state != null && state.rules.tags.getBool(mapKey); }
 
@@ -50,14 +50,14 @@ public final class IntrusionMap {
         rules.unitCap = 1;
         rules.teams.get(Team.sharded).unitHealthMultiplier = 300f / 220f;
         rules.teams.get(Team.sharded).unitDamageMultiplier = 1.5f;
-        rules.modeName = "Isolation / Gamma";
+        rules.modeName = "Isolation / Gamma → Transliminal";
         return rules;
     }
 
     public static void generate(){
         state.rules = rules();
         state.map = new Map(StringMap.of("name", "病毒隔离空间", "author", "Project Farstar",
-                "description", "Java processor controlled Gamma combat / 原生伽马弹幕反击地图"));
+                "description", "Gamma to Transliminal combat / 伽马升级凌际弹幕反击地图"));
         state.map.width = width;
         state.map.height = height;
         world.loadGenerator(width, height, tiles -> {

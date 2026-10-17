@@ -30,12 +30,12 @@ public final class IntrusionRecoveryCheck {
             controller.updateTile();
             IntrusionAttackCheck.check(script.recoveryActive(), "unlock lost after save/load or boss healing");
             gamma = script.controlledGamma();
-            gamma.health = 299.99f;
+            gamma.health = gamma.maxHealth - 0.01f;
             controller.updateTile();
-            IntrusionAttackCheck.check(gamma.health == 300f, "recovery exceeded max health");
+            IntrusionAttackCheck.check(gamma.health == gamma.maxHealth, "recovery exceeded max health");
             gamma.health = 0f;
             controller.updateTile();
-            IntrusionAttackCheck.check(script.finished() && !script.won(), "recovery revived dead Gamma");
+            IntrusionAttackCheck.check(script.finished() && !script.won(), "recovery revived dead player");
             System.out.println("PASS: 80% unlock, 6 HP/sec, persistent unlock/save-load, max health cap, no resurrection");
             System.exit(0);
         }catch(Throwable error){ error.printStackTrace(); System.exit(1); }

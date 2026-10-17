@@ -131,15 +131,16 @@ public final class IntrusionRenderer {
         }
         Unit gamma = script.controlledGamma();
         if(gamma != null && !gamma.dead){
-            // Five enlarged flight-shape vertices plus the center identify the player and heading.
-            float r = Math.max(8f, gamma.hitSize * 0.85f);
-            float dot = Math.max(1.5f, markerPixel * 2.2f);
-            for(int i = 0; i < 5; i++){
-                float angle = gamma.rotation + (i == 0 ? 0f : i == 1 ? 120f : i == 2 ? -120f : i == 3 ? 160f : -160f);
-                float distance = i < 3 ? r : r * 0.65f;
-                point(gamma.x + Angles.trnsx(angle, distance), gamma.y + Angles.trnsy(angle, distance), dot, gammaColor);
-            }
-            point(gamma.x, gamma.y, Math.max(2f, markerPixel * 2.8f), gammaColor);
+            // A stable hollow ring keeps the player readable without covering its center.
+            float stroke = Math.max(1.3f, markerPixel * 2f);
+            float radius = Math.max(gamma.hitSize * 0.85f, markerPixel * 9f);
+            Draw.color(Color.black);
+            Lines.stroke(stroke + markerPixel * 2f);
+            Lines.circle(gamma.x, gamma.y, radius);
+            Draw.color(gammaColor);
+            Lines.stroke(stroke);
+            Lines.circle(gamma.x, gamma.y, radius);
+            Lines.stroke(1f);
         }
         Draw.reset();
     }

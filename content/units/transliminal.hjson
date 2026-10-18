@@ -61,7 +61,6 @@ engines: [
 
 weapons: [
   {
-    name: "transliminal-pulse"
     mirror: true
     alternate: true
     rotate: false
@@ -93,7 +92,6 @@ weapons: [
     }
   }
   {
-    name: "transliminal-rift"
     mirror: false
     rotate: true
     rotateSpeed: 12

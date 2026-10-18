@@ -17,6 +17,7 @@ import cryon.Content.OblivionUnit;
 import cryon.Features.*;
 import cryon.Fx.CryonFx;
 import cryon.Generator.CryonPlanetGenerator;
+import cryon.Generator.AravisPlanetGenerator;
 import cryon.Injector.DeuteriumReactorInjector;
 import cryon.Injector.HeatBoostTurret;
 import cryon.Injector.MeltingDrillInjector;
@@ -79,7 +80,8 @@ public class CryonJavaMod extends Mod {
 
 
 
-    public CryonJavaMod() {}
+    public CryonJavaMod() {
+    }
 
     public static FluxBarrier fluxBarrier;
     public static FluxBarrier    aegisBarrier;
@@ -115,6 +117,7 @@ public class CryonJavaMod extends Mod {
     public static StackRouter stackRouter;
     public static WindTurbine windTurbine;
     public static MultiRecipeCrafter metallurgicalFurnace;
+    public static MultiRecipeCrafter advancedAlloyFurnace;
 
 
 
@@ -152,6 +155,7 @@ public class CryonJavaMod extends Mod {
         cryon.Story.IntrusionContent.load();
         CryonItems.load();
         AravisEnvironment.load();
+        cryon.Content.BioCrawlerUnits.load();
 
 
         new Drill("melting-drill") {{ }};
@@ -998,6 +1002,27 @@ public class CryonJavaMod extends Mod {
                     new DrawFlame()
             );
         }};
+
+        advancedAlloyFurnace = new MultiRecipeCrafter("advanced-alloy-furnace") {{
+            size = 4;
+            health = 1800;
+            hasPower = true;
+            hasItems = true;
+            itemCapacity = 80;
+            consumePower(8f);
+            requirements(Category.crafting, ItemStack.with(
+                    CryonItems.ferrum, 320, CryonItems.hardSteel, 180,
+                    CryonItems.armorAlloy, 100, Items.silicon, 220));
+            // Same material ratios as the starter furnace; eight times the throughput.
+            recipes.add(new CraftRecipe(
+                    ItemStack.with(CryonItems.steel, 12, CryonItems.manganese, 8, Items.coal, 8),
+                    ItemStack.with(CryonItems.armorAlloy, 4), 90f));
+            recipes.add(new CraftRecipe(
+                    ItemStack.with(CryonItems.armorAlloy, 8, Items.coal, 16,
+                            CryonItems.manganese, 8, CryonItems.nickel, 12),
+                    ItemStack.with(CryonItems.ashesAlloy, 8), 120f));
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+        }};
         windTurbine = new WindTurbine("wind-turbine") {{
             size = 2;
             health = 260;
@@ -1219,6 +1244,7 @@ public class CryonJavaMod extends Mod {
 
         lagrange = new UnitType("lagrange") {{
             constructor = PayloadUnit::create;
+            range = 250f;
 
             flying = true;
             health = 20000f;
@@ -1291,7 +1317,8 @@ public class CryonJavaMod extends Mod {
                         shootStatusDuration = 60f + 60f;
 
                         bullet = new LaserBulletType(250f) {{
-                            length = 700f;
+                            rangeOverride = 250f;
+                            length = 250f;
                             width = 90f;
                             lifetime = 60f;
                             colors = new Color[]{
@@ -1962,6 +1989,7 @@ public class CryonJavaMod extends Mod {
     private void initTimed() {
         cryon.Story.DesolateIntrusion.install();
         LoadTiming.measure("init / environment", CryonEnvironment::init);
+        LoadTiming.measure("init / aravis environment", AravisEnvironment::init);
         LoadTiming.measure("init / sectors", CryonSectors::load);
         Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
         if(exist == null){
@@ -2220,6 +2248,8 @@ public class CryonJavaMod extends Mod {
 
         }
         if(aravisPlanet != null) {
+            aravisPlanet.generator = new AravisPlanetGenerator();
+            aravisPlanet.allowLaunchToNumbered = true;
             aravisPlanet.updateLighting = false;
             aravisPlanet.clearSectorOnLose = true;
 
@@ -2290,6 +2320,8 @@ public class CryonJavaMod extends Mod {
                 new ItemStack(Items.silicon, 40)
         });
         if (cryonPlanet != null) waveEmitter.shownPlanets.add(cryonPlanet);
+        // Register before initCapacities so all new plan liquids are accepted.
+        cryon.Content.CrawlerProduction.addPlans(t3universalAssembler, t4universalAssembler, t5universalAssembler);
         // 添加生产计划
         if (peak != null) {
             t3universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{

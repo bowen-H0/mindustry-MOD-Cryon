@@ -1,0 +1,73 @@
+type: flying
+name: 君临
+description: 统御核心的高级工程机。高效建造并开采镍矿，携带更多物资，发射带环形光晕的高能修复束，拦截敌方单位并高效修复友方建筑，无法伤害敌方建筑。
+flying: true
+lowAltitude: false
+controller: builderAI
+isEnemy: false
+coreUnitDock: true
+health: 950
+armor: 8
+speed: 3.6
+rotateSpeed: 8
+hitSize: 16
+itemCapacity: 100
+buildSpeed: 3
+mineTier: 3
+mineSpeed: 6
+mineItems: [ferrum, copper, lead, coal, sand, manganese, nickel, av-red-sand]
+fogRadius: 0
+engineOffset: 9
+engineSize: 3
+targetAir: true
+targetGround: true
+faceTarget: true
+weapons: [
+  {
+    x: 5
+    y: 1
+    mirror: true
+    alternate: true
+    reload: 14
+    shootSound: shootLaser
+    bullet: {
+      type: LaserBoltBulletType
+      damage: 28
+      speed: 8
+      lifetime: 28
+      width: 5
+      height: 22
+      collidesAir: true
+      collidesGround: true
+      collidesTeam: true
+      healPercent: 1.2
+      buildingDamageMultiplier: 0
+      healAmount: 24
+      healColor: 84f491
+      healEffect: healBlockFull
+      hitColor: 6ea8ff
+      trailColor: 6ea8ff
+      trailWidth: 2
+      trailLength: 12
+      lightColor: 6ea8ff
+      lightRadius: 32
+      lightOpacity: 0.6
+      shootEffect: {
+        type: MultiEffect
+        effects: [
+          { type: WaveEffect, lifetime: 12, sizeFrom: 1, sizeTo: 8, strokeFrom: 1.5, strokeTo: 0, colorFrom: aee3ff, colorTo: "6ea8ff00" }
+        ]
+      }
+      backColor: 6ea8ff
+      frontColor: ffffff
+      hitEffect: {
+        type: MultiEffect
+        effects: [
+          { type: WaveEffect, lifetime: 16, sizeFrom: 2, sizeTo: 18, strokeFrom: 2, strokeTo: 0, colorFrom: aee3ff, colorTo: "6ea8ff00" }
+          { type: ParticleEffect, particles: 6, lifetime: 18, length: 16, sizeFrom: 2, sizeTo: 0, colorFrom: aee3ff, colorTo: "6ea8ff00" }
+        ]
+      }
+      despawnEffect: hitLaserColor
+    }
+  }
+]

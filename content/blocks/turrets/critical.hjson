@@ -3,7 +3,7 @@ name: "临界"
 description: "消耗大量电力与氘元素，发射高穿透临界能量弹，伴随交织的副弹，对目标及周围敌人造成毁灭性打击。"
 category: turret
 size: 5
-health: 6500
+health: 20800
 range: 300
 shootY: 12
 reload: 120

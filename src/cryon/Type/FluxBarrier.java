@@ -209,6 +209,8 @@ public class FluxBarrier extends Block{
     }
 
     public class ForceBuild extends Building implements Ranged, ExplosionShield{
+        // SoundControl reads this from its audio thread. Never query world entities there.
+        private volatile boolean ambientShieldActive;
         public boolean broken = true;
         public float buildup, radscl, hit, warmup, phaseHeat;
         public float shieldHeat = 0f;
@@ -233,11 +235,12 @@ public class FluxBarrier extends Block{
 
         @Override
         public boolean shouldAmbientSound(){
-            return !broken && realRadius() > 1f;
+            return ambientShieldActive;
         }
 
         @Override
         public void onRemoved(){
+            ambientShieldActive = false;
             float radius = realRadius();
             if(!broken && radius > 1f) Fx.forceShrink.at(x, y, radius, team.color);
             super.onRemoved();
@@ -245,6 +248,7 @@ public class FluxBarrier extends Block{
 
         @Override
         public void pickedUp(){
+            ambientShieldActive = false;
             super.pickedUp();
             radscl = warmup = 0f;
         }
@@ -275,6 +279,7 @@ public class FluxBarrier extends Block{
                 shieldBreakEffect.at(x, y, realRadius(), team.color);
                 breakSound.at(x, y);
                 kill();
+                return;
             }
             if(heatCooldownTimer > 0){
                 heatCooldownTimer -= Time.delta;
@@ -319,6 +324,7 @@ public class FluxBarrier extends Block{
 
         public void deflectBullets() {
             float realRadius = realRadius();
+            ambientShieldActive = !broken && realRadius > 1f;
             if (realRadius > 0 && !broken) {
                 paramBlock = FluxBarrier.this;
                 paramEntity = this;
@@ -328,6 +334,7 @@ public class FluxBarrier extends Block{
         }
         @Override
         public boolean absorbExplosion(float ex, float ey, float damage){
+            if(realRadius() <= 0f || broken) return false;
             boolean absorb = Intersector.isInRegularPolygon(sides, x, y, realRadius(), shieldRotation, ex, ey);
             if(absorb){
                 absorbEffect.at(ex, ey);
@@ -339,7 +346,7 @@ public class FluxBarrier extends Block{
         }
 
         public float realRadius(){
-            return (radius + phaseHeat * phaseRadiusBoost) * radscl;
+            return FluxSuppressionAbility.suppressed(team, x, y) ? 0f : (radius + phaseHeat * phaseRadiusBoost) * radscl;
         }
 
         @Override

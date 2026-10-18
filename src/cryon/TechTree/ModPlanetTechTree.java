@@ -239,7 +239,11 @@ public abstract class ModPlanetTechTree {
                 if(unit == null){ Log.warn("[@] Unit not found: @, skipping", modName, e.name); return; }
 
                 Seq<Objective> objs = sectorGateObjectives(e.name);
-                node(unit, e.manualReqs, objs, () -> buildChildrenOf(e.name, targetPlanet));
+                // Automatic unit nodes have no manual cost. Resolve the engine's
+                // research cost instead of passing null to TechNode.setupRequirements.
+                ItemStack[] requirements = e.manualReqs != null ? e.manualReqs : unit.researchRequirements();
+                if(requirements == null) requirements = ItemStack.empty;
+                node(unit, requirements, objs, () -> buildChildrenOf(e.name, targetPlanet));
                 markPlanet(unit, targetPlanet);
             }
             case SECTOR -> {

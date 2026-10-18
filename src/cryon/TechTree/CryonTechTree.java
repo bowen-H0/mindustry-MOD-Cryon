@@ -320,6 +320,9 @@ public class CryonTechTree extends ModPlanetTechTree {
         add(Kind.UNIT, "natica", "t2factory", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));
         add(Kind.UNIT, "peak", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
         add(Kind.UNIT, "salus", "mechanical-assembler", r(CryonContent.item("titanium"), 2400, CryonContent.item("farstar-alloy"), 2600, CryonContent.item("silicon"), 2300));
+        add(Kind.UNIT, "propugno", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
+        add(Kind.UNIT, "ratio", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
+        add(Kind.UNIT, "veritas", "t5universal-assembler", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("phase-fabric"), 4000, CryonContent.item("nano-material"), 2000, CryonContent.item("graphite"), 3000, CryonContent.item("silicon"), 5000));
         add(Kind.UNIT, "umbra", "t3universal-assembler", r(CryonContent.item("farstar-alloy"), 500, CryonContent.item("silicon"), 2000, CryonContent.item("phase-fabric"), 3000));
         add(Kind.UNIT, "sagitta", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));
         add(Kind.UNIT, "blaze", "t4universal-assembler", r(CryonContent.item("surge-alloy"), 3000, CryonContent.item("silicon"), 4000, CryonContent.item("graphite"), 3000, CryonContent.item("neutronite"), 1000));

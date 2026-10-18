@@ -1,0 +1,16 @@
+type: Reconstructor
+name: 高级重构厂
+description: 将黑曜机甲重构为T3硝石喷火机甲。
+size: 5
+health: 2600
+constructTime: 2400
+itemCapacity: 160
+consumes: {
+  power: 10
+  items: {
+    items: [silicon/120, armor-alloy/100, ashes-alloy/60]
+  }
+}
+upgrades: [[obsidianum, nitrum]]
+category: units
+requirements: [ferrum/350, hard-steel/220, armor-alloy/180, ashes-alloy/80, silicon/250]

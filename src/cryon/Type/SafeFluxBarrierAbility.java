@@ -116,6 +116,7 @@ public class SafeFluxBarrierAbility extends Ability {
 
     @Override
     public void update(Unit unit) {
+        if(FluxSuppressionAbility.suppressed(unit.team, unit.x, unit.y)) return;
 
         if (broken) {
             brokenTimer -= Time.delta;
@@ -232,6 +233,7 @@ public class SafeFluxBarrierAbility extends Ability {
 
     @Override
     public void draw(Unit unit) {
+        if(FluxSuppressionAbility.suppressed(unit.team, unit.x, unit.y)) return;
         if (broken) {
             drawBrokenIndicator(unit);
             return;

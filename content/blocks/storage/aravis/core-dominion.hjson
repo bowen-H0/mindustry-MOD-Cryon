@@ -1,0 +1,12 @@
+type: CoreBlock
+name: 统御核心
+description: 阿拉维斯的高级核心。可升级征伐核心，提供更多储存空间和单位容量，配备高级核心机君临。
+size: 4
+health: 4800
+armor: 6
+itemCapacity: 9000
+unitType: imperator
+unitCapModifier: 40
+category: effect
+isFirstTier: false
+requirements: [ferrum/1800, hard-steel/900, armor-alloy/700, silicon/1000, ashes-alloy/200]

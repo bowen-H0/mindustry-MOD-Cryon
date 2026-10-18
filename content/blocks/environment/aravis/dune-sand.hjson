@@ -4,3 +4,5 @@ speedMultiplier: 1
 mapColor: "9c9284"
 itemDrop: sand
 playerUnmineable: true
+
+wall: dune-sand-wall

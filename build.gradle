@@ -79,7 +79,25 @@ tasks.register('jarAndroid'){
     }
 }
 
+tasks.register('validateSpriteNames'){
+    group = 'verification'
+    description = 'Reject duplicate atlas names across both sprite source directories.'
+    def spriteFiles = files(fileTree('sprites'){ include '**/*.png' },
+            fileTree('assets/sprites'){ include '**/*.png' })
+    inputs.files(spriteFiles)
+    doLast{
+        def collisions = spriteFiles.files.groupBy{ it.name }.findAll{ name, paths -> paths.size() > 1 }
+        if(!collisions.isEmpty()){
+            def details = collisions.sort().collect{ name, paths ->
+                "${name}: ${paths.collect{ project.relativePath(it) }.sort().join(', ')}"
+            }.join('\n')
+            throw new GradleException("Duplicate sprite atlas names (folders do not isolate names):\n${details}")
+        }
+    }
+}
+
 jar{
+    dependsOn 'validateSpriteNames'
     archiveFileName = "${project.name}Desktop.jar"
     from{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }

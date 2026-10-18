@@ -20,6 +20,7 @@ public class AravisTechTree extends ModPlanetTechTree {
         // 根节点本身不写进 entries，它由 rootBlock() 指定
         // 这里只写挂在根节点下面的子节点
         addAuto(Kind.BLOCK, "core-conquest", null);
+        addAuto(Kind.BLOCK, "core-dominion", "core-conquest");
 
         // ---- BLOCK ----
         addAuto(Kind.BLOCK, "anti-wind-conveyor", "core-conquest");
@@ -50,15 +51,19 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "extension-drill", "aeolian-drill");
         addAuto(Kind.BLOCK, "aeolian-node", "aeolian-drill");
         addAuto(Kind.BLOCK, "wind-turbine", "aeolian-node");
+        addAuto(Kind.BLOCK, "coal-burner", "aeolian-node");
         addAuto(Kind.BLOCK, "aeolian-solar-panel", "wind-turbine");
         addAuto(Kind.BLOCK, "aeolian-large-solar-panel", "aeolian-solar-panel");
 
         addAuto(Kind.BLOCK, "metallurgical-furnace", "aeolian-drill");
+        addAuto(Kind.BLOCK, "advanced-alloy-furnace", "metallurgical-furnace");
+        addAuto(Kind.BLOCK, "aravis-regen-projector", "aeolian-node");
 
 
         addAuto(Kind.BLOCK, "fusillade", "core-conquest");
         addAuto(Kind.BLOCK, "chisel", "fusillade");
         addAuto(Kind.BLOCK, "saxum", "chisel");
+        addAuto(Kind.BLOCK, "afterglow-cannon", "saxum");
         addAuto(Kind.BLOCK, "fractura", "chisel");
         addAuto(Kind.BLOCK, "volans", "fusillade");
 
@@ -74,12 +79,13 @@ public class AravisTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "mech-unit-factory", "core-conquest");
         addAuto(Kind.BLOCK, "mech-unit-reconstructor", "mech-unit-factory");
+        addAuto(Kind.BLOCK, "advanced-mech-reconstructor", "mech-unit-reconstructor");
 
 
         add(Kind.UNIT, "jaspis", "mech-unit-factory",r(CryonItems.hardSteel, 60, CryonContent.item("silicon"), 100, CryonItems.ferrum, 100));
-        add(Kind.UNIT, "nitrum", "jaspis",r(CryonItems.hardSteel, 60, CryonContent.item("silicon"), 100, CryonItems.ferrum, 100));
+        add(Kind.UNIT, "nitrum", "advanced-mech-reconstructor",r(CryonItems.hardSteel, 60, CryonContent.item("silicon"), 100, CryonItems.ferrum, 100));
         add(Kind.UNIT, "obsidianum", "mech-unit-reconstructor",r(CryonItems.armorAlloy, 160, CryonContent.item("silicon"), 200, CryonContent.item("lead"), 200));
-        add(Kind.UNIT, "hematites", "obsidianum",r(CryonItems.armorAlloy, 160, CryonContent.item("silicon"), 200, CryonContent.item("lead"), 200));
+        add(Kind.UNIT, "hematites", "nitrum",r(CryonItems.armorAlloy, 160, CryonContent.item("silicon"), 200, CryonContent.item("lead"), 200));
 
 
 

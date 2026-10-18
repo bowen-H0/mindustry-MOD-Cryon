@@ -95,6 +95,7 @@ public class FluxBarrierAbility extends Ability {
 
     @Override
     public void update(Unit unit) {
+        if(FluxSuppressionAbility.suppressed(unit.team, unit.x, unit.y)) return;
         if (shieldHeat >= maxShieldHeat) {
             Fx.shieldBreak.at(unit.x, unit.y, radius, unit.type.shieldColor(unit));
             breakSound.at(unit.x, unit.y);
@@ -164,6 +165,7 @@ public class FluxBarrierAbility extends Ability {
     }
     @Override
     public void draw(Unit unit) {
+        if(FluxSuppressionAbility.suppressed(unit.team, unit.x, unit.y)) return;
         float r = radscl * radius;
         if (r <= 0.001f) return;
         cryon.Features.FluxShieldRenderer.drawFluxShields();

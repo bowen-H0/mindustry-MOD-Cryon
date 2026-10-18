@@ -1,0 +1,13 @@
+type: RegenProjector
+name: 余温修复器
+description: 消耗电力，持续修复范围内受损的建筑。采用埃里克尔式范围再生修复。
+size: 3
+health: 900
+range: 15
+healPercent: 0.05
+baseColor: 84f491
+consumes: {
+  power: 3
+}
+category: effect
+requirements: [ferrum/100, silicon/100, armor-alloy/70, ashes-alloy/30]

@@ -14,7 +14,7 @@ weapons: [
     name: nitrum-flame-cannon
     x: 5
     y: 0.5
-    reload: 0
+    reload: 60
     rotate: false
     mirror: true
     alternate: false
@@ -28,11 +28,13 @@ weapons: [
 
     bullet: {
       type: ContinuousFlameBulletType
-      damage: 50
-      length: 130
+      damage: 8
+      damageInterval: 5
+      lifetime: 60
+      length: 110
       ammoMultiplier: 1.4
-      knockback: 1.5
-      pierceCap: 3
+      knockback: 0.8
+      pierceCap: 2
       buildingDamageMultiplier: 0.4
       timescaleDamage: true
       colors: ["eb7a3299", "f5893dcc", "ff5e1fff", "ff8c42", "ffe0b3"]

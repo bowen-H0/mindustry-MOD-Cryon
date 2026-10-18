@@ -1,0 +1,85 @@
+type: ItemTurret
+name: 焦土
+description: 消耗余晖合金，齐射散布的集束炮弹，落地后迸射燃烧子弹药，对大片地面区域实施轰炸。
+size: 4
+health: 3600
+range: 320
+reload: 150
+rotateSpeed: 1.8
+shootCone: 5
+inaccuracy: 3
+velocityRnd: 0.2
+shoot: {
+  type: ShootSpread
+  shots: 7
+  spread: 4
+}
+shootY: 14
+recoil: 8
+shake: 6
+shootSound: shootArtillery
+targetAir: false
+targetGround: true
+maxAmmo: 30
+ammoPerShot: 4
+consumeAmmoOnce: true
+ammoTypes: {
+  ashes-alloy: {
+    type: ArtilleryBulletType
+    speed: 4
+    lifetime: 85
+    scaleLife: true
+    damage: 40
+    splashDamage: 100
+    splashDamageRadius: 28
+    collidesAir: false
+    collidesGround: true
+    collidesTiles: false
+    ammoMultiplier: 2
+    width: 14
+    height: 18
+    backColor: c4513a
+    frontColor: ffe0b3
+    trailColor: c4513a
+    trailWidth: 4
+    trailLength: 18
+    hitEffect: massiveExplosion
+    despawnEffect: massiveExplosion
+    shootEffect: shootBig
+    smokeEffect: shootBigSmoke
+    status: burning
+    statusDuration: 300
+    makeFire: true
+    fragBullets: 5
+    fragRandomSpread: 360
+    fragVelocityMin: 0.5
+    fragVelocityMax: 1.2
+    fragLifeMin: 0.5
+    fragLifeMax: 1
+    fragBullet: {
+      type: ArtilleryBulletType
+      speed: 2.5
+      lifetime: 22
+      damage: 10
+      splashDamage: 35
+      splashDamageRadius: 20
+      collidesAir: false
+      collidesGround: true
+      collidesTiles: false
+      width: 7
+      height: 10
+      backColor: c4513a
+      frontColor: ffe0b3
+      trailColor: c4513a
+      trailWidth: 1.5
+      trailLength: 6
+      hitEffect: flakExplosion
+      despawnEffect: flakExplosion
+      status: burning
+      statusDuration: 300
+      makeFire: true
+    }
+  }
+}
+category: turret
+requirements: [ferrum/400, hard-steel/260, silicon/300, armor-alloy/200, ashes-alloy/140]

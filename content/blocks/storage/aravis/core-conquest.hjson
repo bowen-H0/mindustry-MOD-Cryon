@@ -1,10 +1,10 @@
 type: CoreBlock
 name: "征伐核心"
-description: "Aravis 星球的初级核心。"
+description: "阿拉维斯的初级核心，配备专属核心机执锋。"
 size: 3
 health: 1500
 itemCapacity: 3000
-unitType: alpha
+unitType: vindex
 unitCapModifier: 16
 category: effect
 isFirstTier: true

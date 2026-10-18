@@ -1,0 +1,7 @@
+type: StaticWall
+name: 风纹沙墙
+solid: true
+destructible: false
+size: 1
+variants: 2
+mapColor: "9c9284"

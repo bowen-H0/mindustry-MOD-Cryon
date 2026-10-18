@@ -1244,7 +1244,7 @@ public class CryonJavaMod extends Mod {
 
         lagrange = new UnitType("lagrange") {{
             constructor = PayloadUnit::create;
-            range = 250f;
+            range = 600f;
 
             flying = true;
             health = 20000f;
@@ -1316,9 +1316,9 @@ public class CryonJavaMod extends Mod {
                         shootStatus = StatusEffects.unmoving;
                         shootStatusDuration = 60f + 60f;
 
-                        bullet = new LaserBulletType(250f) {{
-                            rangeOverride = 250f;
-                            length = 250f;
+                        bullet = new LaserBulletType(312.5f) {{
+                            rangeOverride = 600f;
+                            length = 600f;
                             width = 90f;
                             lifetime = 60f;
                             colors = new Color[]{
@@ -2227,6 +2227,10 @@ public class CryonJavaMod extends Mod {
             generator.baseSeed = 12;
             cryonPlanet.updateLighting = false;
             cryonPlanet.generator = generator;
+            if(!Vars.headless){
+                CryonSurfaceMesh.install(cryonPlanet);
+                CruxStationMesh.install(cryonPlanet);
+            }
             cryonPlanet.allowWaves = true;
             cryonPlanet.allowSectorInvasion = true;
             cryonPlanet.enemyCoreSpawnReplace = true;

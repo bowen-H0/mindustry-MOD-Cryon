@@ -14,6 +14,7 @@ import mindustry.content.*;
 import mindustry.game.*;
 import mindustry.maps.generators.*;
 import mindustry.type.UnitType;
+import mindustry.type.Sector;
 import mindustry.world.*;
 import mindustry.world.blocks.environment.*;
 import mindustry.world.meta.*;
@@ -42,6 +43,60 @@ import java.io.IOException;
 import static mindustry.Vars.*;
 
 public class CryonPlanetGenerator extends PlanetGenerator{
+    private boolean lightRefreshQueued;
+
+    @Override
+    public boolean isEmissive(){ return true; }
+
+    @Override
+    public void getEmissiveColor(Vec3 position, Color out){
+        out.set(Color.clear);
+        mindustry.type.Planet planet = Vars.content.planet("cryon-cryon");
+        if(planet == null) return;
+        float enemyDistance = 999f, friendlyDistance = 999f, coverage = 0f;
+        for(Sector sector : planet.sectors){
+            float distance = position.dst(sector.tile.v);
+            if(sector.hasEnemyBase() && !sector.isCaptured()){
+                float difficultyOffset = sector.preset == null ? 0f : Math.max(0f, sector.preset.difficulty / 10f * 0.03f - 0.03f);
+                enemyDistance = Math.min(enemyDistance, distance - difficultyOffset);
+            }else if(sector.hasBase() && distance < friendlyDistance){
+                friendlyDistance = distance;
+                coverage = sector.info.lightCoverage;
+            }
+        }
+        // Serpulo scales distance by 0.25: a base lights a district, not one face.
+        float noise = Simplex.noise3d(baseSeed, 3, 0.4, 9,
+                position.x, position.y + 370f, position.z);
+        float lightScale = Math.min(coverage / 50000f, 1.3f);
+        if(lightScale < 1f) lightScale = Interp.pow5Out.apply(lightScale);
+        // Leave unlit streets between small clusters instead of filling a solid disk.
+        float clusters = Simplex.noise3d(baseSeed + 71, 2, 0.5, 65,
+                position.x, position.y + 90f, position.z);
+        if(clusters < 0.54f) return;
+        float brightness = Simplex.noise3d(baseSeed, 1, 1, 9,
+                position.x, position.y + 99f, position.z);
+        if(enemyDistance * 0.25f + noise * 0.035f < 0.065f){
+            out.set(Team.crux.color).mul(0.8f + brightness * 0.4f);
+        }else if(friendlyDistance * 0.25f + Simplex.noise3d(baseSeed, 3, 0.4, 9,
+                position.x, position.y + 600f, position.z) * 0.035f < 0.065f * lightScale){
+            out.set(Team.sharded.color).mul(0.7f + brightness * 0.4f);
+        }
+    }
+
+    private void refreshBaseLights(Sector sector){
+        if(Vars.headless || lightRefreshQueued) return;
+        lightRefreshQueued = true;
+        // Our orbital mesh owns a shader: rebuild on the GL thread, not an executor.
+        arc.Core.app.post(() -> {
+            lightRefreshQueued = false;
+            sector.planet.reloadMesh();
+        });
+    }
+
+    @Override public void onSectorCaptured(Sector sector){ refreshBaseLights(sector); }
+    @Override public void onSectorLost(Sector sector){ refreshBaseLights(sector); }
+    @Override public void beforeSaveWrite(Sector sector){ refreshBaseLights(sector); }
+
     public float heightScl = 0.9f, octaves = 8, persistence = 0.7f, heightPow = 3f, heightMult = 1.6f;
 
     //TODO inline/remove

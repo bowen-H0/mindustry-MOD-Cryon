@@ -11,6 +11,8 @@ import mindustry.Vars;
 import mindustry.ai.UnitCommand;
 import mindustry.ai.UnitStance;
 import mindustry.ai.types.CommandAI;
+import mindustry.ai.types.FlyingAI;
+import mindustry.gen.Teamc;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Call;
 import mindustry.gen.Player;
@@ -118,18 +120,26 @@ public class SpaceJumpAbility extends Ability{
             return;
         }
         if(Vars.net.client() || cooldown > 0f || !canAutoJump(unit)) return;
-        CommandAI ai = (CommandAI)unit.controller();
         float x, y;
-        if(ai.attackTarget != null){
-            x = ai.attackTarget.x(); y = ai.attackTarget.y();
+        Teamc attackTarget = null;
+        Vec2 targetPos = null;
+        if(unit.controller() instanceof CommandAI ai){
+            attackTarget = ai.attackTarget;
+            targetPos = ai.targetPos;
+        }else if(unit.controller() instanceof FlyingAI ai){
+            // Follow the ordinary flight AI's own target priorities, including distant cores.
+            attackTarget = ai.findMainTarget(unit.x, unit.y, unit.range(), unit.type.targetAir, unit.type.targetGround);
+        }
+        if(attackTarget != null){
+            x = attackTarget.x(); y = attackTarget.y();
             float distance = unit.dst(x, y);
             float stop = Math.max(unit.hitSize, unit.range() * 0.8f);
             if(distance <= stop) return;
             float fraction = (distance - stop) / distance;
             x = unit.x + (x - unit.x) * fraction;
             y = unit.y + (y - unit.y) * fraction;
-        }else if(ai.targetPos != null){
-            x = ai.targetPos.x; y = ai.targetPos.y;
+        }else if(targetPos != null){
+            x = targetPos.x; y = targetPos.y;
         }else return;
         if(worthwhile(unit, x, y) && requestJump(unit, x, y)) automatic = true;
     }
@@ -154,6 +164,9 @@ public class SpaceJumpAbility extends Ability{
     }
 
     private boolean canAutoJump(Unit unit){
+        if(unit.controller() instanceof FlyingAI){
+            return unit.team != Vars.state.rules.defaultTeam && unit.team != mindustry.game.Team.derelict && unit.hasWeapons();
+        }
         if(!(unit.controller() instanceof CommandAI)) return false;
         CommandAI ai = (CommandAI)unit.controller();
         return !ai.hasStance(UnitStance.patrol) && !ai.hasStance(UnitStance.holdPosition)

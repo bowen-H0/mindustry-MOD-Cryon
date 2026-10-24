@@ -87,8 +87,10 @@ void main(){
     col.b = texture2D(u_scene, uvB).b;
 
     col *= 1.0 - EDGE_DARKEN * darken;
-    col += RIM_COLOR * rim * RIM_GLOW;
-    col += ARC_COLOR * arc * ARC_GLOW;
+    // Fit the glow into the sampled scene's remaining headroom. Bright aurora and
+    // overlapping shields must not clip the background into a solid white rim.
+    vec3 glow = RIM_COLOR * rim * RIM_GLOW + ARC_COLOR * arc * ARC_GLOW;
+    col += (vec3(1.0) - clamp(col, 0.0, 1.0)) * (vec3(1.0) - exp(-glow));
 
     gl_FragColor = vec4(col, alpha);
 }

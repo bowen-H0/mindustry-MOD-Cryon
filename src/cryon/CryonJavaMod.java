@@ -1993,6 +1993,7 @@ public class CryonJavaMod extends Mod {
     }
 
     private void initTimed() {
+        SpaceJump.install();
         cryon.Story.DesolateIntrusion.install();
         LoadTiming.measure("init / environment", CryonEnvironment::init);
         LoadTiming.measure("init / aravis environment", AravisEnvironment::init);

@@ -2,6 +2,7 @@ package cryon.Features;
 
 import arc.Core;
 import arc.graphics.Color;
+import arc.graphics.Blending;
 import arc.graphics.Gl;
 import arc.graphics.Texture;
 import arc.graphics.gl.FrameBuffer;
@@ -102,10 +103,27 @@ public class ReflectShieldRenderer {
                 },
                 () -> {
                     if(count == 0) return;
+                    Draw.flush();
                     lensBuffer.end();
-                    lensBuffer.blit(lensShader);
-                    count = 0;
+                    try{
+                        composite(() -> lensBuffer.blit(lensShader));
+                    }finally{
+                        count = 0;
+                    }
                 }
         );
+    }
+
+    private static void composite(Runnable blit){
+        // FrameBuffer.blit bypasses SpriteBatch. Its logical blend may be normal while
+        // the last flushed weather mesh left the GPU in additive mode.
+        Blending previous = Draw.getBlend();
+        Gl.enable(Gl.blend);
+        Blending.normal.apply();
+        try{
+            blit.run();
+        }finally{
+            previous.apply();
+        }
     }
 }

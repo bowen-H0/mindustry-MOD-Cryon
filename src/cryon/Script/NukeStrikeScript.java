@@ -1,6 +1,7 @@
 package cryon.Script;
 
 import arc.audio.Sound;
+import arc.Core;
 import arc.graphics.Color;
 import arc.math.Interp;
 import arc.math.Mathf;
@@ -11,6 +12,8 @@ import arc.struct.IntSet;
 import arc.struct.Seq;
 import arc.util.io.*;
 import cryon.Fx.NukeFx;
+import cryon.Fx.AntiNukeFx;
+import cryon.Type.NuclearArbiter;
 import mindustry.entities.Effect;
 import mindustry.game.Team;
 import mindustry.game.Teams.TeamData;
@@ -38,6 +41,10 @@ public class NukeStrikeScript extends MapScript {
     public float delayMinutes = 5f;     // 几分钟后打击
     public float power = 5f;            // 威力 1~10：半径 = 240 * power
     public boolean friendlyFire = true; // 爆炸是否波及友军
+    public int strikeId;
+    public boolean showStation = true;
+    public boolean simpleWarning;
+    private Seq<NukeStrikeScript> reservedTargets;
     public float friendlyPenalty = 6f;  // 选点时每个友军建筑相当于扣多少个敌军建筑
 
     // ---- 固定参数 ----
@@ -55,6 +62,9 @@ public class NukeStrikeScript extends MapScript {
     public float remaining, totalTicks;
     public float tx, ty, blastRadius;
     public float fallTimer, blastTimer, waveR;
+    public boolean intercepting;
+    public float interceptorX, interceptorY, interceptorLastX, interceptorLastY;
+    private boolean interceptorVisualStarted;
     public int coveredEnemy, coveredFriendly;
     private boolean noTarget;
     private float retryTimer, hudTimer = 1e6f;
@@ -91,7 +101,15 @@ public class NukeStrikeScript extends MapScript {
         for(int i = 0; i < fx.size; i++) if(Mathf.dst2(fx.get(i), fy.get(i), cx, cy) <= r2) f++;
         cEnemy = e;
         cFriend = f;
-        return e - friendlyPenalty * f;
+        float score = e - friendlyPenalty * f;
+        if(reservedTargets != null){
+            for(NukeStrikeScript other : reservedTargets){
+                if(other.phase == DONE) continue;
+                float separation = Mathf.dst(cx, cy, other.tx, other.ty);
+                score -= Math.max(1, ex.size) * 2f * Mathf.clamp(1f - separation / Math.max(1f, R + other.blastRadius));
+            }
+        }
+        return score;
     }
 
     /** 选出覆盖最多敌方建筑、友军尽量少的落点，找不到敌方建筑返回 false */
@@ -150,6 +168,25 @@ public class NukeStrikeScript extends MapScript {
 
     // ================= 主循环 =================
 
+    /** Reusable volley entry point. Keeps all targeting, visuals, blast and interception logic here. */
+    public boolean arm(float strength, float warningTicks, Seq<NukeStrikeScript> reservations){
+        power = Mathf.clamp(strength, 0.5f, 10f);
+        reservedTargets = reservations;
+        try{
+            if(!chooseTarget()) return false;
+        }finally{
+            reservedTargets = null;
+        }
+        phase = LOCK;
+        remaining = totalTicks = Math.max(1f, warningTicks);
+        return true;
+    }
+
+    public void broadcastInterception(String event, float x, float y){
+        if(net.server()) Call.clientPacketReliable("cryon-anti-nuke",
+            event + "|" + build.pos() + "|" + x + "|" + y + "|" + strikeId);
+    }
+
     @Override
     public void update() {
         if(phase == DONE){
@@ -187,7 +224,7 @@ public class NukeStrikeScript extends MapScript {
             case LOCK -> {
                 remaining -= d;
                 int sec = (int)Math.ceil(remaining / 60f);
-                if(sec <= 10 && sec > 0 && sec != lastBeep){
+                if(!simpleWarning && sec <= 10 && sec > 0 && sec != lastBeep){
                     lastBeep = sec;
                     float p = 1f + (10 - sec) * 0.08f;
                     snd(Sounds.click, x(), y(), 1f, p);
@@ -203,8 +240,10 @@ public class NukeStrikeScript extends MapScript {
 
             }
             case FALL -> {
+                NuclearArbiter.tryLaunch(this);
                 fallTimer += d;
-                if(fallTimer >= fallTime) startBlast();
+                updateInterception(d);
+                if(phase == FALL && fallTimer >= fallTime && (!net.client() || !intercepting)) startBlast();
             }
             case BLAST -> updateBlast(d);
             default -> {}
@@ -212,6 +251,62 @@ public class NukeStrikeScript extends MapScript {
     }
 
     // ================= 爆炸 =================
+
+    public float missileY(){
+        return ty + 3200f * (1f - Interp.pow2In.apply(Mathf.clamp(fallTimer / fallTime)));
+    }
+
+    public void beginInterception(float x, float y){
+        if(phase != FALL || intercepting) return;
+        intercepting = true;
+        interceptorX = interceptorLastX = x;
+        interceptorY = interceptorLastY = y;
+        Building launcher = world.buildWorld(x, y);
+        if(launcher instanceof NuclearArbiter.NuclearArbiterBuild){
+            ((NuclearArbiter.NuclearArbiterBuild)launcher).prepareLaunch();
+        }
+        startInterceptorVisual();
+        AntiNukeFx.launch.at(x, y, Color.valueOf("a4eaff"));
+        snd(Sounds.shootMissileLarge, x, y, 1f, 1.1f);
+    }
+
+    private void updateInterception(float delta){
+        if(!intercepting) return;
+        startInterceptorVisual();
+        interceptorLastX = interceptorX;
+        interceptorLastY = interceptorY;
+        float dx = tx - interceptorX, dy = missileY() - interceptorY;
+        float distance = Mathf.len(dx, dy), step = 18f * delta;
+        if(distance <= step + 16f){
+            if(!net.client()){
+                float x = tx, y = missileY();
+                intercepted(x, y);
+                broadcastInterception("hit", x, y);
+            }
+        }else{
+            interceptorX += dx / distance * step;
+            interceptorY += dy / distance * step;
+        }
+    }
+
+    private void startInterceptorVisual(){
+        if(interceptorVisualStarted || headless) return;
+        interceptorVisualStarted = true;
+        // Anchor this effect at the launcher, not at a potentially off-screen Java processor.
+        AntiNukeFx.interceptor.at(interceptorX, interceptorY, 0f, Color.white, this);
+    }
+
+    /** End the strike directly: never enter BLAST or run any of its damage callbacks. */
+    public void intercepted(float x, float y){
+        if(phase != FALL) return;
+        phase = DONE;
+        alive = false;
+        intercepting = false;
+        hudEpoch++;
+        AntiNukeFx.neutralized.at(x, y, Color.valueOf("a4eaff"));
+        Effect.shake(5f, 24f, x, y);
+        snd(Sounds.explosionMissile, x, y, 1.4f, 0.7f);
+    }
 
     private boolean hitTeam(Team t) {
         return t != Team.derelict && (friendlyFire || t != build.team);
@@ -304,14 +399,14 @@ public class NukeStrikeScript extends MapScript {
 
     private String statusText() {
         switch(phase){
-            case IDLE: return "待机";
+            case IDLE: return Core.bundle.get("script.nuke-strike.idle");
             case COUNT:
-                if(remaining <= lockLead) return noTarget ? "等待目标…" : "即将锁定";
-                return "倒计时 " + fmt(remaining);
-            case LOCK: return "已锁定 " + fmt(remaining) + "  敌" + coveredEnemy + " / 友" + coveredFriendly;
-            case FALL: return "坠落中";
-            case BLAST: return "爆炸中";
-            default: return "已使用";
+                if(remaining <= lockLead) return noTarget ? Core.bundle.get("script.nuke-strike.waiting-target") : Core.bundle.get("script.nuke-strike.locking");
+                return Core.bundle.format("script.nuke-strike.countdown", fmt(remaining));
+            case LOCK: return Core.bundle.format("script.nuke-strike.locked", fmt(remaining), coveredEnemy, coveredFriendly);
+            case FALL: return Core.bundle.get("script.nuke-strike.falling");
+            case BLAST: return Core.bundle.get("script.nuke-strike.blasting");
+            default: return Core.bundle.get("script.nuke-strike.used");
         }
     }
 
@@ -323,14 +418,14 @@ public class NukeStrikeScript extends MapScript {
     @Override
     public void buildUI(Table table) {
         table.row();
-        table.label(() -> "延迟 " + (int)delayMinutes + " 分钟");
+        table.label(() -> Core.bundle.format("script.nuke-strike.delay", (int)delayMinutes));
         table.row();
         table.slider(1f, 60f, 1f, delayMinutes, v -> {
             if(phase == IDLE) delayMinutes = v;
         }).width(220f);
 
         table.row();
-        table.label(() -> "威力 " + power + "  (半径 " + (int)(radiusFor(power) / tilesize) + " 格)");
+        table.label(() -> Core.bundle.format("script.nuke-strike.power", power, (int)(radiusFor(power) / tilesize)));
         table.row();
         table.slider(1f, 10f, 0.5f, power, v -> {
             if(phase < LOCK) power = v;
@@ -340,7 +435,7 @@ public class NukeStrikeScript extends MapScript {
         table.label(this::statusText);
 
         table.row();
-        TextButton btn = table.button("启动倒计时", Styles.flatt, () -> {
+        TextButton btn = table.button(Core.bundle.get("script.nuke-strike.start"), Styles.flatt, () -> {
             if(phase == IDLE){
                 totalTicks = delayMinutes * 3600f;
                 remaining = totalTicks;
@@ -352,7 +447,7 @@ public class NukeStrikeScript extends MapScript {
             }
         }).size(160f, 40f).get();
         btn.update(() -> {
-            btn.setText(phase == IDLE ? "启动倒计时" : (phase == COUNT || phase == LOCK) ? "取消" : "—");
+            btn.setText(phase == IDLE ? Core.bundle.get("script.nuke-strike.start") : (phase == COUNT || phase == LOCK) ? Core.bundle.get("script.nuke-strike.cancel") : Core.bundle.get("script.nuke-strike.unavailable"));
             btn.setDisabled(phase > LOCK);
         });
     }
@@ -374,6 +469,11 @@ public class NukeStrikeScript extends MapScript {
         write.f(blastRadius);
         write.i(coveredEnemy);
         write.i(coveredFriendly);
+        write.b(1); // Optional extension; old length-delimited script saves end above.
+        write.f(fallTimer);
+        write.bool(intercepting);
+        write.f(interceptorX);
+        write.f(interceptorY);
     }
 
     @Override
@@ -391,6 +491,12 @@ public class NukeStrikeScript extends MapScript {
         // 爆炸/坠落的中间态不存档：坠落重来，爆炸中读档视为已完成
         if(phase == FALL) fallTimer = 0f;
         if(phase == BLAST) phase = DONE;
+        if(read.checkEOF() != -1){
+            fallTimer = read.f();
+            intercepting = read.bool();
+            interceptorX = interceptorLastX = read.f();
+            interceptorY = interceptorLastY = read.f();
+        }
         lastBeep = -1;
     }
 }

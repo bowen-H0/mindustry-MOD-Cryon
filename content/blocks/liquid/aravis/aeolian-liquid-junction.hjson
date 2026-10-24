@@ -1,0 +1,6 @@
+type: LiquidJunction
+size: 1
+health: 90
+liquidCapacity: 24
+category: liquid
+requirements: [ferrum/4]

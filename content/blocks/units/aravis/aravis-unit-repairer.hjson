@@ -1,0 +1,8 @@
+type: cryon.Type.WaterCooledRepairTower
+size: 2
+health: 650
+category: units
+range: 96
+healAmount: 0.6
+consumes: { power: 3 }
+requirements: [ferrum/120, steel/80, silicon/100, manganese/50]

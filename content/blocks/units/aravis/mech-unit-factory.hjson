@@ -1,5 +1,5 @@
 {
-  type: UnitFactory
+  type: cryon.Type.WaterCooledUnitFactory
   name: "机甲单位工厂"
   description: "消耗资源，制造出机甲单位。"
   size: 3
@@ -7,7 +7,7 @@
   hasPower: true
   hasItems: true
   consumes: {
-    power: 3.0
+    power: 6.0
   }
   requirements: [
     ferrum/100
@@ -19,7 +19,7 @@
   plans: [
     {
       unit: jaspis
-      time: 2400
+      time: 4800
       requirements: [
         silicon/30
         hard-steel/20

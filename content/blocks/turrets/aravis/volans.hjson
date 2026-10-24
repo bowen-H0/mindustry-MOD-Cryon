@@ -67,3 +67,9 @@ requirements: [
   armor-alloy/420
   silicon/380
 ]
+// Optional water cooling; firing remains available without water.
+coolant: {
+  type: ConsumeLiquid
+  liquid: water
+  amount: 0.1
+}

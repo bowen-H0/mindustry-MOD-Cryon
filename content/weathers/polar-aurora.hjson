@@ -2,6 +2,8 @@ type: cryon.Type.CryonAuroraWeather
 duration: 10800
 opacityMultiplier: 0.85
 brightness: 0.65
+fullyVisibleZoom: 2
+hiddenZoom: 3
 lowerColor: 58FFC1
 upperColor: A48BFF
 coreColor: A4F4FF

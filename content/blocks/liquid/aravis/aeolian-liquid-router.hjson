@@ -1,0 +1,6 @@
+type: LiquidRouter
+size: 1
+health: 130
+liquidCapacity: 60
+category: liquid
+requirements: [ferrum/6, copper/3]

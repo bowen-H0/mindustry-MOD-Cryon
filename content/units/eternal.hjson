@@ -1,7 +1,7 @@
 type: tank
 name: "永璨"
-health: 45000
-armor: 32
+health: 38000
+armor: 28
 speed: 0.45
 hitSize: 46
 omniMovement: false
@@ -34,7 +34,7 @@ abilities: [
     angle: 100
     regen: 1.5
     cooldown: 600
-    max: 12000
+    max: 9000
     y: -30
     width: 10
     whenShooting: false
@@ -51,7 +51,7 @@ weapons: [
     shake: 8
     rotate: true
     mirror: false
-    reload: 35
+    reload: 45
     shootCone: 5
     shadow: 12
     shootY: 30
@@ -59,7 +59,7 @@ weapons: [
 
     bullet: {
       type: LaserBulletType
-      damage: 1250
+      damage: 1000
       length: 220
       width: 45
       lifetime: 25

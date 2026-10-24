@@ -4,11 +4,17 @@ description: "进阶钻头。需要电力驱动,可用水加速。"
 size: 3
 health: 320
 tier: 3
-drillTime: 400
+drillTime: 720
 category: production
 hasPower: true
 consumes: {
-  power: 1.1
+  power: 2.5
+  liquid: {
+    liquid: water
+    amount: 0.1
+    optional: true
+    booster: true
+  }
 }
 requirements: [
   armor-alloy/140
@@ -18,4 +24,4 @@ requirements: [
 blockedItems: []
 liquidCapacity: 20
 itemCapacity: 20
-liquidBoostIntensity: 1.6
+liquidBoostIntensity: 1.2247449

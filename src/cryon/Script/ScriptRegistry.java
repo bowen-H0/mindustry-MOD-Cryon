@@ -1,5 +1,6 @@
 package cryon.Script;
 
+import arc.Core;
 import arc.func.Prov;
 import arc.struct.OrderedMap;
 import arc.util.Log;
@@ -14,6 +15,10 @@ public class ScriptRegistry {
             this.id = id;
             this.name = name;
             this.factory = factory;
+        }
+
+        public String localizedName(){
+            return Core.bundle.get(name, name);
         }
     }
 

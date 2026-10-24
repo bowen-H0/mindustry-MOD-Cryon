@@ -38,15 +38,66 @@ ammoTypes: {
     ammoMultiplier: 2
     width: 14
     height: 18
-    backColor: c4513a
-    frontColor: ffe0b3
-    trailColor: c4513a
-    trailWidth: 4
-    trailLength: 18
-    hitEffect: massiveExplosion
-    despawnEffect: massiveExplosion
-    shootEffect: shootBig
-    smokeEffect: shootBigSmoke
+    backColor: a84b35
+    frontColor: fff1ce
+    trailColor: ff9a52
+    trailWidth: 3.2
+    trailLength: 24
+    lightColor: ff9a52
+    lightRadius: 48
+    lightOpacity: 0.45
+    trailEffect: {
+      type: ParticleEffect
+      lifetime: 18
+      particles: 2
+      length: 7
+      sizeFrom: 1.6
+      sizeTo: 0
+      colorFrom: ffda9c
+      colorTo: "c4513a00"
+    }
+    hitEffect: { type: cryon.Fx.AfterglowImpact }
+    despawnEffect: { type: cryon.Fx.AfterglowImpact }
+    shootEffect: {
+      type: MultiEffect
+      effects: [
+        {
+          type: ParticleEffect
+          lifetime: 17
+          particles: 7
+          cone: 24
+          length: 38
+          line: true
+          strokeFrom: 2
+          strokeTo: 0
+          lenFrom: 12
+          lenTo: 0
+          colorFrom: fff1ce
+          colorTo: "ff8b4300"
+        }
+        {
+          type: WaveEffect
+          lifetime: 12
+          sizeFrom: 2
+          sizeTo: 13
+          strokeFrom: 2
+          strokeTo: 0
+          colorFrom: ffda9c
+          colorTo: "c4513a00"
+        }
+      ]
+    }
+    smokeEffect: {
+      type: ParticleEffect
+      lifetime: 38
+      particles: 6
+      cone: 28
+      length: 30
+      sizeFrom: 4
+      sizeTo: 0
+      colorFrom: "9b77685c"
+      colorTo: "51443f00"
+    }
     status: burning
     statusDuration: 300
     makeFire: true
@@ -68,13 +119,22 @@ ammoTypes: {
       collidesTiles: false
       width: 7
       height: 10
-      backColor: c4513a
-      frontColor: ffe0b3
-      trailColor: c4513a
-      trailWidth: 1.5
-      trailLength: 6
-      hitEffect: flakExplosion
-      despawnEffect: flakExplosion
+      backColor: a84b35
+      frontColor: fff1ce
+      trailColor: ff9a52
+      trailWidth: 1.3
+      trailLength: 9
+      lightColor: ff9a52
+      lightRadius: 22
+      lightOpacity: 0.3
+      hitEffect: {
+        type: cryon.Fx.AfterglowImpact
+        small: true
+      }
+      despawnEffect: {
+        type: cryon.Fx.AfterglowImpact
+        small: true
+      }
       status: burning
       statusDuration: 300
       makeFire: true
@@ -83,3 +143,10 @@ ammoTypes: {
 }
 category: turret
 requirements: [ferrum/400, hard-steel/260, silicon/300, armor-alloy/200, ashes-alloy/140]
+
+// Optional water cooling; firing remains available without water.
+coolant: {
+  type: ConsumeLiquid
+  liquid: water
+  amount: 0.1
+}

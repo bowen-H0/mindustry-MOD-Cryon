@@ -1,6 +1,7 @@
 package cryon.Type;
 
 import arc.Events;
+import arc.Core;
 import arc.scene.ui.layout.Table;
 import arc.util.*;
 import arc.util.io.*;
@@ -35,7 +36,13 @@ public class JavaProcessor extends Block {
         category = Category.logic;
 
         // 配置值 = 脚本 id，空字符串表示不运行任何脚本
-        config(String.class, (JavaProcessorBuild b, String id) -> b.setScript(id));
+        config(String.class, (JavaProcessorBuild b, String id) -> {
+            if(b.script instanceof NuclearCleansingScript && id != null && id.startsWith("nuclear-cleansing:")){
+                ((NuclearCleansingScript)b.script).configure(id.substring("nuclear-cleansing:".length()));
+            }else{
+                b.setScript(id);
+            }
+        });
         configClear((JavaProcessorBuild b) -> b.setScript(""));
         Events.on(EventType.SectorCaptureEvent.class, e -> sectorCaptured = true);
         Events.on(EventType.WorldLoadEvent.class, e -> sectorCaptured = false);
@@ -96,24 +103,24 @@ public class JavaProcessor extends Block {
                 t.button(Icon.list, Styles.cleari, 40f, this::showSelectDialog).size(48f);
                 t.label(() -> {
                     ScriptRegistry.Entry e = ScriptRegistry.entries.get(scriptId);
-                    String n = e == null ? "未选择" : e.name;
-                    return n + (failed ? " [scarlet](出错)" : "");
+                    String n = e == null ? Core.bundle.get("script.selector.unselected") : e.localizedName();
+                    return n + (failed ? Core.bundle.get("script.selector.error-suffix") : "");
                 }).padRight(6f);
                 if (script != null) script.buildUI(t);
             });
         }
 
         private void showSelectDialog() {
-            BaseDialog d = new BaseDialog("选择 Java 类");
+            BaseDialog d = new BaseDialog(Core.bundle.get("script.selector.title"));
             d.cont.pane(p -> {
                 p.defaults().growX().height(50f).pad(3f).minWidth(300f);
-                p.button("无", Styles.flatTogglet, () -> {
+                p.button(Core.bundle.get("script.selector.none"), Styles.flatTogglet, () -> {
                     configure("");
                     d.hide();
                 }).update(b -> b.setChecked(scriptId.isEmpty()));
                 p.row();
                 for (var e : ScriptRegistry.entries.values()) {
-                    p.button(e.name + "  [gray](" + e.id + ")", Styles.flatTogglet, () -> {
+                    p.button(e.localizedName() + "  [gray](" + e.id + ")", Styles.flatTogglet, () -> {
                         configure(e.id);
                         d.hide();
                     }).update(b -> b.setChecked(e.id.equals(scriptId)));

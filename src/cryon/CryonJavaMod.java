@@ -156,6 +156,8 @@ public class CryonJavaMod extends Mod {
         CryonItems.load();
         AravisEnvironment.load();
         cryon.Content.BioCrawlerUnits.load();
+        new TeamFlagProjector("team-flag-projector");
+        new NuclearArbiter("disarmament");
 
 
         new Drill("melting-drill") {{ }};
@@ -919,6 +921,7 @@ public class CryonJavaMod extends Mod {
             }};
 
         metallurgicalFurnace = new MultiRecipeCrafter("metallurgical-furnace") {{
+            waterCooling = new cryon.Type.WaterCooling(0.1f, 1.5f);
             size = 2;
             health = 400;
             category = Category.crafting;
@@ -926,7 +929,7 @@ public class CryonJavaMod extends Mod {
             hasItems = true;
             hasLiquids = false;
             itemCapacity = 20;
-            consumePower(1.5f);
+            consumePower(3f);
 
             requirements(Category.crafting, ItemStack.with(
                     Items.copper, 85,
@@ -941,7 +944,7 @@ public class CryonJavaMod extends Mod {
                     new ItemStack[]{
                             new ItemStack(Items.silicon, 2)
                     },
-                    40f
+                    120f
             ));
 
             recipes.add(new CraftRecipe(
@@ -951,7 +954,7 @@ public class CryonJavaMod extends Mod {
                     new ItemStack[]{
                             new ItemStack(Items.lead, 2)
                     },
-                    30f
+                    90f
             ));
             recipes.add(new CraftRecipe(
                     new ItemStack[]{
@@ -961,7 +964,7 @@ public class CryonJavaMod extends Mod {
                     new ItemStack[]{
                             new ItemStack(CryonItems.steel, 2)
                     },
-                    60f
+                    180f
             ));
             recipes.add(new CraftRecipe(
                     new ItemStack[]{
@@ -971,7 +974,7 @@ public class CryonJavaMod extends Mod {
                     new ItemStack[]{
                             new ItemStack(CryonItems.hardSteel, 2)
                     },
-                    120f
+                    360f
             ));
             recipes.add(new CraftRecipe(
                     new ItemStack[]{
@@ -982,7 +985,7 @@ public class CryonJavaMod extends Mod {
                     new ItemStack[]{
                             new ItemStack(CryonItems.armorAlloy, 1)
                     },
-                    180f
+                    540f
             ));
             recipes.add(new CraftRecipe(
                     new ItemStack[]{
@@ -994,7 +997,7 @@ public class CryonJavaMod extends Mod {
                     new ItemStack[]{
                             new ItemStack(CryonItems.ashesAlloy, 2)
                     },
-                    240f
+                    720f
             ));
 
             drawer = new DrawMulti(
@@ -1004,30 +1007,31 @@ public class CryonJavaMod extends Mod {
         }};
 
         advancedAlloyFurnace = new MultiRecipeCrafter("advanced-alloy-furnace") {{
+            waterCooling = new cryon.Type.WaterCooling(0.2f, 1.5f);
             size = 4;
             health = 1800;
             hasPower = true;
             hasItems = true;
             itemCapacity = 80;
-            consumePower(8f);
+            consumePower(12f);
             requirements(Category.crafting, ItemStack.with(
                     CryonItems.ferrum, 320, CryonItems.hardSteel, 180,
                     CryonItems.armorAlloy, 100, Items.silicon, 220));
-            // Same material ratios as the starter furnace; eight times the throughput.
+            // Same material ratios as the starter furnace; four times the throughput.
             recipes.add(new CraftRecipe(
                     ItemStack.with(CryonItems.steel, 12, CryonItems.manganese, 8, Items.coal, 8),
-                    ItemStack.with(CryonItems.armorAlloy, 4), 90f));
+                    ItemStack.with(CryonItems.armorAlloy, 4), 540f));
             recipes.add(new CraftRecipe(
                     ItemStack.with(CryonItems.armorAlloy, 8, Items.coal, 16,
                             CryonItems.manganese, 8, CryonItems.nickel, 12),
-                    ItemStack.with(CryonItems.ashesAlloy, 8), 120f));
+                    ItemStack.with(CryonItems.ashesAlloy, 8), 720f));
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
         }};
         windTurbine = new WindTurbine("wind-turbine") {{
             size = 2;
             health = 260;
             clearAreaSize = 9;        // 以自身为中心，9x9范围内不能有其他建筑/障碍
-            powerProduction = 3.5f;   // 满功率发电量
+            powerProduction = 1.5f;   // 90 power/second at full spin-up
             spinUpTime = 60f * 10f;   // 大约10秒爬升到满功率
             spinDownMultiplier = 3f;  // 一旦被挡住，回落速度是爬升速度的3倍（更快停下来）
 
@@ -1963,7 +1967,9 @@ public class CryonJavaMod extends Mod {
         ScriptRegistry.register("astro_observatory", "天文观测", AstroObservatoryScript::new);
 
         ScriptRegistry.register("orbital_strike", "轨道打击", OrbitalStrikeScript::new);
-        ScriptRegistry.register("nuke_strike", "核弹打击", NukeStrikeScript::new);
+        ScriptRegistry.register("nuke_strike", "script.nuke-strike.name", NukeStrikeScript::new);
+        ScriptRegistry.register("nuclear_cleansing", "script.nuclear-cleansing.name", NuclearCleansingScript::new);
+        NuclearCleansingScript.initNetworking();
 
 
 
@@ -2217,7 +2223,7 @@ public class CryonJavaMod extends Mod {
         if(guardian != null) guardian.abilities.add(new IgnoreDamageAbility(0.2f));
         CryonContent.unit("blaze").abilities.add(new IgnoreDamageAbility(0.25f));
 
-        CryonContent.unit("eternal").abilities.add(new IgnoreDamageAbility(0.3f));
+        CryonContent.unit("eternal").abilities.add(new IgnoreDamageAbility(0.2f));
 
         // generator
         if(cryonPlanet != null) {
@@ -2253,6 +2259,8 @@ public class CryonJavaMod extends Mod {
         }
         if(aravisPlanet != null) {
             aravisPlanet.generator = new AravisPlanetGenerator();
+            aravisPlanet.campaignRuleDefaults.fog = true;
+            aravisPlanet.campaignRules.fog = true;
             aravisPlanet.allowLaunchToNumbered = true;
             aravisPlanet.updateLighting = false;
             aravisPlanet.clearSectorOnLose = true;

@@ -1,12 +1,12 @@
-type: Reconstructor
+type: cryon.Type.WaterCooledReconstructor
 name: 高级重构厂
 description: 将黑曜机甲重构为T3硝石喷火机甲。
 size: 5
 health: 2600
-constructTime: 2400
+constructTime: 7200
 itemCapacity: 160
 consumes: {
-  power: 10
+  power: 18
   items: {
     items: [silicon/120, armor-alloy/100, ashes-alloy/60]
   }

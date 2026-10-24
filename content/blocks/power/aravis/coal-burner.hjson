@@ -6,8 +6,8 @@ health: 320
 category: power
 hasItems: true
 itemCapacity: 10
-powerProduction: 2
-itemDuration: 120
+powerProduction: 1
+itemDuration: 90
 consumes: {
   items: [coal/1]
 }

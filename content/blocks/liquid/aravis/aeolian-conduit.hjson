@@ -1,0 +1,9 @@
+type: Conduit
+size: 1
+health: 90
+liquidCapacity: 24
+liquidPressure: 1.1
+category: liquid
+requirements: [ferrum/2]
+bridgeReplacement: aeolian-liquid-bridge
+junctionReplacement: aeolian-liquid-junction

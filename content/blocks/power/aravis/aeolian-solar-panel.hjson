@@ -1,9 +1,9 @@
 type: SolarGenerator
 name: "风蚀太阳能板"
-description: "太阳能板，光电转化效率更高。"
+description: "提供稳定的太阳能供电。重工业生产仍需扩建发电设施。"
 size: 3
 health: 360
-powerProduction: 1.8
+powerProduction: 0.9
 category: power
 buildVisibility: shown
 requirements: [

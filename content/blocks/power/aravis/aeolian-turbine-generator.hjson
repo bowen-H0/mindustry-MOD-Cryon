@@ -1,0 +1,36 @@
+type: ConsumeGenerator
+size: 3
+health: 1200
+category: power
+hasItems: true
+hasLiquids: true
+itemCapacity: 30
+liquidCapacity: 90
+powerProduction: 6
+itemDuration: 60
+consumes: {
+  items: [coal/1]
+  liquid: {
+    liquid: water
+    amount: 0.2
+  }
+}
+generateEffect: generatespark
+effectChance: 0.02
+requirements: [ferrum/220, steel/120, hard-steel/80, silicon/150, manganese/80]
+drawer: {
+  type: DrawMulti
+  drawers: [
+    { type: DrawDefault }
+    {
+      type: DrawRegion
+      suffix: "-rotator"
+      spinSprite: true
+      rotateSpeed: 4
+    }
+    {
+      type: DrawRegion
+      suffix: "-top"
+    }
+  ]
+}

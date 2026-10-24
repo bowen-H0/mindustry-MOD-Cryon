@@ -37,12 +37,13 @@ public class BioCrawlerUnits{
         type.legCount = tier == 4 ? 8 : 6;
         type.legLength = new float[]{22, 38, 38, 60, 80}[tier];
         type.legBaseOffset = new float[]{6, 10, 10, 14, 18}[tier];
-        type.legMoveSpace = 1.8f;
+        type.legMoveSpace = tier == 4 ? 1f : 1.8f;
         type.legExtension = tier < 3 ? -2 : tier == 3 ? -3 : -4;
         type.legStraightness = 0.5f;
         type.legGroupSize = 2;
-        type.legSpeed = tier < 2 ? 0.6f : 0.85f;
-        type.legContinuousMove = true;
+        type.legSpeed = tier == 4 ? 1.2f : tier < 2 ? 0.6f : 0.85f;
+        // Veritas steps track actual travel, including acceleration and terrain speed changes.
+        type.legContinuousMove = tier != 4;
         type.targetAir = false;
         type.faceTarget = true;
         type.shieldColor = orange;
@@ -117,11 +118,11 @@ public class BioCrawlerUnits{
             arcs.shoot.shotDelay = 4;
             type.weapons.add(arcs, rocketMount(8, -9, 58f, reach, 2));
         }else{
-            type.weapons.add(kineticMount(tier, tier == 2 ? 12 : tier == 3 ? 20 : 29, 9, reach));
-            type.weapons.add(rocketMount(tier == 2 ? 10 : tier == 3 ? 20 : 29, -12, 35f + tier * 13f, reach, 3));
-            type.weapons.add(airMount(tier, tier == 2 ? 8 : tier == 3 ? 13 : 18, -20, reach));
+            type.weapons.add(kineticMount(tier, tier == 2 ? 12 : tier == 3 ? 20 : 18, 9, reach));
+            type.weapons.add(rocketMount(tier == 2 ? 10 : tier == 3 ? 20 : 18, -12, 35f + tier * 13f, reach, 3));
+            type.weapons.add(airMount(tier, tier == 2 ? 8 : tier == 3 ? 13 : 8, tier == 4 ? -14 : -20, reach));
             if(tier >= 3){
-                Weapon heat = mount("salus-mount", tier == 3 ? 25 : 34, -2, 125, true);
+                Weapon heat = mount("salus-mount", tier == 3 ? 25 : 22, -2, 125, true);
                 ContinuousFlameBulletType beam = new ContinuousFlameBulletType(30f + tier * 9f);
                 tint(beam);
                 beam.length = reach * 0.72f;
@@ -138,7 +139,7 @@ public class BioCrawlerUnits{
             }
             if(tier == 4){
                 // Malign: homing projectiles unfold into a forward laser on impact.
-                Weapon lances = mount("salus-weapon", 22, 24, 110, true);
+                Weapon lances = mount("salus-weapon", 12, 19, 110, true);
                 MissileBulletType pod = rocket(65, reach * 0.8f, 20);
                 pod.fragBullet = laser(85f, 70f, 12f);
                 pod.fragBullets = 1;
@@ -147,10 +148,20 @@ public class BioCrawlerUnits{
                 lances.shoot.shots = 2;
                 lances.shoot.shotDelay = 8;
                 lances.shootSound = Sounds.shootMalign;
-                Weapon mortars = mount("salus-weapon", 22, -30, 160, true);
+                Weapon mortars = mount("salus-weapon", 12, -25, 160, true);
                 mortars.bullet = shell(140, reach * 0.85f, 30);
                 mortars.shootSound = Sounds.shootArtillery;
                 type.weapons.add(lances, mortars);
+            }
+        }
+        if(tier == 4){
+            // Dedicated Veritas sprites; keep mounts inside the visible hull, not its transparent canvas.
+            String[] sprites = {"main", "kinetic", "missile", "antiair", "flame", "missile", "mortar"};
+            float[] muzzles = {9f, 6f, 5f, 5f, 5f, 5f, 6f};
+            for(int i = 0; i < sprites.length; i++){
+                Weapon weapon = type.weapons.get(i);
+                weapon.name = "cryon-veritas-" + sprites[i];
+                weapon.shootY = muzzles[i];
             }
         }
         return type;

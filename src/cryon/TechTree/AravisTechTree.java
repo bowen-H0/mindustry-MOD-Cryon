@@ -49,9 +49,16 @@ public class AravisTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "aeolian-drill", "core-conquest");
         addAuto(Kind.BLOCK, "extension-drill", "aeolian-drill");
+        addAuto(Kind.BLOCK, "aeolian-pump", "aeolian-drill");
+        addAuto(Kind.LIQUID, "water", "aeolian-pump");
+        addAuto(Kind.BLOCK, "aeolian-conduit", "aeolian-pump");
+        addAuto(Kind.BLOCK, "aeolian-liquid-router", "aeolian-conduit");
+        addAuto(Kind.BLOCK, "aeolian-liquid-junction", "aeolian-conduit");
+        addAuto(Kind.BLOCK, "aeolian-liquid-bridge", "aeolian-conduit");
         addAuto(Kind.BLOCK, "aeolian-node", "aeolian-drill");
         addAuto(Kind.BLOCK, "wind-turbine", "aeolian-node");
         addAuto(Kind.BLOCK, "coal-burner", "aeolian-node");
+        addAuto(Kind.BLOCK, "aeolian-turbine-generator", "coal-burner");
         addAuto(Kind.BLOCK, "aeolian-solar-panel", "wind-turbine");
         addAuto(Kind.BLOCK, "aeolian-large-solar-panel", "aeolian-solar-panel");
 
@@ -78,6 +85,7 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "armor-alloy-wall-large", "armor-alloy-wall");
 
         addAuto(Kind.BLOCK, "mech-unit-factory", "core-conquest");
+        addAuto(Kind.BLOCK, "aravis-unit-repairer", "mech-unit-factory");
         addAuto(Kind.BLOCK, "mech-unit-reconstructor", "mech-unit-factory");
         addAuto(Kind.BLOCK, "advanced-mech-reconstructor", "mech-unit-reconstructor");
 
@@ -131,6 +139,8 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.SECTOR, "checkpoint", "ridge");
         addAuto(Kind.SECTOR, "dunes", "checkpoint");
         addAuto(Kind.SECTOR, "ashes", "dunes");
+        addAuto(Kind.SECTOR, "aravis-aegis", "ashes");
+        addAuto(Kind.SECTOR, "terminus", "aravis-aegis");
 
         sectorGate("checkpoint", "saxum", "fractura");
 

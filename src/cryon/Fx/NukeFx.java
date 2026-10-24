@@ -54,7 +54,7 @@ public class NukeFx {
         }
         if(ph == NukeStrikeScript.FALL) drawMissile(s);
         if(ph == NukeStrikeScript.BLAST) drawBlast(s);
-        drawStation(s, e.x, e.y);
+        if(s.showStation) drawStation(s, e.x, e.y);
         Draw.reset();
     });
 
@@ -93,6 +93,15 @@ public class NukeFx {
 
     /** 落点标记：爆炸半径、致死区、倒计时弧、辐射标志 */
     private static void drawTarget(NukeStrikeScript s){
+        if(s.simpleWarning){
+            float radius = Mathf.clamp(s.blastRadius * 0.08f, 32f, 64f);
+            float remaining = s.phase == NukeStrikeScript.LOCK
+                    ? s.remaining + s.fallTime : Math.max(0f, s.fallTime - s.fallTimer);
+            NukeMarkerFx.draw(s.tx, s.ty, radius, remaining, s.totalTicks + s.fallTime,
+                    s.strikeId + s.build.pos());
+            NukeMarkerFx.drawLight(s.tx, s.ty, radius, remaining);
+            return;
+        }
         float t = Time.time, R = s.blastRadius, x = s.tx, y = s.ty;
         float lp = s.phase == NukeStrikeScript.LOCK ? 1f - Mathf.clamp(s.remaining / s.lockLead) : 1f;
         float blink = Mathf.absin(t, Mathf.lerp(24f, 4f, lp), 1f);
@@ -157,11 +166,13 @@ public class NukeFx {
         Fill.quad(x - 12f, my + 60f, x + 12f, my + 60f, x + 12f, my + 48f, x - 12f, my + 48f);
         Drawf.light(x, my + 30f, 260f, hot, 0.9f);
 
-        // 地面：逼近的冲击预兆
-        color(Color.white);
-        Draw.alpha(fp * 0.6f);
-        stroke(2f + fp * 4f);
-        Lines.circle(x, y, 20f + (1f - fp) * 220f);
+        if(!s.simpleWarning){
+            // 地面：逼近的冲击预兆
+            color(Color.white);
+            Draw.alpha(fp * 0.6f);
+            stroke(2f + fp * 4f);
+            Lines.circle(x, y, 20f + (1f - fp) * 220f);
+        }
     }
 
     /** 闪光 + 火球 + 冲击波 + 蘑菇云 + 余烬 */

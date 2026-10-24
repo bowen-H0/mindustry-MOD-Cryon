@@ -2,8 +2,8 @@ parent: "aela"
 solarSystem: "aela"
 orbitRadius: 160
 radius: 1
-accessible: true
-alwaysUnlocked: true
+accessible: false
+alwaysUnlocked: false
 visible: false
 
 mesh: [

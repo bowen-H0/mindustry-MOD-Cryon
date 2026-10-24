@@ -114,6 +114,7 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "cryo-electrolyzer", "cryon-water-extractor");
         addAuto(Kind.BLOCK, "cryo-heat-redirector", "cryo-electric-heater");
         addAuto(Kind.BLOCK, "cryo-illuminator", "hydrothermal-generator");
+        addAuto(Kind.BLOCK, "team-flag-projector", "cryo-illuminator");
 
 
         addAuto(Kind.BLOCK, "cryo-liquid-bridge", "cryo-conduit");
@@ -258,6 +259,7 @@ public class CryonTechTree extends ModPlanetTechTree {
 
 
         addAuto(Kind.BLOCK, "vulcan", "torrent");
+        addAuto(Kind.BLOCK, "disarmament", "vulcan");
         addAuto(Kind.BLOCK, "aurora", "gem");
         addAuto(Kind.BLOCK, "railgun", "aurora");
         addAuto(Kind.BLOCK, "critical", "deluge");

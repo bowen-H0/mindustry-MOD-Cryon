@@ -1,10 +1,10 @@
 type: Drill
 name: "风蚀钻头"
-description: "初始钻头。"
+description: "初始钻头。可用水加速。"
 size: 2
 health: 80
 tier: 2
-drillTime: 600
+drillTime: 900
 category: production
 hasPower: false
 requirements: [
@@ -13,3 +13,13 @@ requirements: [
 blockedItems: []
 liquidCapacity: 10
 itemCapacity: 10
+liquidBoostIntensity: 1.2247449
+
+consumes: {
+  liquid: {
+    liquid: water
+    amount: 0.05
+    optional: true
+    booster: true
+  }
+}

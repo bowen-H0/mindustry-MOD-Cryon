@@ -1,0 +1,9 @@
+type: Pump
+size: 3
+health: 900
+pumpAmount: 0.033333335
+liquidCapacity: 90
+hasPower: true
+consumes: { power: 2 }
+category: liquid
+requirements: [ferrum/120, copper/90, steel/40]

@@ -67,3 +67,9 @@ requirements: [
   lead/350
   copper/400
 ]
+// Optional water cooling; firing remains available without water.
+coolant: {
+  type: ConsumeLiquid
+  liquid: water
+  amount: 0.1
+}

@@ -1,8 +1,8 @@
 type: mech
-speed: 0.5
+speed: 0.65
 flying: false
-health: 1020
-armor: 12
+health: 3200
+armor: 16
 hitSize: 16
 outlineColor: 5c4d33
 mechLegColor: 8a7355
@@ -22,20 +22,18 @@ weapons: [
     shoot: {
       firstShotDelay: 0
     }
-    shootStatusDuration:60
-    shootStatus:slow
     shootSound: shootSublimate
 
     bullet: {
       type: ContinuousFlameBulletType
-      damage: 8
+      damage: 60
       damageInterval: 5
       lifetime: 60
-      length: 110
+      length: 88
       ammoMultiplier: 1.4
-      knockback: 0.8
-      pierceCap: 2
-      buildingDamageMultiplier: 0.4
+      knockback: 0.15
+      pierceCap: 3
+      buildingDamageMultiplier: 0.65
       timescaleDamage: true
       colors: ["eb7a3299", "f5893dcc", "ff5e1fff", "ff8c42", "ffe0b3"]
       flareColor: "ff6a1a"

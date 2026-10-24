@@ -35,6 +35,8 @@ public class MultiRecipeCrafter extends GenericCrafter {
     /** 所有可用配方 */
     public Seq<CraftRecipe> recipes = new Seq<>(4);
 
+    public WaterCooling waterCooling;
+
     protected ConsumeItemDynamic consItemDyn;
     protected ConsumeLiquidsDynamic consLiquidDyn;
 
@@ -47,6 +49,8 @@ public class MultiRecipeCrafter extends GenericCrafter {
 
     @Override
     public void init() {
+
+        if(waterCooling != null) consume(waterCooling);
 
         config(Integer.class, (MultiRecipeCrafterBuild build, Integer value) -> {
             if (value == null) return;
@@ -145,6 +149,11 @@ public class MultiRecipeCrafter extends GenericCrafter {
     public class MultiRecipeCrafterBuild extends GenericCrafterBuild {
         /** -1 表示尚未选择配方，此时不接受任何物品输入 */
         public int currentRecipe = -1;
+
+        @Override
+        public float efficiencyScale(){
+            return super.efficiencyScale() * (waterCooling == null ? 1f : waterCooling.speed(this));
+        }
 
         public CraftRecipe recipe() {
             return currentRecipe == -1 ? null : recipes.get(currentRecipe);

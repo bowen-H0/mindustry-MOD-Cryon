@@ -6,6 +6,8 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.math.Mathf;
+import arc.math.Interp;
+import arc.scene.ui.layout.Scl;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.gen.WeatherState;
@@ -17,6 +19,8 @@ public class CryonAuroraWeather extends Weather {
     public Color upperColor = Color.valueOf("a48bff");
     public Color coreColor = Color.valueOf("a4f4ff");
     public float brightness = 0.65f;
+    /** Camera scales before UI scaling: lower values mean a more distant view. */
+    public float fullyVisibleZoom = 2f, hiddenZoom = 3f;
 
     public CryonAuroraWeather(String name){
         super(name);
@@ -24,7 +28,11 @@ public class CryonAuroraWeather extends Weather {
 
     @Override
     public void drawOver(WeatherState state){
-        float opacity = Mathf.clamp(state.opacity * Vars.renderer.weatherAlpha * opacityMultiplier);
+        float zoom = Vars.renderer.getDisplayScale() / Scl.scl(1f);
+        float zoomVisibility = Interp.smooth.apply(Mathf.clamp(
+                (hiddenZoom - zoom) / Math.max(0.001f, hiddenZoom - fullyVisibleZoom)));
+        float opacity = Mathf.clamp(state.opacity * Vars.renderer.weatherAlpha * opacityMultiplier)
+                * zoomVisibility;
         if(opacity <= 0.001f) return;
         float width = Core.camera.width, height = Core.camera.height;
         float left = Core.camera.position.x - width / 2f;

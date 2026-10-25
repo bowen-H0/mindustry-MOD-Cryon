@@ -22,6 +22,18 @@ import mindustry.type.unit.MissileUnitType;
 import mindustry.content.StatusEffects;
 
 public class SpaceJump{
+    public static mindustry.ai.UnitCommand jumpCommand;
+
+    public static void loadCommands(){
+        jumpCommand = new mindustry.ai.UnitCommand("space-jump", "cryon-space-jump-command", null){
+            @Override
+            public String localized(){ return Core.bundle.get("command.cryon-space-jump"); }
+        };
+        jumpCommand.switchToMove = false;
+        jumpCommand.drawTarget = true;
+        jumpCommand.resetTarget = true;
+    }
+
     private static final String packet = "cryon-space-jump";
     private static Unit previewUnit;
     private static Element previewInput;
@@ -49,6 +61,11 @@ public class SpaceJump{
     }
 
     public static void install(){
+        if(!Vars.headless){
+            // PlacementFragment reads Icon.icons directly rather than UnitCommand.getIcon().
+            mindustry.gen.Icon.icons.put(jumpCommand.icon,
+                new arc.scene.style.TextureRegionDrawable(Core.atlas.find("cryon-space-jump-command")));
+        }
         Events.on(mindustry.game.EventType.ResetEvent.class, event -> {
             manualUnits.clear(); manualHeldUnit = null; dismissedUntilRelease = false; closePreview();
         });
@@ -75,6 +92,8 @@ public class SpaceJump{
                 && type.flying && !type.hidden && !type.internal
                 && type.playerControllable && !(type instanceof MissileUnitType) && !excluded(type)){
                 type.abilities.add(new SpaceJumpAbility());
+                type.commands = type.commands.copy();
+                type.commands.addUnique(jumpCommand);
                 for(int i = 0; i < type.engines.size; i++){
                     UnitType.UnitEngine engine = type.engines.get(i);
                     if(!(engine instanceof DigitalEngine)) type.engines.set(i, new DigitalEngine(engine));

@@ -22,6 +22,7 @@ import mindustry.graphics.Layer;
  * 弹体本身完全不绘制,玩家看到落点警告标记,延迟后蓝色光束落下造成范围伤害。
  */
 public class BeaconBulletType extends ArtilleryBulletType {
+    public boolean fusedTargeting;
 
     public float strikeDelay = 90f;
     public float strikeRadius = 80f;
@@ -83,6 +84,8 @@ public class BeaconBulletType extends ArtilleryBulletType {
         mark(b.team, b.aimX, b.aimY);
     }
 
+    public void fuseAt(Team team,float x,float y){mark(team,x,y);}
+
     protected void mark(Team team, float x, float y) {
         Marker m = new Marker(x, y, strikeRadius, strikeDelay, markColor, team);
         markers.add(m);
@@ -99,12 +102,12 @@ public class BeaconBulletType extends ArtilleryBulletType {
         BeaconFx.impact.at(x, y, 0f, beamColor);
 
         Units.nearbyEnemies(team, x, y, strikeRadius, unit -> {
-            if (unit.isGrounded()) { // 只伤害地面单位
+            if (fusedTargeting?unit.checkTarget(collidesAir,collidesGround):unit.isGrounded()) {
                 unit.damage(strikeDamage);
             }
         });
 
-        Vars.indexer.eachBlock(null, x, y, strikeRadius,
+        if(!fusedTargeting || collidesGround)Vars.indexer.eachBlock(null, x, y, strikeRadius,
                 building -> building.team != team,
                 building -> building.damage(strikeDamage)
         );

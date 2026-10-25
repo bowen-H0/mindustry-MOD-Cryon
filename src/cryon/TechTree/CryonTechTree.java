@@ -14,6 +14,16 @@ import mindustry.world.blocks.storage.CoreBlock;
 import static mindustry.Vars.*;
 
 public class CryonTechTree extends ModPlanetTechTree {
+    private static arc.struct.ObjectSet<String> fusionBlocks;
+    public static boolean fusionMember(Block block){
+        if(block==null || !block.name.startsWith("cryon-"))return false;
+        if(fusionBlocks==null){
+            CryonTechTree tree=new CryonTechTree();tree.registerEntries();fusionBlocks=new arc.struct.ObjectSet<>();
+            for(Entry entry:tree.entries)if(entry.kind==Kind.BLOCK)fusionBlocks.add("cryon-"+entry.name);
+        }
+        return fusionBlocks.contains(block.name);
+    }
+
 
     public CryonTechTree(){
         super("cryon");
@@ -224,6 +234,7 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "spark", "gem");
         addAuto(Kind.BLOCK, "spiral", "core-pioneer");
+        addAuto(Kind.BLOCK, "unity", "spiral");
         addAuto(Kind.BLOCK, "titanium-drill", "melting-drill");
         addAuto(Kind.BLOCK, "coagulation-drill", "melting-drill");
 
@@ -460,6 +471,8 @@ public class CryonTechTree extends ModPlanetTechTree {
                 "nano-material-weaver","quantum","surge-reactor","t4universal-assembler");
         sectorGate("silent-tundra",
                 "deluge");
+        sectorGate("laboratory-088",
+                "unity");
         sectorGate("magnificent-rift",
                 "t5universal-assembler");
     }

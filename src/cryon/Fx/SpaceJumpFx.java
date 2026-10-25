@@ -38,6 +38,11 @@ public class SpaceJumpFx{
 
     public static Color tint(int level){ return palettes[Mathf.clamp(level, 1, 5) - 1]; }
 
+    /** Keep small-hull folds restrained while preserving capital-ship effects. */
+    private static float intensity(int level){
+        return level == 1 ? 0.4f : level == 2 ? 0.6f : level == 3 ? 0.8f : 1f;
+    }
+
     // ================= 全局画面预算 =================
 
     private static final int MAX_PILLARS = 3, MAX_BURSTS = 6, MAX_LIGHTS = 4, MAX_WELLS = 6;
@@ -61,7 +66,7 @@ public class SpaceJumpFx{
         tick();
         if(!Core.camera.bounds(Tmp.r1).grow(r * 3f).contains(x, y)) return false;
         cur++;
-        return true;
+        return cur <= (mindustry.Vars.mobile ? 12 : 40);
     }
 
     private static void light(float x, float y, float r, Color c, float a){
@@ -204,16 +209,16 @@ public class SpaceJumpFx{
     // ================= 蓄力 =================
 
     public static void charge(Unit unit, float tx, float ty, float progress, int level, Trail[] trails){
-        float radius = level >= 4 ? digitalHalfSize(unit) : unit.hitSize * 0.65f + 25f;
+        float radius = level >= 4 ? digitalHalfSize(unit) : (unit.hitSize * 0.65f + 25f) * Mathf.sqrt(intensity(level));
         if(enter(unit.x, unit.y, radius)) drawCharge(unit, progress, level, trails, radius);
-        if(progress > 0.4f) Effect.shake((0.6f + level * 0.6f) * progress * progress, 6f, unit.x, unit.y);
+        if(progress > 0.4f && cur <= (mindustry.Vars.mobile ? 12 : 40)) Effect.shake((0.6f + level * 0.6f) * progress * progress * intensity(level), 6f, unit.x, unit.y);
     }
 
     private static void drawCharge(Unit unit, float progress, int level, Trail[] trails, float radius){
         float z = Draw.z();
         Blending blend = Draw.getBlend();
         try{
-            if(progress > 0f) darkWell(unit.x, unit.y, radius * (2.2f - 0.6f * progress), progress);
+            if(progress > 0f) darkWell(unit.x, unit.y, radius * (2.2f - 0.6f * progress), progress * intensity(level));
 
             Draw.z(glowZ);
             Draw.blend(Blending.additive);
@@ -223,7 +228,7 @@ public class SpaceJumpFx{
             if(progress > 0f){
                 if(level <= 3){
                     SpaceJumpRiftRenderer.submit(unit.x, unit.y, radius, unit.rotation,
-                            progress, progress, level, 0f);
+                            progress, progress * intensity(level), level, 0f);
                     signature(unit.x, unit.y, radius, unit.rotation, progress, level, Time.time, false);
                 }
                 particles(unit.x, unit.y, radius, progress, level, Time.time, unit.id);
@@ -380,7 +385,7 @@ public class SpaceJumpFx{
     // ================= 预警 / 预览 =================
 
     public static void warning(Unit unit, float x, float y, float progress, int level){
-        float radius = level >= 4 ? digitalHalfSize(unit) : unit.hitSize * 0.65f + 25f;
+        float radius = level >= 4 ? digitalHalfSize(unit) : (unit.hitSize * 0.65f + 25f) * Mathf.sqrt(intensity(level));
         if(!enter(x, y, radius)) return;
         float z = Draw.z();
         Blending blend = Draw.getBlend();
@@ -432,10 +437,10 @@ public class SpaceJumpFx{
         if(level <= 3) departureEffects[level - 1].at(ox, oy, rotation, tint(level), visual);
         arrivalEffects[level - 1].at(x, y, rotation, tint(level), visual);
         // 震动取最大值而非叠加，这里再按强度略降，避免多发时镜头狂抖
-        float shakeScale = Mathf.lerp(0.6f, 1f, scale);
+        float shakeScale = Mathf.lerp(0.6f, 1f, scale) * intensity(level);
         Effect.shake((2f + level * 1.5f) * shakeScale, 14f + level * 4f, ox, oy);
         Effect.shake((4f + level * 2.5f) * shakeScale, 24f + level * 5f, x, y);
-        if(level >= 4) return;
+        if(level >= 4 || mindustry.Vars.mobile) return;
         Wake wake = new Wake();
         wake.dx = x - ox; wake.dy = y - oy; wake.level = level;
         for(int i = 0; i < unit.type.engines.size; i++){
@@ -450,17 +455,17 @@ public class SpaceJumpFx{
 
     public static final Effect engineWake = new Effect(80f, 2600f, e -> {
         if(!(e.data instanceof Wake)) return;
-        tick();
+        if(!enter(e.x, e.y, 1300f)) return;
         Wake wake = (Wake)e.data;
         Blending previous = Draw.getBlend();
         Draw.blend(Blending.additive);
         Color wakeColor = tint((int)wake.level);
         float punch = Interp.pow3Out.apply(e.fout());
         // 尾焰是长条，叠加最容易发白，拥挤时额外压低
-        float s = scale * scale;
+        float s = scale * scale * intensity((int)wake.level);
         for(int i = 0; i < wake.engines.size; i++){
             Vec2 engine = wake.engines.get(i);
-            float width = wake.radii.get(i) * (1.2f + wake.level * 0.15f) * punch;
+            float width = wake.radii.get(i) * (1.2f + wake.level * 0.15f) * punch * Mathf.sqrt(intensity((int)wake.level));
             float x2 = engine.x + wake.dx, y2 = engine.y + wake.dy;
             if(halo()){
                 Draw.color(wakeColor); Draw.alpha(0.14f * e.fout() * s);
@@ -501,7 +506,7 @@ public class SpaceJumpFx{
             effects[i] = new Effect(life, 1800f, e -> {
                 if(tier >= 4 && departure) return;
                 FoldVisual visual = e.data instanceof FoldVisual ? (FoldVisual)e.data : new FoldVisual(30f, tier);
-                float radius = tier >= 4 ? visual.size * 0.5f : visual.size * 0.65f + 25f;
+                float radius = tier >= 4 ? visual.size * 0.5f : (visual.size * 0.65f + 25f) * Mathf.sqrt(intensity(tier));
                 if(!enter(e.x, e.y, radius)) return;
                 float z = Draw.z(); Blending blend = Draw.getBlend();
                 try{
@@ -515,7 +520,7 @@ public class SpaceJumpFx{
                         impact = departure ? e.fin() : Mathf.clamp((e.time - rt) / 18f);
                     }
                     boolean shaded = SpaceJumpRiftRenderer.submit(e.x, e.y, radius, e.rotation,
-                            aperture, energy, tier, departure ? 1f : 2f);
+                            aperture, energy * intensity(tier), tier, departure ? 1f : 2f);
                     Draw.blend(Blending.additive); Draw.color(tint(tier));
                     float f = e.fout();
                     float moving = departure ? e.fout() : e.fin();
@@ -550,7 +555,7 @@ public class SpaceJumpFx{
                     }
 
                     float pillarA = departure ? Interp.pow2Out.apply(f) : (tier >= 4 ? Mathf.clamp(1f - impact * 1.2f) * (aperture > 0.9f ? 1f : 0f) : f);
-                    if(tier <= 3) pillar(e.x, e.y, radius * (0.3f + 0.25f * f), 320f + radius * 2f, tier, pillarA * 0.7f);
+                    if(tier <= 3) pillar(e.x, e.y, radius * (0.3f + 0.25f * f), (320f + radius * 2f) * intensity(tier), tier, pillarA * 0.7f * intensity(tier));
 
                     if(tier <= 3) burst(e.x, e.y, radius, impact, tier, e.id, 1.2f);
 

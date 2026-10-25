@@ -25,7 +25,7 @@ public class SpaceJumpPointRenderer{
     private static FrameBuffer discarded, hull;
     private static Shader shader;
     private static float progress;
-    private static int tier;
+    private static int tier, pointDraws;
     private static boolean failed;
     private static final Blending premultiplied = new Blending(Gl.one, Gl.oneMinusSrcAlpha);
 
@@ -56,6 +56,7 @@ public class SpaceJumpPointRenderer{
         if(!needed) return;
         try{ ensureResources(); }
         catch(Throwable error){ failed = true; Log.err("[SpaceJump] native point renderer unavailable", error); return; }
+        pointDraws = 0;
         capture(Layer.flyingUnitLow);
         capture(Layer.flyingUnit);
     }
@@ -72,7 +73,10 @@ public class SpaceJumpPointRenderer{
                     if(Math.abs(unit.x - Core.camera.position.x) > Core.camera.width / 2f + margin
                         || Math.abs(unit.y - Core.camera.position.y) > Core.camera.height / 2f + margin) continue;
                     progress = amount(unit); tier = SpaceJumpAbility.level(unit);
-                    if(progress <= 0f){ drawNativeHull(unit, layer); Draw.flush(); continue; }
+                    // Each processed hull costs a full-screen framebuffer pass.
+                    // Keep excess ships visible through the ordinary native draw.
+                    if(progress <= 0f || pointDraws >= (Vars.mobile ? 3 : 12)){ drawNativeHull(unit, layer); Draw.flush(); continue; }
+                    pointDraws++;
                     hull.begin(Color.clear);
                     Blending.normal.apply();
                     drawNativeHull(unit, layer);

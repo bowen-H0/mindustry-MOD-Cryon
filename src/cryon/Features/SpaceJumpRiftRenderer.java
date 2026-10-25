@@ -39,7 +39,7 @@ public class SpaceJumpRiftRenderer{
         float reach = size * 3.6f;
         if(Math.abs(x - Core.camera.position.x) > Core.camera.width / 2f + reach
             || Math.abs(y - Core.camera.position.y) > Core.camera.height / 2f + reach) return false;
-        if(count >= max) return false;
+        if(count >= (Vars.mobile ? 4 : max)) return false;
         if(!scheduled){ scheduled = true; Draw.draw(layer, SpaceJumpRiftRenderer::render); }
         int k = count * 4;
         positions[k] = x; positions[k + 1] = y; positions[k + 2] = size;

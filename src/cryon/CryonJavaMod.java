@@ -152,12 +152,14 @@ public class CryonJavaMod extends Mod {
     }
 
     private void loadContentTimed() {
+        SpaceJump.loadCommands();
         cryon.Story.IntrusionContent.load();
         CryonItems.load();
         AravisEnvironment.load();
         cryon.Content.BioCrawlerUnits.load();
         new TeamFlagProjector("team-flag-projector");
         new NuclearArbiter("disarmament");
+        new UnityTurret("unity");
 
 
         new Drill("melting-drill") {{ }};
@@ -2114,7 +2116,7 @@ public class CryonJavaMod extends Mod {
             Color pink = Color.valueOf("ff4fa3");
             Color white = Color.white;
 
-            BasicBulletType mainBullet = new BasicBulletType(8f, 24000f){{
+            BasicBulletType mainBullet = new cryon.Type.CriticalBulletType(8f, 24000f){{
                 sprite = "missile-large";
                 width = 12f;
                 height = 20f;
@@ -2128,25 +2130,16 @@ public class CryonJavaMod extends Mod {
                 pierceBuilding = true;
                 hitColor = backColor = trailColor = pink;
                 frontColor = white;
-                trailWidth = 4f;
-                trailLength = 9;
-                hitEffect = despawnEffect = Fx.massiveExplosion;
+                trailWidth = 7f;
+                trailLength = 16;
+                drawSize = 220f;
+                lightRadius = 100f;
+                lightOpacity = 0.7f;
+                hitShake = 8f;
+                hitEffect = despawnEffect = cryon.Fx.CriticalFx.impact;
                 smokeEffect = Fx.shootSmokeTitan;
 
-                shootEffect = new ExplosionEffect(){{
-                    lifetime = 40f;
-                    waveStroke = 4f;
-                    waveColor = sparkColor = trailColor;
-                    waveRad = 15f;
-                    smokeSize = 5f;
-                    smokes = 8;
-                    smokeSizeBase = 0f;
-                    smokeColor = trailColor;
-                    sparks = 8;
-                    sparkRad = 40f;
-                    sparkLen = 4f;
-                    sparkStroke = 3f;
-                }};
+                shootEffect = cryon.Fx.CriticalFx.shoot;
 
                 int count = 6;
                 for(int j = 0; j < count; j++){
@@ -2176,20 +2169,7 @@ public class CryonJavaMod extends Mod {
 
                             splashDamage = 300f;
                             splashDamageRadius = 36f;
-                            despawnEffect = new ExplosionEffect(){{
-                                lifetime = 50f;
-                                waveStroke = 4f;
-                                waveColor = sparkColor = trailColor;
-                                waveRad = 30f;
-                                smokeSize = 7f;
-                                smokes = 6;
-                                smokeSizeBase = 0f;
-                                smokeColor = trailColor;
-                                sparks = 5;
-                                sparkRad = 30f;
-                                sparkLen = 3f;
-                                sparkStroke = 1.5f;
-                            }};
+                            hitEffect = despawnEffect = cryon.Fx.CriticalFx.satelliteHit;
                         }};
                         sub.load();
                         spawnBullets.add(sub);
@@ -2198,6 +2178,7 @@ public class CryonJavaMod extends Mod {
             }};
 
             mainBullet.load();
+            criticalPoint.shake = 9f;
             criticalPoint.shootType = mainBullet;
             criticalPoint.init();
         } else {

@@ -29,7 +29,7 @@ public class SpaceJumpAbility extends Ability{
     public float maximumJumpTimeRatio = 0.5f;
     public float maxDistance = 8f * 120f;
     public float minimumJumpDistance = 8f * 40f;
-    private float cooldown, charge, originX, originY, targetX, targetY, facing, reconstruction;
+    private float landingCheck, cooldown, charge, originX, originY, targetX, targetY, facing, reconstruction;
     private boolean active, automatic, finishing;
     private int level;
     private Trail[] engineTrails;
@@ -54,7 +54,18 @@ public class SpaceJumpAbility extends Ability{
     public boolean digitalizing(){ return level >= 4 && (active || reconstructing()); }
     public boolean ready(Unit unit){ return SpaceJump.allowed(unit) && !active && !reconstructing() && cooldown <= 0f && !unit.dead && unit.isFlying(); }
     public float chargeProgress(){ return active ? Mathf.clamp(charge / chargeTime()) : 0f; }
-    public float chargeTime(){ return 45f + level * 18f; }
+    /** Lower hull classes trade shorter range for longer preparation and recovery. */
+    public float range(Unit unit){
+        int tier = level(unit);
+        return maxDistance * (tier == 1 ? 0.5f : tier == 2 ? 2f / 3f : tier == 3 ? 5f / 6f : 1f);
+    }
+    private float reloadTime(int tier){
+        return reload * (tier == 1 ? 2f : tier == 2 ? 1.6f : tier == 3 ? 1.2f : 1f);
+    }
+    private static float chargeTime(int tier){
+        return 45f + tier * 18f + (tier == 1 ? 57f : tier == 2 ? 39f : tier == 3 ? 21f : 0f);
+    }
+    public float chargeTime(){ return chargeTime(level); }
 
     @Override
     public String localized(){ return Core.bundle.get("ability.cryon-space-jump"); }
@@ -68,7 +79,7 @@ public class SpaceJumpAbility extends Ability{
     public void displayBars(Unit unit, arc.scene.ui.layout.Table bars){
         if(!SpaceJump.enabled() || !SpaceJump.allowed(unit)) return;
         bars.add(new Bar(() -> active ? Core.bundle.get("cryon.space-jump.charging") : localized(),
-            () -> SpaceJumpFx.color, () -> active ? chargeProgress() : 1f - cooldown / reload)).row();
+            () -> SpaceJumpFx.color, () -> active ? chargeProgress() : 1f - cooldown / reloadTime(level(unit)))).row();
     }
 
     @Override
@@ -93,15 +104,19 @@ public class SpaceJumpAbility extends Ability{
             // Anchor during spool-up; use precisely the unit's normal turn rate, including statuses.
             unit.set(originX, originY);
             unit.vel.setZero();
-            if(!Vars.net.client()){
+            landingCheck -= Time.delta;
+            // Reservations stay stable; spread expensive fleet-wide checks over 15 ticks.
+            // Always validate once more immediately before arrival.
+            if(!Vars.net.client() && (landingCheck <= 0f || charge + Time.delta >= chargeTime())){
+                landingCheck = 15f;
                 Vec2 safe = SpaceJumpLanding.outsideEnemyFlux(unit, new Vec2(targetX, targetY));
-                if(safe != null && distantEnough(unit, safe)) safe = SpaceJumpFormation.plan(unit, safe, maxDistance, Math.max(8f, minimumJumpDistance), new Vec2());
+                if(safe != null && distantEnough(unit, safe)) safe = SpaceJumpFormation.plan(unit, safe, range(unit), Math.max(8f, minimumJumpDistance), new Vec2());
                 if(safe == null || !distantEnough(unit, safe)){
                     cancel(unit);
                     return;
                 }
                 if(Mathf.dst2(targetX, targetY, safe.x, safe.y) > 0.01f){
-                    if(automatic && !worthwhile(unit, safe, chargeTime() - charge)){
+                    if(automatic && !orderedJump(unit) && !worthwhile(unit, safe, chargeTime() - charge)){
                         cancel(unit);
                         return;
                     }
@@ -141,13 +156,13 @@ public class SpaceJumpAbility extends Ability{
         }else if(targetPos != null){
             x = targetPos.x; y = targetPos.y;
         }else return;
-        if(worthwhile(unit, x, y) && requestJump(unit, x, y)) automatic = true;
+        if((orderedJump(unit) || worthwhile(unit, x, y)) && requestJump(unit, x, y)) automatic = true;
     }
 
     /** Compare the actual, range/flux-limited hop with flying that same displacement. */
     public boolean worthwhile(Unit unit, float x, float y){
         Vec2 destination = landing(unit, x, y, new Vec2());
-        return destination != null && distantEnough(unit, destination) && worthwhile(unit, destination, 45f + level(unit) * 18f);
+        return destination != null && distantEnough(unit, destination) && worthwhile(unit, destination, chargeTime(level(unit)));
     }
 
     private boolean worthwhile(Unit unit, Vec2 destination, float chargeRemaining){
@@ -163,6 +178,11 @@ public class SpaceJumpAbility extends Ability{
             && flightTime - jumpTime >= minimumTimeSaved;
     }
 
+    private boolean orderedJump(Unit unit){
+        return SpaceJump.jumpCommand != null && unit.controller() instanceof CommandAI ai
+            && ai.currentCommand() == SpaceJump.jumpCommand;
+    }
+
     private boolean canAutoJump(Unit unit){
         if(unit.controller() instanceof FlyingAI){
             return unit.team != Vars.state.rules.defaultTeam && unit.team != mindustry.game.Team.derelict && unit.hasWeapons();
@@ -170,7 +190,7 @@ public class SpaceJumpAbility extends Ability{
         if(!(unit.controller() instanceof CommandAI)) return false;
         CommandAI ai = (CommandAI)unit.controller();
         return !ai.hasStance(UnitStance.patrol) && !ai.hasStance(UnitStance.holdPosition)
-            && (ai.currentCommand() == UnitCommand.moveCommand || ai.currentCommand() == UnitCommand.loopPayloadCommand)
+            && (ai.currentCommand() == UnitCommand.moveCommand || ai.currentCommand() == UnitCommand.loopPayloadCommand || orderedJump(unit))
             && ai.hasCommand();
     }
 
@@ -197,11 +217,11 @@ public class SpaceJumpAbility extends Ability{
         y = Mathf.clamp(y, margin, Math.max(margin, Vars.world.unitHeight() - margin));
         float distance = unit.dst(x, y);
         if(distance < 0.001f) return out.set(unit.x, unit.y);
-        float fraction = Math.min(1f, maxDistance / distance);
+        float fraction = Math.min(1f, range(unit) / distance);
         x = unit.x + (x - unit.x) * fraction;
         y = unit.y + (y - unit.y) * fraction;
         Vec2 safe = SpaceJumpLanding.outsideEnemyFlux(unit, out.set(x, y));
-        return safe == null || !distantEnough(unit, safe) ? safe : SpaceJumpFormation.plan(unit, safe, maxDistance, Math.max(8f, minimumJumpDistance), out);
+        return safe == null || !distantEnough(unit, safe) ? safe : SpaceJumpFormation.plan(unit, safe, range(unit), Math.max(8f, minimumJumpDistance), out);
     }
 
     public void redirect(float x, float y){
@@ -211,6 +231,7 @@ public class SpaceJumpAbility extends Ability{
     public void begin(Unit unit, float x, float y, float ox, float oy, float rotation, int tier){
         if(!SpaceJump.enabled() || !SpaceJump.allowed(unit)) return;
         targetX = x; targetY = y; originX = ox; originY = oy; facing = rotation;
+        landingCheck = 1f + Math.floorMod(unit.id, 15);
         level = tier; charge = 0f; reconstruction = 0f; active = true; automatic = false;
         engineTrails = null;
         updateTrails(unit);
@@ -237,7 +258,7 @@ public class SpaceJumpAbility extends Ability{
         finishing = true;
         unit.set(x, y); unit.rotation = rotation; unit.vel.setZero();
         unit.snapInterpolation(); unit.snapSync();
-        cooldown = reload;
+        cooldown = reloadTime(level);
     }
 
     /** Vanilla controllers run after abilities; restore the locked pose once they have finished. */
@@ -259,7 +280,7 @@ public class SpaceJumpAbility extends Ability{
     }
 
     private void updateTrails(Unit unit){
-        if(Vars.headless || level >= 4){ engineTrails = null; return; }
+        if(Vars.headless || Vars.mobile || level >= 4){ engineTrails = null; return; }
         if(engineTrails == null){
             engineTrails = new Trail[unit.type.engines.size];
             for(int i = 0; i < engineTrails.length; i++) engineTrails[i] = new Trail(40 + level * 8);
@@ -284,7 +305,7 @@ public class SpaceJumpAbility extends Ability{
     public Ability copy(){
         SpaceJumpAbility copy = (SpaceJumpAbility)super.copy();
         copy.active = false; copy.automatic = false; copy.finishing = false;
-        copy.cooldown = 0; copy.charge = 0; copy.reconstruction = 0; copy.engineTrails = null;
+        copy.landingCheck = 0; copy.cooldown = 0; copy.charge = 0; copy.reconstruction = 0; copy.engineTrails = null;
         return copy;
     }
 }

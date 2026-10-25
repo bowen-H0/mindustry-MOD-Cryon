@@ -134,6 +134,8 @@ public class KismetBulletType extends ArtilleryBulletType {
     }
 
     /** 子弹销毁瞬间在落点执行绑定逻辑 */
+    public void fuseAt(Bullet b,float x,float y){shareFractionStatic=shareFraction;resolve(b,x,y);}
+
     protected void resolve(Bullet b, float x, float y) {
         kismetLaser.at(b.x, b.y, 0f, linkColor, new Vec2(x, y));
 

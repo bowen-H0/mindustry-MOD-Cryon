@@ -66,6 +66,10 @@ public class HeatBoostTurret extends ItemTurret {
         // 存储接收到的热量
         public float boostHeat = 0f;
 
+        public float fusionHeatBoost(){
+            return heatCapacity<=0f?0f:Math.min(boostHeat/heatCapacity,1f)*maxHeatBoost;
+        }
+
         // ---- HeatConsumer 接口 ----
 
         @Override

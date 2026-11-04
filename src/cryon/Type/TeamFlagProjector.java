@@ -7,8 +7,10 @@ import arc.graphics.g2d.*;
 import arc.math.Mathf;
 import arc.util.Time;
 import arc.util.Tmp;
+import arc.util.Log;
 import cryon.Content.CryonItems;
 import cryon.Features.ProjectorSalutes;
+import cryon.Features.TeamEmblems;
 import mindustry.Vars;
 import mindustry.content.Items;
 import mindustry.game.EventType.DisposeEvent;
@@ -24,6 +26,7 @@ import mindustry.world.meta.BuildVisibility;
 public class TeamFlagProjector extends Block{
     // 保持原类名和内容 ID,已放置的方块不会丢
     private final TextureRegion[] teamSymbols = new TextureRegion[256];
+    private final Pixmap[] teamMasks = new Pixmap[256];
 
     public static float emblemSize = 64f;   // 图标大小
     public static float hoverHeight = 58f;  // 悬浮高度
@@ -49,22 +52,59 @@ public class TeamFlagProjector extends Block{
 
     @Override public void load(){
         super.load();
-        if(Vars.headless) return;
+        // Mods also invokes load() on its atlas-packing worker, without a GL context.
+        // GPU textures are created by loadTeamSymbols() at ClientLoadEvent instead.
+    }
+
+    @Override public void createIcons(MultiPacker packer){
+        super.createIcons(packer);
         for(Team team : Team.all){
+            if(teamSymbols[team.id] != null || teamMasks[team.id] != null) continue;
+            // Newer engines return the error sprite for absent names, not null.
+            // Custom factions use their bundled PNGs instead of atlas fallbacks.
             String name = "team-" + team.name;
-            if(!Core.atlas.has(name)) continue;
-            Pixmap mask = Core.atlas.getPixmap(name).crop();
-            for(int y = 0; y < mask.height; y++){
-                for(int x = 0; x < mask.width; x++){
-                    mask.set(x, y, 0xffffff00 | (mask.get(x, y) & 0xff));
-                }
-            }
-            Texture texture = new Texture(mask);
-            mask.dispose();
-            texture.setFilter(Texture.TextureFilter.linear);
-            teamSymbols[team.id] = new TextureRegion(texture);
-            Events.on(DisposeEvent.class, event -> texture.dispose());
+            if(TeamEmblems.bundledPath(team) != null || !Core.atlas.has(name)) continue;
+            PixmapRegion source = packer.get(name);
+            if(source != null) teamMasks[team.id] = source.crop();
         }
+    }
+
+    /** Called on the render thread after client loading, while the GL context is current. */
+    public void loadTeamSymbols(){
+        if(Vars.headless || Core.atlas == null) return;
+        for(Team team : Team.all) loadTeamSymbol(team);
+    }
+
+    private void loadTeamSymbol(Team team){
+        if(teamSymbols[team.id] != null) return;
+        String bundled = TeamEmblems.bundledPath(team);
+        Pixmap mask = teamMasks[team.id];
+        if(mask == null && bundled != null){
+            try(java.io.InputStream stream = TeamFlagProjector.class.getResourceAsStream(bundled)){
+                if(stream == null) throw new java.io.IOException("Missing bundled " + team.name + " PNG");
+                java.io.ByteArrayOutputStream bytes = new java.io.ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int count;
+                while((count = stream.read(buffer)) != -1) bytes.write(buffer, 0, count);
+                mask = new Pixmap(bytes.toByteArray());
+            }catch(java.io.IOException error){
+                Log.err("[Cryon] Could not load bundled " + team.name + " projection", error);
+                return;
+            }
+        }
+        if(mask == null) return;
+        for(int y = 0; y < mask.height; y++){
+            for(int x = 0; x < mask.width; x++){
+                mask.set(x, y, 0xffffff00 | (mask.get(x, y) & 0xff));
+            }
+        }
+        Texture texture = new Texture(mask);
+        mask.dispose();
+        teamMasks[team.id] = null;
+        texture.setFilter(Texture.TextureFilter.linear);
+        teamSymbols[team.id] = new TextureRegion(texture);
+        Events.on(DisposeEvent.class, event -> texture.dispose());
+        if(bundled != null) Log.info("[Cryon] Loaded @ projection from @", team.name, bundled);
     }
 
     public class TeamFlagProjectorBuild extends Building{
@@ -82,6 +122,7 @@ public class TeamFlagProjector extends Block{
 
 
         public TextureRegion teamSymbol(){
+            if(teamSymbols[team.id] == null) loadTeamSymbol(team);
             return teamSymbols[team.id];
         }
 

@@ -1,0 +1,15 @@
+type: Floor
+variants: 3
+isLiquid: true
+liquidDrop: water
+liquidMultiplier: 1
+speedMultiplier: 0.7
+drownTime: 0
+status: wet
+statusDuration: 60
+supportsOverlay: true
+cacheLayer: normal
+mapColor: 64868b
+shallow: true
+itemDrop: abyssal-sediment
+playerUnmineable: false

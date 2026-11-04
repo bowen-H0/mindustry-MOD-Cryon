@@ -136,7 +136,14 @@ public abstract class ModPlanetTechTree {
     }
 
     protected void sectorGate(String sectorName, String... gatedNames){
-        sectorGateTable.put(sectorName, gatedNames);
+        String[] existing = sectorGateTable.get(sectorName);
+        if(existing == null){
+            sectorGateTable.put(sectorName, gatedNames);
+        }else{
+            String[] combined = java.util.Arrays.copyOf(existing, existing.length + gatedNames.length);
+            System.arraycopy(gatedNames, 0, combined, existing.length, gatedNames.length);
+            sectorGateTable.put(sectorName, combined);
+        }
     }
 
     protected static ItemStack[] r(Object... pairs){
@@ -205,9 +212,10 @@ public abstract class ModPlanetTechTree {
                 if(item == null){ Log.warn("[@] Item not found: @, skipping", modName, e.name); return; }
 
                 if(e.manualReqs != null){
-                    node(item, e.manualReqs, () -> buildChildrenOf(e.name, targetPlanet));
+                    node(item, e.manualReqs, sectorGateObjectives(e.name), () -> buildChildrenOf(e.name, targetPlanet));
                 }else{
                     Seq<Objective> objs = Seq.with(new Produce(item));
+                    objs.addAll(sectorGateObjectives(e.name));
                     node(item, new ItemStack[]{}, objs, () -> buildChildrenOf(e.name, targetPlanet));
                 }
                 markPlanet(item, targetPlanet);

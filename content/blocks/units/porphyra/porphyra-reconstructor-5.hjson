@@ -1,0 +1,17 @@
+type: Reconstructor
+size: 9
+health: 3150
+hasPower: true
+hasItems: true
+consumes: {
+  power: 13.8
+  items: [oganesson/65, gamma-crystal/65, porphyra-alloy/80, phase-crystal/70]
+}
+constructTime: 3600
+upgrades: [
+  [cortex, connectome]
+  [polymer, macromolecule]
+  [gravity, singularity]
+]
+category: units
+requirements: [rhenium/450, neptunium/270, oganesson/130, porphyra-alloy/120, phase-crystal/140]

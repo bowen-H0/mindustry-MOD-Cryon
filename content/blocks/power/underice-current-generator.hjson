@@ -1,0 +1,12 @@
+size: 2
+health: 240
+category: power
+powerProduction: 2
+requirements: [aluminum/50, silicon/30]
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {type: DrawDefault}
+    {type: DrawRegion, suffix: "-rotator", rotateSpeed: 4}
+  ]
+}

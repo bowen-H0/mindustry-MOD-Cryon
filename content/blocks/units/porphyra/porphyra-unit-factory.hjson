@@ -1,0 +1,27 @@
+type: UnitFactory
+size: 3
+health: 700
+hasPower: true
+hasItems: true
+consumes: {
+  power: 2.2
+}
+plans: [
+  {
+    unit: receptor
+    time: 420
+    requirements: [rhenium/35, gamma-crystal/15, rhenium-plate/8]
+  }
+  {
+    unit: monomer
+    time: 500
+    requirements: [rhenium/45, gamma-crystal/20, rhenium-plate/14]
+  }
+  {
+    unit: particle
+    time: 400
+    requirements: [rhenium/30, gamma-crystal/15, rhenium-plate/6]
+  }
+]
+category: units
+requirements: [rhenium/140, gamma-crystal/25, rhenium-plate/35]

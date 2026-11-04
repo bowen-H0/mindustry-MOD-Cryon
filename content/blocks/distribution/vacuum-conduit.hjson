@@ -10,3 +10,5 @@ requirements: [
 ]
 bridgeReplacement: vacuum-bridge
 junctionReplacement: vacuum-crosser
+floating: true
+placeableLiquid: true

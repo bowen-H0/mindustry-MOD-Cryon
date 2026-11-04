@@ -60,7 +60,7 @@ public class GlobalSuppressionAbility extends FluxSuppressionAbility{
                 if(!(ability instanceof GlobalSuppressionAbility)) continue;
                 float range = ((GlobalSuppressionAbility)ability).radius;
                 Units.nearbyBuildings(source.x, source.y, range, build -> {
-                    if(build.dead || build.team == source.team || build.team == Team.derelict) return;
+                    if(build.dead || cryon.Features.MapAlliances.allied(build.team, source.team) || build.team == Team.derelict) return;
                     if(!before.containsKey(build)) before.put(build, new State(build));
                     build.enabled = false;
                     // Temporarily detach from the update group, like native sleeping.

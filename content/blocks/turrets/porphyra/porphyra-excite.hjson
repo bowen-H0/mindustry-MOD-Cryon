@@ -1,0 +1,40 @@
+type: ItemTurret
+size: 2
+health: 840
+range: 115
+reload: 42
+rotateSpeed: 4
+shootCone: 15
+shootY: 6
+recoil: 1.0
+shootSound: shootLaser
+shootEffect: shootBigColor
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+targetAir: false
+targetGround: true
+ammoTypes: {
+  rhenium: {
+    type: LightningBulletType
+    damage: 24
+    lightningLength: 20
+    lightningLengthRand: 3
+    lightningColor: c7a5ed
+    collidesAir: false
+    status: shocked
+    statusDuration: 60
+    shootEffect: shootBigColor
+    hitEffect: hitLancer
+    hitColor: c7a5ed
+    lightColor: a17bd6
+  }
+}
+shoot: {
+  type: ShootSpread
+  shots: 3
+  spread: 12
+}
+category: turret
+requirements: [rhenium/110]

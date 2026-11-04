@@ -1,0 +1,6 @@
+planet: cryon-depths
+sector: 5
+difficulty: 6
+captureWave: 0
+addStartingItems: true
+isLastSector: true

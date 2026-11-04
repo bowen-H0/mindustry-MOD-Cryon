@@ -1,0 +1,10 @@
+type: Pump
+size: 2
+health: 440
+pumpAmount: 0.16
+liquidCapacity: 80
+hasPower: true
+consumes: { power: 1.2 }
+drawer: { type: DrawDefault }
+category: liquid
+requirements: [rhenium/60, gamma-crystal/25, technetium/20]

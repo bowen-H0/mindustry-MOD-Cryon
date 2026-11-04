@@ -102,14 +102,14 @@ public class BeaconBulletType extends ArtilleryBulletType {
         BeaconFx.impact.at(x, y, 0f, beamColor);
 
         Units.nearbyEnemies(team, x, y, strikeRadius, unit -> {
-            if (fusedTargeting?unit.checkTarget(collidesAir,collidesGround):unit.isGrounded()) {
+            if (!cryon.Features.MapAlliances.allied(unit.team, team) && (fusedTargeting?unit.checkTarget(collidesAir,collidesGround):unit.isGrounded())) {
                 unit.damage(strikeDamage);
             }
         });
 
         if(!fusedTargeting || collidesGround)Vars.indexer.eachBlock(null, x, y, strikeRadius,
-                building -> building.team != team,
-                building -> building.damage(strikeDamage)
+                building -> !cryon.Features.MapAlliances.allied(building.team, team),
+                building -> building.damage(team, strikeDamage)
         );
 
         Fx.hitBulletColor.at(x, y, 0f, beamColor);

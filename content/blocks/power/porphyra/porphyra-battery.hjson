@@ -1,0 +1,8 @@
+type: Battery
+size: 2
+health: 380
+consumes: {
+  powerBuffered: 30000
+}
+category: power
+requirements: [rhenium/70, technetium/30, gamma-crystal/15]

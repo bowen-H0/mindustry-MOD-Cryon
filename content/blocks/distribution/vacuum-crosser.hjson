@@ -11,3 +11,5 @@ requirements: [
   aluminum/4
   magnesium/2
 ]
+floating: true
+placeableLiquid: true

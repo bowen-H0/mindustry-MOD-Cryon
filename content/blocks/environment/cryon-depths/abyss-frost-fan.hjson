@@ -1,0 +1,10 @@
+{
+  "type": "SeaBush",
+  "variants": 0,
+  "solid": false,
+  "breakable": true,
+  "lobesMin": 4,
+  "lobesMax": 6,
+  "magMin": 3,
+  "magMax": 9
+}

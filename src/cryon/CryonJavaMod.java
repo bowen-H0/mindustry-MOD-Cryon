@@ -12,17 +12,20 @@ import cryon.Content.CryonItems;
 import cryon.Content.AravisEnvironment;
 import cryon.Content.CryonEnvironment;
 import cryon.Content.CryonSectors;
+import cryon.Content.PorphyraEnvironment;
 import cryon.Content.DestroyerUnit;
 import cryon.Content.OblivionUnit;
 import cryon.Features.*;
 import cryon.Fx.CryonFx;
 import cryon.Generator.CryonPlanetGenerator;
 import cryon.Generator.AravisPlanetGenerator;
+import cryon.Generator.PorphyraPlanetGenerator;
 import cryon.Injector.DeuteriumReactorInjector;
 import cryon.Injector.HeatBoostTurret;
 import cryon.Injector.MeltingDrillInjector;
 import cryon.Script.*;
 import cryon.TechTree.AravisTechTree;
+import cryon.TechTree.PorphyraTechTree;
 import cryon.TechTree.CryonTechTree;
 import cryon.TechTree.ModPlanetTechTree;
 import cryon.Type.*;
@@ -81,6 +84,11 @@ public class CryonJavaMod extends Mod {
 
 
     public CryonJavaMod() {
+        // Set the faction name before team emblem regions are collected from the atlas.
+        NormaTeam.init();
+        AllianceTeam.init();
+        PioneerTeam.init();
+        UnitDisplayOrder.install();
     }
 
     public static FluxBarrier fluxBarrier;
@@ -155,11 +163,20 @@ public class CryonJavaMod extends Mod {
         SpaceJump.loadCommands();
         cryon.Story.IntrusionContent.load();
         CryonItems.load();
+        CryonCampaignLayers.load();
+        cryon.Content.CryonDepthsEnvironment.load();
+        UnderwaterEditor.load();
+        cryon.Content.PlanetEnvironmentStatuses.load();
+        cryon.Content.SubmarineContent.load();
+        CrystalStatueBlock.loadContent();
         AravisEnvironment.load();
+        PorphyraEnvironment.load();
+        new PorphyraTradeTower("porphyra-trade-tower");
         cryon.Content.BioCrawlerUnits.load();
         new TeamFlagProjector("team-flag-projector");
         new NuclearArbiter("disarmament");
         new UnityTurret("unity");
+        new cryon.Type.QuantumCommunicationComputer("quantum-communication-computer");
 
 
         new Drill("melting-drill") {{ }};
@@ -1995,10 +2012,29 @@ public class CryonJavaMod extends Mod {
     }
 
     private void initTimed() {
+        cryon.Story.StoryProgress.install();
+        MainMenuTheme.install();
+        PorphyraFlyingAI.install();
+        PlanetTraits.install();
+        UnderwaterEditor.install();
+        MapAlliances.install();
         SpaceJump.install();
         cryon.Story.DesolateIntrusion.install();
         LoadTiming.measure("init / environment", CryonEnvironment::init);
+        LoadTiming.measure("init / depths environment", cryon.Content.CryonDepthsEnvironment::init);
         LoadTiming.measure("init / aravis environment", AravisEnvironment::init);
+        LoadTiming.measure("init / porphyra environment", PorphyraEnvironment::init);
+        PorphyraCampaign.install();
+        Events.on(ClientLoadEvent.class, event -> {
+            PorphyraFont.install();
+            NormaTeam.loadIcon();
+            AllianceTeam.loadIcon();
+            PioneerTeam.loadIcon();
+        });
+        Events.on(ClientLoadEvent.class, event -> {
+            Block projector = Vars.content.block("cryon-team-flag-projector");
+            if(projector instanceof TeamFlagProjector flags) flags.loadTeamSymbols();
+        });
         LoadTiming.measure("init / sectors", CryonSectors::load);
         Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
         if(exist == null){
@@ -2198,6 +2234,8 @@ public class CryonJavaMod extends Mod {
         Item aluminum = CryonContent.item("aluminum");
         Planet cryonPlanet = Vars.content.planet("cryon-cryon");
         Planet aravisPlanet = Vars.content.planet("cryon-aravis");
+        Planet kyanosStar = Vars.content.planet("cryon-kyanos");
+        Planet porphyraPlanet = Vars.content.planet("cryon-porphyra");
 
 
         if(peak != null)     peak.abilities.add(new IgnoreDamageAbility(0.25f));
@@ -2263,6 +2301,28 @@ public class CryonJavaMod extends Mod {
 
             };
 
+        }
+        if(kyanosStar != null){
+            kyanosStar.accessible = false;
+            if(!Vars.headless) KyanosCoronaMesh.install(kyanosStar);
+        }
+        if(porphyraPlanet != null){
+            porphyraPlanet.generator = new PorphyraPlanetGenerator();
+            porphyraPlanet.defaultEnv = Env.terrestrial;
+            porphyraPlanet.allowLaunchToNumbered = false;
+            porphyraPlanet.clearSectorOnLose = true;
+            porphyraPlanet.updateLighting = false;
+            if(!Vars.headless) PorphyraRingMesh.install(porphyraPlanet);
+            porphyraPlanet.ruleSetter = r -> {
+                r.lighting = true;
+                r.ambientLight = Color.valueOf("352447a8");
+                r.coreDestroyClear = true;
+                r.placeRangeCheck = false;
+                r.polygonCoreProtection = false;
+                r.unitPayloadsExplode = true;
+                PorphyraEnvironment.applyWeather(r);
+                PorphyraCampaign.setFactions(r);
+            };
         }
         fluxBarrier.requirements(Category.effect, BuildVisibility.shown, new ItemStack[]{
                 new ItemStack(Items.graphite, 80),
@@ -2550,12 +2610,21 @@ public class CryonJavaMod extends Mod {
             CryonContent.unit("vain").abilities.add(weakShield);
         }
 
+        cryon.Content.SubmarineContent.configureProduction();
+        DeepSeaRules.configure();
+        CryonCampaignLayers.configure();
+        CryonCampaignLayers.install();
+        PlanetTraits.configure();
+        UnitDisplayOrder.arrangeProduction();
+
         // TechTree
         Events.on(ClientLoadEvent.class, e -> {
             LoadTiming.measure("ClientLoad / tech tree cleanup", () -> ModPlanetTechTree.globalCleanup("cryon"));
 
             CryonTechTree.load();
             AravisTechTree.load();
+            PorphyraTechTree.load();
+            CryonCampaignLayers.shareResearch();
 
              TechNode root = TechTree.roots.find(
                     n -> n.content != null && n.content.name.equals("cryon-core-pioneer"));

@@ -4,6 +4,7 @@ import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.*;
 import arc.math.Mathf;
+import arc.math.geom.QuadTree;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.Time;
@@ -19,6 +20,7 @@ import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.logic.LAccess;
+import mindustry.logic.Ranged;
 import mindustry.type.*;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
@@ -148,7 +150,7 @@ public class UnityTurret extends Block{
             ()->Pal.accent,()->b.constructorUse()>0?Mathf.clamp(b.constructorSatisfaction):1f));
     }
 
-    public class UnityBuild extends Building implements ConstructorConsumer,HeatConsumer{
+    public class UnityBuild extends Building implements ConstructorConsumer,HeatConsumer,Ranged{
         public final float[] fusionSideHeat=new float[4];
         public float fusionHeat;
         @Override public float[] sideHeat(){return fusionSideHeat;}
@@ -195,6 +197,7 @@ public class UnityTurret extends Block{
             for(Mount m:mounts)if(m.source.consPower!=null)total+=m.source.consPower.requestedPower(m.build);
             return total;
         }
+        @Override public float range(){return fusion==null || mounts.isEmpty()?0f:fusion.range;}
         public boolean affordable(UnityBlueprint recipe){
             return Vars.state.rules.infiniteResources || (core()!=null && core().items.has(recipe.cost()));
         }
@@ -203,12 +206,20 @@ public class UnityTurret extends Block{
             pending=recipe;progress=0;
         }
         public void install(UnityBlueprint recipe){
-            for(Mount m:mounts)m.dispose();
-            mounts.clear();blueprint=recipe;palette=new UnityPalette(recipe.color);
-            if(tile!=null){if(recipe.color.isEmpty())coloredPositions.remove(pos());else coloredPositions.add(pos());}
-            for(UnityBlueprint.Module module:recipe.modules)mounts.add(new Mount(module));
-            fusion=new UnityFusion(recipe);totalFusedShots=0;fusionReload=0f;charge=-1f;fusionTarget=null;
-            beam=null;beamTime=0;
+            // Quadtree removal uses the current range to find the old node. Detach before
+            // changing it; detached module builds and not-yet-indexed save loads stay detached.
+            QuadTree<Building> tree=tile!=null && tile.build==this?team.data().turretTree:null;
+            boolean indexed=tree!=null && tree.remove(this);
+            try{
+                for(Mount m:mounts)m.dispose();
+                mounts.clear();blueprint=recipe;palette=new UnityPalette(recipe.color);
+                if(tile!=null){if(recipe.color.isEmpty())coloredPositions.remove(pos());else coloredPositions.add(pos());}
+                for(UnityBlueprint.Module module:recipe.modules)mounts.add(new Mount(module));
+                fusion=new UnityFusion(recipe);totalFusedShots=0;fusionReload=0f;charge=-1f;fusionTarget=null;
+                beam=null;beamTime=0;
+            }finally{
+                if(indexed)tree.insert(this);
+            }
         }
         private void refundLegacyPayment(){
             if(!Vars.net.client() && legacyRefund.length>0 && core()!=null){for(ItemStack stack:legacyRefund)core().items.add(stack.item,stack.amount);legacyRefund=ItemStack.empty;}
@@ -318,12 +329,10 @@ public class UnityTurret extends Block{
             if(finished)UnityConsumption.display(table,blueprint,this);
         }
         @Override public float fogRadius(){
-            float range=0f;
-            if(fusion!=null)range=fusion.range/Vars.tilesize;
-            return range;
+            return range()/Vars.tilesize;
         }
         @Override public void drawSelect(){
-            float range=fusion==null?0f:fusion.range;
+            float range=range();
             if(range>0)Drawf.dashCircle(x,y,range,team.color);
         }
         @Override public void onRemoved(){

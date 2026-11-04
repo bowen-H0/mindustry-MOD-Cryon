@@ -221,7 +221,7 @@ public class KismetBulletType extends ArtilleryBulletType {
         float[] bestDst = {Float.MAX_VALUE};
 
         Groups.unit.intersect(x - range, y - range, range * 2, range * 2, u -> {
-            if (u.team == b.team || u.dead || !u.isValid()) return;
+            if (cryon.Features.MapAlliances.allied(u.team, b.team) || u.dead || !u.isValid()) return;
 
             float dst = u.dst(x, y);
             if (dst < range && dst < bestDst[0]) {

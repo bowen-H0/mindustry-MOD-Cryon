@@ -1,0 +1,11 @@
+type: Drill
+size: 2
+health: 380
+tier: 3
+drillTime: 360
+hasPower: true
+consumes: {
+  power: 0.35
+}
+category: production
+requirements: [rhenium/50]

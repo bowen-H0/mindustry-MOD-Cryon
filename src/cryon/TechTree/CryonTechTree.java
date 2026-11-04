@@ -31,8 +31,11 @@ public class CryonTechTree extends ModPlanetTechTree {
 
     @Override
     protected void registerEntries(){
+        addAuto(Kind.BLOCK, "powered-pump", "cryo-conduit");
+        addAuto(Kind.BLOCK, "underice-current-generator", "aluminum-node");
         // ---- ITEM(全部 auto) ----
         addAuto(Kind.ITEM, "aluminum", "core-pioneer");
+        addAuto(Kind.ITEM, "abyssal-sediment", "aluminum");
         addAuto(Kind.ITEM, "crystal-sand", "magnesium");
         addAuto(Kind.ITEM, "dry-ice", "aluminum");
         addAuto(Kind.ITEM, "farstar-alloy", "titanium");
@@ -172,6 +175,7 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "constructor-node", "aluminum-node");
         addAuto(Kind.BLOCK, "construct-wave-emitter", "constructor-node");
+        addAuto(Kind.BLOCK, "quantum-communication-computer", "construct-wave-emitter");
         addAuto(Kind.BLOCK, "constructor-drill", "construct-wave-emitter");
         addAuto(Kind.BLOCK, "wave-reactor", "construct-wave-emitter");
 
@@ -224,6 +228,7 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "quartz-reactor", "magnesium-converter");
         addAuto(Kind.BLOCK, "scrap-pyrolyzer", "magnesium-converter");
         addAuto(Kind.BLOCK, "shattering-drill", "core-pioneer");
+        addAuto(Kind.BLOCK, "sediment-separator", "shattering-drill");
         addAuto(Kind.BLOCK, "silicon-separator", "hydrothermal-generator");
 
         addAuto(Kind.BLOCK, "slag-extractor", "hydrothermal-generator");
@@ -461,7 +466,7 @@ public class CryonTechTree extends ModPlanetTechTree {
         sectorGate("cryon-fusion-bastion",
                 "phase-reactor", "agitator-tower");
         sectorGate("relay-32a",
-                "beacon");
+                "beacon", "quantum-communication-computer");
         sectorGate("stellar-observatory",
                 "aurora");
 
@@ -507,5 +512,6 @@ public class CryonTechTree extends ModPlanetTechTree {
     /** 保留原来的调用方式：CryonTechTree.load() */
     public static void load(){
         new CryonTechTree().run();
+        cryon.Story.StoryProgress.gateResearch();
     }
 }

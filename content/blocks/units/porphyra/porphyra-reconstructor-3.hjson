@@ -1,0 +1,17 @@
+type: Reconstructor
+size: 5
+health: 1750
+hasPower: true
+hasItems: true
+consumes: {
+  power: 9.0
+  items: [promethium/40, gamma-crystal/35, laminated-rhenium/20, phase-crystal/25]
+}
+constructTime: 2400
+upgrades: [
+  [synapse, ganglion]
+  [dimer, oligomer]
+  [momentum, inertia]
+]
+category: units
+requirements: [rhenium/250, technetium/160, promethium/80]

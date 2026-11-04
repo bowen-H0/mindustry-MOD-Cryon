@@ -1,0 +1,5 @@
+type: StaticWall
+variants: 1
+mapColor: 34213e
+solid: true
+destructible: false

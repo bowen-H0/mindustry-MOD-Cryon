@@ -1,0 +1,9 @@
+type: CoreBlock
+size: 4
+health: 4200
+itemCapacity: 7000
+unitType: process
+unitCapModifier: 60
+category: effect
+isFirstTier: false
+requirements: [rhenium/1200, technetium/600]

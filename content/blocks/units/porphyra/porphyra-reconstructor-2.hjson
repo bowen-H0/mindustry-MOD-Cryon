@@ -1,0 +1,17 @@
+type: Reconstructor
+size: 4
+health: 1400
+hasPower: true
+hasItems: true
+consumes: {
+  power: 7.8
+  items: [technetium/25, gamma-crystal/20, laminated-rhenium/20]
+}
+constructTime: 2100
+upgrades: [
+  [receptor, synapse]
+  [monomer, dimer]
+  [particle, momentum]
+]
+category: units
+requirements: [rhenium/180, technetium/80]

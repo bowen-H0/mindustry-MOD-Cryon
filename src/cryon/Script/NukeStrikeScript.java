@@ -309,7 +309,7 @@ public class NukeStrikeScript extends MapScript {
     }
 
     private boolean hitTeam(Team t) {
-        return t != Team.derelict && (friendlyFire || t != build.team);
+        return t != Team.derelict && (t == build.team ? friendlyFire : !cryon.Features.MapAlliances.allied(t, build.team));
     }
 
     private void startBlast() {

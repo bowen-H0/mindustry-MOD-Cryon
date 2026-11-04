@@ -1,0 +1,6 @@
+type: Conduit
+size: 1
+health: 190
+liquidCapacity: 20
+category: liquid
+requirements: [rhenium/3]

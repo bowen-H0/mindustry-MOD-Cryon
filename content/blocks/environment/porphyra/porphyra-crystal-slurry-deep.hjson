@@ -1,0 +1,13 @@
+type: Floor
+variants: 2
+isLiquid: true
+liquidDrop: crystal-slurry
+liquidMultiplier: 1
+speedMultiplier: 0.25
+drownTime: 180
+status: melting
+statusDuration: 90
+supportsOverlay: false
+supportsBeingOverlaid: false
+cacheLayer: water
+mapColor: 5c3a70

@@ -1,0 +1,7 @@
+type: BeamNode
+size: 1
+health: 190
+range: 8
+laserWidth: 0.4
+category: power
+requirements: [rhenium/10]

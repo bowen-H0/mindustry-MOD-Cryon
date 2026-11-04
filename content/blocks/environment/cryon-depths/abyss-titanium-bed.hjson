@@ -1,0 +1,7 @@
+{
+  "type": "Floor",
+  "variants": 3,
+  "cacheLayer": "normal",
+  "itemDrop": "titanium",
+  "playerUnmineable": false
+}

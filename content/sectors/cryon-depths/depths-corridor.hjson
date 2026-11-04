@@ -1,0 +1,5 @@
+planet: cryon-depths
+sector: 3
+difficulty: 4
+captureWave: 30
+addStartingItems: true

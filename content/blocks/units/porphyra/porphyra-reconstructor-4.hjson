@@ -1,0 +1,17 @@
+type: Reconstructor
+size: 7
+health: 2450
+hasPower: true
+hasItems: true
+consumes: {
+  power: 11.4
+  items: [neptunium/55, gamma-crystal/50, porphyra-alloy/30, phase-crystal/40]
+}
+constructTime: 3000
+upgrades: [
+  [ganglion, cortex]
+  [oligomer, polymer]
+  [inertia, gravity]
+]
+category: units
+requirements: [rhenium/350, promethium/220, neptunium/110, laminated-rhenium/120, phase-crystal/80]

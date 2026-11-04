@@ -30,7 +30,7 @@ public class FluxSuppressionAbility extends Ability{
     public static boolean suppressed(Team team, float x, float y){
         boolean[] result = {false};
         Units.nearbyEnemies(team, x, y, searchRadius, source -> {
-            if(result[0] || source.dead || !source.isAdded()) return;
+            if(result[0] || source.dead || !source.isAdded() || cryon.Features.MapAlliances.allied(team, source.team)) return;
             for(Ability ability : source.abilities){
                 if(ability instanceof FluxSuppressionAbility && source.within(x, y, ((FluxSuppressionAbility)ability).radius)){
                     result[0] = true;

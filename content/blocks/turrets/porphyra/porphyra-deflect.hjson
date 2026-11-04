@@ -1,0 +1,40 @@
+type: ItemTurret
+size: 3
+health: 1260
+range: 255
+reload: 32
+rotateSpeed: 3
+shootCone: 15
+shootY: 9
+recoil: 1.5
+shootSound: shootLaser
+shootEffect: shootBigColor
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+targetAir: true
+targetGround: false
+ammoTypes: {
+  promethium: {
+type: FlakBulletType
+speed: 7
+lifetime: 37
+damage: 35
+width: 8
+height: 12
+splashDamage: 55
+splashDamageRadius: 35
+explodeRange: 30
+backColor: 7955ba
+frontColor: ebd6ff
+hitColor: c7a5ed
+trailColor: a17bd6
+lightColor: a17bd6
+shootEffect: shootBigColor
+hitEffect: hitSquaresColor
+despawnEffect: hitSquaresColor
+  }
+}
+category: turret
+requirements: [rhenium/140, technetium/90, promethium/75]

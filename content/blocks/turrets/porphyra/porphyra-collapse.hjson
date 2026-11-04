@@ -1,0 +1,55 @@
+type: ItemTurret
+size: 5
+health: 2100
+range: 420
+reload: 210
+rotateSpeed: 1
+shootCone: 15
+shootY: 15
+recoil: 2.5
+shootSound: shootLaser
+shootEffect: shootBigColor
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+targetAir: false
+targetGround: true
+ammoTypes: {
+  oganesson: {
+    type: ArtilleryBulletType
+    speed: 4.8
+    lifetime: 90
+    damage: 240
+    width: 24
+    height: 32
+    splashDamage: 750
+    splashDamageRadius: 145
+    collidesAir: false
+    fragBullets: 8
+    fragBullet: {
+      type: LightningBulletType
+      damage: 40
+      lightningLength: 20
+      lightningLengthRand: 6
+      lightningColor: c7a5ed
+      hitColor: c7a5ed
+      collidesAir: false
+    }
+    backColor: 7955ba
+    frontColor: ebd6ff
+    hitColor: c7a5ed
+    trailColor: a17bd6
+    lightColor: a17bd6
+    shootEffect: shootBigColor
+    hitEffect: massiveExplosion
+    despawnEffect: massiveExplosion
+  }
+}
+shoot: {
+  type: ShootSpread
+  shots: 3
+  spread: 6
+}
+category: turret
+requirements: [rhenium/450, neptunium/260, oganesson/160]

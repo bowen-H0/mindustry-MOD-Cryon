@@ -1,0 +1,6 @@
+planet: cryon-depths
+sector: 0
+difficulty: 1
+captureWave: 12
+addStartingItems: true
+alwaysUnlocked: false

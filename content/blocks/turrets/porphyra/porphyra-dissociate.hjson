@@ -1,0 +1,63 @@
+type: LiquidTurret
+size: 3
+health: 1260
+range: 120
+reload: 4
+rotateSpeed: 3
+shootCone: 15
+shootY: 9
+recoil: 1.5
+shootSound: shootLaser
+shootEffect: shootBigColor
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+targetAir: true
+targetGround: true
+ammoTypes: {
+  gamma-brine: {
+    type: LiquidBulletType
+    liquid: gamma-brine
+    speed: 6
+    lifetime: 23
+    damage: 4
+    knockback: 0.8
+    orbSize: 4
+    puddleSize: 8
+    hitColor: b2f3d7
+    shootEffect: shootBigColor
+  }
+  crystal-slurry: {
+    type: LiquidBulletType
+    liquid: crystal-slurry
+    speed: 5
+    lifetime: 27
+    damage: 16
+    orbSize: 4.5
+    puddleSize: 9
+    statusDuration: 180
+    hitColor: f09bd8
+    shootEffect: shootBigColor
+  }
+
+  porphyra-plasma: {
+    type: LiquidBulletType
+    liquid: porphyra-plasma
+    speed: 5.5
+    lifetime: 24
+    damage: 12
+    orbSize: 4.5
+    puddleSize: 8
+    splashDamage: 12
+    splashDamageRadius: 12
+    status: melting
+    statusDuration: 180
+    hitColor: c7a5ed
+    lightColor: a17bd6
+    shootEffect: shootBigColor
+    hitEffect: hitLiquid
+  }
+}
+category: turret
+requirements: [rhenium/160, technetium/125]

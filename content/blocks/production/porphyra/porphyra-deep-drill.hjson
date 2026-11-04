@@ -1,0 +1,11 @@
+type: Drill
+size: 3
+health: 570
+tier: 7
+drillTime: 220
+hasPower: true
+consumes: {
+  power: 1.4
+}
+category: production
+requirements: [rhenium/100, technetium/80, promethium/45]

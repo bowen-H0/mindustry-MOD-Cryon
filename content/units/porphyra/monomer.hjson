@@ -1,0 +1,45 @@
+type: tank
+flying: false
+health: 330
+armor: 2
+speed: 0.65
+rotateSpeed: 7
+hitSize: 11
+itemCapacity: 15
+omniMovement: false
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 42,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "BasicBulletType",
+      "hitColor": "78baff",
+      "lightColor": "78baff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "347bd2",
+      "frontColor": "d8efff",
+      "trailColor": "5ba5ef",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 17,
+      "damage": 34,
+      "speed": 10,
+      "lifetime": 19,
+      "pierce": true,
+      "pierceArmor": true,
+      "pierceCap": 2
+    },
+    "name": "porphyra-monomer-weapon-1",
+    "shootY": 2.5,
+    "recoil": 1.2
+  }
+]

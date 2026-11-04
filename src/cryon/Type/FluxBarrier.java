@@ -69,7 +69,7 @@ public class FluxBarrier extends Block{
     protected static FluxBarrier paramBlock;
     protected static ForceBuild paramEntity;
     protected static final Cons<Bullet> shieldConsumer = bullet -> {
-        if(bullet.team != paramEntity.team && bullet.type.absorbable && !bullet.absorbed &&
+        if(!cryon.Features.MapAlliances.allied(bullet.team, paramEntity.team) && bullet.type.absorbable && !bullet.absorbed &&
                 Intersector.isInRegularPolygon(paramBlock.sides, paramEntity.x, paramEntity.y, paramEntity.realRadius(), paramBlock.shieldRotation, bullet.x, bullet.y)){
 
             bullet.absorb();

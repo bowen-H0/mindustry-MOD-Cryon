@@ -1,0 +1,101 @@
+type: flying
+flying: true
+health: 2100
+armor: 3
+speed: 2.3
+rotateSpeed: 4
+hitSize: 27
+itemCapacity: 75
+engineOffset: 0
+engineSize: 0
+engines: [
+  {
+    "x": 0,
+    "y": -16.8,
+    "radius": 3.6,
+    "rotation": -90
+  },
+  {
+    "x": -10,
+    "y": -15.2,
+    "radius": 2.4,
+    "rotation": -90
+  },
+  {
+    "x": 10,
+    "y": -15.2,
+    "radius": 2.4,
+    "rotation": -90
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 150,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "ContinuousLaserBulletType",
+      "hitColor": "c5a0ee",
+      "lightColor": "b17cde",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "damage": 27,
+      "length": 245,
+      "width": 5,
+      "lifetime": 70,
+      "colors": [
+        "7953b055",
+        "bc8ee5",
+        "ffffff"
+      ]
+    },
+    "continuous": true,
+    "name": "porphyra-gravity-weapon-1",
+    "shootY": 5.0,
+    "recoil": 1.2
+  },
+  {
+    "x": 12,
+    "y": -3,
+    "mirror": true,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 105,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "MissileBulletType",
+      "hitColor": "c5a0ee",
+      "lightColor": "b17cde",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "7551b8",
+      "frontColor": "ead4ff",
+      "trailColor": "a97be0",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 12,
+      "damage": 38,
+      "speed": 4.6,
+      "lifetime": 70,
+      "homingPower": 0.07,
+      "homingRange": 120,
+      "splashDamage": 25,
+      "splashDamageRadius": 23
+    },
+    "shoot": {
+      "shots": 4,
+      "shotDelay": 7
+    },
+    "name": "porphyra-gravity-weapon-2",
+    "shootY": 3.5,
+    "recoil": 1.2
+  }
+]

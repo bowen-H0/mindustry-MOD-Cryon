@@ -1,0 +1,122 @@
+{
+  "abyss-pillow-basalt": [
+    "枕状玄武岩",
+    "Pillow basalt"
+  ],
+  "abyss-pressure-slate": [
+    "深压板岩",
+    "Pressure slate"
+  ],
+  "abyss-obsidian": [
+    "深海黑曜岩",
+    "Abyssal obsidian"
+  ],
+  "abyss-limestone": [
+    "海相石灰岩",
+    "Marine limestone"
+  ],
+  "abyss-black-silt": [
+    "深海黑泥",
+    "Abyssal black silt"
+  ],
+  "abyss-white-clay": [
+    "白色沉积黏土",
+    "White sedimentary clay"
+  ],
+  "abyss-frozen-silt": [
+    "冻凝沉积层",
+    "Frozen sediment"
+  ],
+  "abyss-silica-crust": [
+    "硅质硬壳",
+    "Siliceous crust"
+  ],
+  "abyss-ice-crystal-floor": [
+    "深海冰晶层",
+    "Abyssal ice crystals"
+  ],
+  "abyss-titanium-bed": [
+    "富钛海底矿床",
+    "Rich titanium seabed"
+  ],
+  "abyss-nickel-bed": [
+    "富镍海底矿床",
+    "Rich nickel seabed"
+  ],
+  "abyss-metal-nodules": [
+    "镍质结核层",
+    "Nickel nodule bed"
+  ],
+  "abyss-basalt-wall": [
+    "枕状玄武岩壁",
+    "Pillow basalt wall"
+  ],
+  "abyss-slate-wall": [
+    "深压板岩壁",
+    "Pressure slate wall"
+  ],
+  "abyss-limestone-wall": [
+    "海相石灰岩壁",
+    "Marine limestone wall"
+  ],
+  "abyss-ice-wall": [
+    "深海冰晶壁",
+    "Abyssal ice wall"
+  ],
+  "abyss-nodule-wall": [
+    "金属结核岩壁",
+    "Metal nodule wall"
+  ],
+  "abyss-glass-kelp": [
+    "玻璃海带",
+    "Glass kelp"
+  ],
+  "abyss-ribbon-kelp": [
+    "暗纹带藻",
+    "Dark ribbon kelp"
+  ],
+  "abyss-lantern-weed": [
+    "灯笼藻",
+    "Lantern weed"
+  ],
+  "abyss-frost-fan": [
+    "霜羽海扇",
+    "Frost sea fan"
+  ],
+  "abyss-glow-anemone": [
+    "辉光海葵",
+    "Glowing anemone"
+  ],
+  "abyss-lantern-coral": [
+    "灯笼珊瑚",
+    "Lantern coral"
+  ],
+  "abyss-tube-sponge": [
+    "深压管海绵",
+    "Pressure tube sponge"
+  ],
+  "abyss-ice-fern": [
+    "冰晶海蕨",
+    "Ice-crystal sea fern"
+  ],
+  "abyss-basalt-boulder": [
+    "深海玄武岩块",
+    "Abyssal basalt boulder"
+  ],
+  "abyss-nickel-nodule": [
+    "镍质结核",
+    "Nickel nodule"
+  ],
+  "abyss-titanium-crystal": [
+    "钛质晶簇",
+    "Titanium crystal cluster"
+  ],
+  "abyss-brine-crystal": [
+    "盐卤晶簇",
+    "Brine crystal cluster"
+  ],
+  "abyss-rift-spire": [
+    "深海裂隙石柱",
+    "Abyssal rift spire"
+  ]
+}

@@ -1,0 +1,13 @@
+type: Floor
+variants: 2
+isLiquid: true
+liquidDrop: gamma-brine
+liquidMultiplier: 1
+speedMultiplier: 0.7
+drownTime: 0
+status: wet
+statusDuration: 90
+supportsOverlay: false
+supportsBeingOverlaid: false
+cacheLayer: water
+mapColor: 42978b

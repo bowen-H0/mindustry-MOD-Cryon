@@ -1,0 +1,6 @@
+type: SolarGenerator
+size: 2
+health: 380
+powerProduction: 1.3
+category: power
+requirements: [rhenium/45]

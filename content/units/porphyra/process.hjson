@@ -1,0 +1,62 @@
+type: flying
+flying: true
+controller: builderAI
+isEnemy: false
+coreUnitDock: true
+health: 720
+armor: 5
+speed: 3.1
+rotateSpeed: 8
+hitSize: 14
+itemCapacity: 90
+buildSpeed: 2.2
+mineTier: 5
+mineSpeed: 5
+mineItems: [gamma-crystal, rhenium, technetium, promethium, neptunium, oganesson]
+fogRadius: 0
+engineOffset: 0
+engineSize: 0
+engines: [
+  {
+    "x": 0,
+    "y": -8,
+    "radius": 3,
+    "rotation": -90
+  }
+]
+weapons: [
+  {
+    name: porphyra-process-weapon-1
+    shootY: 2.5
+    x: 0
+    y: 4
+    mirror: false
+    reload: 42
+    shootSound: shootLaser
+    shoot: {
+      type: ShootSpread
+      shots: 5
+      spread: 8
+    }
+    bullet: {
+      type: BasicBulletType
+      damage: 12
+      speed: 6.9
+      lifetime: 29
+      width: 5
+      height: 11
+      collidesAir: true
+      collidesGround: true
+      backColor: 7851bb
+      frontColor: eacfff
+      hitColor: c6a2ee
+      shootEffect: shootBigColor
+      trailColor: a578dc
+      trailLength: 16
+      trailWidth: 1.8
+      splashDamage: 10
+      splashDamageRadius: 18
+      hitEffect: hitSquaresColor
+    }
+  }
+]

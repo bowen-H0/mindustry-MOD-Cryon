@@ -1,0 +1,6 @@
+type: Unloader
+size: 1
+health: 160
+speed: 4
+category: distribution
+requirements: [rhenium/14, technetium/7, gamma-crystal/4]

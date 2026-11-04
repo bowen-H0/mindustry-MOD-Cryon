@@ -22,7 +22,7 @@ public class ElectronicJammerAbility extends Ability {
     private static final Object JAMMED = new Object();
 
     private static final Cons<Bullet> bulletConsumer = b -> {
-        if (b.team == sEnemyTeam) return;
+        if (cryon.Features.MapAlliances.allied(b.team, sEnemyTeam)) return;
         if (b.data == JAMMED) return;
         if (b.time > 2f) return;
         if (sJamChance < 1f && !Mathf.chance(sJamChance)) return;

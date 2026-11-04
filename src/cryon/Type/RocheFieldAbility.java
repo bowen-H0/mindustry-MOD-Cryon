@@ -225,7 +225,7 @@ public class RocheFieldAbility extends Ability{
             starPos(unit, i);
             float sx = tmp.x, sy = tmp.y;
             Groups.bullet.intersect(sx - absorbRadius, sy - absorbRadius, absorbRadius * 2f, absorbRadius * 2f, b -> {
-                if(b.team != unit.team && b.type.absorbable && b.within(sx, sy, absorbRadius + b.type.hitSize / 2f)){
+                if(!cryon.Features.MapAlliances.allied(b.team, unit.team) && b.type.absorbable && b.within(sx, sy, absorbRadius + b.type.hitSize / 2f)){
                     absorbFx.at(b.x, b.y, 0f, color);
                     b.absorb();
                     flash = 1f;
@@ -248,7 +248,7 @@ public class RocheFieldAbility extends Ability{
             }
             if(hitBuildings && targetGround){
                 Units.nearbyBuildings(unit.x, unit.y, range, b -> {
-                    if((b.team != Team.derelict || state.rules.coreCapture) && b.team != unit.team && b.block.targetable && !b.block.privileged){
+                    if((b.team != Team.derelict || state.rules.coreCapture) && !cryon.Features.MapAlliances.allied(b.team, unit.team) && b.block.targetable && !b.block.privileged){
                         all.add(b);
                     }
                 });

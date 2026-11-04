@@ -6,6 +6,8 @@ health: 80
 tier: 1
 drillTime: 280
 category: production
+floating: true
+placeableLiquid: true
 consumes: {}
 requirements: [
   aluminum/40

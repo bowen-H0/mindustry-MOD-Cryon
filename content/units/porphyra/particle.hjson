@@ -1,0 +1,55 @@
+type: flying
+flying: true
+health: 120
+armor: 0
+speed: 3.5
+rotateSpeed: 7
+hitSize: 9
+itemCapacity: 15
+engineOffset: 0
+engineSize: 0
+engines: [
+  {
+    "x": 0,
+    "y": -8,
+    "radius": 2.67,
+    "rotation": -90
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 30,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "BasicBulletType",
+      "hitColor": "c5a0ee",
+      "lightColor": "b17cde",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "7551b8",
+      "frontColor": "ead4ff",
+      "trailColor": "a97be0",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 3,
+      "height": 8,
+      "damage": 9,
+      "speed": 10,
+      "lifetime": 18
+    },
+    "shoot": {
+      "shots": 3,
+      "shotDelay": 3
+    },
+    "name": "porphyra-particle-weapon-1",
+    "shootY": 2.5,
+    "recoil": 1.2
+  }
+]

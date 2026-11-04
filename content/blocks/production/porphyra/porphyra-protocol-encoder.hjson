@@ -1,0 +1,13 @@
+type: GenericCrafter
+size: 2
+health: 380
+craftTime: 90
+itemCapacity: 30
+hasPower: true
+outputItem: protocol-point/1
+consumes: {
+  power: 1.0
+  items: [rhenium/2, gamma-crystal/4]
+}
+category: crafting
+requirements: [rhenium/80, gamma-crystal/40, technetium/30]

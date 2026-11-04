@@ -16,13 +16,13 @@ public class SpaceJumpLanding{
         Seq<Vec2> intervals = new Seq<>();
         float clearance = unit.hitSize / 2f + 8f;
         for(Building building : Groups.build){
-            if(building.team == unit.team || building.dead || !(building instanceof FluxBarrier.ForceBuild)) continue;
+            if(cryon.Features.MapAlliances.allied(building.team, unit.team) || building.dead || !(building instanceof FluxBarrier.ForceBuild)) continue;
             FluxBarrier.ForceBuild shield = (FluxBarrier.ForceBuild)building;
             float radius = shield.broken ? 0f : shield.realRadius();
             if(radius > 0.001f) interval(unit, dx, dy, length2, shield.x, shield.y, radius + clearance, intervals);
         }
         for(Unit source : Groups.unit){
-            if(source.team == unit.team || source.dead || !source.isAdded()
+            if(cryon.Features.MapAlliances.allied(source.team, unit.team) || source.dead || !source.isAdded()
                 || FluxSuppressionAbility.suppressed(source.team, source.x, source.y)) continue;
             for(Ability ability : source.abilities){
                 float radius = 0f;

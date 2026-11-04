@@ -1,0 +1,6 @@
+type: Floor
+variants: 3
+inEditor: false
+mapColor: 3d5260
+itemDrop: abyssal-sediment
+playerUnmineable: false

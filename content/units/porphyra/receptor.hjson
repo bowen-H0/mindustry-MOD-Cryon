@@ -1,0 +1,102 @@
+template: cryon.Type.PorphyraHoverUnitType
+type: hover
+flying: false
+hovering: true
+canDrown: false
+shadowElevation: 0.1
+useEngineElevation: false
+accel: 0.09
+drag: 0.07
+health: 210
+armor: 2
+speed: 2.4
+rotateSpeed: 7
+hitSize: 9
+itemCapacity: 15
+engineOffset: 0
+engineSize: 0
+engineColor: 5ba5ef
+engineColorInner: d8efff
+engines: [
+  {
+    "x": 0,
+    "y": -8.25,
+    "radius": 2.3,
+    "rotation": -90
+  }
+]
+abilities: [
+  {
+    type: MoveEffectAbility
+    x: 0
+    y: -8.25
+    color: 5ba5ef
+    effect: missileTrailShort
+    interval: 4
+    teamColor: false
+  }
+]
+parts: [
+  {
+    "type": "HoverPart",
+    "x": 6.25,
+    "y": -0.5,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "HoverPart",
+    "x": 3.25,
+    "y": 3.5,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "cryon.Type.PorphyraLightPart",
+    "suffix": "-light",
+    "cycleDuration": 1200,
+    "opacity": 0.8
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 0,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 38,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "ShrapnelBulletType",
+      "hitColor": "ffffff",
+      "lightColor": "ffffff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "damage": 25,
+      "length": 100,
+      "width": 13,
+      "fromColor": "ffffff",
+      "toColor": "e4eaf1",
+      "serrations": 3
+    },
+    "name": "porphyra-receptor-weapon-1",
+    "shootY": 3.0,
+    "recoil": 1.2,
+    "top": true
+  }
+]

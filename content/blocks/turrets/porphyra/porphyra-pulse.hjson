@@ -1,0 +1,39 @@
+type: ItemTurret
+size: 3
+health: 1260
+range: 220
+reload: 30
+rotateSpeed: 3
+shootCone: 5
+shootY: 9
+recoil: 1.5
+shootSound: shootLaser
+shootEffect: shootBigColor
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+targetAir: true
+targetGround: true
+ammoTypes: {
+  technetium: {
+    type: LaserBulletType
+    damage: 50
+    length: 220
+    width: 8
+    lifetime: 14
+    buildingDamageMultiplier: 0.5
+    colors: [7955ba88, c7a5ed, ffffff]
+    hitColor: c7a5ed
+    shootEffect: shootBigColor
+    hitEffect: hitLancer
+  }
+}
+shoot: {
+  type: ShootAlternate
+  shots: 2
+  barrels: 2
+  spread: 6
+}
+category: turret
+requirements: [rhenium/130, technetium/90]

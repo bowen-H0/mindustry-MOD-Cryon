@@ -26,7 +26,9 @@ public class CryonItems{
     // ================== 物品声明 ==================
 
     public static Item aluminum, magnesium, quartz, salt, sodium, crystalSand,
-            dryIce, cryoAlloy, farstarAlloy, nickel, neutronite, nanoMaterial, ferrum,steel,hardSteel,redSand, manganese, armorAlloy,ashesAlloy;
+            dryIce, cryoAlloy, farstarAlloy, nickel, neutronite, nanoMaterial, ferrum,steel,hardSteel,redSand, manganese, armorAlloy,ashesAlloy,
+            rhenium, technetium, promethium, neptunium, oganesson, gammaCrystal, protocolPoint, laminatedRhenium, phaseCrystal, porphyraAlloy, rheniumPlate,
+            abyssalSediment;
 
     // ================== 白名单 ==================
 
@@ -103,18 +105,34 @@ public class CryonItems{
         manganese = item("manganese", "b8a9c9", 1);
         armorAlloy = item("armor-alloy", "5f6b7a", 0);
         ashesAlloy= item("ashes-alloy", "c4513a", 0);
+        // Porphyra: structural metal -> electronics -> radiation -> nuclear industry -> superheavy matter.
+        rhenium = item("rhenium", "cbb6da", 1);
+        technetium = item("technetium", "a785d0", 2);
+        promethium = item("promethium", "df87d8", 3, 0f, 0f, 0.15f, 0.35f);
+        neptunium = item("neptunium", "8772bd", 4, 0.1f, 0f, 0.15f, 0.55f);
+        oganesson = item("oganesson", "e9ddff", 5, 0.2f, 0f, 0.4f, 0.8f);
+        gammaCrystal = item("gamma-crystal", "80e8b1", 1);
+        protocolPoint = item("protocol-point", "79b8ef", 0);
+        laminatedRhenium = item("laminated-rhenium", "b4adc9", 0);
+        phaseCrystal = item("phase-crystal", "b9f0db", 0);
+        porphyraAlloy = item("porphyra-alloy", "e4b9ef", 0);
+        rheniumPlate = item("rhenium-plate", "cbb6da", 0);
+        // Append new items so existing content registration order remains stable.
+        abyssalSediment = item("abyssal-sediment", "879894", 0);
+        abyssalSediment.lowPriority = true;
         // ================== 白名单登记 ==================
         planet("aluminum", "cryon-cryon");
         planet("magnesium", "cryon-cryon");
-        planet("titanium", "cryon-cryon");
+        planet("titanium", "cryon-cryon", "cryon-porphyra");
         planet("scrap", "cryon-cryon");
-        planet("silicon", "cryon-cryon","cryon-aravis");
-        planet("graphite", "cryon-cryon");
+        planet("silicon", "cryon-cryon","cryon-aravis", "cryon-porphyra");
+        planet("graphite", "cryon-cryon", "cryon-porphyra");
         planet("quartz", "cryon-cryon");
         planet("salt", "cryon-cryon");
         planet("sodium", "cryon-cryon");
         planet("crystal-sand", "cryon-cryon");
         planet("dry-ice", "cryon-cryon");
+        planet("abyssal-sediment", "cryon-cryon", "cryon-cryon-depths");
         planet("cryo-alloy", "cryon-cryon");
         planet("farstar-alloy", "cryon-cryon");
         planet("nickel", "cryon-cryon","cryon-aravis");
@@ -129,6 +147,17 @@ public class CryonItems{
         planet("av-red-sand", "cryon-aravis");
         planet("manganese", "cryon-aravis");
         planet("armor-alloy", "cryon-aravis");
+        planet("gamma-crystal", "cryon-porphyra");
+        planet("protocol-point", "cryon-porphyra");
+        planet("laminated-rhenium", "cryon-porphyra");
+        planet("rhenium-plate", "cryon-porphyra");
+        planet("phase-crystal", "cryon-porphyra");
+        planet("porphyra-alloy", "cryon-porphyra");
+        planet("rhenium", "cryon-porphyra");
+        planet("technetium", "cryon-porphyra");
+        planet("promethium", "cryon-porphyra");
+        planet("neptunium", "cryon-porphyra");
+        planet("oganesson", "cryon-porphyra");
 
 
     }

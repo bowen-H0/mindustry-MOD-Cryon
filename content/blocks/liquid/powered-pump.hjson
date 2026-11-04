@@ -1,0 +1,11 @@
+size: 2
+health: 180
+hasPower: true
+floating: true
+placeableLiquid: true
+liquidCapacity: 120
+pumpAmount: 0.25
+consumeTime: 60
+consumes: {power: 1.5}
+requirements: [aluminum/90, silicon/60, titanium/30, graphite/20]
+category: liquid

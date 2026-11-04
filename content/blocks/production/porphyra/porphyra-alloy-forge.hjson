@@ -1,0 +1,16 @@
+type: GenericCrafter
+size: 3
+health: 855
+craftTime: 180
+itemCapacity: 30
+hasLiquids: true
+liquidCapacity: 45
+hasPower: true
+outputItem: porphyra-alloy/1
+consumes: {
+  power: 4.5
+  items: [laminated-rhenium/2, phase-crystal/2, titanium/2, neptunium/1]
+  liquid: porphyra-plasma/0.12
+}
+category: crafting
+requirements: [laminated-rhenium/100, phase-crystal/60, titanium/60, neptunium/50]

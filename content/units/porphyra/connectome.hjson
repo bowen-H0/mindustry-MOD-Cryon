@@ -1,0 +1,160 @@
+template: cryon.Type.PorphyraHoverUnitType
+type: hover
+flying: false
+hovering: true
+canDrown: false
+shadowElevation: 0.1
+useEngineElevation: false
+accel: 0.09
+drag: 0.07
+health: 10500
+armor: 14
+speed: 1.2
+rotateSpeed: 3
+hitSize: 36
+itemCapacity: 95
+engineOffset: 0
+engineSize: 0
+engineColor: 5ba5ef
+engineColorInner: d8efff
+engines: [
+  {
+    "x": 0,
+    "y": -20.16,
+    "radius": 6.72,
+    "rotation": -90
+  },
+  {
+    "x": -9.6,
+    "y": -22.08,
+    "radius": 3.84,
+    "rotation": -90
+  },
+  {
+    "x": 9.6,
+    "y": -22.08,
+    "radius": 3.84,
+    "rotation": -90
+  },
+  {
+    "x": -15.36,
+    "y": -19.2,
+    "radius": 2.88,
+    "rotation": -90
+  },
+  {
+    "x": 15.36,
+    "y": -19.2,
+    "radius": 2.88,
+    "rotation": -90
+  }
+]
+abilities: [
+  {
+    type: MoveEffectAbility
+    x: 0
+    y: -20.16
+    color: 5ba5ef
+    effect: missileTrailShort
+    interval: 4
+    teamColor: false
+  }
+]
+parts: [
+  {
+    "type": "HoverPart",
+    "x": 20.5,
+    "y": -10,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "HoverPart",
+    "x": 8.5,
+    "y": 8.75,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "cryon.Type.PorphyraLightPart",
+    "suffix": "-light",
+    "cycleDuration": 1200,
+    "opacity": 0.8
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 145,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "LaserBulletType",
+      "hitColor": "ffffff",
+      "lightColor": "ffffff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "damage": 160,
+      "length": 285,
+      "width": 16,
+      "colors": [
+        "ffffff55",
+        "e4eaf1",
+        "ffffff"
+      ],
+      "lifetime": 18
+    },
+    "shoot": {
+      "type": "ShootSpread",
+      "shots": 3,
+      "spread": 14,
+      "firstShotDelay": 28
+    },
+    "name": "porphyra-connectome-weapon-1",
+    "shootY": 7.0,
+    "recoil": 1.2,
+    "top": true
+  },
+  {
+    "x": 0,
+    "y": -4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 34,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "LightningBulletType",
+      "hitColor": "ffffff",
+      "lightColor": "ffffff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "damage": 40,
+      "lightningLength": 16,
+      "lightningLengthRand": 4,
+      "lightningColor": "ffffff"
+    },
+    "name": "porphyra-connectome-weapon-2",
+    "shootY": 4.5,
+    "recoil": 1.2,
+    "top": true
+  }
+]

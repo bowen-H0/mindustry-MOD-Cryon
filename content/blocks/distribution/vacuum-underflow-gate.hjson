@@ -10,3 +10,5 @@ requirements: [
   aluminum/6
   magnesium/2
 ]
+floating: true
+placeableLiquid: true

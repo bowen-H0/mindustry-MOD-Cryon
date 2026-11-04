@@ -1,0 +1,38 @@
+type: LaserTurret
+size: 3
+health: 1260
+range: 195
+reload: 55
+rotateSpeed: 3
+shootCone: 15
+shootY: 9
+recoil: 1.5
+shootSound: shootLaser
+shootEffect: shootBigColor
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+hasPower: true
+consumes: {
+  power: 4
+}
+shootDuration: 55
+shoot: {
+  firstShotDelay: 0
+}
+shootType: {
+type: ContinuousLaserBulletType
+damage: 30
+length: 195
+width: 4
+colors: [8054b3, c7a0ef, ffffff]
+hitColor: c7a5ed
+trailColor: a17bd6
+lightColor: a17bd6
+shootEffect: shootBigColor
+hitEffect: hitSquaresColor
+despawnEffect: hitSquaresColor
+}
+category: turret
+requirements: [rhenium/180, technetium/130, promethium/120]

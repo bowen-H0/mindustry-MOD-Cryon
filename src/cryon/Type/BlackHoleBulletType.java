@@ -81,7 +81,7 @@ public class BlackHoleBulletType extends BulletType{
         }
         if(collidesGround){
             Units.nearbyBuildings(b.x, b.y, radius, bd -> {
-                if(bd.team != b.team && bd.team != Team.derelict && bd.block.targetable){
+                if(!cryon.Features.MapAlliances.allied(bd.team, b.team) && bd.team != Team.derelict && bd.block.targetable){
                     bd.damage(b.team, flat * mult);
                 }
             });
@@ -103,7 +103,7 @@ public class BlackHoleBulletType extends BulletType{
 
         // 吞掉敌方子弹
         Groups.bullet.intersect(b.x - r, b.y - r, r * 2f, r * 2f, o -> {
-            if(o != b && o.team != b.team && o.type.absorbable && o.within(b, r)){
+            if(o != b && !cryon.Features.MapAlliances.allied(o.team, b.team) && o.type.absorbable && o.within(b, r)){
                 o.absorb();
             }
         });

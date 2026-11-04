@@ -1,0 +1,87 @@
+type: flying
+flying: true
+controller: builderAI
+isEnemy: false
+coreUnitDock: true
+health: 1500
+armor: 9
+speed: 2.8
+rotateSpeed: 8
+hitSize: 18
+itemCapacity: 160
+buildSpeed: 3.2
+mineTier: 5
+mineSpeed: 7
+mineItems: [gamma-crystal, rhenium, technetium, promethium, neptunium, oganesson]
+fogRadius: 0
+engineOffset: 0
+engineSize: 0
+engines: [
+  {
+    "x": 0,
+    "y": -12,
+    "radius": 4.5,
+    "rotation": -90
+  },
+  {
+    "x": -8,
+    "y": -9,
+    "radius": 3,
+    "rotation": -90
+  },
+  {
+    "x": 8,
+    "y": -9,
+    "radius": 3,
+    "rotation": -90
+  }
+]
+weapons: [
+  {
+    name: porphyra-kernel-weapon-1
+    shootY: 3.5
+    x: 0
+    y: 5
+    mirror: false
+    reload: 56
+    shootSound: shootLaser
+    shoot: {
+      type: ShootSpread
+      shots: 7
+      spread: 6
+    }
+    bullet: {
+      type: BasicBulletType
+      damage: 17
+      speed: 7.2
+      lifetime: 33
+      width: 7
+      height: 13
+      collidesAir: true
+      collidesGround: true
+      backColor: 8b61c6
+      frontColor: f8e7ff
+      hitColor: d9b8f6
+      shootEffect: shootBigColor
+      trailColor: b88ce8
+      trailLength: 20
+      trailWidth: 2.3
+      splashDamage: 15
+      splashDamageRadius: 23
+      fragBullets: 2
+      fragBullet: {
+        type: BasicBulletType
+        speed: 4.8
+        lifetime: 15
+        damage: 5
+        width: 3
+        height: 5
+        backColor: 9168ce
+        frontColor: f2ddff
+        trailColor: b794e8
+        trailLength: 7
+      }
+      hitEffect: hitSquaresColor
+    }
+  }
+]

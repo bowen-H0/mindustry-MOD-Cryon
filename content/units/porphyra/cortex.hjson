@@ -1,0 +1,120 @@
+template: cryon.Type.PorphyraHoverUnitType
+type: hover
+flying: false
+hovering: true
+canDrown: false
+shadowElevation: 0.1
+useEngineElevation: false
+accel: 0.09
+drag: 0.07
+health: 3700
+armor: 11
+speed: 1.5
+rotateSpeed: 4
+hitSize: 26
+itemCapacity: 75
+engineOffset: 0
+engineSize: 0
+engineColor: 5ba5ef
+engineColorInner: d8efff
+engines: [
+  {
+    "x": 0,
+    "y": -16,
+    "radius": 6.55,
+    "rotation": -90
+  },
+  {
+    "x": -8.73,
+    "y": -13.09,
+    "radius": 3.64,
+    "rotation": -90
+  },
+  {
+    "x": 8.73,
+    "y": -13.09,
+    "radius": 3.64,
+    "rotation": -90
+  }
+]
+abilities: [
+  {
+    type: MoveEffectAbility
+    x: 0
+    y: -16
+    color: 5ba5ef
+    effect: missileTrailShort
+    interval: 4
+    teamColor: false
+  }
+]
+parts: [
+  {
+    "type": "HoverPart",
+    "x": 15.5,
+    "y": -2,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "HoverPart",
+    "x": 9,
+    "y": -11.5,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "cryon.Type.PorphyraLightPart",
+    "suffix": "-light",
+    "cycleDuration": 1200,
+    "opacity": 0.8
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 125,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "ContinuousLaserBulletType",
+      "hitColor": "ffffff",
+      "lightColor": "ffffff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "damage": 23,
+      "length": 220,
+      "width": 4,
+      "lifetime": 65,
+      "colors": [
+        "ffffff55",
+        "e4eaf1",
+        "ffffff"
+      ]
+    },
+    "continuous": true,
+    "shootStatus": "slow",
+    "shootStatusDuration": 65,
+    "name": "porphyra-cortex-weapon-1",
+    "shootY": 5.0,
+    "recoil": 1.2,
+    "top": true
+  }
+]

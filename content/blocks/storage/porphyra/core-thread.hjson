@@ -1,0 +1,9 @@
+type: CoreBlock
+size: 3
+health: 1800
+itemCapacity: 3500
+unitType: thread
+unitCapModifier: 25
+category: effect
+isFirstTier: true
+requirements: [rhenium/600]

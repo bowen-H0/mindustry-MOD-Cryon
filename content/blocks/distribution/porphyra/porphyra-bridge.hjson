@@ -1,0 +1,7 @@
+type: DuctBridge
+size: 1
+health: 190
+speed: 4
+range: 4
+category: distribution
+requirements: [rhenium/12]

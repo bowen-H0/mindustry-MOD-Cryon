@@ -1,0 +1,62 @@
+type: flying
+flying: true
+health: 780
+armor: 2
+speed: 2.7
+rotateSpeed: 5
+hitSize: 19
+itemCapacity: 55
+engineOffset: 0
+engineSize: 0
+engines: [
+  {
+    "x": 0,
+    "y": -10.08,
+    "radius": 4.7,
+    "rotation": -90
+  }
+]
+targetAir: false
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 100,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "ArtilleryBulletType",
+      "hitColor": "c5a0ee",
+      "lightColor": "b17cde",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "7551b8",
+      "frontColor": "ead4ff",
+      "trailColor": "a97be0",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 12,
+      "damage": 30,
+      "speed": 2,
+      "lifetime": 60,
+      "splashDamage": 135,
+      "splashDamageRadius": 44,
+      "collidesAir": false,
+      "collidesTiles": false,
+      "despawnHit": true
+    },
+    "shoot": {
+      "shots": 5,
+      "shotDelay": 8
+    },
+    "inaccuracy": 6,
+    "name": "porphyra-inertia-weapon-1",
+    "shootY": 3.5,
+    "recoil": 1.2
+  }
+]

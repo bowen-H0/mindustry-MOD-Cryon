@@ -92,7 +92,7 @@ public class DecoyUnitType extends UnitType{
             incoming = null;
             best = Float.MAX_VALUE;
             Groups.bullet.intersect(unit.x - 140, unit.y - 140, 280, 280, bullet -> {
-                if(bullet.team == unit.team || !bullet.type.collides || !unit.within(bullet, 140)
+                if(cryon.Features.MapAlliances.allied(bullet.team, unit.team) || !bullet.type.collides || !unit.within(bullet, 140)
                         || (unit.isFlying() ? !bullet.type.collidesAir : !bullet.type.collidesGround)) return;
                 float score = unit.dst2(bullet);
                 if(score < best){ best = score; incoming = bullet; }

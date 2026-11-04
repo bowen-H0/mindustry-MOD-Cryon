@@ -1005,23 +1005,15 @@ public class RBMKReactor {
             public void updateTile() {
                 Building target = target();
 
-                if (target == null && link != -1) {
-                    Tile t = world.tile(link);
-                    boolean building = t != null && t.build instanceof ConstructBlock.ConstructBuild;
-                    if (!building) link = -1;
-                    return;
-                }
+                // Blueprint targets may still be empty, not even construction sites yet.
+                // Keep the configured position through construction/destruction so delivery
+                // resumes when the fuel rod is built. Only explicit configuration clears it.
+                if (target == null) return;
 
                 transportCounter += edelta();
                 while (transportCounter >= transportTime) {
                     Item item = items.take();
                     if (item == null) break;
-
-                    if (target == null) {
-                        items.add(item, 1);
-                        items.undoFlow(item);
-                        break;
-                    }
 
                     if (target.acceptItem(this, item)) {
                         target.handleItem(this, item);
@@ -1040,7 +1032,8 @@ public class RBMKReactor {
                 table.table(Styles.black6, t -> {
                     t.defaults().pad(4f);
                     t.label(() -> link == -1 ? "未链接（点击方块再点燃料棒）"
-                            : "已链接 → " + Point2.x(link) + "," + Point2.y(link)).row();
+                            : (target() == null ? "等待燃料棒 → " : "已链接 → ")
+                            + Point2.x(link) + "," + Point2.y(link)).row();
                     t.button("清除链接", () -> configure(-1)).size(120f, 30f).disabled(b -> link == -1);
                 });
             }

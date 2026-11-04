@@ -42,7 +42,7 @@ public class AgitatorBlock extends Block {
         private float searchTimer;
         private Unit searchResult;
         private final arc.func.Cons<Unit> targetFinder = u -> {
-            if(u.team != team && u.isValid() && u.within(x, y, range)
+            if(!cryon.Features.MapAlliances.allied(u.team, team) && u.isValid() && u.within(x, y, range)
                     && u.health <= u.maxHealth * healthThreshold
                     && (searchResult == null || u.id < searchResult.id)){
                 searchResult = u;

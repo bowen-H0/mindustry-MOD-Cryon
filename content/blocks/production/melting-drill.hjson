@@ -6,6 +6,8 @@ health: 80
 tier: 1
 drillTime: 220
 category: production
+floating: true
+placeableLiquid: true
 hasPower: true
 consumes: {
   power: 0.6

@@ -49,6 +49,11 @@
             silicon/20
             graphite/5
           ]
-        }
+        },
+    {
+      unit: minimus
+      time: 1200
+      requirements: [aluminum/35, magnesium/25, graphite/12, silicon/15]
+    }
   ]
 }

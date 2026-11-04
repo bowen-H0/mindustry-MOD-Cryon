@@ -1,0 +1,39 @@
+type: ItemTurret
+size: 4
+health: 1680
+range: 370
+reload: 115
+rotateSpeed: 2
+shootCone: 15
+shootY: 12
+recoil: 2.0
+shootSound: shootLaser
+shootEffect: shootBigColor
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+targetAir: false
+targetGround: true
+ammoTypes: {
+  neptunium: {
+type: ArtilleryBulletType
+speed: 5
+lifetime: 78
+damage: 90
+width: 13
+height: 20
+splashDamage: 110
+splashDamageRadius: 36
+backColor: 7955ba
+frontColor: ebd6ff
+hitColor: c7a5ed
+trailColor: a17bd6
+lightColor: a17bd6
+shootEffect: shootBigColor
+hitEffect: hitSquaresColor
+despawnEffect: hitSquaresColor
+  }
+}
+category: turret
+requirements: [rhenium/240, promethium/145, neptunium/95]

@@ -45,7 +45,7 @@ public class FluxBarrierAbility extends Ability {
     private static FluxBarrierAbility paramField;
 
     private static final Cons<Bullet> shieldConsumer = b -> {
-        if (b.team == paramUnit.team || !b.type.absorbable || b.absorbed) return;
+        if (cryon.Features.MapAlliances.allied(b.team, paramUnit.team) || !b.type.absorbable || b.absorbed) return;
         if (!Intersector.isInRegularPolygon(paramField.sides, paramUnit.x, paramUnit.y,
                 realRad, paramField.rotation, b.x(), b.y())) return;
         // todo It should be different from ForceProjector.

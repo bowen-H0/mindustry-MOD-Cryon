@@ -1,0 +1,5 @@
+type: Wall
+size: 1
+health: 600
+category: defense
+requirements: [rhenium/6]

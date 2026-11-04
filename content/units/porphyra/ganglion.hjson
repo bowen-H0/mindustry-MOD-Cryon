@@ -1,0 +1,131 @@
+template: cryon.Type.PorphyraHoverUnitType
+type: hover
+flying: false
+hovering: true
+canDrown: false
+shadowElevation: 0.1
+useEngineElevation: false
+accel: 0.09
+drag: 0.07
+health: 1300
+armor: 8
+speed: 1.8
+rotateSpeed: 5
+hitSize: 18
+itemCapacity: 55
+engineOffset: 0
+engineSize: 0
+engineColor: 5ba5ef
+engineColorInner: d8efff
+engines: [
+  {
+    "x": 0,
+    "y": -15.36,
+    "radius": 5.76,
+    "rotation": -90
+  },
+  {
+    "x": -10.24,
+    "y": -11.52,
+    "radius": 3.84,
+    "rotation": -90
+  },
+  {
+    "x": 10.24,
+    "y": -11.52,
+    "radius": 3.84,
+    "rotation": -90
+  }
+]
+abilities: [
+  {
+    type: MoveEffectAbility
+    x: 0
+    y: -15.36
+    color: 5ba5ef
+    effect: missileTrailShort
+    interval: 4
+    teamColor: false
+  }
+]
+parts: [
+  {
+    "type": "HoverPart",
+    "x": 11,
+    "y": -10.75,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "HoverPart",
+    "x": 10.5,
+    "y": 4.5,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "cryon.Type.PorphyraLightPart",
+    "suffix": "-light",
+    "cycleDuration": 1200,
+    "opacity": 0.8
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 78,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "MissileBulletType",
+      "hitColor": "ffffff",
+      "lightColor": "ffffff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "dce3ec",
+      "frontColor": "ffffff",
+      "trailColor": "ffffff",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 12,
+      "damage": 45,
+      "speed": 3.8,
+      "lifetime": 65,
+      "homingPower": 0.09,
+      "homingRange": 110,
+      "weaveMag": 2,
+      "weaveScale": 7,
+      "splashDamage": 28,
+      "splashDamageRadius": 24,
+      "status": "sapped",
+      "statusDuration": 100
+    },
+    "shoot": {
+      "type": "ShootSpread",
+      "shots": 3,
+      "spread": 16
+    },
+    "name": "porphyra-ganglion-weapon-1",
+    "shootY": 3.5,
+    "recoil": 1.2,
+    "top": true
+  }
+]

@@ -1,0 +1,13 @@
+type: GenericCrafter
+size: 2
+health: 380
+craftTime: 90
+itemCapacity: 30
+hasPower: true
+outputItem: laminated-rhenium/2
+consumes: {
+  power: 1.2
+  items: [rhenium/3, graphite/1]
+}
+category: crafting
+requirements: [rhenium/100, gamma-crystal/40, technetium/35]

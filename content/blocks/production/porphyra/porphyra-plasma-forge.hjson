@@ -1,0 +1,13 @@
+type: GenericCrafter
+size: 3
+health: 570
+craftTime: 120
+outputLiquid: porphyra-plasma/0.35
+liquidCapacity: 90
+hasPower: true
+consumes: {
+  power: 2.5
+  items: [technetium/2]
+}
+category: production
+requirements: [rhenium/120, technetium/100]

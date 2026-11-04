@@ -1,0 +1,11 @@
+type: MassDriver
+size: 3
+health: 750
+itemCapacity: 150
+reload: 150
+range: 520
+consumes: {
+  power: 2
+}
+category: distribution
+requirements: [rhenium/170, technetium/110, neptunium/60]

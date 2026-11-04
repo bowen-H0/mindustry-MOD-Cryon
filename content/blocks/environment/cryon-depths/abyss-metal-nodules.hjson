@@ -1,0 +1,6 @@
+{
+  "type": "Floor",
+  "variants": 3,
+  "cacheLayer": "normal",
+  "itemDrop": "nickel"
+}

@@ -1,0 +1,82 @@
+type: tank
+flying: false
+health: 18500
+armor: 14
+speed: 0.25
+rotateSpeed: 3
+hitSize: 44
+itemCapacity: 95
+omniMovement: false
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 170,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "ShrapnelBulletType",
+      "hitColor": "78baff",
+      "lightColor": "78baff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "damage": 580,
+      "length": 290,
+      "width": 32,
+      "fromColor": "c7eaff",
+      "toColor": "347bd2",
+      "serrations": 8,
+      "pierceArmor": true
+    },
+    "shoot": {
+      "firstShotDelay": 50
+    },
+    "shootStatus": "unmoving",
+    "shootStatusDuration": 60,
+    "name": "porphyra-macromolecule-weapon-1",
+    "shootY": 8.0,
+    "recoil": 1.2
+  },
+  {
+    "x": 13,
+    "y": -4,
+    "mirror": true,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 130,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "ArtilleryBulletType",
+      "hitColor": "78baff",
+      "lightColor": "78baff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "347bd2",
+      "frontColor": "d8efff",
+      "trailColor": "5ba5ef",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 12,
+      "damage": 65,
+      "speed": 4.5,
+      "lifetime": 75,
+      "splashDamage": 125,
+      "splashDamageRadius": 45,
+      "collidesAir": false
+    },
+    "shoot": {
+      "shots": 3,
+      "shotDelay": 12
+    },
+    "inaccuracy": 4,
+    "name": "porphyra-macromolecule-weapon-2",
+    "shootY": 6.0,
+    "recoil": 1.2
+  }
+]

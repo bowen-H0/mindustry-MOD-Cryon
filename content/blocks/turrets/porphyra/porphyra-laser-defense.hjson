@@ -1,0 +1,13 @@
+type: PointDefenseTurret
+size: 2
+health: 620
+range: 168
+reload: 12
+rotateSpeed: 20
+shootCone: 12
+bulletDamage: 35
+color: 80e8b1
+hasPower: true
+consumes: { power: 2.5 }
+category: turret
+requirements: [rhenium/90, gamma-crystal/65, technetium/45]

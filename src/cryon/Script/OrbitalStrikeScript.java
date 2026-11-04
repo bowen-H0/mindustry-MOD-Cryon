@@ -65,7 +65,7 @@ public class OrbitalStrikeScript extends MapScript {
 
     /** 其他阵营：不是处理器自己的队伍，也不是 derelict */
     private boolean isEnemy(Team t) {
-        return t != build.team && t != Team.derelict;
+        return !cryon.Features.MapAlliances.allied(t, build.team) && t != Team.derelict;
     }
 
     /** 可作为目标/伤害对象：敌方 + 有效 + targetable + 在射程内 */

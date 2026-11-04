@@ -1,0 +1,5 @@
+type: Wall
+size: 2
+health: 4000
+category: defense
+requirements: [rhenium/24, gamma-crystal/16]

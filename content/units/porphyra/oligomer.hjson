@@ -1,0 +1,50 @@
+type: tank
+flying: false
+health: 2400
+armor: 8
+speed: 0.45
+rotateSpeed: 5
+hitSize: 23
+itemCapacity: 55
+omniMovement: false
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 115,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "ArtilleryBulletType",
+      "hitColor": "78baff",
+      "lightColor": "78baff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "347bd2",
+      "frontColor": "d8efff",
+      "trailColor": "5ba5ef",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 12,
+      "damage": 35,
+      "speed": 4,
+      "lifetime": 70,
+      "splashDamage": 75,
+      "splashDamageRadius": 32,
+      "collidesAir": false
+    },
+    "shoot": {
+      "shots": 4,
+      "shotDelay": 9
+    },
+    "inaccuracy": 5,
+    "name": "porphyra-oligomer-weapon-1",
+    "shootY": 4.5,
+    "recoil": 1.2
+  }
+]

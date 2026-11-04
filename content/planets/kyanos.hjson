@@ -1,0 +1,32 @@
+generator: PlanetGenerator
+solarSystem: "kyanos"
+parent: "sun"
+orbitRadius: 12000
+radius: 20
+drawOrbit: false
+tidalLock: true
+accessible: false
+alwaysUnlocked: false
+visible: false
+bloom: true
+hasAtmosphere: false
+orbitSpacing: 8
+lightColor: d9afff
+mesh: {
+  type: SunMesh
+  divisions: 5
+  octaves: 5
+  persistence: 0.5
+  scl: 1.2
+  pow: 0.78
+  mag: 0.95
+  colorScale: 1
+  colors: [
+    62319aff
+    8746bfff
+    af65dbff
+    d392edff
+    edc4faff
+    f8e8ffff
+  ]
+}

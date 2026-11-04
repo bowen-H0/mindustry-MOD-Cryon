@@ -1,0 +1,6 @@
+type: LiquidRouter
+size: 3
+health: 570
+liquidCapacity: 1300
+category: liquid
+requirements: [rhenium/90, technetium/30]

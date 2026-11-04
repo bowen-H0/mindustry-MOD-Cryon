@@ -1,0 +1,9 @@
+type: CoreBlock
+size: 5
+health: 8000
+itemCapacity: 13000
+unitType: kernel
+unitCapModifier: 95
+category: effect
+isFirstTier: false
+requirements: [rhenium/2400, technetium/1600, promethium/800, neptunium/400, oganesson/150]

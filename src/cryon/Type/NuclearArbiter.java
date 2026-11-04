@@ -81,7 +81,7 @@ public class NuclearArbiter extends Block{
         if(Vars.net.client() || nuke.phase != NukeStrikeScript.FALL || nuke.intercepting) return;
         NuclearArbiterBuild[] best = {null};
         Groups.build.each(b -> {
-            if(!(b instanceof NuclearArbiterBuild) || b.team == nuke.build.team) return;
+            if(!(b instanceof NuclearArbiterBuild) || cryon.Features.MapAlliances.allied(b.team, nuke.build.team)) return;
             NuclearArbiterBuild silo = (NuclearArbiterBuild)b;
             NuclearArbiter type = (NuclearArbiter)silo.block;
             if(!silo.isValid() || !silo.enabled || silo.efficiency < 0.99f

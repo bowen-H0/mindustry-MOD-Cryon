@@ -1,0 +1,6 @@
+type: LiquidRouter
+size: 1
+health: 190
+liquidCapacity: 30
+category: liquid
+requirements: [rhenium/8]

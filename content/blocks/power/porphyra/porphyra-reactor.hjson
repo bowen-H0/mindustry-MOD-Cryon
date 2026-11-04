@@ -1,0 +1,10 @@
+type: ConsumeGenerator
+size: 3
+health: 570
+powerProduction: 9
+itemDuration: 90
+consumes: {
+  items: [promethium/1]
+}
+category: power
+requirements: [rhenium/160, technetium/90, promethium/60, laminated-rhenium/45, silicon/35]

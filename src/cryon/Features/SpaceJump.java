@@ -52,9 +52,16 @@ public class SpaceJump{
 
     public static boolean excluded(UnitType type){
         String name = type.name.startsWith("cryon-") ? type.name.substring(6) : type.name;
+        if(type.name.startsWith("cryon-") && porphyraUnits.contains(name)) return true;
         return name.equals("vain") || name.equals("roche") || name.equals("threshold")
             || name.equals("hyperion") || name.equals("oblivion");
     }
+
+    private static final arc.struct.ObjectSet<String> porphyraUnits = arc.struct.ObjectSet.with(
+        "thread", "process", "kernel",
+        "receptor", "synapse", "ganglion", "cortex", "connectome",
+        "monomer", "dimer", "oligomer", "polymer", "macromolecule",
+        "particle", "momentum", "inertia", "gravity", "singularity");
 
     public static boolean allowed(Unit unit){
         return unit != null && !excluded(unit.type) && !unit.hasEffect(StatusEffects.boss);

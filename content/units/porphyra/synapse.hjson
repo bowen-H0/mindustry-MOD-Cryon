@@ -1,0 +1,131 @@
+template: cryon.Type.PorphyraHoverUnitType
+type: hover
+flying: false
+hovering: true
+canDrown: false
+shadowElevation: 0.1
+useEngineElevation: false
+accel: 0.09
+drag: 0.07
+health: 530
+armor: 5
+speed: 2.1
+rotateSpeed: 6
+hitSize: 13
+itemCapacity: 35
+engineOffset: 0
+engineSize: 0
+engineColor: 5ba5ef
+engineColorInner: d8efff
+engines: [
+  {
+    "x": -3.5,
+    "y": -10,
+    "radius": 2.4,
+    "rotation": -90
+  },
+  {
+    "x": 3.5,
+    "y": -10,
+    "radius": 2.4,
+    "rotation": -90
+  }
+]
+abilities: [
+  {
+    "type": "MoveEffectAbility",
+    "x": -3.5,
+    "y": -10,
+    "color": "5ba5ef",
+    "effect": "missileTrailShort",
+    "interval": 4,
+    "teamColor": false
+  },
+  {
+    "type": "MoveEffectAbility",
+    "x": 3.5,
+    "y": -10,
+    "color": "5ba5ef",
+    "effect": "missileTrailShort",
+    "interval": 4,
+    "teamColor": false
+  }
+]
+parts: [
+  {
+    "type": "HoverPart",
+    "x": 7.0,
+    "y": -2,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "HoverPart",
+    "x": 7.0,
+    "y": 4,
+    "mirror": true,
+    "radius": 6,
+    "phase": 90,
+    "stroke": 2,
+    "layerOffset": -0.001,
+    "color": "ffffff",
+    "circles": 2,
+    "minStroke": 0.12
+  },
+  {
+    "type": "cryon.Type.PorphyraLightPart",
+    "suffix": "-light",
+    "cycleDuration": 1200,
+    "opacity": 0.8
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 2,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 56,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "BasicBulletType",
+      "hitColor": "ffffff",
+      "lightColor": "ffffff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "dce3ec",
+      "frontColor": "ffffff",
+      "trailColor": "ffffff",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 12,
+      "speed": 7,
+      "lifetime": 25,
+      "damage": 19,
+      "lightning": 2,
+      "lightningDamage": 9,
+      "lightningLength": 5,
+      "lightningColor": "ffffff",
+      "status": "shocked",
+      "statusDuration": 60
+    },
+    "shoot": {
+      "shots": 3,
+      "shotDelay": 5
+    },
+    "name": "porphyra-synapse-weapon-1",
+    "shootY": 3.5,
+    "recoil": 1.2,
+    "top": true
+  }
+]

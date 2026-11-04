@@ -1,0 +1,59 @@
+type: flying
+flying: true
+health: 300
+armor: 1
+speed: 3.1
+rotateSpeed: 6
+hitSize: 13
+itemCapacity: 35
+engineOffset: 0
+engineSize: 0
+engines: [
+  {
+    "x": 0,
+    "y": -9.78,
+    "radius": 3.67,
+    "rotation": -90
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 64,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "MissileBulletType",
+      "hitColor": "c5a0ee",
+      "lightColor": "b17cde",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "7551b8",
+      "frontColor": "ead4ff",
+      "trailColor": "a97be0",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 12,
+      "damage": 28,
+      "speed": 5,
+      "lifetime": 46,
+      "homingPower": 0.09,
+      "homingRange": 110,
+      "splashDamage": 15,
+      "splashDamageRadius": 17
+    },
+    "shoot": {
+      "shots": 4,
+      "shotDelay": 5
+    },
+    "name": "porphyra-momentum-weapon-1",
+    "shootY": 2.5,
+    "recoil": 1.2
+  }
+]

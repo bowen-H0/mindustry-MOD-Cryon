@@ -1,0 +1,79 @@
+type: tank
+flying: false
+health: 6800
+armor: 11
+speed: 0.35
+rotateSpeed: 4
+hitSize: 31
+itemCapacity: 75
+omniMovement: false
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 4,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 155,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "LaserBulletType",
+      "hitColor": "78baff",
+      "lightColor": "78baff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "damage": 310,
+      "length": 310,
+      "width": 20,
+      "colors": [
+        "347bd255",
+        "5ba5ef",
+        "d8efff"
+      ],
+      "lifetime": 18
+    },
+    "shoot": {
+      "firstShotDelay": 40
+    },
+    "shootStatus": "unmoving",
+    "shootStatusDuration": 45,
+    "name": "porphyra-polymer-weapon-1",
+    "shootY": 6.0,
+    "recoil": 1.2
+  },
+  {
+    "x": 10,
+    "y": 0,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 22,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "FlakBulletType",
+      "hitColor": "78baff",
+      "lightColor": "78baff",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "backColor": "347bd2",
+      "frontColor": "d8efff",
+      "trailColor": "5ba5ef",
+      "trailLength": 12,
+      "trailWidth": 1.5,
+      "width": 6,
+      "height": 12,
+      "damage": 22,
+      "speed": 7,
+      "lifetime": 28,
+      "splashDamage": 30,
+      "splashDamageRadius": 24,
+      "collidesGround": false
+    },
+    "name": "porphyra-polymer-weapon-2",
+    "shootY": 4.0,
+    "recoil": 1.2
+  }
+]

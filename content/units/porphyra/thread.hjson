@@ -1,0 +1,60 @@
+type: flying
+flying: true
+controller: builderAI
+isEnemy: false
+coreUnitDock: true
+health: 320
+armor: 2
+speed: 3.5
+rotateSpeed: 8
+hitSize: 10
+itemCapacity: 45
+buildSpeed: 1.4
+mineTier: 2
+mineSpeed: 3.5
+mineItems: [gamma-crystal, rhenium, technetium]
+fogRadius: 0
+engineOffset: 0
+engineSize: 0
+engines: [
+  {
+    "x": 0,
+    "y": -8,
+    "radius": 3,
+    "rotation": -90
+  }
+]
+weapons: [
+  {
+    name: porphyra-thread-weapon-1
+    shootY: 2.5
+    x: 0
+    y: 3
+    mirror: false
+    reload: 30
+    shootSound: shootLaser
+    shoot: {
+      type: ShootSpread
+      shots: 3
+      spread: 10
+    }
+    bullet: {
+      type: BasicBulletType
+      damage: 9
+      speed: 6.7
+      lifetime: 25
+      width: 4
+      height: 9
+      collidesAir: true
+      collidesGround: true
+      backColor: 8053bb
+      frontColor: e6c4fa
+      hitColor: ca9df0
+      shootEffect: shootSmallColor
+      trailColor: a56bd5
+      trailLength: 12
+      trailWidth: 1.4
+      hitEffect: hitSquaresColor
+    }
+  }
+]

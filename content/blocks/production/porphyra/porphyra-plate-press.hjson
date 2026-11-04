@@ -1,0 +1,13 @@
+type: GenericCrafter
+size: 2
+health: 380
+craftTime: 60
+itemCapacity: 20
+hasPower: true
+outputItem: rhenium-plate/1
+consumes: {
+  power: 0.5
+  items: [rhenium/2]
+}
+category: crafting
+requirements: [rhenium/50, gamma-crystal/15]

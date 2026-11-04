@@ -1,0 +1,5 @@
+type: Sorter
+size: 1
+health: 160
+category: distribution
+requirements: [rhenium/8, technetium/3, gamma-crystal/2]

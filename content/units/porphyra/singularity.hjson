@@ -1,0 +1,69 @@
+type: flying
+flying: true
+health: 5800
+armor: 5
+speed: 1.9
+rotateSpeed: 3
+hitSize: 39
+itemCapacity: 95
+engineOffset: 0
+engineSize: 0
+engines: [
+  {
+    "x": 0,
+    "y": -24.08,
+    "radius": 3.92,
+    "rotation": -90
+  }
+]
+faceTarget: false
+weapons: [
+  {
+    "x": 0,
+    "y": 10,
+    "mirror": false,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 260,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "cryon.Type.PorphyraGravityBullet"
+    },
+    "name": "porphyra-singularity-weapon-1",
+    "shootY": 7.5,
+    "recoil": 1.2
+  },
+  {
+    "x": 15,
+    "y": 0,
+    "mirror": true,
+    "rotate": true,
+    "rotateSpeed": 5,
+    "reload": 85,
+    "shootSound": "shootLaser",
+    "bullet": {
+      "type": "LaserBulletType",
+      "hitColor": "c5a0ee",
+      "lightColor": "b17cde",
+      "shootEffect": "shootBigColor",
+      "hitEffect": "hitSquaresColor",
+      "despawnEffect": "hitSquaresColor",
+      "damage": 110,
+      "length": 255,
+      "width": 10,
+      "colors": [
+        "7953b0",
+        "cca1f2",
+        "ffffff"
+      ],
+      "lifetime": 18
+    },
+    "shoot": {
+      "shots": 2,
+      "shotDelay": 10
+    },
+    "name": "porphyra-singularity-weapon-2",
+    "shootY": 5.0,
+    "recoil": 1.2
+  }
+]

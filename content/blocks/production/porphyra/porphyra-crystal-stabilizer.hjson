@@ -1,0 +1,13 @@
+type: GenericCrafter
+size: 2
+health: 560
+craftTime: 120
+itemCapacity: 30
+hasPower: true
+outputItem: phase-crystal/2
+consumes: {
+  power: 2.2
+  items: [gamma-crystal/3, silicon/2, promethium/1]
+}
+category: crafting
+requirements: [rhenium/130, gamma-crystal/60, technetium/60, silicon/30]

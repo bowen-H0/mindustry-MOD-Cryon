@@ -2,6 +2,12 @@
 
 Alpha test version: contains bugs, mechanics subject to change.
 
+## AI 开发声明 / AI Development Disclosure
+
+本项目全程使用 AI 智能体进行开发。本人并不掌握或了解项目中的全部技术细节。
+
+This project is developed using AI agents throughout the development process. I do not fully understand every technical detail of the project.
+
 ## Overview
 
 - **Author**: [bowen-H0](https://github.com/bowen-H0)

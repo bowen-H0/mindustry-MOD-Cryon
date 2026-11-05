@@ -54,7 +54,7 @@ public class SpaceJump{
         String name = type.name.startsWith("cryon-") ? type.name.substring(6) : type.name;
         if(type.name.startsWith("cryon-") && porphyraUnits.contains(name)) return true;
         return name.equals("vain") || name.equals("roche") || name.equals("threshold")
-            || name.equals("hyperion") || name.equals("oblivion");
+            || name.equals("hyperion") || name.equals("oblivion") || name.equals("eon");
     }
 
     private static final arc.struct.ObjectSet<String> porphyraUnits = arc.struct.ObjectSet.with(

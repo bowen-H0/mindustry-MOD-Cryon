@@ -1979,6 +1979,7 @@ public class CryonJavaMod extends Mod {
 
 
 
+        LoadTiming.measure("loadContent / EonUnit", cryon.Content.EonUnit::load);
         LoadTiming.measure("loadContent / OblivionUnit", OblivionUnit::load);
         LoadTiming.measure("loadContent / DestroyerUnit", DestroyerUnit::load);
         ScriptRegistry.register("virus-intrusion", "病毒入侵（锁定关卡）", VirusIntrusionScript::new);

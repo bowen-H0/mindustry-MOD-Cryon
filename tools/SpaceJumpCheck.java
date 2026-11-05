@@ -65,7 +65,7 @@ public class SpaceJumpCheck{
   preview.landing(u,800,100,landing); check(preview.jump(u,800,100),"preview confirmation rejected");
   int previewTicks=0; while(preview.active() && previewTicks++<1000)preview.update(u);
   check(u.dst(landing)<0.01,"actual destination differs from preview");
-  for(String name:new String[]{"vain","roche","threshold","hyperion","oblivion"}){
+  for(String name:new String[]{"vain","roche","threshold","hyperion","oblivion","eon"}){
    check(cryon.Features.SpaceJump.excluded(new mindustry.type.UnitType("cryon-"+name)),"excluded unit accepted: "+name);
   }
   u.apply(mindustry.content.StatusEffects.boss,60f);

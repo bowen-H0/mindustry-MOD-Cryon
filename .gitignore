@@ -161,3 +161,9 @@ android/libs/
 
 # Local agent instructions
 /AGENTS.md
+
+# Keep Markdown documentation local, except README files.
+*.[mM][dD]
+*.[mM][aA][rR][kK][dD][oO][wW][nN]
+![Rr][Ee][Aa][Dd][Mm][Ee]*.[mM][dD]
+![Rr][Ee][Aa][Dd][Mm][Ee]*.[mM][aA][rR][kK][dD][oO][wW][nN]

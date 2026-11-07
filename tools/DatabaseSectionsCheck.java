@@ -34,16 +34,20 @@ public final class DatabaseSectionsCheck{
         check(nanoTab!=null&&bossTab!=null&&nanoTab.hidden&&bossTab.hidden&&nanoTab.hideDatabase&&bossTab.hideDatabase,"database-only tab markers");
         String[] bosses={"vain","roche","threshold","hyperion","oblivion","destroyer","eon"};
         for(String name:bosses){var unit=Vars.content.unit("cryon-"+name);check(unit!=null&&"unit".equals(unit.databaseCategory)&&unit.databaseTabs.size==1&&unit.databaseTabs.contains(bossTab)&&!unit.allDatabaseTabs,"boss classification: "+name);}
-        String[] nanoBlocks={"nano-floor","nano-ore","nano-terrain-wall","rogue-nano-drill","nano-machine-factory","nano-large-factory","nano-combat-factory","nano-ultimate-factory","nano-warehouse","grey-goo-loader","grey-goo-unload-point","rogue-nano-unloader","nano-cleaver","nano-reactor","nano-suppressor","nano-regeneration-matrix","emp-bomb"};
+        String[] nanoBlocks={"nano-floor","nano-ore","nano-terrain-wall","rogue-nano-drill","nano-machine-factory","nano-large-factory","nano-combat-factory","nano-ultimate-factory","nano-warehouse","rogue-nano-unloader","nano-cleaver","nano-bridge"};
         for(String name:nanoBlocks){var block=Vars.content.block("cryon-"+name);check(block!=null&&"block".equals(block.databaseCategory)&&block.databaseTabs.size==1&&block.databaseTabs.contains(nanoTab)&&!block.allDatabaseTabs,"nano block classification: "+name);}
-        for(String name:new String[]{"nano-eroder","grey-goo-carrier","nano-armor-breaker","nano-annihilator"})check(Vars.content.unit("cryon-"+name).databaseTabs.contains(nanoTab),"nano unit classification");
+        for(String name:new String[]{"nano-eroder","nano-weaver","nano-armor-breaker","nano-annihilator"})check(Vars.content.unit("cryon-"+name).databaseTabs.contains(nanoTab),"nano unit classification");
         check(Vars.content.item("cryon-nano-material").databaseTabs.contains(nanoTab),"nano material omitted");
         check(!"cryon-boss".equals(Vars.content.unit("cryon-destroyer-body").databaseCategory)&&Vars.content.unit("cryon-destroyer-body").hidden,"hidden boss body exposed");
         check(!"cryon-boss".equals(Vars.content.unit("cryon-intrusion-virus").databaseCategory)&&Vars.content.unit("cryon-intrusion-virus").hidden,"story gating changed");
         var warehouse=Vars.content.block("cryon-nano-warehouse");Vars.state.rules.infiniteResources=false;
         check(warehouse.isHidden()&&!warehouse.isPlaceable(),"database visibility leaked into campaign placement");
         check(Vars.content.block("cryon-nano-floor").isHidden(),"environment became buildable outside database");
-        Vars.state.rules.infiniteResources=true;check(!warehouse.isHidden(),"sandbox build access changed");Vars.state.rules.infiniteResources=false;
+        Vars.state.rules.infiniteResources=true;check(warehouse.isHidden(),"exclusive warehouse appeared in player sandbox build menu");Vars.state.rules.infiniteResources=false;
+        for(String name:new String[]{"nano-reactor","nano-suppressor","nano-regeneration-matrix","nano-wall-large","nano-projector","nano-material-weaver","emp-bomb"})check(!Vars.content.block("cryon-"+name).databaseTabs.contains(nanoTab),"player device leaked into creature database: "+name);
+        var pipe=Vars.content.block("cryon-reinforced-vacuum-duct");check(pipe.databaseTabs.contains(nanoTab)&&pipe.databaseTabs.size>1,"shared pipe lost player/nano tabs");
+        for(String name:new String[]{"grey-goo-loader","grey-goo-unload-point"})check(Vars.content.block("cryon-"+name).hideDatabase&&Vars.content.block("cryon-"+name).isHidden(),"retired freight port exposed");
+        check(Vars.content.unit("cryon-grey-goo-carrier").hidden&&Vars.content.unit("cryon-grey-goo-carrier").hideDatabase,"retired carrier exposed");
         var visibility=warehouse.buildVisibility;ObjectMap<Content,Short> ids=new ObjectMap<>();
         for(var list:Vars.content.getContentMap())for(Content content:list)ids.put(content,content.id);
         sections.getMethod("configure").invoke(null);check(warehouse.buildVisibility==visibility,"repeat configure nested visibility wrapper");
@@ -76,7 +80,7 @@ public final class DatabaseSectionsCheck{
             if(entry.databaseTabs.contains(nanoTab))nanoCount++;
             if(entry.databaseTabs.contains(bossTab))bossCount++;
         }
-        check(nanoCount>=25&&bossCount==7,"top tab contents incorrect");
-        System.out.println("DATABASE_SECTIONS_CHECK_PASS: nano/BOSS top tabs parallel with planets, original category restoration, full nano content, 7 boss series, hidden/story exclusions, sandbox/campaign placement preserved, idempotence and stable IDs");
+        check(nanoCount==19&&bossCount==7,"top tab contents incorrect");
+        System.out.println("DATABASE_SECTIONS_CHECK_PASS: nano/BOSS top tabs parallel with planets, original category restoration, exclusive nano content and shared pipe, 7 boss series, hidden/story exclusions, faction-only construction and player content separated, idempotence and stable IDs");
     }
 }

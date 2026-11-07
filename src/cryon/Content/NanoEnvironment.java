@@ -26,7 +26,7 @@ public final class NanoEnvironment{
     private static final Seq<NanoSuppressorBuild> suppressors = new Seq<>();
     private static final Seq<mindustry.gen.Building> damageBuildings = new Seq<>();
     private static float elapsed;
-    private static int pulses;
+    private static float planningElapsed=-30f;
     private static boolean installed;
 
     public static void load(){
@@ -42,7 +42,10 @@ public final class NanoEnvironment{
     public static void install(){
         if(installed) return;
         installed = true;
-        Events.on(ResetEvent.class, e -> clear());
+        cryon.Features.NanoConstruction.install();
+        cryon.Features.RetiredNanoLogistics.install();
+        Events.on(WorldLoadBeginEvent.class, e -> cryon.Features.NanoConstruction.clear());
+        Events.on(ResetEvent.class, e -> {clear();cryon.Features.NanoConstruction.clear();});
         Events.on(WorldLoadEvent.class, e -> rebuild());
         Events.on(SaveLoadEvent.class, e -> rebuild());
         Events.run(Trigger.update, () -> {
@@ -50,12 +53,14 @@ public final class NanoEnvironment{
             elapsed += Time.delta;
             if(elapsed >= 60f){
                 elapsed %= 60f; spreadStep(); damageTerrain();
-                if(++pulses % 2 == 0) NanoColonies.step();
             }
+            // Keep colony planning off the frame that runs the spread/corrosion pulse.
+            planningElapsed+=Time.delta;
+            if(planningElapsed>=120f){planningElapsed%=120f;NanoColonies.step();}
         });
     }
 
-    private static void clear(){ edge.clear(); queued.clear(); suppressors.clear(); damageBuildings.clear(); NanoColonies.clear(); elapsed = 0f; pulses = 0; }
+    private static void clear(){ edge.clear(); queued.clear(); suppressors.clear(); damageBuildings.clear(); NanoColonies.clear(); elapsed = 0f; planningElapsed = -30f; }
     public static boolean infected(Tile t){ return t != null && (t.floor() == floor || t.block() == wall || t.overlay() == ore); }
     private static boolean convertible(Tile t){ return t != null && t.floor() != Blocks.empty && !infected(t); }
     private static boolean boundary(Tile t){

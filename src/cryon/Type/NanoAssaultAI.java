@@ -20,8 +20,8 @@ public class NanoAssaultAI extends AIController{
             moveTo(target,unit.range()*0.65f);unit.lookAt(target);return;
         }
         refresh-=Time.delta;
-        if(objective==null||!objective.isValid()||objective.dead||refresh<=0){
-            refresh=120f;objective=null;float score=Float.MAX_VALUE;
+        if(refresh<=0||(objective!=null&&(!objective.isValid()||objective.dead))){
+            refresh=120f+unit.id%41;objective=null;float score=Float.MAX_VALUE;
             for(Team team:Team.all)if(team!=Team.derelict&&!MapAlliances.allied(unit.team,team)){
                 for(Building b:Vars.state.teams.get(team).buildings){
                     if(!b.isValid()||b.dead||!b.block.targetable)continue;

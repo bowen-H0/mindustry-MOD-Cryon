@@ -166,7 +166,10 @@ public final class CryonCampaignLayers{
             }
             Vars.ui.research.shown(() -> {
                 LayerView view = activeView();
-                if(view != null && view.dialog.isShown() && isCryon(view.params.planet)) Vars.ui.research.switchTree(surface.techTree);
+                // The library star map is separate from Vars.ui.planet. The native
+                // shown callback may lay out another tree before this callback runs.
+                // Switching alone leaves the new nodes at (0, 0), overlapping.
+                if(view != null && view.dialog.isShown() && isCryon(view.params.planet)) Vars.ui.research.rebuildTree(surface.techTree);
             });
             Events.run(Trigger.uiDrawBegin, () -> {
                 ensureLayerUi(nativeView);

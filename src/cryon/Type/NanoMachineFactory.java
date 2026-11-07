@@ -17,21 +17,21 @@ public class NanoMachineFactory extends Block{
     public int cost = 12;
     public UnitType outputUnit;
     public int unitLimit = 128;
-    public boolean nanoOnly=true;
     public UnitType product(){return outputUnit==null?NanoColonyContent.eroder:outputUnit;}
     public float spawnDistance(){return size*tilesize/2f+Math.max(tilesize/2f,product().hitSize/2f+2f);}
     public int clearanceDepth(){return size<=3?1:Math.max(1,(int)Math.ceil((spawnDistance()+product().hitSize/2f+2f)/tilesize)-(size+1)/2+1);}
     public int clearanceHalfWidth(){return Math.max(size/2,(int)Math.ceil(product().hitSize/2f/tilesize));}
     public NanoMachineFactory(String name){
         super(name);
-        requirements(Category.units, BuildVisibility.sandboxOnly, ItemStack.empty);
+        requirements(Category.units, BuildVisibility.editorOnly, ItemStack.empty);
         size = 3; health = 2400; update = solid = hasItems = acceptsItems = rotate = true;
         itemCapacity = 120; buildType = NanoFactoryBuild::new;
     }
+    @Override public boolean canPlaceOn(Tile tile,mindustry.game.Team team,int rotation){return team==DisasterFactions.nano&&super.canPlaceOn(tile,team,rotation);}
     public class NanoFactoryBuild extends Building{
         public float progress;
         @Override public boolean acceptItem(Building source, Item item){
-            return (!nanoOnly||team == DisasterFactions.nano) && source.team == team && item == CryonItems.nanoMaterial && items.get(item) < itemCapacity;
+            return (team == DisasterFactions.nano) && source.team == team && item == CryonItems.nanoMaterial && items.get(item) < itemCapacity;
         }
         public boolean frontClear(){
             int dx = Geometry.d4x(rotation), dy = Geometry.d4y(rotation);
@@ -43,7 +43,7 @@ public class NanoMachineFactory extends Block{
             return true;
         }
         @Override public void updateTile(){
-            if(net.client() || !enabled || (nanoOnly&&team != DisasterFactions.nano) || !frontClear() || !items.has(CryonItems.nanoMaterial, cost)) return;
+            if(net.client() || !enabled || team != DisasterFactions.nano || !frontClear() || !items.has(CryonItems.nanoMaterial, cost)) return;
             UnitType product = product();
             if(Groups.unit.count(u -> u.team == team && !u.dead && u.type == product) >= unitLimit) return;
             float sx = x + Geometry.d4x(rotation) * spawnDistance(), sy = y + Geometry.d4y(rotation) * spawnDistance();
@@ -51,13 +51,13 @@ public class NanoMachineFactory extends Block{
             progress += Time.delta;
             if(progress >= craftTime){
                 progress %= craftTime; items.remove(CryonItems.nanoMaterial, cost);
-                product.spawn(team, sx, sy).rotation = rotdeg();
+                Unit created=product.spawn(team,sx,sy);created.rotation=rotdeg();
                 NanoFeedbackFx.event(NanoFeedbackFx.grow, sx, sy, 2f, 1);
             }
         }
         @Override public void draw(){
             super.draw();
-            if(enabled && (!nanoOnly||team == DisasterFactions.nano) && items.has(CryonItems.nanoMaterial, cost)){
+            if(enabled && (team == DisasterFactions.nano) && items.has(CryonItems.nanoMaterial, cost)){
                 NanoFeedbackFx.ambient(frontClear() ? NanoFeedbackFx.charge : NanoFeedbackFx.warning, x, y, 0f, 22f);
             }
         }

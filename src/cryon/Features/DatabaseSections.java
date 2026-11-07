@@ -20,6 +20,13 @@ public final class DatabaseSections{
     private static final ObjectSet<String> bosses=ObjectSet.with(
         "cryon-vain","cryon-roche","cryon-threshold","cryon-hyperion",
         "cryon-oblivion","cryon-destroyer","cryon-eon");
+    private static final ObjectSet<String> nanoExclusive=ObjectSet.with(
+        "cryon-nano-floor","cryon-nano-ore","cryon-nano-terrain-wall","cryon-nano-material",
+        "cryon-rogue-nano-drill","cryon-rogue-nano-wall","cryon-rogue-nano-unloader",
+        "cryon-nano-machine-factory","cryon-nano-large-factory","cryon-nano-combat-factory",
+        "cryon-nano-ultimate-factory","cryon-nano-warehouse","cryon-nano-cleaver","cryon-nano-bridge",
+        "cryon-nano-eroder","cryon-nano-weaver","cryon-nano-armor-breaker","cryon-nano-annihilator");
+    private static final String sharedPipe="cryon-reinforced-vacuum-duct";
     private static boolean installed,opening;
 
     public static void load(){
@@ -39,8 +46,7 @@ public final class DatabaseSections{
     public static String category(UnlockableContent content){
         if(content.minfo.mod==null||!"cryon".equals(content.minfo.mod.name)||!content.name.startsWith("cryon-"))return null;
         if(bosses.contains(content.name))return boss;
-        String name=content.name.substring("cryon-".length());
-        return name.startsWith("nano-")||name.startsWith("rogue-nano-")||name.startsWith("grey-goo-")||name.equals("emp-bomb")?nano:null;
+        return nanoExclusive.contains(content.name)||sharedPipe.equals(content.name)?nano:null;
     }
     public static void configure(){
         if(nanoTab==null||bossTab==null)return;
@@ -51,7 +57,11 @@ public final class DatabaseSections{
             entry.databaseCategory=entry.getContentType().name();
             entry.databaseTag=entry instanceof Block?((Block)entry).category.name():null;
             entry.allDatabaseTabs=false;
-            entry.databaseTabs.clear();entry.databaseTabs.add(nano.equals(category)?nanoTab:bossTab);
+            if(sharedPipe.equals(entry.name)){
+                entry.databaseTabs.addAll(entry.shownPlanets);
+                if(entry.databaseTabs.isEmpty())entry.databaseTabs.add(mindustry.content.Planets.serpulo);
+                entry.databaseTabs.add(nanoTab);
+            }else{entry.databaseTabs.clear();entry.databaseTabs.add(nano.equals(category)?nanoTab:bossTab);}
             if(entry instanceof Block){
                 Block block=(Block)entry;
                 if(block.buildVisibility!=BuildVisibility.shown&&!(block.buildVisibility instanceof DatabaseVisibility)){

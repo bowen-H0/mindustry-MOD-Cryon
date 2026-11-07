@@ -24,7 +24,7 @@ public class NanoEroderAI extends AIController{
             return;
         }
         retarget -= Time.delta;
-        if(destination == null || retarget <= 0f || unit.within(destination, 12f)){
+        if(retarget <= 0f || (destination != null && unit.within(destination, 12f))){
             destination = NanoColonies.destination(unit);
             retarget = 120f + Mathf.randomSeed(unit.id, 60);
         }
@@ -33,7 +33,7 @@ public class NanoEroderAI extends AIController{
             if(mindustry.Vars.controlPath != null && mindustry.Vars.controlPath.getPathPosition(unit, destinationPosition, nextPosition, noPath)){
                 moveTo(nextPosition, 0f); faceMovement();
             }else if(mindustry.Vars.controlPath == null){ moveTo(destination, 0f); faceMovement(); }
-            if(noPath[0]){ destination = null; retarget = 0; }
+            if(noPath[0]){ destination = null; retarget = 60f + unit.id % 31; }
         }
     }
 }

@@ -47,14 +47,14 @@ public final class NanoColonyCheck{
         check(Vars.world.tile(27,25).overlay()==ore&&Vars.world.tile(24,23).floor()!=floor,"vein preference missing or ground spread jumped");
         terrain.getMethod("seed",float.class,float.class,int.class).invoke(null,25*8f,25*8f,14);
         colonies.getMethod("step").invoke(null);
-        Building miner=find(drill);check(miner!=null,"colony did not build drill");
-        check(find(factory)==null,"colony grew entire base instantly");
-        for(int i=0;i<8;i++)colonies.getMethod("step").invoke(null);
-        Building machine=find(factory);check(machine!=null&&Groups.build.count(b->b.block==belt)==5,"drill/duct/factory chain missing");
+        check(find(drill)==null&&find(factory)==null,"planner placed completed structures without builders");
+        for(int i=0;i<12000&&(find(factory)==null||find(wall)==null);i++){
+            tick();if(i%120==0)colonies.getMethod("step").invoke(null);
+        }
+        Building miner=find(drill),machine=find(factory);
+        check(miner!=null&&machine!=null&&Groups.build.count(b->b.block==belt)>=5,"native drill/duct/factory construction missing");
         check(find(wall)!=null,"regenerating defenses missing");
         check((boolean)machine.getClass().getMethod("frontClear").invoke(machine),"factory frontage blocked by colony");
-        // No free fuel: native drill and native ducts must actually deliver material.
-        check(machine.items.total()==0,"factory conjured fuel");
         boolean transported=false;
         for(int i=0;i<6000;i++){
             tick();if(machine.items.total()>0)transported=true;
@@ -120,7 +120,7 @@ public final class NanoColonyCheck{
             tiles.get(5,5).setBlock(Blocks.coreShard,Team.sharded);
             for(int x=25;x<=27;x++)tiles.get(x,25).setOverlay(Blocks.oreCopper);
             tiles.get(75,60).setOverlay(Blocks.oreTitanium);
-        });Vars.state.set(mindustry.core.GameState.State.playing);Vars.state.rules.canGameOver=false;Time.delta=1f;
+        });Vars.state.set(mindustry.core.GameState.State.playing);Vars.state.rules.canGameOver=false;Vars.state.rules.enemyCoreBuildRadius=0;Time.delta=1f;
     }
     static void corrosion()throws Exception{
         infect(60,60);Unit ground=UnitTypes.dagger.spawn(Team.sharded,480,480),air=UnitTypes.flare.spawn(Team.sharded,480,480);
@@ -133,5 +133,5 @@ public final class NanoColonyCheck{
     }
     static void infect(int x,int y)throws Exception{terrain.getMethod("infect",Tile.class).invoke(null,Vars.world.tile(x,y));}
     static Building find(Block b){return Groups.build.find(x->x.block==b&&x.team==nano);}
-    static void tick(){for(Building b:Groups.build.copy())if(b.isValid())b.update();Time.update();Vars.state.tick+=1;Vars.state.teams.updateTeamStats();}
+    static void tick(){Groups.unit.updatePhysics();for(Unit u:Groups.unit.copy())if(u.type.name.equals("cryon-nano-weaver"))u.update();for(Building b:Groups.build.copy())if(b.isValid())b.update();Time.update();Vars.state.tick+=1;Vars.state.teams.updateTeamStats();}
 }

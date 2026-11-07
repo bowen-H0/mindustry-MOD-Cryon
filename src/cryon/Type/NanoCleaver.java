@@ -14,7 +14,7 @@ import mindustry.world.meta.*;
 /** A warehouse defense beam, paid in six-frame material batches. No free persistent beam. */
 public class NanoCleaver extends ContinuousTurret{
     public NanoCleaver(String name){
-        super(name);requirements(Category.turret,BuildVisibility.sandboxOnly,ItemStack.empty);
+        super(name);requirements(Category.turret,BuildVisibility.editorOnly,ItemStack.empty);
         size=3;health=6000;armor=12;range=240;rotateSpeed=4;shootY=12;
         hasItems=acceptsItems=true;itemCapacity=120;canOverdrive=false;
         targetAir=targetGround=true;shootCone=12;
@@ -23,9 +23,12 @@ public class NanoCleaver extends ContinuousTurret{
         beam.colors=new Color[]{Color.valueOf("237e4a66"),Color.valueOf("4ce68c"),Color.valueOf("d9ffe5")};
         shootType=beam;buildType=NanoCleaverBuild::new;
     }
+    @Override public boolean canPlaceOn(mindustry.world.Tile tile,mindustry.game.Team team,int rotation){
+        return team==cryon.Features.DisasterFactions.nano&&super.canPlaceOn(tile,team,rotation);
+    }
     public class NanoCleaverBuild extends ContinuousTurretBuild{
         public float paidTime;
-        @Override public boolean acceptItem(Building source,Item item){return source.team==team&&item==CryonItems.nanoMaterial&&items.get(item)<itemCapacity;}
+        @Override public boolean acceptItem(Building source,Item item){return team==DisasterFactions.nano&&source.team==team&&item==CryonItems.nanoMaterial&&items.get(item)<itemCapacity;}
         @Override public boolean canUnload(){return false;}
         @Override public boolean hasAmmo(){return enabled&&team==DisasterFactions.nano&&(paidTime>0||items.has(CryonItems.nanoMaterial));}
         @Override public void updateTile(){

@@ -37,17 +37,9 @@ d.ellipse((35,53,61,79),fill='#3a8656',outline='#8bf4ae',width=2);save(im,'nano-
 im=Image.new('RGBA',(48,48));d=ImageDraw.Draw(im)
 for pts in [[(18,15),(3,5),(2,27),(16,33)],[(30,15),(45,5),(46,27),(32,33)]]:d.polygon(pts,fill='#5f7669',outline='#b2c6ad');
 d.ellipse((13,6,35,40),fill='#304c39',outline='#99c997',width=2);d.rectangle((18,20,30,34),fill='#2b6741',outline='#4ce68c',width=2);d.ellipse((18,9,30,17),fill='#9cf4b7');save(im,'grey-goo-carrier','units')
-for name,n in [('nano-armor-breaker',128),('nano-annihilator',272)]:
-    im=Image.new('RGBA',(n,n));d=ImageDraw.Draw(im);c=n//2
-    for side in (-1,1):
-        x=c+side*n//3
-        d.rounded_rectangle((x-n//10,n//5,x+n//10,n*9//10),radius=4,fill='#3f5147',outline='#96ac93',width=3)
-        for y in range(n//4,n*9//10,n//8):d.line((x-n//12,y,x+n//12,y),fill='#22382c',width=3)
-    d.polygon([(c,n//12),(c+n//4,n//4),(c+n//4,n*3//4),(c,n*9//10),(c-n//4,n*3//4),(c-n//4,n//4)],fill='#6e806b',outline='#b0c4a7',width=3)
-    d.ellipse((c-n//8,c-n//8,c+n//8,c+n//8),fill='#285a3a',outline='#56e891',width=3)
-    d.polygon([(c-n//5,n//4),(c-n//3,0),(c-n//12,n//8),(c,n//4),(c+n//12,n//8),(c+n//3,0),(c+n//5,n//4)],fill='#9faf93',outline='#d7e2c1')
-    for off in (-1,1):d.line((c+off*n//9,n//3,c+off*n//9,n*2//3),fill='#4ce68c',width=3)
-    save(im,name,'units')
+from generate_nano_legs_sprites import heavy_body, legs
+for name,n,width in [('nano-armor-breaker',128,16),('nano-annihilator',272,28)]:
+    save(heavy_body(n),name,'units');legs(name,width)
 for name,n in [('nano-specialist-weapon',32),('nano-annihilator-weapon',56)]:
     im=Image.new('RGBA',(n,n*2));d=ImageDraw.Draw(im);d.rectangle((3,n//2,n-4,n*2-3),fill='#3d5541',outline='#a1b89a',width=2)
     for x in (n//3,n*2//3):d.rectangle((x-2,0,x+2,n*3//2),fill='#78bd8a',outline='#c5f4d0')

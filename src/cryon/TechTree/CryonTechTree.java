@@ -366,6 +366,7 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.SECTOR, "desolate-zone-87", "cryon-sector-glacial-basin");
 
         addAuto(Kind.SECTOR, "laboratory-088", "desolate-zone-87");
+        addAuto(Kind.SECTOR, "eroded-wastes", "laboratory-088");
 
         addAuto(Kind.SECTOR, "cryon-neutron-flux-zone", "cryon-gravel-ice");
         addAuto(Kind.SECTOR, "cryon-sector-1", "core-pioneer");
@@ -421,6 +422,8 @@ public class CryonTechTree extends ModPlanetTechTree {
         //T3后
         sectorReq("laboratory-088",
                 CryonContent.block("t3universal-assembler"));
+        sectorReq("eroded-wastes",
+                CryonContent.item("nano-material"));
         sectorReq("titanium-fortress",
                 CryonContent.sector("laboratory-088"));
 
@@ -484,6 +487,8 @@ public class CryonTechTree extends ModPlanetTechTree {
                 "deluge");
         sectorGate("laboratory-088",
                 "unity");
+        sectorGate("eroded-wastes",
+                "nano-reactor");
         sectorGate("magnificent-rift",
                 "t5universal-assembler");
     }

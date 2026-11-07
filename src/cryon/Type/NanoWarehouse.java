@@ -11,18 +11,21 @@ import mindustry.world.meta.*;
 /** Independent storage, never a core or victory objective. Bootstrap belt plan is saved. */
 public class NanoWarehouse extends StorageBlock{
     public NanoWarehouse(String name){
-        super(name);requirements(Category.effect,BuildVisibility.sandboxOnly,ItemStack.empty);
+        super(name);requirements(Category.effect,BuildVisibility.editorOnly,ItemStack.empty);
         size=5;health=12000;armor=10;itemCapacity=12000;coreMerge=false;
         buildType=NanoWarehouseBuild::new;
+    }
+    @Override public boolean canPlaceOn(mindustry.world.Tile tile,mindustry.game.Team team,int rotation){
+        return team==cryon.Features.DisasterFactions.nano&&super.canPlaceOn(tile,team,rotation);
     }
     public class NanoWarehouseBuild extends StorageBuild{
         public int supplyPos=-1;
         public final IntSeq supplyRoute=new IntSeq();
         @Override public boolean acceptItem(Building source,Item item){
-            return source.team==team&&item==CryonItems.nanoMaterial&&super.acceptItem(source,item);
+            return team==cryon.Features.DisasterFactions.nano&&source.team==team&&item==CryonItems.nanoMaterial&&super.acceptItem(source,item);
         }
         @Override public int acceptStack(Item item,int amount,Teamc source){
-            return item==CryonItems.nanoMaterial&&(source==null||source.team()==team)?super.acceptStack(item,amount,source):0;
+            return team==cryon.Features.DisasterFactions.nano&&item==CryonItems.nanoMaterial&&(source==null||source.team()==team)?super.acceptStack(item,amount,source):0;
         }
         @Override public byte version(){return 1;}
         @Override public void write(Writes w){super.write(w);w.i(supplyPos);w.s(supplyRoute.size);for(int i=0;i<supplyRoute.size;i++)w.i(supplyRoute.get(i));}

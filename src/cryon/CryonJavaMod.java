@@ -2027,6 +2027,7 @@ public class CryonJavaMod extends Mod {
 
     private void initTimed() {
         cryon.Content.NanoEnvironment.install();
+        NanoLegUnits.install();
         cryon.Story.StoryProgress.install();
         MainMenuTheme.install();
         PorphyraFlyingAI.install();
@@ -2644,6 +2645,9 @@ public class CryonJavaMod extends Mod {
             PorphyraTechTree.load();
             CryonCampaignLayers.shareResearch();
             DatabaseSections.configure();
+            // Control's ClientLoad listener ran before these trees existed.
+            // Reuse the native zero-cost unlock check for existing campaign progress.
+            Vars.control.checkAutoUnlocks();
 
              TechNode root = TechTree.roots.find(
                     n -> n.content != null && n.content.name.equals("cryon-core-pioneer"));

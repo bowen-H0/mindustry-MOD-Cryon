@@ -62,14 +62,19 @@ public class QuantumCommunicationComputer extends Block{
         public float constructorSatisfaction;
 
         public boolean ready(){
-            return isValid() && enabled && power != null && power.status >= 0.999f
+            return Vars.state.isCampaign() && !Vars.state.isEditor()
+                    && isValid() && enabled && power != null && power.status >= 0.999f
                     && constructorSatisfaction >= 0.999f
-                    && (!Vars.state.isCampaign() || block.unlockedNow());
+                    && block.unlockedNow();
         }
         @Override public float constructorUse(){ return constructorUse; }
         @Override public void constructorStatus(float status){ constructorSatisfaction = arc.math.Mathf.clamp(status); }
         @Override public boolean constructorValid(){ return enabled && isValid(); }
         @Override public void buildConfiguration(Table table){
+            if(!Vars.state.isCampaign() || Vars.state.isEditor()){
+                table.add("@cryon.quantum.campaign-only").wrap().width(320f).pad(8f);
+                return;
+            }
             table.add("@cryon.quantum.requirements").wrap().width(320f).pad(8f).row();
             table.button("@cryon.quantum.open", () -> {
                 if(ready()) new QuantumCommunicationDialog(this).show();

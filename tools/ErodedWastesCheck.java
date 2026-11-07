@@ -71,10 +71,10 @@ public class ErodedWastesCheck{
             Vars.world.loadSector(preset.sector);
             check(Vars.state.rules.sector == preset.sector, "wrong loaded sector");
         }
-        check(Vars.state.rules.waves && !Vars.state.rules.attackMode && Vars.state.rules.winWave == 100, "wrong mission rules");
+        check(Vars.state.rules.waves && !Vars.state.rules.attackMode && Vars.state.rules.winWave == 40, "wrong mission rules");
         check(Vars.state.rules.spawns.size > 0, "missing waves");
         check(Vars.state.rules.defaultTeam.core() != null, "missing player core");
         check(Vars.spawner.countSpawns() > 0, "missing enemy spawn");
-        System.out.println("PASS: adjacent sector 89, eradication threat, laboratory + nano-material prerequisites, playable 100-wave map");
+        System.out.println("PASS: adjacent sector 89, eradication threat, laboratory + nano-material prerequisites, playable 40-wave map");
     }
 }

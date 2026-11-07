@@ -49,7 +49,7 @@ public final class NanoEnvironment{
         Events.on(WorldLoadEvent.class, e -> rebuild());
         Events.on(SaveLoadEvent.class, e -> rebuild());
         Events.run(Trigger.update, () -> {
-            if(Vars.state == null || !Vars.state.isGame() || Vars.state.isPaused() || Vars.net.client()) return;
+            if(Vars.state == null || !Vars.state.isGame() || Vars.state.isEditor() || Vars.state.isPaused() || Vars.net.client()) return;
             elapsed += Time.delta;
             if(elapsed >= 60f){
                 elapsed %= 60f; spreadStep(); damageTerrain();
@@ -79,7 +79,7 @@ public final class NanoEnvironment{
     }
 
     public static void infect(Tile t){
-        if(Vars.net.client() || t == null || t.floor() == Blocks.empty) return;
+        if(Vars.net.client() || Vars.state.isEditor() || t == null || t.floor() == Blocks.empty) return;
         boolean naturalWall = t.block() instanceof StaticWall;
         boolean wasOre = t.overlay() == ore;
         boolean mineral = wasOre || NanoColonies.mineral(t);
@@ -94,7 +94,7 @@ public final class NanoEnvironment{
 
     /** One wave per second, capped to keep large contaminated maps responsive. */
     public static void spreadStep(){
-        if(Vars.net.client()) return;
+        if(Vars.net.client() || Vars.state.isEditor()) return;
         refreshSuppressors();
         int count = Math.min(edge.size, 128);
         for(int i = 0; i < count; i++){
@@ -138,7 +138,7 @@ public final class NanoEnvironment{
     }
 
     public static void spreadByUnit(mindustry.gen.Unit unit){
-        if(Vars.net.client() || unit.dead || unit.team != DisasterFactions.nano || suppressed(unit.tileOn())) return;
+        if(Vars.net.client() || Vars.state.isEditor() || unit.dead || unit.team != DisasterFactions.nano || suppressed(unit.tileOn())) return;
         for(int dx = -1; dx <= 1; dx++) for(int dy = -1; dy <= 1; dy++){
             Tile t = Vars.world.tile(unit.tileX() + dx, unit.tileY() + dy);
             if(t != null && !suppressed(t)) infect(t);
@@ -147,7 +147,7 @@ public final class NanoEnvironment{
 
     /** Corrosion affects ground occupants and entire building footprints, regardless of diplomacy. */
     public static void damageTerrain(){
-        if(Vars.net.client()) return;
+        if(Vars.net.client() || Vars.state.isEditor()) return;
         for(mindustry.gen.Unit u : Groups.unit.copy()){
             if(!u.dead && u.team != DisasterFactions.nano && u.isGrounded() && infected(u.tileOn())){
                 NanoFeedbackFx.event(NanoFeedbackFx.corrosion, u.x, u.y, u.hitSize * 0.6f, 4);
@@ -172,7 +172,7 @@ public final class NanoEnvironment{
     }
 
     public static void seed(float x, float y, int radius){
-        if(Vars.net.client()) return;
+        if(Vars.net.client() || Vars.state.isEditor()) return;
         int cx = mindustry.core.World.toTile(x), cy = mindustry.core.World.toTile(y);
         for(int dx = -radius; dx <= radius; dx++) for(int dy = -radius; dy <= radius; dy++){
             if(dx * dx + dy * dy <= radius * radius) infect(Vars.world.tile(cx + dx, cy + dy));

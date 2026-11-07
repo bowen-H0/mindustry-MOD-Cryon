@@ -38,6 +38,7 @@ public class QuantumCommunicationRenderCheck{
             Core.graphics.setFullscreen(false);Core.graphics.setWindowSize(1280,900);
             for(var actor:Core.scene.root.getChildren().copy())if(actor instanceof Dialog d){d.clearActions();d.hide(null);}
             Vars.logic.reset();Vars.state.rules=new Rules();
+            Vars.state.rules.sector=Vars.content.sector("cryon-cryon-sector-1").sector;
             Vars.world.loadGenerator(80,80,tiles->{for(int x=0;x<80;x++)for(int y=0;y<80;y++)tiles.set(x,y,new Tile(x,y,Blocks.sand,Blocks.air,Blocks.air));});
             Vars.player.team(Team.sharded);Vars.player.unit(UnitTypes.alpha.spawn(Team.sharded,240,200));
             var block=Vars.content.block("cryon-quantum-communication-computer");block.unlock();

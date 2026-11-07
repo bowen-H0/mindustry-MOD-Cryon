@@ -39,6 +39,7 @@ public final class NanoColonyCheck{
         check(eroder.weapons.first().bullet instanceof mindustry.entities.bullet.LaserBulletType,"missing pulse laser");
         check(eroder.weapons.first().bullet.damage==42f,"laser damage");
         Vars.logic=new Logic();Vars.logic.reset();world();
+        editorPause();Vars.logic.reset();world();
         infect(25,25);check(Vars.world.tile(25,25).overlay()==ore,"normal ore not replaced");
         infect(24,25);check(Vars.world.tile(24,25).overlay()==Blocks.air,"ore randomly created on bare ground");
         check(!((Drill)Blocks.mechanicalDrill).canMine(Vars.world.tile(25,25)),"low tier drill can mine hardness 4");
@@ -132,6 +133,34 @@ public final class NanoColonyCheck{
         check(b.health==hp-40f&&safe.health==safeHp,"building footprint corrosion/immunity: building="+hp+" -> "+b.health+", nano="+safeHp+" -> "+safe.health+", size="+b.block.size+", grouped="+Groups.build.copy().contains(b)+", floor="+Vars.world.tile(54,59).floor().name);
     }
     static void infect(int x,int y)throws Exception{terrain.getMethod("infect",Tile.class).invoke(null,Vars.world.tile(x,y));}
+    static int infectedCount(){int count=0;for(Tile t:Vars.world.tiles)if(t.floor()==floor)count++;return count;}
+    static void editorPause()throws Exception{
+        infect(50,40);
+        Unit ground=UnitTypes.dagger.spawn(Team.sharded,50*8,40*8);
+        Unit insect=eroder.spawn(nano,70*8,40*8);
+        Vars.world.tile(50,40).setBlock(Blocks.copperWall,Team.sharded);
+        Building target=Vars.world.build(50,40);
+        int before=infectedCount(),buildings=Groups.build.size();float unitHp=ground.health,buildingHp=target.health;
+        // "Edit in-game" keeps State.playing while setting rules.editor.
+        Vars.state.rules.editor=true;
+        check(Vars.state.isGame()&&!Vars.state.isPaused(),"editor fixture must remain in-game and unpaused");
+        for(int i=0;i<240;i++)Events.fire(mindustry.game.EventType.Trigger.update);
+        terrain.getMethod("spreadStep").invoke(null);
+        terrain.getMethod("spreadByUnit",Unit.class).invoke(null,insect);
+        terrain.getMethod("seed",float.class,float.class,int.class).invoke(null,80*8f,40*8f,3);
+        infect(90,40);
+        terrain.getMethod("damageTerrain").invoke(null);
+        colonies.getMethod("step").invoke(null);
+        check(infectedCount()==before&&Groups.build.size()==buildings,"nano terrain/colonies changed during in-game editing");
+        check(ground.health==unitHp&&target.health==buildingHp,"nano corrosion continued during editing");
+        Vars.state.rules.editor=false;
+        for(int i=0;i<60;i++)Events.fire(mindustry.game.EventType.Trigger.update);
+        check(infectedCount()>before,"terrain spread did not resume after editing");
+        check(ground.health<unitHp&&target.health<buildingHp,"corrosion did not resume after editing");
+        terrain.getMethod("spreadByUnit",Unit.class).invoke(null,insect);
+        check(Vars.world.tile(70,40).floor()==floor,"unit infection did not resume after editing");
+        System.out.println("NANO_EDITOR_CHECK_PASS: unpaused in-game editor freezes spread, unit/reactor seeding, colonies and corrosion; simulation resumes afterward");
+    }
     static Building find(Block b){return Groups.build.find(x->x.block==b&&x.team==nano);}
     static void tick(){Groups.unit.updatePhysics();for(Unit u:Groups.unit.copy())if(u.type.name.equals("cryon-nano-weaver"))u.update();for(Building b:Groups.build.copy())if(b.isValid())b.update();Time.update();Vars.state.tick+=1;Vars.state.teams.updateTeamStats();}
 }

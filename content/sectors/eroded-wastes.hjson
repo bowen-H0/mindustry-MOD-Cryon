@@ -2,4 +2,4 @@ planet: cryon
 sector: 89
 alwaysUnlocked: false
 difficulty: 10
-captureWave: 100
+captureWave: 40

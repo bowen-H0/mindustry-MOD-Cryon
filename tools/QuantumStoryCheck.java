@@ -69,6 +69,15 @@ public class QuantumStoryCheck{
         Vars.state.rules=new Rules();Vars.world.loadGenerator(80,80,tiles->{for(int x=0;x<80;x++)for(int y=0;y<80;y++)tiles.set(x,y,new Tile(x,y,Blocks.sand,Blocks.air,Blocks.air));});
         Vars.world.tile(30,30).setBlock(computer,Team.sharded);Building terminal=Vars.world.build(30,30);computer.unlock();
         Method ready=terminal.getClass().getMethod("ready"),supply=terminal.getClass().getMethod("constructorStatus",float.class);
+        terminal.power.status=1;supply.invoke(terminal,1f);
+        check(!(boolean)ready.invoke(terminal),"Custom/sandbox terminal is usable");
+        terminal.configured(null,true);terminal.configured(null,0);terminal.configured(null,3);
+        check(!get("underground")&&call(reconnect("crux"),"npc").equals("crux.enemy"),"Non-campaign terminal changed story progress");
+        Vars.state.rules.sector=Vars.content.sector("cryon-cryon-sector-1").sector;
+        Vars.state.rules.editor=true;
+        check(!(boolean)ready.invoke(terminal),"In-game editor terminal is usable");
+        terminal.configured(null,true);check(!get("underground"),"Editor terminal changed story progress");
+        Vars.state.rules.editor=false;terminal.power.status=0;supply.invoke(terminal,0f);
         check(!(boolean)ready.invoke(terminal),"Unpowered terminal is usable");terminal.configured(null,true);check(!get("underground"),"Unpowered terminal unlocked underground");
         terminal.power.status=1;tick(terminal);check(!(boolean)ready.invoke(terminal),"Terminal works without constructor energy");
         supply.invoke(terminal,0.5f);check(!(boolean)ready.invoke(terminal),"Partial constructor supply opens terminal");

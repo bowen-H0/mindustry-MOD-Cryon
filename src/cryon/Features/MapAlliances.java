@@ -56,7 +56,10 @@ public final class MapAlliances{
         });
         Events.run(Trigger.beforeGameUpdate, MapAlliances::refresh);
         Events.run(Trigger.afterGameUpdate, MapAlliances::checkVictory);
+        // Input mode can be recreated when switching between touch and keyboard controls.
+        Events.run(Trigger.update, cryon.Type.AllianceMobileInput::install);
         if(!Vars.headless) Events.on(ClientLoadEvent.class, event -> {
+            cryon.Type.AllianceMobileInput.install();
             Vars.ui.editor.shown(MapAlliances::addEditorButton);
             Events.on(ResizeEvent.class, resize -> Core.app.post(() -> {
                 if(Vars.ui.editor.isShown()) addEditorButton();

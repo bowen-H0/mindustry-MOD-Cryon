@@ -4,10 +4,8 @@ import arc.Core;
 import arc.Events;
 import arc.files.Fi;
 import arc.util.Log;
-import cryon.Script.VirusIntrusionScript;
 import mindustry.core.GameState;
 import mindustry.game.EventType.*;
-import mindustry.game.Rules;
 import mindustry.game.Saves.SaveSlot;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
@@ -24,7 +22,6 @@ public final class DesolateIntrusion {
     private static final String timerKey = "cryon-intrusion-wave-timer";
     public static final String campaignKey = "cryon-intrusion-campaign";
     private static boolean installed, switching, transitionFailed;
-    private static float checkTimer;
 
     private DesolateIntrusion() {}
     private static Fi snapshot(){ return dataDirectory.child("cryon-intrusion/reality.msav"); }
@@ -49,32 +46,24 @@ public final class DesolateIntrusion {
         Events.on(WorldLoadEvent.class, event -> prepareWorld());
         Events.on(SaveLoadEvent.class, event -> prepareWorld());
         Events.on(PlayEvent.class, event -> prepareWorld());
-        Events.on(UnitDestroyEvent.class, event -> {
-            if(!eligible() || state.gameOver || !stage().isEmpty()) return;
-            if(event.unit.team != state.rules.waveTeam || !event.unit.type.name.equals("cryon-roche") || state.wave < 99) return;
-            if(Groups.unit.contains(u -> u != event.unit && u.team == state.rules.waveTeam
-                    && u.type.name.equals("cryon-roche") && !u.dead && u.health > 0f)) return;
-            state.rules.winWave = 0;
-            Rules owner = state.rules;
-            Core.app.post(() -> { if(state.rules == owner && eligible() && !state.gameOver) begin(); });
-        });
         Events.run(Trigger.update, DesolateIntrusion::update);
     }
 
     private static void prepareWorld(){
-        checkTimer = 0f;
         if(switching || IntrusionMap.active()) return;
         transitionFailed = false;
         if(!eligible()){
             if(state != null && state.rules.tags.containsKey(winKey)) restoreRules();
             return;
         }
-        if(state.rules.sector.info.wasCaptured || stage().equals("cleared") || stage().equals("failed")) return;
-        if(!state.rules.tags.containsKey(winKey)){
-            state.rules.tags.put(winKey, Integer.toString(state.rules.winWave > 0 ? state.rules.winWave : 100));
+        // Only resume a campaign intrusion that was already in progress in an older save.
+        // New campaigns and saves waiting for the old trigger use normal capture rules.
+        if(!stage().equals("active")){
+            if(state.rules.tags.containsKey(winKey)) restoreRules();
+            return;
         }
         state.rules.winWave = 0;
-        if(stage().equals("active")) state.rules.waveTimer = false;
+        state.rules.waveTimer = false;
     }
 
     private static void restoreRules(){
@@ -100,12 +89,6 @@ public final class DesolateIntrusion {
             }
         }else if(stage().equals("failed")){
             lose();
-        }else if(stage().isEmpty() && !state.rules.sector.info.wasCaptured){
-            checkTimer += Core.graphics.getDeltaTime();
-            if(checkTimer >= 0.5f){
-                checkTimer = 0f;
-                if(state.wave >= state.rules.tags.getInt(winKey, 100) && state.enemies == 0 && !spawner.isSpawning()) begin();
-            }
         }
     }
 
@@ -120,21 +103,6 @@ public final class DesolateIntrusion {
                 Log.err("[CryonIntrusion] Map transition failed; reality checkpoint retained.", error);
                 if(!headless && ui != null) ui.showException(Core.bundle.get("cryon.intrusion.transition-error"), error);
             }finally{ switching = false; }
-        });
-    }
-
-    private static void begin(){
-        if(switching || !stage().isEmpty()) return;
-        state.rules.tags.put(stageKey, "active");
-        state.rules.tags.put(timerKey, Boolean.toString(state.rules.waveTimer));
-        state.rules.waveTimer = false;
-        state.rules.winWave = 0;
-        queue(() -> {
-            snapshot().parent().mkdirs();
-            SaveIO.write(snapshot()); // Abort before resetting the world if this fails.
-            outcome().writeString("pending");
-            if(control.saves.getCurrent() != null) control.saves.getCurrent().save();
-            enter(true);
         });
     }
 

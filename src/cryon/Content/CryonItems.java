@@ -28,7 +28,7 @@ public class CryonItems{
     public static Item aluminum, magnesium, quartz, salt, sodium, crystalSand,
             dryIce, cryoAlloy, farstarAlloy, nickel, neutronite, nanoMaterial, ferrum,steel,hardSteel,redSand, manganese, armorAlloy,ashesAlloy,
             rhenium, technetium, promethium, neptunium, oganesson, gammaCrystal, protocolPoint, laminatedRhenium, phaseCrystal, porphyraAlloy, rheniumPlate,
-            abyssalSediment;
+            abyssalSediment, nuclearExplosive;
 
     // ================== 白名单 ==================
 
@@ -95,7 +95,7 @@ public class CryonItems{
         farstarAlloy = item("farstar-alloy", "d0a0ff", 0, 0f, 0f, 0.6f, 0f);
         nickel = item("nickel", "e3decfff", 3, 0f, 0f, 0f, 0f);
         neutronite = item("neutronite", "90c8ffff", 0, 0.1f, 0f, 0.1f, 0.9f);
-        nanoMaterial = item("nano-material", "4CE68C", 0, 0f, 0.15f, 0f, 0.3f);
+        nanoMaterial = item("nano-material", "4CE68C", 4, 0f, 0.15f, 0f, 0.3f);
 
         // ---- Aravis 本星物品 ----
         ferrum = item("ferrum", "8C8C8C", 1, 0f, 0f, 0f, 0f);
@@ -120,6 +120,9 @@ public class CryonItems{
         // Append new items so existing content registration order remains stable.
         abyssalSediment = item("abyssal-sediment", "879894", 0);
         abyssalSediment.lowPriority = true;
+        nuclearExplosive = item("nuclear-explosive", "ff6254", 0, 18f, 1.2f, 1f, 4f);
+        nuclearExplosive.alwaysUnlocked = true;
+        nuclearExplosive.cost = 10f;
         // ================== 白名单登记 ==================
         planet("aluminum", "cryon-cryon");
         planet("magnesium", "cryon-cryon");
@@ -133,6 +136,7 @@ public class CryonItems{
         planet("crystal-sand", "cryon-cryon");
         planet("dry-ice", "cryon-cryon");
         planet("abyssal-sediment", "cryon-cryon", "cryon-cryon-depths");
+        planet("nuclear-explosive", "cryon-cryon");
         planet("cryo-alloy", "cryon-cryon");
         planet("farstar-alloy", "cryon-cryon");
         planet("nickel", "cryon-cryon","cryon-aravis");

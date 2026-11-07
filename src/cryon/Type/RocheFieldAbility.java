@@ -42,7 +42,7 @@ public class RocheFieldAbility extends Ability{
         Draw.reset();
     });
 
-    // 吸血激光:从星连到友军(data = 友军)
+    // 吸血激光:从星连到敌军(data = 敌军)
     public static final Effect drainFx = new Effect(18f, 600f, e -> {
         if(!(e.data instanceof Position p)) return;
         float fout = e.fout();
@@ -84,10 +84,10 @@ public class RocheFieldAbility extends Ability{
     public float centerOffsetX = 0f, centerOffsetY = -30f;   // 跟随机体朝向
 
     public float layer = ReflectShieldAbility.layerReflectShield + 10f;
-    // ---------- 友军吸血 ----------
-    public float drainDamage = 200f;   // 每次对友军造成的伤害
+    // ---------- 敌军吸血 ----------
+    public float drainDamage = 200f;   // 每次对敌军造成的伤害
     public float drainReload = 15f;    // 间隔(tick)
-    public float drainHealMult = 1f;   // 回血 = 友军实际受到的伤害 * 这个倍率
+    public float drainHealMult = 1f;   // 回血 = 敌军实际受到的伤害 * 这个倍率
 
     public Color color = Color.valueOf("ff2a2a");
 
@@ -172,6 +172,7 @@ public class RocheFieldAbility extends Ability{
     }
 
     public void drawOverlay(Unit unit){
+        if(cryon.Script.DesolatePlainScript.entering(unit)) return;
         // 简单视锥裁剪
         if(!Core.camera.bounds(Tmp.r1).grow(range * 2f).contains(unit.x, unit.y)) return;
 
@@ -234,6 +235,7 @@ public class RocheFieldAbility extends Ability{
         }
 
         // ===== 2. 每隔几秒,范围内敌人/建筑掉血 =====
+        if(net.client() || unit.hasEffect(mindustry.content.StatusEffects.disarmed)) return;
         if((timer += Time.delta) >= reload){
             timer = 0f;
             wave = 1f;
@@ -241,7 +243,8 @@ public class RocheFieldAbility extends Ability{
 
             if(hitUnits){
                 Units.nearby(null, unit.x, unit.y, range, other -> {
-                    if(other.team != unit.team && other.checkTarget(targetAir, targetGround) && other.targetable(unit.team)){
+                    if(!cryon.Features.MapAlliances.allied(other.team, unit.team)
+                        && other.checkTarget(targetAir, targetGround) && other.targetable(unit.team)){
                         all.add(other);
                     }
                 });
@@ -269,26 +272,29 @@ public class RocheFieldAbility extends Ability{
             }
         }
 
-        // ===== 3. 自己没满血时,三颗星向最近的友军放红色激光吸血 =====
-        if(unit.health < unit.maxHealth && (drainTimer += Time.delta) >= drainReload){
+        // ===== 3. 自己没满血时,三颗星向最近的敌军放红色激光吸血 =====
+        if(!net.client() && !unit.hasEffect(mindustry.content.StatusEffects.disarmed)
+            && unit.health < unit.maxHealth && (drainTimer += Time.delta) >= drainReload){
             drainTimer = 0f;
             for(int i = 0; i < stars; i++){
                 if(unit.health >= unit.maxHealth) break;
 
                 starPos(unit, i);
                 float sx = tmp.x, sy = tmp.y;
-                Unit ally = Units.closest(unit.team, sx, sy, range, u -> u != unit && u.within(unit, range));
-                if(ally == null) continue;
+                Unit enemy = Units.closestEnemy(unit.team, sx, sy, range,
+                    u -> !u.dead && u.health > 0f && !cryon.Features.MapAlliances.allied(u.team, unit.team)
+                        && u.checkTarget(targetAir, targetGround) && u.targetable(unit.team) && u.within(unit, range));
+                if(enemy == null) continue;
 
                 // 真实伤害:不走 damage/damagePierce 的伤害管线(不受护盾、护甲、易伤等任何加成/减免影响),
                 // 直接手动扣 health,回血量就是实际扣掉的血量
-                float taken = Math.min(drainDamage, ally.health);
-                ally.health -= taken;
-                ally.clampHealth();
+                float taken = Math.min(drainDamage, enemy.health);
+                enemy.health -= taken;
+                enemy.clampHealth();
                 unit.heal(taken * drainHealMult);
 
-                drainFx.at(sx, sy, 0f, color, ally);
-                hitFx.at(ally.x, ally.y, 0f, color);
+                drainFx.at(sx, sy, 0f, color, enemy);
+                hitFx.at(enemy.x, enemy.y, 0f, color);
             }
         }
     }

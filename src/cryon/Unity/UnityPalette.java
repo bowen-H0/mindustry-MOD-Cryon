@@ -19,6 +19,7 @@ public class UnityPalette{
         if(color==null || original==null)return original;
         if(copies.containsKey(original))return copies.get(original);
         BulletType copy=original.copy();
+        cryon.Features.ProjectileTags.inherit(original,copy);
         // BulletType.copy registers a content ID. These copies are local visuals only.
         Vars.content.getBy(ContentType.bullet).remove(copy, true);
         copy.id=original.id;

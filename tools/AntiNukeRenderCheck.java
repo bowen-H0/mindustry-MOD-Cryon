@@ -28,6 +28,10 @@ public class AntiNukeRenderCheck{
                 });
                 Vars.world.tile(64,64).setBlock(Vars.content.block("cryon-disarmament"),Team.sharded);
                 silo=Vars.world.tile(64,64).build;
+                for(String name:new String[]{"hatchRegion","doorLeftRegion","doorRightRegion"}){
+                    var region=(arc.graphics.g2d.TextureRegion)silo.block.getClass().getField(name).get(silo.block);
+                    if(!Core.atlas.isFound(region))throw new AssertionError("Missing textured hatch component: "+name);
+                }
                 Vars.world.tile(61,64).setBlock(Blocks.powerSource,Team.sharded);
                 Vars.world.tile(15,15).setBlock(Vars.content.block("cryon-java-processor"),Team.crux);
                 Building processor=Vars.world.tile(15,15).build;

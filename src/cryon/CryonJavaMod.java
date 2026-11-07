@@ -88,7 +88,9 @@ public class CryonJavaMod extends Mod {
         NormaTeam.init();
         AllianceTeam.init();
         PioneerTeam.init();
+        DisasterFactions.init();
         UnitDisplayOrder.install();
+        DatabaseSections.install();
     }
 
     public static FluxBarrier fluxBarrier;
@@ -163,6 +165,8 @@ public class CryonJavaMod extends Mod {
         SpaceJump.loadCommands();
         cryon.Story.IntrusionContent.load();
         CryonItems.load();
+        cryon.Content.NanoEnvironment.load();
+        cryon.Content.NanoColonyContent.load();
         CryonCampaignLayers.load();
         cryon.Content.CryonDepthsEnvironment.load();
         UnderwaterEditor.load();
@@ -1989,6 +1993,7 @@ public class CryonJavaMod extends Mod {
         ScriptRegistry.register("orbital_strike", "轨道打击", OrbitalStrikeScript::new);
         ScriptRegistry.register("nuke_strike", "script.nuke-strike.name", NukeStrikeScript::new);
         ScriptRegistry.register("nuclear_cleansing", "script.nuclear-cleansing.name", NuclearCleansingScript::new);
+        ScriptRegistry.register(DesolatePlainScript.id, "script.desolate-plain.name", DesolatePlainScript::new);
         NuclearCleansingScript.initNetworking();
 
 
@@ -2002,6 +2007,14 @@ public class CryonJavaMod extends Mod {
             privileged = true;
             size = 1;
         }};
+        new OrbitalPowerNode("orbital-power-node");
+        new OrbitalBarrierNode("orbital-barrier-node");
+        new NanoRegenerationMatrix("nano-regeneration-matrix");
+        new NanoReactor("nano-reactor");
+        new NanoSuppressor("nano-suppressor");
+        new EmpBomb("emp-bomb");
+        DatabaseSections.load();
+        new RealityAnchoringMatrix("reality-anchoring-matrix");
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -2013,6 +2026,7 @@ public class CryonJavaMod extends Mod {
     }
 
     private void initTimed() {
+        cryon.Content.NanoEnvironment.install();
         cryon.Story.StoryProgress.install();
         MainMenuTheme.install();
         PorphyraFlyingAI.install();
@@ -2021,6 +2035,7 @@ public class CryonJavaMod extends Mod {
         MapAlliances.install();
         SpaceJump.install();
         cryon.Story.DesolateIntrusion.install();
+        DesolatePlainScript.install();
         LoadTiming.measure("init / environment", CryonEnvironment::init);
         LoadTiming.measure("init / depths environment", cryon.Content.CryonDepthsEnvironment::init);
         LoadTiming.measure("init / aravis environment", AravisEnvironment::init);
@@ -2031,6 +2046,7 @@ public class CryonJavaMod extends Mod {
             NormaTeam.loadIcon();
             AllianceTeam.loadIcon();
             PioneerTeam.loadIcon();
+            TeamEmblems.loadIcon(DisasterFactions.nano);
         });
         Events.on(ClientLoadEvent.class, event -> {
             Block projector = Vars.content.block("cryon-team-flag-projector");
@@ -2617,6 +2633,7 @@ public class CryonJavaMod extends Mod {
         CryonCampaignLayers.install();
         PlanetTraits.configure();
         UnitDisplayOrder.arrangeProduction();
+        DatabaseSections.configure();
 
         // TechTree
         Events.on(ClientLoadEvent.class, e -> {
@@ -2626,6 +2643,7 @@ public class CryonJavaMod extends Mod {
             AravisTechTree.load();
             PorphyraTechTree.load();
             CryonCampaignLayers.shareResearch();
+            DatabaseSections.configure();
 
              TechNode root = TechTree.roots.find(
                     n -> n.content != null && n.content.name.equals("cryon-core-pioneer"));
@@ -2665,6 +2683,7 @@ public class CryonJavaMod extends Mod {
         });
 
 
+        cryon.Features.ProjectileTags.install();
         //SectorIdDebug.install();
         if(cryonPlanet != null){
             Log.info("[CryonDebug] hasGrid=@ sectorCount=@", cryonPlanet.hasGrid(), cryonPlanet.sectors.size);

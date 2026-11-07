@@ -131,6 +131,7 @@ public class ThresholdFieldAbility extends Ability{
 
     @Override
     public void draw(Unit unit){
+        if(cryon.Script.DesolatePlainScript.entering(unit)) return;
         super.draw(unit);
         Vec2 c = center(unit);
         float cx = c.x, cy = c.y;

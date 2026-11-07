@@ -147,6 +147,7 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "cryo-repair-tower", "cryo-mender");
         addAuto(Kind.BLOCK, "overdrive-tower", "cryo-mender");
         addAuto(Kind.BLOCK, "nano-projector", "mend-projector-advanced");
+        addAuto(Kind.BLOCK, "nano-regeneration-matrix", "nano-projector");
         addAuto(Kind.BLOCK, "mend-projector-advanced", "cryo-mender");
 
 
@@ -192,6 +193,8 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "flux-barrier", "micro-projector");
         addAuto(Kind.BLOCK, "aegis-barrier", "flux-barrier");
+        addAuto(Kind.BLOCK, "orbital-barrier-node", "aegis-barrier");
+        addAuto(Kind.BLOCK, "reality-anchoring-matrix", "orbital-barrier-node");
 
         addAuto(Kind.BLOCK, "gem", "spiral");
         addAuto(Kind.BLOCK, "meteor", "spiral");
@@ -225,6 +228,9 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "penetrate", "cavity");
         addAuto(Kind.BLOCK, "phase-constructor", "neutron-activator");
         addAuto(Kind.BLOCK, "nano-material-weaver", "phase-constructor");
+        addAuto(Kind.BLOCK, "nano-reactor", "nano-material-weaver");
+        addAuto(Kind.BLOCK, "nano-suppressor", "nano-material-weaver");
+        addAuto(Kind.BLOCK, "emp-bomb", "nano-suppressor");
         addAuto(Kind.BLOCK, "quartz-reactor", "magnesium-converter");
         addAuto(Kind.BLOCK, "scrap-pyrolyzer", "magnesium-converter");
         addAuto(Kind.BLOCK, "shattering-drill", "core-pioneer");

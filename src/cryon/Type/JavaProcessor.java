@@ -88,7 +88,7 @@ public class JavaProcessor extends Block {
         }
 
         public boolean scriptLocked(){
-            return cryon.Story.IntrusionMap.active()
+            return script instanceof DesolatePlainScript || cryon.Story.IntrusionMap.active()
                     && (script instanceof VirusIntrusionScript || script instanceof cryon.Script.OrbitalStrikeScript);
         }
 

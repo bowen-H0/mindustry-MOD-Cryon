@@ -64,7 +64,7 @@ public class UnityFusion{
         throw new IllegalArgumentException("Unsupported fusion source: "+t.name);
     }
     public static BulletType privateCopy(BulletType original){
-        BulletType copy=original.copy();Vars.content.getBy(ContentType.bullet).remove(copy,true);copy.id=original.id;return copy;
+        BulletType copy=original.copy();cryon.Features.ProjectileTags.inherit(original,copy);Vars.content.getBy(ContentType.bullet).remove(copy,true);copy.id=original.id;return copy;
     }
     private BulletType mix(Seq<BulletType> ingredients,int depth,String color,boolean child){
         BulletType carrier=ingredients.first();
@@ -126,6 +126,7 @@ public class UnityFusion{
         }else{out.fragBullet=null;out.intervalBullet=null;}
         if(!color.isEmpty())out=new UnityPalette(color).apply(out);
         UnityHybridBullet hybrid=new UnityHybridBullet(out,statuses,durations,beacons,links);
+        for(BulletType ingredient:ingredients) cryon.Features.ProjectileTags.inherit(ingredient,hybrid);
         wireTypes.add(hybrid);return hybrid;
     }
     private static float effectiveDamage(BulletType b){return b instanceof BeaconBulletType?((BeaconBulletType)b).strikeDamage:b.damage;}

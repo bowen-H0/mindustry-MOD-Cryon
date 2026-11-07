@@ -77,7 +77,7 @@ public final class MapAlliances{
         java.util.Arrays.fill(members, false);
         for(String part : value.split(",")){
             int id = Strings.parseInt(part.trim(), -1);
-            if(id > 0 && id < members.length){ members[id] = true; hasAllies = true; }
+            if(id > 0 && id < members.length && !DisasterFactions.contains(Team.get(id))){ members[id] = true; hasAllies = true; }
         }
     }
 
@@ -87,7 +87,7 @@ public final class MapAlliances{
     }
 
     public static void setAlly(Rules rules, Team team, boolean ally){
-        if(team == Team.derelict || team == rules.defaultTeam) return;
+        if(team == Team.derelict || team == rules.defaultTeam || DisasterFactions.contains(team)) return;
         read(rules); members[team.id] = ally;
         StringBuilder value = new StringBuilder();
         for(int id = 1; id < members.length; id++) if(members[id]){
@@ -112,6 +112,12 @@ public final class MapAlliances{
     public static boolean mayTarget(Teamc target, Team observer){ return !friendlyDifferent(target.team(), observer); }
     public static boolean mayDamageFrom(Teamc target, Team source){ return !friendlyDifferent(target.team(), source); }
     public static boolean mayDamage(Teamc target){ return current == null || mayDamageFrom(target, current.actor); }
+    public static boolean maySetPosition(Teamc actor, float x, float y){
+        return !(actor instanceof Unit) || cryon.Type.RealityAnchoringMatrix.allowRelocation((Unit)actor, x, y, false);
+    }
+    public static boolean mayTeleport(Teamc actor, float x, float y){
+        return !(actor instanceof Unit) || cryon.Type.RealityAnchoringMatrix.allowRelocation((Unit)actor, x, y, true);
+    }
     public static boolean mayCollide(Teamc actor, Object other){
         return !(other instanceof Teamc) || (!(actor instanceof Bullet) && !(other instanceof Bullet))
             || !friendlyDifferent(actor.team(), ((Teamc)other).team());
@@ -296,6 +302,7 @@ public final class MapAlliances{
         for(Team team : Team.baseTeams) if(team != Team.derelict && team != rules.defaultTeam) teams.addUnique(team);
         for(var tile : Vars.editor.tiles()) if(tile.team() != Team.derelict && tile.team() != rules.defaultTeam) teams.addUnique(tile.team());
         for(Team team : Team.all) if(selected(rules, team)) teams.addUnique(team);
+        teams.removeAll(DisasterFactions::contains);
         teams.sort(team -> team.id);
         dialog.cont.pane(list -> {
             for(Team team : teams){
@@ -342,13 +349,38 @@ public final class MapAlliances{
 
     /** Keep native bullet pooling and callbacks, with the attacker's diplomacy active for damage. */
     public static class AllianceBullet extends Bullet{
+        public int projectileTags;
+        public boolean realityWeakened;
+        @Override public float damageMultiplier(){ return super.damageMultiplier() * (realityWeakened ? 0.5f : 1f); }
+        @Override public void reset(){ super.reset(); projectileTags = 0; realityWeakened = false; }
         @Override public boolean collides(Hitboxc other){ return mayCollide(this, other) && super.collides(other); }
-        @Override public void add(){ Scope scope = enter(this); try{ super.add(); }finally{ exit(scope); } }
-        @Override public void update(){ Scope scope = enter(this); try{ super.update(); }finally{ exit(scope); } }
+        @Override public void add(){
+            Scope scope = enter(this);
+            AllianceBullet previous = ProjectileTags.current;
+            ProjectileTags.initialize(this); ProjectileTags.current = this;
+            float length = cryon.Type.OrbitalBarrierNode.clipBeam(this, true);
+            try{ super.add(); }finally{ cryon.Type.OrbitalBarrierNode.restoreBeam(this, length); ProjectileTags.current = previous; exit(scope); }
+        }
+        @Override public void update(){
+            ProjectileTags.check(this);
+            if(cryon.Type.OrbitalBarrierNode.intercept(this)) return;
+            Scope scope = enter(this);
+            AllianceBullet previous = ProjectileTags.current; ProjectileTags.current = this;
+            float length = cryon.Type.OrbitalBarrierNode.clipBeam(this, type instanceof mindustry.entities.bullet.ContinuousBulletType);
+            try{ super.update(); }finally{ cryon.Type.OrbitalBarrierNode.restoreBeam(this, length); ProjectileTags.current = previous; exit(scope); }
+        }
+        @Override public void draw(){
+            float length = cryon.Type.OrbitalBarrierNode.clipBeam(this, false);
+            try{ super.draw(); }finally{ cryon.Type.OrbitalBarrierNode.restoreBeam(this, length); }
+        }
         @Override public void collision(Hitboxc other, float x, float y){
             if(!mayCollide(this, other)) return;
-            Scope scope = enter(this); try{ super.collision(other, x, y); }finally{ exit(scope); }
+            Scope scope = enter(this); AllianceBullet previous = ProjectileTags.current; ProjectileTags.current = this;
+            try{ super.collision(other, x, y); }finally{ ProjectileTags.current = previous; exit(scope); }
         }
-        @Override public void remove(){ Scope scope = enter(this); try{ super.remove(); }finally{ exit(scope); } }
+        @Override public void remove(){
+            Scope scope = enter(this); AllianceBullet previous = ProjectileTags.current; ProjectileTags.current = this;
+            try{ super.remove(); }finally{ ProjectileTags.current = previous; exit(scope); }
+        }
     }
 }

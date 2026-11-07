@@ -101,6 +101,10 @@ final class AllianceAdapters{
             }catch(NoSuchMethodException ignored){}
         }
         if(Unit.class.isAssignableFrom(base)){
+            try{
+                if(!Modifier.isFinal(base.getMethod("set", float.class, float.class).getModifiers()))
+                    relocation(code, owner, "set", "maySetPosition");
+            }catch(NoSuchMethodException ignored){}
             guarded(code, owner, "targetable", "(" + team + ")Z", "mayTarget", "(" + teamc + team + ")Z", new Class<?>[]{mindustry.game.Team.class});
             guarded(code, owner, "collides", "(Lmindustry/gen/Hitboxc;)Z", "mayCollide", "(" + teamc + "Ljava/lang/Object;)Z", new Class<?>[]{Hitboxc.class});
         }else{
@@ -155,6 +159,15 @@ final class AllianceAdapters{
             }
             return count == 0 ? constructor.newInstance() : constructor.newInstance(outer);
         }
+    }
+
+    private static void relocation(ClassFileWriter code, String owner, String method, String check){
+        code.startMethod(method, "(FF)V", ClassFileWriter.ACC_PUBLIC);
+        code.addLoadThis(); code.addFLoad(1); code.addFLoad(2);
+        code.addInvoke(INVOKESTATIC, helper, check, "(" + teamc + "FF)Z");
+        int allowed = code.acquireLabel(); code.add(IFNE, allowed); code.add(RETURN); code.markLabel(allowed);
+        code.addLoadThis(); code.addFLoad(1); code.addFLoad(2);
+        code.addInvoke(INVOKESPECIAL, owner, method, "(FF)V"); code.add(RETURN); code.stopMethod((short)3);
     }
 
     private static void damageBullet(ClassFileWriter code, String owner){

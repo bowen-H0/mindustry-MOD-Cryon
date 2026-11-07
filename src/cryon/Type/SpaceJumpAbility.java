@@ -97,6 +97,9 @@ public class SpaceJumpAbility extends Ability{
             return;
         }
         if(active){
+            if(!Vars.net.client() && !RealityAnchoringMatrix.teleportAllowed(unit, targetX, targetY)){
+                cancel(unit); return;
+            }
             if(!Vars.net.client() && automatic && !canAutoJump(unit)){
                 cancel(unit);
                 return;
@@ -200,6 +203,7 @@ public class SpaceJumpAbility extends Ability{
     }
 
     private boolean requestJump(Unit unit, float x, float y){
+        if(!RealityAnchoringMatrix.teleportAllowed(unit, x, y)) return false;
         if(!SpaceJump.enabled() || !SpaceJump.allowed(unit) || Vars.net.client() || active || reconstructing() || cooldown > 0f || unit.dead || !unit.isFlying()
             || !Float.isFinite(x) || !Float.isFinite(y)) return false;
         Vec2 landing = landing(unit, x, y, new Vec2());
@@ -211,6 +215,7 @@ public class SpaceJumpAbility extends Ability{
 
     /** Shared by preview and server execution so the displayed landing obeys the same limits. */
     public Vec2 landing(Unit unit, float x, float y, Vec2 out){
+        if(!RealityAnchoringMatrix.teleportAllowed(unit, x, y)) return null;
         if(!Float.isFinite(x) || !Float.isFinite(y)) return null;
         float margin = Math.max(4f, unit.hitSize / 2f);
         x = Mathf.clamp(x, margin, Math.max(margin, Vars.world.unitWidth() - margin));
@@ -247,6 +252,7 @@ public class SpaceJumpAbility extends Ability{
 
     public void finish(Unit unit, float x, float y, float rotation){
         if(!SpaceJump.enabled() || !SpaceJump.allowed(unit)) return;
+        if(!Vars.net.client() && !RealityAnchoringMatrix.teleportAllowed(unit, x, y)){ cancel(unit); return; }
         if(!active){ originX = unit.x; originY = unit.y; level = level(unit); }
         if(!Vars.headless){
             SpaceJumpAudio.fold(unit, originX, originY, x, y, level);

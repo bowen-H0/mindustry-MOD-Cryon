@@ -38,6 +38,7 @@ public class HighDimensionBarrierAbility extends Ability{
     }
 
     @Override public void draw(Unit unit){
+        if(cryon.Script.DesolatePlainScript.entering(unit)) return;
         float intensity = Math.max(unit.hitTime, data);
         if(intensity <= 0.001f || hull.name == null) return;
         if(hull.region == null) hull.region = Core.atlas.find(hull.name);

@@ -10,6 +10,7 @@ import mindustry.gen.Unit;
 /** Resolve the closest safe landing toward the source, outside the union of hostile flux fields. */
 public class SpaceJumpLanding{
     public static Vec2 outsideEnemyFlux(Unit unit, Vec2 destination){
+        if(!RealityAnchoringMatrix.teleportAllowed(unit, destination.x, destination.y)) return null;
         float dx = destination.x - unit.x, dy = destination.y - unit.y;
         float length2 = dx * dx + dy * dy;
         if(length2 < 0.0001f) return destination;
@@ -47,7 +48,8 @@ public class SpaceJumpLanding{
             if(end >= 1f && start <= 1f){
                 if(start <= 0f) return null; // no safe point on this segment
                 float fraction = Math.max(0f, start - 0.5f / (float)Math.sqrt(length2));
-                return destination.set(unit.x + dx * fraction, unit.y + dy * fraction);
+                float x = unit.x + dx * fraction, y = unit.y + dy * fraction;
+                return RealityAnchoringMatrix.teleportAllowed(unit, x, y) ? destination.set(x, y) : null;
             }
         }
         return destination;

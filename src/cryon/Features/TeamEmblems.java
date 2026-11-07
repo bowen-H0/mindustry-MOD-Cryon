@@ -20,7 +20,7 @@ public final class TeamEmblems{
     private TeamEmblems(){}
 
     public static String bundledPath(Team team){
-        return team == NormaTeam.team || team == AllianceTeam.team || team == PioneerTeam.team
+        return team == NormaTeam.team || team == AllianceTeam.team || team == PioneerTeam.team || team == DisasterFactions.nano
                 ? "/sprites/team-" + team.name + ".png" : null;
     }
 

@@ -24,7 +24,7 @@ import mindustry.world.meta.*;
 public class NuclearArbiter extends Block{
     public float range = 640f, chargeTime = 1800f;
     public ItemStack[] ammunition;
-    private static final Color hatchDark = Color.valueOf("18212b"), hatchPanel = Color.valueOf("667581");
+    public TextureRegion hatchRegion, doorLeftRegion, doorRightRegion;
     private static boolean networkInitialized;
 
     public NuclearArbiter(String name){
@@ -67,6 +67,13 @@ public class NuclearArbiter extends Block{
         super.setStats();
         stats.add(Stat.range, range / Vars.tilesize, StatUnit.blocks);
         stats.add(Stat.reload, chargeTime / 60f, StatUnit.seconds);
+    }
+
+    @Override public void load(){
+        super.load();
+        hatchRegion = Core.atlas.find(name + "-hatch");
+        doorLeftRegion = Core.atlas.find(name + "-door-left");
+        doorRightRegion = Core.atlas.find(name + "-door-right");
     }
 
     @Override public void setBars(){
@@ -128,14 +135,14 @@ public class NuclearArbiter extends Block{
             float z = Draw.z();
             try{
                 Draw.z(Layer.blockOver);
-                Draw.color(hatchDark);
-                Fill.square(x, y, 11f);
+                Draw.color();
+                Draw.rect(hatchRegion, x, y);
                 Draw.color(team.color, door * 0.45f);
                 Lines.stroke(0.8f);
                 Lines.square(x, y, 8.5f);
-                Draw.color(hatchPanel);
-                Fill.rect(x - 5.5f - door * 12f, y, 10.5f, 21f);
-                Fill.rect(x + 5.5f + door * 12f, y, 10.5f, 21f);
+                Draw.color();
+                Draw.rect(doorLeftRegion, x - 5.5f - door * 12f, y);
+                Draw.rect(doorRightRegion, x + 5.5f + door * 12f, y);
                 Draw.color(team.color, enabled && efficiency > 0f ? 0.85f : 0.15f);
                 Lines.stroke(1f);
                 Lines.square(x, y, 14f);

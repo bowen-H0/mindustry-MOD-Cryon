@@ -36,11 +36,15 @@ public final class DesolateIntrusionGateTest {
         DesolateIntrusion.install();
         DesolateIntrusion.install();
         Events.fire(new WorldLoadEvent());
-        check(rules.winWave == 0, "premature wave victory not blocked");
+        check(rules.winWave == 100, "disabled intrusion still blocks normal victory");
         check(rules.canGameOver, "ordinary core defeat disabled");
-        check(rules.tags.getInt("cryon-intrusion-win-wave") == 100, "original win wave lost");
+        check(!rules.tags.containsKey("cryon-intrusion-win-wave"), "disabled intrusion installed a new victory gate");
         Events.fire(new SaveLoadEvent(false));
-        check(rules.tags.getInt("cryon-intrusion-win-wave") == 100, "duplicate load overwrites original win wave");
+        check(rules.winWave == 100, "duplicate load gated normal victory");
+        rules.tags.put("cryon-intrusion-win-wave", "100");
+        rules.winWave = 0;
+        Events.fire(new WorldLoadEvent());
+        check(rules.winWave == 100, "old waiting save left victory locked");
         rules.tags.put("cryon-intrusion-stage", "active");
         rules.tags.put("cryon-intrusion-wave-timer", "true");
         Events.fire(new WorldLoadEvent());
@@ -78,6 +82,6 @@ public final class DesolateIntrusionGateTest {
         Vars.headless = true;
         DesolateIntrusion.preview();
         check(posted.size() == 1, "headless preview queued graphical work");
-        System.out.println("PASS: victory gate, normal core loss, idempotent setup, pending reload, server/network fallback, completed/captured sectors, main-menu preview scheduling");
+        System.out.println("PASS: disabled automatic intrusion, old waiting save recovery, normal core loss, idempotent setup, pending reload, server/network fallback, completed/captured sectors, main-menu preview scheduling");
     }
 }

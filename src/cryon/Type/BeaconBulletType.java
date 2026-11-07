@@ -87,29 +87,34 @@ public class BeaconBulletType extends ArtilleryBulletType {
     public void fuseAt(Team team,float x,float y){mark(team,x,y);}
 
     protected void mark(Team team, float x, float y) {
+        float attenuation = cryon.Features.ProjectileTags.current != null && cryon.Features.ProjectileTags.current.realityWeakened ? 0.5f : 1f;
         Marker m = new Marker(x, y, strikeRadius, strikeDelay, markColor, team);
         markers.add(m);
         Fx.circleColorSpark.at(x, y, markColor);
 
         Time.run(strikeDelay, () -> {
             markers.remove(m);
-            strike(team, x, y);
+            strike(team, x, y, attenuation);
         });
     }
 
     protected void strike(Team team, float x, float y) {
+        strike(team, x, y, 1f);
+    }
+
+    protected void strike(Team team, float x, float y, float attenuation) {
         BeaconFx.beam.at(x, y, 0f, beamColor);
         BeaconFx.impact.at(x, y, 0f, beamColor);
 
         Units.nearbyEnemies(team, x, y, strikeRadius, unit -> {
             if (!cryon.Features.MapAlliances.allied(unit.team, team) && (fusedTargeting?unit.checkTarget(collidesAir,collidesGround):unit.isGrounded())) {
-                unit.damage(strikeDamage);
+                unit.damage(strikeDamage * attenuation);
             }
         });
 
         if(!fusedTargeting || collidesGround)Vars.indexer.eachBlock(null, x, y, strikeRadius,
                 building -> !cryon.Features.MapAlliances.allied(building.team, team),
-                building -> building.damage(team, strikeDamage)
+                building -> building.damage(team, strikeDamage * attenuation)
         );
 
         Fx.hitBulletColor.at(x, y, 0f, beamColor);

@@ -98,6 +98,7 @@ public class ReflectShieldAbility extends Ability {
 
     @Override
     public void draw(Unit unit) {
+        if(cryon.Script.DesolatePlainScript.entering(unit)) return;
         float[] d = getData(unit);
         if (d[1] > 0f) return;
 

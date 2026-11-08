@@ -65,7 +65,8 @@ public class ReflectShieldAbility extends Ability {
                 unit.x - reflectRadius, unit.y - reflectRadius,
                 reflectRadius * 2f, reflectRadius * 2f,
                 b -> {
-                    if (cryon.Features.MapAlliances.allied(b.team, unit.team) || b.absorbed) return;
+                    if (cryon.Features.MapAlliances.allied(b.team, unit.team) || b.absorbed
+                            || b.type instanceof MissileTruckBullets.HypersonicMissile) return;
                     if (!b.within(unit, reflectRadius)) return;
 
                     float speed = b.vel.len();

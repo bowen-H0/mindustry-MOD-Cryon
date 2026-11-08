@@ -81,6 +81,11 @@ public final class OrbitalBarrierNodeCheck{
         Bullet fast = basic.create(null, Team.crux, 200f, 360f, 0f);
         float before = get(a,"shield"); fast.update();
         check(fast.absorbed && get(a,"shield") < before, "fast enemy projectile tunneled through");
+        var hypersonic=Vars.content.unit("cryon-zhulong").weapons.first().bullet;
+        Bullet unstoppable=hypersonic.create(null,Team.crux,310f,360f,0f,-1,1,1,null,null,1000f,360f);
+        float shieldBefore=get(a,"shield");unstoppable.update();
+        check(!unstoppable.absorbed&&unstoppable.isAdded()&&get(a,"shield")==shieldBefore,"hypersonic missile intercepted by active curtain");
+        unstoppable.remove();
         Bullet friendly = basic.create(null, Team.sharded, 200f, 360f, 0f); friendly.update();
         check(!friendly.absorbed, "friendly projectile blocked"); friendly.remove();
         Vars.state.rules.tags.put("cryon-allied-teams", Integer.toString(Team.green.id));

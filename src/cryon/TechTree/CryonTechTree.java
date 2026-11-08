@@ -331,6 +331,11 @@ public class CryonTechTree extends ModPlanetTechTree {
         add(Kind.UNIT, "benignitas", "mechanical-factory", r(CryonContent.item("titanium"), 40, CryonContent.item("silicon"), 50));
         add(Kind.UNIT, "bolide", "t2factory", r(CryonContent.item("titanium"), 300, CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 300));
         add(Kind.UNIT, "buffer", "unit-projector", r(CryonContent.item("magnesium"), 200, CryonContent.item("silicon"), 50));
+        add(Kind.UNIT, "jinwu", "unit-projector", r(CryonContent.item("magnesium"), 180, CryonContent.item("silicon"), 120));
+        add(Kind.UNIT, "xihe", "jinwu", r(CryonContent.item("titanium"), 450, CryonContent.item("silicon"), 600));
+        add(Kind.UNIT, "fusang", "xihe", r(CryonContent.item("farstar-alloy"), 800, CryonContent.item("silicon"), 1800));
+        add(Kind.UNIT, "yaoling", "fusang", r(CryonContent.item("surge-alloy"), 2500, CryonContent.item("neutronite"), 1200));
+        add(Kind.UNIT, "zhulong", "yaoling", r(CryonContent.item("cryo-alloy"), 5000, CryonContent.item("nano-material"), 2500));
         add(Kind.UNIT, "comet", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
         add(Kind.UNIT, "nadir", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
 
@@ -460,6 +465,10 @@ public class CryonTechTree extends ModPlanetTechTree {
                 "t2factory", "denial", "deuterium-reactor",
                 "isotope-separator", "quartz-reactor", "torrent",
                 "small-launch-pad", "small-landing-pad");
+        sectorGate("cryon-sector-frost-outpost", "xihe");
+        sectorGate("cryon-neutron-flux-zone", "fusang");
+        sectorGate("exclusion-zone", "yaoling");
+        sectorGate("magnificent-rift", "zhulong");
 
         sectorGate("cryon-shattered-abyss",
                 "spark", "abyss", "farstar-forge", "nitrogen-separator");

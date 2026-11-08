@@ -124,7 +124,8 @@ public class OrbitalBarrierNode extends Block{
 
     /** Called before native bullet movement, so fast rounds cannot damage behind the curtain. */
     public static boolean intercept(Bullet bullet){
-        if(net.client() || bullet.absorbed || bullet.vel.isZero() || beamLength(bullet.type) >= 0f) return false;
+        if(net.client() || bullet.absorbed || bullet.vel.isZero() || beamLength(bullet.type) >= 0f
+                || bullet.type instanceof MissileTruckBullets.HypersonicMissile) return false;
         OrbitalBarrierBuild first = null, second = null;
         float best = 2f, ex = bullet.x + bullet.vel.x * Time.delta, ey = bullet.y + bullet.vel.y * Time.delta;
         for(OrbitalBarrierBuild a : nodes){

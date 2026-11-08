@@ -177,6 +177,7 @@ public class CryonJavaMod extends Mod {
         PorphyraEnvironment.load();
         new PorphyraTradeTower("porphyra-trade-tower");
         cryon.Content.BioCrawlerUnits.load();
+        cryon.Content.MissileTruckUnits.load();
         new TeamFlagProjector("team-flag-projector");
         new NuclearArbiter("disarmament");
         new UnityTurret("unity");
@@ -2394,6 +2395,7 @@ public class CryonJavaMod extends Mod {
         if (cryonPlanet != null) waveEmitter.shownPlanets.add(cryonPlanet);
         // Register before initCapacities so all new plan liquids are accepted.
         cryon.Content.CrawlerProduction.addPlans(t3universalAssembler, t4universalAssembler, t5universalAssembler);
+        cryon.Content.MissileTruckUnits.configureProduction(t3universalAssembler, t4universalAssembler, t5universalAssembler);
         // 添加生产计划
         if (peak != null) {
             t3universalAssembler.plans.add(new UniversalUnitAssembler.AssemblerUnitPlan() {{

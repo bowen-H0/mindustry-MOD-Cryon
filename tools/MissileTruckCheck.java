@@ -157,7 +157,7 @@ public class MissileTruckCheck{
         Bullet blockedSalvo=fire(2,180,300,500,300);blockedSalvo.type.update(blockedSalvo);
         Bullet blocked=Groups.bullet.find(b->b.type==nodeMissile);
         check(nodeMissile instanceof mindustry.entities.bullet.MissileBulletType&&nodeMissile.collides&&nodeMissile.collidesTiles
-                &&nodeMissile.collideTerrain&&!nodeMissile.pierceBuilding,"T3 missile does not use normal blocking collision");
+                &&!nodeMissile.collideTerrain&&!nodeMissile.collideFloor&&!nodeMissile.pierceBuilding,"T3 missile does not use normal blocking collision");
         blocked.set(520,300);blocked.tileRaycast(22,37,65,37);
         check(!blocked.isAdded()&&blocker.health<blockerHp&&enemy.health==protectedHp,"T3 missile passed through a wall");
         arc.math.geom.Vec2[] actual=(arc.math.geom.Vec2[])field(blockedSalvo.data,"nodes");
@@ -232,7 +232,43 @@ public class MissileTruckCheck{
         check(Math.abs(destination.dst(180,300)-1800)<0.1f,"T5 maximum range is wrong");
         longShot.time=longShot.lifetime;longShot.type.despawned(longShot);
         check(flag(longShot.data,"detonated"),"T5 heavy warhead did not explode at maximum range");
-        System.out.println("MISSILE_TRUCK_CHECK_PASS: five tracked units, production/research, reverse fragment explosions, triple flank launch, adaptive spike trap, multi-target 32-bomb saturation, uninterceptable hypersonic missile, swept target/wall impact, heavy warhead exactly once and ally safety");
+        terrainCollisionChecks(nodeMissile);
+        System.out.println("MISSILE_TRUCK_CHECK_PASS: five tracked units, production/research, reverse fragment explosions, triple flank launch, adaptive spike trap, multi-target 32-bomb saturation, uninterceptable hypersonic missile, swept target/wall impact, heavy warhead exactly once, environment pass-through and ally safety");
+    }
+    static void terrainCollisionChecks(BulletType nodeMissile)throws Exception{
+        clearShots();
+        Vars.world.tile(30,75).setBlock(Blocks.stoneWall);
+        Vars.world.tile(32,75).setBlock(Blocks.copperWall,Team.sharded);
+        Vars.world.tile(34,75).setBlock(Blocks.copperWall,Team.green);
+        Building friendly=Vars.world.build(32,75),allied=Vars.world.build(34,75);
+        float friendlyHp=friendly.health,alliedHp=allied.health;
+        BulletType t1=line[0].weapons.first().bullet;
+        BulletType[] types={t1,(BulletType)field(t1,"fragment"),line[1].weapons.first().bullet,nodeMissile,line[4].weapons.first().bullet};
+        for(int i=0;i<types.length;i++){
+            Bullet b;
+            if(types[i]==nodeMissile){
+                Bullet salvo=fire(2,180,600,500,600);salvo.type.update(salvo);
+                b=Groups.bullet.find(candidate->candidate.type==nodeMissile);
+                Method predict=salvo.type.getClass().getDeclaredMethod("expectedImpact",Bullet.class,arc.math.geom.Vec2.class);
+                predict.setAccessible(true);
+                var predicted=(arc.math.geom.Vec2)predict.invoke(salvo.type,salvo,new arc.math.geom.Vec2(500,600));
+                check(predicted.within(500,600,0.1f),"T3 target planner still stops at terrain/friendly walls");
+            }else b=types[i].create(owner,Team.sharded,180,600,0,-1,1,1,null,null,500,600);
+            check(!b.type.collideTerrain&&!b.type.collideFloor,"unexpected terrain collision type "+i);
+            b.lastX=180;b.lastY=600;b.set(500,600);b.tileRaycast(22,75,62,75);
+            check(b.isAdded(),"environment or friendly wall blocked projectile type "+i);
+            check(friendly.health==friendlyHp&&allied.health==alliedHp,"projectile hit friendly/allied wall type "+i);
+            Vars.world.tile(36,75).setBlock(Blocks.thoriumWall,Team.crux);
+            Building enemy=Vars.world.build(36,75);float hp=enemy.health;
+            b.lastX=180;b.lastY=600;b.set(500,600);b.tileRaycast(22,75,62,75);
+            check(enemy.health<hp,"enemy building no longer intercepts projectile type "+i);
+            if(types[i]==nodeMissile||i==4)check(!b.isAdded(),"non-piercing missile crossed enemy building");
+            check(friendly.health==friendlyHp&&allied.health==alliedHp,"enemy impact damaged friendly/allied walls");
+            enemy.tile.remove();clearShots();
+            check(Vars.world.tile(30,75).block()==Blocks.stoneWall,"projectile modified natural wall");
+        }
+        Vars.world.tile(30,75).setAir();friendly.tile.remove();allied.tile.remove();
+        System.out.println("MISSILE_TERRAIN_PASS: T1 missile/fragments, T2, T3 and T5 pass natural/friendly/allied walls; enemy structures still collide; T3 planning ignores terrain");
     }
     static Bullet fire(int tier,float x,float y,float ax,float ay){return line[tier].weapons.first().bullet.create(owner,Team.sharded,x,y,0,-1,1,1,null,null,ax,ay);}
     static void clearShots(){for(Bullet b:Groups.bullet.copy())b.remove();}

@@ -24,6 +24,7 @@ public final class UnitDisplayOrder{
         line("expedition voyager transliminal");
         line("thread process kernel");
         line("comet bolide umbra sagitta hydra");
+        line("subsonic transonic supersonic relativistic superluminal");
         line("jaspis obsidianum nitrum hematites");
         line("buffer guardian peak blaze eternal");
         line("monomer dimer oligomer polymer macromolecule");

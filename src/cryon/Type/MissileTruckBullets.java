@@ -310,7 +310,7 @@ public final class MissileTruckBullets{
             super(7, 80); rangeOverride = range; lifetime = range / speed + 30;
             homingPower = weaveMag = 0;
             collides = collidesTiles = collidesAir = collidesGround = true;
-            collideTerrain = true; pierce = pierceBuilding = false; keepVelocity = false;
+            collideTerrain = collideFloor = false; pierce = pierceBuilding = false; keepVelocity = false;
             width = 7; height = 14; trailColor = backColor = hitColor = gold;
             frontColor = Color.white; trailLength = 10; trailWidth = 1.3f;
         }
@@ -371,10 +371,9 @@ public final class MissileTruckBullets{
                     mindustry.core.World.toTile(target.x), mindustry.core.World.toTile(target.y), (x, y) -> {
                 mindustry.world.Tile tile = Vars.world.tile(x, y);
                 if(tile == null) return false;
-                boolean terrain = tile.block() instanceof mindustry.world.blocks.environment.StaticWall;
                 boolean hostile = tile.build != null && tile.block().solid && tile.block().targetable
                         && !MapAlliances.allied(b.team, tile.team());
-                if(terrain || hostile){ impact.set(tile.worldx(), tile.worldy()); return true; }
+                if(hostile){ impact.set(tile.worldx(), tile.worldy()); return true; }
                 return false;
             });
             return impact;

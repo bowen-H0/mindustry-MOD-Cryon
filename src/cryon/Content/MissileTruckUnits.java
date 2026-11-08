@@ -18,7 +18,9 @@ public final class MissileTruckUnits{
     public static final String[] names = {"jinwu", "xihe", "fusang", "yaoling", "zhulong"};
     public static final UnitType[] line = new UnitType[5];
     public static void load(){
-        float[] health = {450, 1300, 4200, 16000, 38000};
+        // Keep missile carriers more fragile than Cryon's same-tier frontline tanks.
+        float[] health = {90, 315, 1500, 7500, 28500};
+        float[] armor = {0, 4, 8, 12, 20};
         float[] size = {13, 19, 28, 40, 56};
         float[] range = {160, 240, 330, 440, 1800};
         float[] reload = {70, 110, 250, 480, 720};
@@ -28,7 +30,7 @@ public final class MissileTruckUnits{
             line[tier] = type;
             type.constructor = TankUnit::create;
             type.health = health[tier]; type.hitSize = size[tier];
-            type.armor = new float[]{2, 5, 9, 18, 28}[tier];
+            type.armor = armor[tier];
             type.speed = new float[]{1.35f, 1.1f, 0.85f, 0.65f, 0.5f}[tier];
             type.rotateSpeed = 2.8f - tier * 0.35f;
             type.accel = 0.06f; type.drag = 0.09f;

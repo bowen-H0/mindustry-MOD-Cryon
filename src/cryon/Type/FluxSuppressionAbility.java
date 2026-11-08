@@ -40,7 +40,6 @@ public class FluxSuppressionAbility extends Ability{
         });
         return result[0];
     }
-    // Use the native energy-field renderer only; no extra damage or healing ability.
     private static final FieldVisual visual = new FieldVisual();
     private static class FieldVisual extends EnergyFieldAbility{
         FieldVisual(){

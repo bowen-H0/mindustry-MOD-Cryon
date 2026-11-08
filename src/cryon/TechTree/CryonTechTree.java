@@ -337,6 +337,11 @@ public class CryonTechTree extends ModPlanetTechTree {
         add(Kind.UNIT, "yaoling", "fusang", r(CryonContent.item("surge-alloy"), 2500, CryonContent.item("neutronite"), 1200));
         add(Kind.UNIT, "zhulong", "yaoling", r(CryonContent.item("cryo-alloy"), 5000, CryonContent.item("nano-material"), 2500));
         add(Kind.UNIT, "comet", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
+        add(Kind.UNIT, "subsonic", "unit-projector", r(CryonContent.item("magnesium"), 150, CryonContent.item("silicon"), 100));
+        add(Kind.UNIT, "transonic", "subsonic", r(CryonContent.item("titanium"), 400, CryonContent.item("silicon"), 500, CryonContent.item("graphite"), 300));
+        add(Kind.UNIT, "supersonic", "transonic", r(CryonContent.item("farstar-alloy"), 800, CryonContent.item("silicon"), 1600, CryonContent.item("phase-fabric"), 1200));
+        add(Kind.UNIT, "relativistic", "supersonic", r(CryonContent.item("surge-alloy"), 2400, CryonContent.item("neutronite"), 1000, CryonContent.item("silicon"), 3000));
+        add(Kind.UNIT, "superluminal", "relativistic", r(CryonContent.item("cryo-alloy"), 4000, CryonContent.item("nano-material"), 2400, CryonContent.item("phase-fabric"), 4000, CryonContent.item("silicon"), 5000));
         add(Kind.UNIT, "nadir", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
 
         add(Kind.UNIT, "apex", "t2factory", r(CryonContent.item("titanium"), 500, CryonContent.item("silicon"), 1000, CryonContent.item("graphite"), 1000));

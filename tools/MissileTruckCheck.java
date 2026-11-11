@@ -13,6 +13,7 @@ import mindustry.gen.*;
 import mindustry.net.Net;
 import mindustry.type.*;
 import mindustry.world.Tile;
+import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.blocks.units.*;
 
 /** Packaged production/research and deterministic timing/damage of all five missile carrier tiers. */
@@ -211,7 +212,9 @@ public class MissileTruckCheck{
         check(importantCore.health<1000000&&importantTurret.health<1000000,"T4 failed to bomb separate strategic buildings");
         clearShots();importantCore.tile.remove();importantTurret.tile.remove();index();
         Bullet t5=fire(4,180,300,500,300);BulletType hypersonic=t5.type;
-        check(hypersonic instanceof mindustry.entities.bullet.MissileBulletType&&hypersonic.speed>=40&&hypersonic.rangeOverride>=1800,"T5 must be a very fast long-range native missile");
+        float railgunRange=((Turret)Vars.content.block("cryon-railgun")).range;
+        check(hypersonic instanceof mindustry.entities.bullet.MissileBulletType&&hypersonic.speed>=40,"T5 must be a very fast native missile");
+        check(line[4].range==railgunRange&&hypersonic.rangeOverride==railgunRange,"T5 range must match the railgun");
         check(!hypersonic.hittable&&!hypersonic.absorbable&&!hypersonic.reflectable,"T5 is interceptable");
         Class<?> barrier=loader.loadClass("cryon.Type.OrbitalBarrierNode");
         check(!(boolean)barrier.getMethod("intercept",Bullet.class).invoke(null,t5),"T5 intercepted by orbital barrier");
@@ -229,7 +232,7 @@ public class MissileTruckCheck{
         blocker.tile.remove();clearShots();
         Bullet longShot=fire(4,180,300,2500,300);
         arc.math.geom.Vec2 destination=(arc.math.geom.Vec2)field(longShot.data,"target");
-        check(Math.abs(destination.dst(180,300)-1800)<0.1f,"T5 maximum range is wrong");
+        check(Math.abs(destination.dst(180,300)-railgunRange)<0.1f,"T5 maximum range is wrong");
         longShot.time=longShot.lifetime;longShot.type.despawned(longShot);
         check(flag(longShot.data,"detonated"),"T5 heavy warhead did not explode at maximum range");
         terrainCollisionChecks(nodeMissile);
@@ -267,7 +270,19 @@ public class MissileTruckCheck{
             enemy.tile.remove();clearShots();
             check(Vars.world.tile(30,75).block()==Blocks.stoneWall,"projectile modified natural wall");
         }
-        Vars.world.tile(30,75).setAir();friendly.tile.remove();allied.tile.remove();
+        Vars.world.tile(36,75).setBlock(Blocks.copperWall,Team.derelict);
+        Building abandoned=Vars.world.build(36,75);
+        Unit friendlyUnit=UnitTypes.reign.spawn(Team.sharded,310,600);
+        Unit alliedUnit=UnitTypes.reign.spawn(Team.green,335,600);
+        Bullet t5=fire(4,180,600,500,600);
+        check(!t5.collides(friendlyUnit)&&!t5.collides(alliedUnit),"Friendly unit blocks T5");
+        check(!t5.type.testCollision(t5,friendly)&&!t5.type.testCollision(t5,allied)
+                &&!t5.type.testCollision(t5,abandoned),"Friendly or abandoned building blocks T5");
+        t5.lastX=180;t5.lastY=600;t5.set(516,600);t5.type.update(t5);
+        check(flag(t5.data,"detonated")&&t5.dst(500,600)<0.1f,"T5 did not reach its aim point past neutral and friendly obstacles");
+        check(friendly.health==friendlyHp&&allied.health==alliedHp,"T5 damaged friendly or allied walls");
+        Vars.world.tile(30,75).setAir();friendly.tile.remove();allied.tile.remove();abandoned.tile.remove();
+        friendlyUnit.remove();alliedUnit.remove();
         System.out.println("MISSILE_TERRAIN_PASS: T1 missile/fragments, T2, T3 and T5 pass natural/friendly/allied walls; enemy structures still collide; T3 planning ignores terrain");
     }
     static Bullet fire(int tier,float x,float y,float ax,float ay){return line[tier].weapons.first().bullet.create(owner,Team.sharded,x,y,0,-1,1,1,null,null,ax,ay);}

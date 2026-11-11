@@ -22,7 +22,7 @@ public final class MissileTruckUnits{
         float[] health = {90, 315, 1500, 7500, 28500};
         float[] armor = {0, 4, 8, 12, 20};
         float[] size = {13, 19, 28, 40, 56};
-        float[] range = {160, 240, 330, 440, 1800};
+        float[] range = {160, 240, 330, 440, 600};
         float[] reload = {70, 110, 250, 480, 720};
         int[] pixels = {56, 80, 112, 160, 224};
         for(int tier = 0; tier < 5; tier++){

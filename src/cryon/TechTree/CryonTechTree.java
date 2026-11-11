@@ -281,6 +281,7 @@ public class CryonTechTree extends ModPlanetTechTree {
 
 
         addAuto(Kind.BLOCK, "vulcan", "torrent");
+        addAuto(Kind.BLOCK, "rainburst", "vulcan");
         addAuto(Kind.BLOCK, "disarmament", "vulcan");
         addAuto(Kind.BLOCK, "aurora", "gem");
         addAuto(Kind.BLOCK, "railgun", "aurora");
@@ -289,6 +290,7 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "quantum", "vulcan");
         addAuto(Kind.BLOCK, "beacon", "gem");
+        addAuto(Kind.BLOCK, "purification", "beacon");
         addAuto(Kind.BLOCK, "kismet", "beacon");
 
         addAuto(Kind.BLOCK, "fuel-rod", "hydrothermal-generator");
@@ -388,6 +390,7 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.SECTOR, "silent-tundra", "titanium-fortress");
         addAuto(Kind.SECTOR, "relay-32a", "cryon-fusion-bastion");
         addAuto(Kind.SECTOR, "stellar-observatory", "silent-tundra");
+        addAuto(Kind.SECTOR, "crimson-onslaught", "stellar-observatory");
         addAuto(Kind.SECTOR, "exclusion-zone", "cryon-neutron-flux-zone");
         addAuto(Kind.SECTOR, "baryon-bastion", "exclusion-zone");
         addAuto(Kind.SECTOR, "magnificent-rift", "cryon-sector-shattered-shoal");

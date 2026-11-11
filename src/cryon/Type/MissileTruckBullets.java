@@ -11,6 +11,7 @@ import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.entities.*;
 import mindustry.entities.bullet.*;
+import mindustry.game.Team;
 import mindustry.gen.*;
 import mindustry.graphics.Drawf;
 
@@ -701,6 +702,7 @@ public final class MissileTruckBullets{
             rangeOverride = range; lifetime = range / speed;
             homingPower = weaveMag = 0; keepVelocity = false;
             hittable = absorbable = reflectable = false;
+            collideTerrain = collideFloor = collidesTeam = false;
             pierce = pierceBuilding = false;
             width = 12; height = 30; hitSize = 10;
             backColor = trailColor = gold; frontColor = Color.white;
@@ -714,6 +716,9 @@ public final class MissileTruckBullets{
             target.sub(b.x, b.y).limit(rangeOverride).add(b.x, b.y);
             b.data = new HypersonicState(target.x, target.y);
             b.vel.setAngle(b.angleTo(target)); b.rotation(b.vel.angle());
+        }
+        @Override public boolean testCollision(Bullet b, Building build){
+            return build.team != Team.derelict && !MapAlliances.allied(b.team, build.team) && super.testCollision(b, build);
         }
         private void detonate(Bullet b){
             if(!(b.data instanceof HypersonicState state) || state.detonated || b.absorbed) return;
@@ -730,7 +735,7 @@ public final class MissileTruckBullets{
             float length2 = dx * dx + dy * dy;
             float along = length2 == 0 ? -1 : ((state.target.x - b.lastX) * dx + (state.target.y - b.lastY) * dy) / length2;
             if(along >= 0 && along <= 1 && Mathf.dst(b.lastX + dx * along, b.lastY + dy * along, state.target.x, state.target.y) < 8){
-                // Preserve native wall blocking even when one very fast step crosses the aim point.
+                // Check for enemy structures before detonating at the aim point.
                 b.tileRaycast(mindustry.core.World.toTile(b.lastX), mindustry.core.World.toTile(b.lastY),
                         mindustry.core.World.toTile(state.target.x), mindustry.core.World.toTile(state.target.y));
                 if(!b.isAdded()) return;

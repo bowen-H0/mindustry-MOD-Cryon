@@ -1,0 +1,33 @@
+type: cryon.Type.PurificationTurret
+category: turret
+size: 5
+health: 12500
+armor: 12
+range: 800
+reload: 1800
+shootCone: 360
+rotateSpeed: 6
+recoil: 0
+targetAir: true
+targetGround: true
+shootSound: none
+shootEffect: none
+smokeEffect: none
+consumes: {
+  power: 180
+}
+shootType: {
+  type: cryon.Type.PurificationBulletType
+  rangeOverride: 800
+}
+drawer: {
+  type: DrawTurret
+  basePrefix: cryon-
+}
+requirements: [
+  silicon/1800
+  phase-fabric/1200
+  surge-alloy/800
+  cryo-alloy/650
+  nano-material/500
+]

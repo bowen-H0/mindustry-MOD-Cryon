@@ -73,11 +73,12 @@ public final class SubmarineContent{
         type.itemCapacity = 20 + tier * 20;
         type.envEnabled |= Env.underwater;
         type.immunities.add(pressureStatus);
+        type.immunities.add(StatusEffects.freezing);
         type.stances.addAll(UnitStance.stop, UnitStance.holdFire, UnitStance.pursueTarget,
                 UnitStance.patrol, UnitStance.holdPosition, diveStance);
         type.abilities.add(new DeepDiveAbility());
 
-        RepairBeamWeapon beam = new RepairBeamWeapon("repair-beam-weapon-center");
+        RepairBeamWeapon beam = new RepairBeamWeapon("cryon-submarine-repair-beam");
         beam.mirror = false; beam.x = 0f; beam.y = -size * 0.18f;
         beam.repairSpeed = 0.65f + tier * 0.7f;
         beam.beamWidth = 0.8f + tier * 0.2f;
@@ -85,7 +86,7 @@ public final class SubmarineContent{
         beam.bullet = new BulletType(); beam.bullet.maxRange = 130f + tier * 35f;
         type.weapons.add(beam);
 
-        Weapon laser = new Weapon("retusa-weapon");
+        Weapon laser = new Weapon("cryon-submarine-laser");
         laser.x = size * 0.3f; laser.y = -size * 0.08f;
         laser.rotate = true; laser.rotateSpeed = 5f;
         laser.reload = Math.max(11f, 26f - tier * 3f);
@@ -120,7 +121,7 @@ public final class SubmarineContent{
         }
         type.weapons.add(torpedo);
         if(tier >= 1){
-            PointDefenseWeapon defense = new PointDefenseWeapon("point-defense-mount");
+            PointDefenseWeapon defense = new PointDefenseWeapon("cryon-submarine-point-defense");
             defense.mirror = false; defense.y = -size * 0.26f;
             defense.reload = 12f - tier;
             defense.bullet = new BulletType(); defense.bullet.maxRange = 90f + tier * 15f;

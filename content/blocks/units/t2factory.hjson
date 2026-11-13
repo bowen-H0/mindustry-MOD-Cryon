@@ -25,7 +25,8 @@
     [buffer, guardian],
     [littorina, natica],
     [comet, bolide],
-    [nadir, apex]
+    [nadir, apex],
+    [startrail, transit]
 
   ]
   constructTime: 1200

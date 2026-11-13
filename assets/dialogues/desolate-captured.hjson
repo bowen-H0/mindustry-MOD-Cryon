@@ -1,0 +1,54 @@
+{
+  "title": "荒芜平原被占领后 · 通讯终端",
+  "steps": [
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们已经确认，克莱恩境内的 Crux 军事力量已被彻底清除。",
+      "textKey": "cryon.radio.story.desolate-captured.01.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 8.21
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "这场持续多年的战争终于结束了。",
+      "textKey": "cryon.radio.story.desolate-captured.01.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.92
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "你们的作战效率超出了我们的预期。",
+      "textKey": "cryon.radio.story.desolate-captured.01.03",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.878
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "所以呢？",
+      "textKey": "cryon.radio.story.desolate-captured.02.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 4.837
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "根据我们的评估，克莱恩已经不再存在足以威胁我们的敌对势力。",
+      "textKey": "cryon.radio.story.desolate-captured.03.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 8.983
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "但这并不意味着战争已经结束。",
+      "textKey": "cryon.radio.story.desolate-captured.03.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.295
+    }
+  ],
+  "titleKey": "cryon.radio.story.desolate-captured.title"
+}

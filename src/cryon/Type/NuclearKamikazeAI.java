@@ -1,13 +1,10 @@
 package cryon.Type;
 
-import arc.math.Mathf;
 import arc.util.Time;
 import cryon.Content.CryonItems;
 import cryon.Features.MapAlliances;
-import mindustry.entities.Damage;
 import mindustry.entities.units.AIController;
 import mindustry.gen.*;
-import mindustry.content.Fx;
 
 import static mindustry.Vars.*;
 
@@ -29,7 +26,8 @@ public final class NuclearKamikazeAI extends AIController{
         unit.lookAt(impactTarget);
         moveTo(impactTarget, 0f, 12f);
         float contact = impactTarget.block.size * tilesize / 2f + unit.hitSize * 0.3f + 8f;
-        if(unit.within(impactTarget, contact)) detonate(unit);
+        // Keep the cargo intact for the native unit crash explosion.
+        if(unit.within(impactTarget, contact)) unit.kill();
     }
 
     public Building chooseBuilding(){
@@ -46,17 +44,4 @@ public final class NuclearKamikazeAI extends AIController{
         return best;
     }
 
-    public static boolean detonate(Unit bomber){
-        if(net.client() || bomber.dead || bomber.stack.item != CryonItems.nuclearExplosive || bomber.stack.amount <= 0) return false;
-        int charges = Mathf.clamp(bomber.stack.amount, 1, 6);
-        float x = bomber.x, y = bomber.y, radius = 120f + charges * 24f;
-        mindustry.game.Team team = bomber.team;
-        // Consume the cargo first, so recursive damage/death cannot detonate it twice.
-        bomber.clearItem();
-        Damage.damage(team, x, y, radius, 6000f * charges, true, true, true);
-        Call.effect(Fx.reactorExplosion, x, y, 0f, CryonItems.nuclearExplosive.color);
-        Call.effect(Fx.shockwave, x, y, 0f, CryonItems.nuclearExplosive.color);
-        bomber.kill();
-        return true;
-    }
 }

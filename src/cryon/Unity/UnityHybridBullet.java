@@ -31,7 +31,7 @@ public class UnityHybridBullet extends BulletType{
         for(BeaconBulletType beacon:beacons){beacon.fusedTargeting=true;beacon.collidesAir=air;beacon.collidesGround=ground;}
     }
     private void traits(Bullet b,float x,float y){
-        for(BeaconBulletType beacon:beacons)beacon.fuseAt(b.team,x,y);
+        for(BeaconBulletType beacon:beacons)beacon.fuseAt(b,x,y);
         for(KismetBulletType link:links)link.fuseAt(b,x,y);
     }
     @Override public void init(Bullet b){carrier.init(b);}

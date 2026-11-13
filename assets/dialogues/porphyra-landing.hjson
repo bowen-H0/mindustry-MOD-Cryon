@@ -1,0 +1,376 @@
+{
+  "title": "波菲拉 · 紫晶着陆 · 监听频道",
+  "steps": [
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "联盟。",
+      "textKey": "cryon.radio.story.porphyra-landing.01.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.045
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "在开始行动之前，我要求你们解释自己的来历。",
+      "textKey": "cryon.radio.story.porphyra-landing.01.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 7.045
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "我们已经提供了必要的情报。",
+      "textKey": "cryon.radio.story.porphyra-landing.02.01",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 6.837
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "那不是回答。",
+      "textKey": "cryon.radio.story.porphyra-landing.03.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.587
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "你们突然出现，声称 Sharded 已经与 Norma 结盟，却始终不肯透露自己的真实身份。",
+      "textKey": "cryon.radio.story.porphyra-landing.03.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 11.207
+    },
+    {
+      "team": "malis",
+      "speaker": "Malis",
+      "text": "Crux，我们已经达成合作协议。",
+      "textKey": "cryon.radio.story.porphyra-landing.04.01",
+      "speakerKey": "cryon.radio.speaker.malis",
+      "duration": 6.92
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "协议建立在信任之上。",
+      "textKey": "cryon.radio.story.porphyra-landing.05.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.962
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "而我没有理由信任他们。",
+      "textKey": "cryon.radio.story.porphyra-landing.05.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.128
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "现在最重要的是对抗 Norma。",
+      "textKey": "cryon.radio.story.porphyra-landing.06.01",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 5.962
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "不要转移话题。",
+      "textKey": "cryon.radio.story.porphyra-landing.07.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.753
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "这是最后一次警告。",
+      "textKey": "cryon.radio.story.porphyra-landing.08.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.795
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "立即说明你们的来历，否则我将视你们为敌对势力。",
+      "textKey": "cryon.radio.story.porphyra-landing.08.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 7.378
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "……",
+      "hold": 12,
+      "textKey": "cryon.radio.story.porphyra-landing.09.01",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 16.795
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "回答我！",
+      "textKey": "cryon.radio.story.porphyra-landing.10.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.087
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们已经监测到 Crux 的敌意正在上升。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.11.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.67
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "继续保持沉默将导致联盟关系破裂。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.11.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.003
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "有什么建议？",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.12.01",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 5.337
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们需要一个足以转移其注意力的事件。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.13.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.17
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "已经安排好了。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.14.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.378
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "我们派出了一支小队，正在接近 Crux 的前沿阵地。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.14.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 7.92
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "你们打算主动制造冲突？",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.15.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.045
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "没错。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.16.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.003
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "既然他这么想消灭我们，那就给他一个机会。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.16.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 7.087
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "可以接受。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.17.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 5.128
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "但这只能暂时转移他的注意力，无法消除怀疑。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.17.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 9.08
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "足够了。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.18.01",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 5.295
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "我们只需要时间建立登陆阵地。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.18.02",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 6.837
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "明白。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.19.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 5.128
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们将继续维持双方的通讯隔离。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.19.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.337
+    },
+    {
+      "event": "sharded-receptor-raid",
+      "count": 6
+    },
+    {
+      "team": "malis",
+      "speaker": "Malis",
+      "text": "警告！",
+      "textKey": "cryon.radio.story.porphyra-landing.20.01",
+      "speakerKey": "cryon.radio.speaker.malis",
+      "duration": 5.003
+    },
+    {
+      "team": "malis",
+      "speaker": "Malis",
+      "text": "检测到 Sharded 单位正在接近！",
+      "textKey": "cryon.radio.story.porphyra-landing.20.02",
+      "speakerKey": "cryon.radio.speaker.malis",
+      "duration": 5.92
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "什么？！",
+      "textKey": "cryon.radio.story.porphyra-landing.21.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 4.92
+    },
+    {
+      "team": "malis",
+      "speaker": "Malis",
+      "text": "他们正在攻击我们的阵地！",
+      "textKey": "cryon.radio.story.porphyra-landing.22.01",
+      "speakerKey": "cryon.radio.speaker.malis",
+      "duration": 6.045
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "该死的 Sharded！",
+      "textKey": "cryon.radio.story.porphyra-landing.23.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.212
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "所有部队准备迎敌！",
+      "textKey": "cryon.radio.story.porphyra-landing.23.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.92
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "看来成功了。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.24.01",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 5.67
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "Crux 已经转移注意力。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.25.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.337
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "但根据我们的评估，他仍然没有完全信任联盟。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.25.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 8.21
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "那就让他继续怀疑。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.26.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.837
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "只要他尚未掌握证据，合作就仍然具有维持的可能。",
+      "mode": "encrypted",
+      "textKey": "cryon.radio.story.porphyra-landing.27.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.587
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "继续执行登陆计划。",
+      "textKey": "cryon.radio.story.porphyra-landing.28.01",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 5.92
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "这件事还没完，联盟。",
+      "textKey": "cryon.radio.story.porphyra-landing.29.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.795
+    },
+    {
+      "team": "alliance",
+      "speaker": "联盟",
+      "text": "明白。",
+      "textKey": "cryon.radio.story.porphyra-landing.30.01",
+      "speakerKey": "cryon.radio.speaker.alliance",
+      "duration": 5.128
+    }
+  ],
+  "startDelay": 3,
+  "titleKey": "cryon.radio.story.porphyra-landing.title"
+}

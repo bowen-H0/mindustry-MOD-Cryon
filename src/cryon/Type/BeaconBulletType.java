@@ -7,6 +7,7 @@ import arc.math.Mathf;
 import arc.struct.Seq;
 import arc.util.Time;
 import cryon.Fx.BeaconFx;
+import cryon.Features.OrbitalSupport;
 import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.entities.Effect;
@@ -14,7 +15,9 @@ import mindustry.entities.Units;
 import mindustry.entities.bullet.ArtilleryBulletType;
 import mindustry.game.Team;
 import mindustry.gen.Bullet;
+import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
+import mindustry.world.blocks.defense.turrets.Turret.TurretBuild;
 
 /**
  * BeaconBulletType —— 轨道打击标记弹。
@@ -23,6 +26,7 @@ import mindustry.graphics.Layer;
  */
 public class BeaconBulletType extends ArtilleryBulletType {
     public boolean fusedTargeting;
+    public boolean requiresSkywatch = true;
 
     public float strikeDelay = 90f;
     public float strikeRadius = 80f;
@@ -34,8 +38,11 @@ public class BeaconBulletType extends ArtilleryBulletType {
         public float x, y, radius, delay, startTime;
         public Color color;
         public Team team;
+        public boolean supportRequired;
+        public int claimedBy = -1;
+        public float attenuation = 1f;
 
-        Marker(float x, float y, float radius, float delay, Color color, Team team) {
+        public Marker(float x, float y, float radius, float delay, Color color, Team team) {
             this.x = x;
             this.y = y;
             this.radius = radius;
@@ -74,26 +81,50 @@ public class BeaconBulletType extends ArtilleryBulletType {
         super.update(b);
 
         if (b.time < 1f) {
-            mark(b.team, b.aimX, b.aimY);
+            markFrom(b, b.aimX, b.aimY);
             b.remove();
         }
     }
 
     @Override
     public void hit(Bullet b, float x, float y) {
-        mark(b.team, b.aimX, b.aimY);
+        markFrom(b, b.aimX, b.aimY);
     }
 
-    public void fuseAt(Team team,float x,float y){mark(team,x,y);}
+    public void fuseAt(Bullet source, float x, float y){ markFrom(source, x, y); }
+
+    private void markFrom(Bullet source, float x, float y){
+        if(!Float.isFinite(x) || !Float.isFinite(y) || x < 0f || y < 0f) return;
+        float originX = source.x, originY = source.y, reach = range;
+        if(source.owner instanceof TurretBuild){
+            TurretBuild turret = (TurretBuild)source.owner;
+            originX = turret.x; originY = turret.y; reach = turret.range();
+        }else if(source.owner instanceof Unit){
+            Unit unit = (Unit)source.owner;
+            originX = unit.x; originY = unit.y; reach = unit.range();
+        }
+        if(!Float.isFinite(originX) || !Float.isFinite(originY) || !Float.isFinite(reach) || reach < 0f
+                || Mathf.dst2(originX, originY, x, y) > reach * reach) return;
+        mark(source.team, x, y);
+    }
 
     protected void mark(Team team, float x, float y) {
         float attenuation = cryon.Features.ProjectileTags.current != null && cryon.Features.ProjectileTags.current.realityWeakened ? 0.5f : 1f;
+        if(requiresSkywatch && !fusedTargeting && OrbitalSupport.playerTeam(team)){
+            OrbitalSupport.request(this, team, x, y, attenuation);
+            Fx.circleColorSpark.at(x, y, markColor);
+            return;
+        }
+        markDirect(team, x, y, attenuation);
+    }
+
+    protected void markDirect(Team team, float x, float y, float attenuation){
         Marker m = new Marker(x, y, strikeRadius, strikeDelay, markColor, team);
         markers.add(m);
         Fx.circleColorSpark.at(x, y, markColor);
 
         Time.run(strikeDelay, () -> {
-            markers.remove(m);
+            if(!markers.remove(m, true) || Vars.state == null || !Vars.state.isGame()) return;
             strike(team, x, y, attenuation);
         });
     }
@@ -105,6 +136,8 @@ public class BeaconBulletType extends ArtilleryBulletType {
     protected void strike(Team team, float x, float y, float attenuation) {
         BeaconFx.beam.at(x, y, 0f, beamColor);
         BeaconFx.impact.at(x, y, 0f, beamColor);
+
+        if(Vars.net != null && Vars.net.client()) return;
 
         Units.nearbyEnemies(team, x, y, strikeRadius, unit -> {
             if (!cryon.Features.MapAlliances.allied(unit.team, team) && (fusedTargeting?unit.checkTarget(collidesAir,collidesGround):unit.isGrounded())) {
@@ -124,7 +157,7 @@ public class BeaconBulletType extends ArtilleryBulletType {
 
     public static void drawMarkers() {
         for (Marker m : markers) {
-            float progress = m.progress();
+            float progress = m.supportRequired ? 0f : m.progress();
 
             Draw.z(Layer.flyingUnit + 1f);
             Draw.color(m.color);

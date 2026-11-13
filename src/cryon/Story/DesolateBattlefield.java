@@ -8,6 +8,7 @@ import arc.util.Time;
 import cryon.Content.CryonItems;
 import cryon.Script.DesolatePlainScript;
 import cryon.Type.NuclearKamikazeAI;
+import cryon.Features.MapAlliances;
 import mindustry.ai.types.BuilderAI;
 import mindustry.content.Blocks;
 import mindustry.content.StatusEffects;
@@ -51,10 +52,17 @@ public final class DesolateBattlefield{
         float elapsed = scanTime;
         scanTime = 0f;
         firstScan = false;
+        boolean supportOnly = !hasCombatUnits();
         int bombers = Groups.unit.count(u -> !u.dead && u.team == state.rules.waveTeam && u.flag == armedFlag);
         for(Unit unit : Groups.unit){
             if(unit.dead || unit.team != state.rules.waveTeam) continue;
-            if(role(unit, builderFlag, maxBuilders)){
+            if(support(unit)) unit.updateBuilding = !supportOnly;
+            if(supportOnly && support(unit)){
+                if(!(unit.controller() instanceof SupportChargeAI)){
+                    unit.clearBuilding();
+                    unit.controller(new SupportChargeAI());
+                }
+            }else if(role(unit, builderFlag, maxBuilders)){
                 if(!(unit.controller() instanceof StationBuilderAI)) unit.controller(new StationBuilderAI(this));
             }else if(role(unit, assistantFlag, maxAssistants)){
                 if(!(unit.controller() instanceof StationAssistAI)) unit.controller(new StationAssistAI());
@@ -98,7 +106,7 @@ public final class DesolateBattlefield{
     }
 
     private boolean hasCombatUnits(){
-        return Groups.unit.contains(u -> u.team == state.rules.waveTeam && !u.dead && !support(u));
+        return Groups.unit.contains(u -> u.team == state.rules.waveTeam && !u.dead && u.health > 0f && !support(u));
     }
 
     public Vec2 denseCenter(){
@@ -215,6 +223,55 @@ public final class DesolateBattlefield{
             }
         }
         return false;
+    }
+
+    /** Unarmed support still advances into the player's defenses instead of keeping a wave alive at the rear. */
+    public static final class SupportChargeAI extends AIController{
+        private Teamc destination;
+        private float search;
+
+        @Override public void updateUnit(){
+            if(net.client() || unit.dead) return;
+            unit.updateBuilding = false;
+            MapAlliances.Scope scope = MapAlliances.enter(unit);
+            try{ super.updateUnit(); }
+            finally{ MapAlliances.exit(scope); }
+        }
+
+        private boolean valid(Teamc value){
+            return value != null && !MapAlliances.allied(value.team(), unit.team)
+                && (value instanceof Building ? ((Building)value).isValid()
+                    : value instanceof Unit && ((Unit)value).isAdded() && !((Unit)value).dead);
+        }
+
+        private Teamc destination(){
+            Building core = null, building = null;
+            for(Building candidate : Groups.build){
+                if(candidate.team == mindustry.game.Team.derelict || candidate.block.privileged || !valid(candidate)) continue;
+                if(building == null || unit.dst2(candidate) < unit.dst2(building)) building = candidate;
+                if(candidate instanceof mindustry.world.blocks.storage.CoreBlock.CoreBuild
+                    && (core == null || unit.dst2(candidate) < unit.dst2(core))) core = candidate;
+            }
+            if(core != null) return core;
+            if(building != null) return building;
+            Unit enemy = null;
+            for(Unit candidate : Groups.unit){
+                if(candidate.team == mindustry.game.Team.derelict || !valid(candidate)) continue;
+                if(enemy == null || unit.dst2(candidate) < unit.dst2(enemy)) enemy = candidate;
+            }
+            return enemy;
+        }
+
+        @Override public void updateMovement(){
+            if(!valid(destination) || (search -= Time.delta) <= 0f){
+                destination = destination();
+                search = 60f;
+            }
+            if(destination != null){
+                unit.lookAt(destination);
+                moveTo(destination, 0f, 12f);
+            }
+        }
     }
 
     public static final class StationBuilderAI extends AIController{

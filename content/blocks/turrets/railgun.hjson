@@ -1,6 +1,6 @@
-type: ItemTurret
+type: cryon.Type.OrbitalItemTurret
 name: "磁轨"
-description: "使用冷冻液持续冷却轨道的重型轨道炮。"
+description: "使用冷冻液持续冷却轨道的重型轨道炮。可以攻击地面、空中及高空轨道单位。"
 category: turret
 size: 5
 health: 20000
@@ -40,7 +40,7 @@ drawer: {
 }
 ammoTypes: {
   surge-alloy: {
-    type: RailBulletType
+    type: cryon.Type.OrbitalRailBulletType
     shootEffect: instShoot
     hitEffect: instHit
     pierceEffect: railHit
@@ -55,7 +55,7 @@ ammoTypes: {
     statusDuration: 50
   }
   farstar-alloy: {
-    type: RailBulletType
+    type: cryon.Type.OrbitalRailBulletType
     shootEffect: instShoot
     hitEffect: instHit
     pierceEffect: railHit
@@ -70,7 +70,7 @@ ammoTypes: {
     statusDuration: 300
   }
   cryo-alloy: {
-    type: RailBulletType
+    type: cryon.Type.OrbitalRailBulletType
     shootEffect: instShoot
     hitEffect: instHit
     pierceEffect: railHit

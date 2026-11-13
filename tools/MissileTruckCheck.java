@@ -216,6 +216,7 @@ public class MissileTruckCheck{
         check(hypersonic instanceof mindustry.entities.bullet.MissileBulletType&&hypersonic.speed>=40,"T5 must be a very fast native missile");
         check(line[4].range==railgunRange&&hypersonic.rangeOverride==railgunRange,"T5 range must match the railgun");
         check(!hypersonic.hittable&&!hypersonic.absorbable&&!hypersonic.reflectable,"T5 is interceptable");
+        check(hypersonic.damage==960f,"T5 direct damage must be reduced by 20%");
         Class<?> barrier=loader.loadClass("cryon.Type.OrbitalBarrierNode");
         check(!(boolean)barrier.getMethod("intercept",Bullet.class).invoke(null,t5),"T5 intercepted by orbital barrier");
         check(t5.vel.len()>=40&&t5.x==180,"T5 teleported instead of launching");
@@ -223,6 +224,7 @@ public class MissileTruckCheck{
         t5.lastX=468;t5.lastY=300;t5.set(516,300);t5.type.update(t5);
         check(flag(t5.data,"detonated")&&!t5.isAdded()&&t5.dst(500,300)<0.1f,"T5 high-speed step skipped its target");
         check(enemy.health<enemyBefore-1000&&ally.health==allyBefore,"T5 heavy warhead damage or ally safety failed");
+        check(Math.abs((enemyBefore-enemy.health)-(12800f-enemy.armor))<0.1f,"T5 center blast damage must be reduced by 20%");
         enemyBefore=enemy.health;t5.type.update(t5);t5.type.despawned(t5);
         check(enemy.health==enemyBefore,"T5 detonated twice");
         check(Groups.bullet.size()==0,"T5 spawned obsolete orbs or laser networks");

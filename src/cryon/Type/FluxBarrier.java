@@ -91,6 +91,7 @@ public class FluxBarrier extends Block{
         }
     };
     protected static final Cons<Unit> unitConsumer = unit -> {
+        if(unit.type instanceof OrbitalUnitType) return;
         float overlapDst = (unit.hitSize / 2f + paramEntity.realRadius()) - unit.dst(paramEntity);
 
         if (overlapDst > 0) {

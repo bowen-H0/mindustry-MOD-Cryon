@@ -11,6 +11,7 @@ import arc.util.io.Writes;
 import cryon.Features.MapAlliances;
 import cryon.Story.DesolateFleetCutscene;
 import cryon.Story.DesolateBattlefield;
+import cryon.UI.RadioDialogue;
 import cryon.Type.JavaProcessor.JavaProcessorBuild;
 import mindustry.content.StatusEffects;
 import mindustry.game.EventType.*;
@@ -120,6 +121,13 @@ public final class DesolatePlainScript extends NuclearCleansingScript{
             && !MapAlliances.allied(u.team, state.rules.defaultTeam));
     }
 
+    private void dialogueOnce(String cue, boolean play){
+        String tag = "cryon-desolate-radio-" + cue;
+        if(state.rules.tags.getBool(tag)) return;
+        state.rules.tags.put(tag, "true");
+        if(play) RadioDialogue.broadcastKey(mindustry.game.Team.crux, "Crux", "cryon.desolate.radio." + cue);
+    }
+
     @Override public void update(){
         active = this;
         if(state.isEditor() || state.gameOver) return;
@@ -129,6 +137,8 @@ public final class DesolatePlainScript extends NuclearCleansingScript{
             if(phase == intro) poseFleet();
             return;
         }
+        // Tags survive saves without changing the processor's binary save format.
+        dialogueOnce("opening", phase == waiting && !cleansingStarted && state.wave <= 2);
         battlefield.update();
         // state.wave is the NEXT wave; wave 21 means wave 20 has been dispatched.
         if(!cleansingStarted && (state.wave > 21
@@ -136,9 +146,12 @@ public final class DesolatePlainScript extends NuclearCleansingScript{
             cleansingStarted = true;
             running = true;
             timer = 0f;
+            dialogueOnce("cleansing", true);
             if(net.server()) Call.announce(Core.bundle.get("cryon.desolate.cleansing"));
             else if(!headless && ui != null) ui.announce(Core.bundle.get("cryon.desolate.cleansing"), 5f);
         }
+        // state.wave == finalWave() means the preceding (normally 99th) wave just began.
+        if(phase == waiting && state.wave >= finalWave()) dialogueOnce("fleet", true);
         if(phase == waiting && state.wave >= finalWave()){
             state.rules.waveTimer = false;
             state.wavetime = state.rules.waveSpacing;

@@ -1,0 +1,87 @@
+{
+  "title": "克莱恩 · 中子流溢区 · 监听频道",
+  "titleKey": "cryon.radio.story.neutron-flux-zone.title",
+  "startDelay": 3,
+  "steps": [
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "你们已经多次无视我们的警告。",
+      "textKey": "cryon.radio.story.neutron-flux-zone.01.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.378
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "所以呢？",
+      "textKey": "cryon.radio.story.neutron-flux-zone.02.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 4.837
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "我们已经授权在该区域使用核武器。",
+      "textKey": "cryon.radio.story.neutron-flux-zone.03.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 7.212
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "立即停止一切军事行动，并撤出中子流溢区。",
+      "textKey": "cryon.radio.story.neutron-flux-zone.04.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 8.403
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "你们可以试试。",
+      "textKey": "cryon.radio.story.neutron-flux-zone.05.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.628
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "……",
+      "textKey": "cryon.radio.story.neutron-flux-zone.06.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 4.795
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "看来你们仍然没有意识到局势的严重性。",
+      "textKey": "cryon.radio.story.neutron-flux-zone.06.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 7.42
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "最后通牒。",
+      "textKey": "cryon.radio.story.neutron-flux-zone.07.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.628
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "立即撤离，否则我们将启动核打击程序。",
+      "textKey": "cryon.radio.story.neutron-flux-zone.07.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 7.587
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "通讯结束。",
+      "textKey": "cryon.radio.story.neutron-flux-zone.08.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.462
+    }
+  ]
+}

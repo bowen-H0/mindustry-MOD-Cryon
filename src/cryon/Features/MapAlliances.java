@@ -356,7 +356,11 @@ public final class MapAlliances{
         public boolean realityWeakened;
         @Override public float damageMultiplier(){ return super.damageMultiplier() * (realityWeakened ? 0.5f : 1f); }
         @Override public void reset(){ super.reset(); projectileTags = 0; realityWeakened = false; }
-        @Override public boolean collides(Hitboxc other){ return mayCollide(this, other) && super.collides(other); }
+        @Override public boolean collides(Hitboxc other){
+            if(!mayCollide(this, other)) return false;
+            return type instanceof cryon.Type.OrbitalTargetingProjectile
+                ? OrbitalTargeting.test(() -> super.collides(other)) : super.collides(other);
+        }
         @Override public void add(){
             Scope scope = enter(this);
             AllianceBullet previous = ProjectileTags.current;

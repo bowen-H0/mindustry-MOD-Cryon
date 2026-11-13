@@ -17,6 +17,11 @@
   buildVisibility: shown
   plans: [
     {
+      unit: startrail
+      time: 1800
+      requirements: [magnesium/30, silicon/20, graphite/10]
+    },
+    {
       unit: littorina
       time: 1200        
       requirements: [

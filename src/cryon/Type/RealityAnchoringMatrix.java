@@ -84,6 +84,7 @@ public class RealityAnchoringMatrix extends Block{
         return low <= high;
     }
     public static boolean teleportAllowed(Unit unit, float x, float y){
+        if(unit.type instanceof OrbitalUnitType) return true;
         float margin = unit.hitSize / 2f;
         return !contains(unit.team, unit.x, unit.y, margin) && !contains(unit.team, x, y, margin);
     }

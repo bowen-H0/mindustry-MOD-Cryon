@@ -36,6 +36,34 @@ public final class StoryProgress{
     public static boolean contacted(QuantumConversation.Contact contact){ return value(contactKey(contact)); }
     public static boolean pioneerRefused(){ return value("cryon-quantum-pioneer-refused"); }
 
+    private static String chapterSector(String chapter){
+        if(chapter.equals("desolate-captured")) return "desolate-plain";
+        if(chapter.equals("aravis-captured")) return "terminus";
+        return null;
+    }
+
+    public static boolean chapterAvailable(String chapter){
+        String sector = chapterSector(chapter);
+        if(sector == null || !get(Flag.underground)) return false;
+        if(value("cryon-story-captured-" + sector)) return true;
+        if(Vars.net != null && Vars.net.client()) return false;
+        var preset = Vars.content.sector("cryon-" + sector);
+        return preset != null && preset.sector.isCaptured();
+    }
+
+    public static String pendingTerminal(){
+        for(String chapter : new String[]{"desolate-captured", "aravis-captured"}){
+            if(chapterAvailable(chapter) && !value("cryon-dialogue-read-" + chapter)) return chapter;
+        }
+        return null;
+    }
+
+    public static void completeTerminal(String chapter){
+        if(!chapterAvailable(chapter)) return;
+        writeValue("cryon-dialogue-read-" + chapter, true);
+        set(chapter.equals("aravis-captured") ? Flag.actTwo : Flag.aravisMission, true);
+    }
+
     public static void recordContact(QuantumConversation.Contact contact){
         if(!contacted(contact)){
             writeValue(contactKey(contact), true);
@@ -74,6 +102,12 @@ public final class StoryProgress{
                 Vars.state.rules.tags.put(contactKey(contact), Boolean.toString(contacted(contact)));
             }
             Vars.state.rules.tags.put("cryon-quantum-pioneer-refused", Boolean.toString(pioneerRefused()));
+            for(String chapter : new String[]{"desolate-captured", "aravis-captured"}){
+                String sector = chapterSector(chapter);
+                Vars.state.rules.tags.put("cryon-story-captured-" + sector, Boolean.toString(chapterAvailable(chapter)));
+                Vars.state.rules.tags.put("cryon-dialogue-read-" + chapter,
+                    Boolean.toString(value("cryon-dialogue-read-" + chapter)));
+            }
         }
         applyPlanetGates();
     }
@@ -85,6 +119,15 @@ public final class StoryProgress{
         Events.on(WorldLoadEvent.class, event -> publish());
         Events.on(ResetEvent.class, event -> publish());
         Events.on(ClientLoadEvent.class, event -> publish());
+        Events.on(SectorCaptureEvent.class, event -> {
+            if(Vars.net != null && Vars.net.client() || event.sector == null || event.sector.preset == null) return;
+            for(String sector : new String[]{"desolate-plain", "terminus"}){
+                if(event.sector.preset.name.equals("cryon-" + sector)){
+                    writeValue("cryon-story-captured-" + sector, true);
+                    save();
+                }
+            }
+        });
         Events.run(Trigger.update, StoryProgress::applyPlanetGates);
     }
 

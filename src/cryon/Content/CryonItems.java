@@ -120,7 +120,7 @@ public class CryonItems{
         // Append new items so existing content registration order remains stable.
         abyssalSediment = item("abyssal-sediment", "879894", 0);
         abyssalSediment.lowPriority = true;
-        nuclearExplosive = item("nuclear-explosive", "ff6254", 0, 18f, 1.2f, 1f, 4f);
+        nuclearExplosive = item("nuclear-explosive", "ff6254", 0, 2f, 0f, 0f, 0f);
         nuclearExplosive.alwaysUnlocked = true;
         nuclearExplosive.cost = 10f;
         // ================== 白名单登记 ==================

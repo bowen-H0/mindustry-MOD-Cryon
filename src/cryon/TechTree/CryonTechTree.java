@@ -319,6 +319,7 @@ public class CryonTechTree extends ModPlanetTechTree {
         // ---- UNIT_BLOCK ----
         addAuto(Kind.UNIT_BLOCK, "mechanical-assembler", "benignitas");
         addAuto(Kind.UNIT_BLOCK, "mechanical-factory", "unit-projector");
+        addAuto(Kind.UNIT_BLOCK, "orbital-deployment-pad", "unit-projector");
         addAuto(Kind.UNIT_BLOCK, "t2factory", "unit-projector");
         addAuto(Kind.UNIT_BLOCK, "t3universal-assembler", "t2factory");
         addAuto(Kind.UNIT_BLOCK, "t4universal-assembler", "t3universal-assembler");
@@ -339,6 +340,12 @@ public class CryonTechTree extends ModPlanetTechTree {
         add(Kind.UNIT, "yaoling", "fusang", r(CryonContent.item("surge-alloy"), 2500, CryonContent.item("neutronite"), 1200));
         add(Kind.UNIT, "zhulong", "yaoling", r(CryonContent.item("cryo-alloy"), 5000, CryonContent.item("nano-material"), 2500));
         add(Kind.UNIT, "comet", "unit-projector", r(CryonContent.item("magnesium"), 100, CryonContent.item("silicon"), 30));
+        add(Kind.UNIT, "startrail", "unit-projector", r(CryonContent.item("magnesium"), 150, CryonContent.item("silicon"), 100, CryonContent.item("graphite"), 50));
+        add(Kind.UNIT, "transit", "startrail", r(CryonContent.item("titanium"), 350, CryonContent.item("silicon"), 400, CryonContent.item("graphite"), 250));
+        add(Kind.UNIT, "halo", "transit", r(CryonContent.item("farstar-alloy"), 600, CryonContent.item("silicon"), 1200, CryonContent.item("titanium"), 800));
+        add(Kind.UNIT, "aphelion", "halo", r(CryonContent.item("surge-alloy"), 2500, CryonContent.item("silicon"), 3000, CryonContent.item("neutronite"), 1000));
+        add(Kind.UNIT, "firmament", "aphelion", r(CryonContent.item("cryo-alloy"), 5000, CryonContent.item("nano-material"), 2500, CryonContent.item("silicon"), 6000));
+        add(Kind.UNIT, "skywatch", "orbital-deployment-pad", r(CryonContent.item("aluminum"), 400, CryonContent.item("silicon"), 300, CryonContent.item("titanium"), 200));
         add(Kind.UNIT, "subsonic", "unit-projector", r(CryonContent.item("magnesium"), 150, CryonContent.item("silicon"), 100));
         add(Kind.UNIT, "transonic", "subsonic", r(CryonContent.item("titanium"), 400, CryonContent.item("silicon"), 500, CryonContent.item("graphite"), 300));
         add(Kind.UNIT, "supersonic", "transonic", r(CryonContent.item("farstar-alloy"), 800, CryonContent.item("silicon"), 1600, CryonContent.item("phase-fabric"), 1200));

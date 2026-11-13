@@ -698,7 +698,7 @@ public final class MissileTruckBullets{
     }
     public static class HypersonicMissile extends MissileBulletType{
         public HypersonicMissile(float range){
-            super(48, 1200);
+            super(48, 960);
             rangeOverride = range; lifetime = range / speed;
             homingPower = weaveMag = 0; keepVelocity = false;
             hittable = absorbable = reflectable = false;
@@ -723,7 +723,7 @@ public final class MissileTruckBullets{
         private void detonate(Bullet b){
             if(!(b.data instanceof HypersonicState state) || state.detonated || b.absorbed) return;
             state.detonated = true;
-            area(b, b.x, b.y, 180, 16000);
+            area(b, b.x, b.y, 180, 12800);
             heavyBlast.at(b.x, b.y, b.rotation(), gold);
             Effect.shake(14, 30, b.x, b.y);
         }

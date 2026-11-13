@@ -42,6 +42,8 @@ public class QuantumCommunicationComputer extends Block{
                 StoryProgress.recordContact(QuantumConversation.Contact.values()[action]);
             }else if(action == refusePioneer){
                 StoryProgress.recordPioneerRefusal();
+            }else if(action == 4 || action == 5){
+                StoryProgress.completeTerminal(action == 4 ? "desolate-captured" : "aravis-captured");
             }
         });
     }

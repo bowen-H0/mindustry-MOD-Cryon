@@ -93,6 +93,7 @@ public class OblivionBossAbility extends Ability {
                 reflectRadius * 2f, reflectRadius * 2f,
                 b -> {
                     if (cryon.Features.MapAlliances.allied(b.team, unit.team) || b.absorbed
+                            || b.type instanceof OrbitalProjectile
                             || b.type instanceof MissileTruckBullets.HypersonicMissile) return;
                     if (!b.within(unit, reflectRadius)) return;
 
@@ -112,6 +113,7 @@ public class OblivionBossAbility extends Ability {
                 reflectRadius * 2f, reflectRadius * 2f,
                 b -> {
                     if (cryon.Features.MapAlliances.allied(b.team, unit.team) || b.absorbed
+                            || b.type instanceof OrbitalProjectile
                             || b.type instanceof MissileTruckBullets.HypersonicMissile) return;
                     if (!b.within(unit, reflectRadius)) return;
 

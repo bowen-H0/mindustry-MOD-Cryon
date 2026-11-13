@@ -72,6 +72,12 @@ public class QuantumCommunicationDialog extends BaseDialog{
                 button.add(faction.localized()).fontScale(1.6f).growX().left();
             }, () -> {
                 if(!computer.ready()) return;
+                String chapter = contact == QuantumConversation.Contact.pioneer ? StoryProgress.pendingTerminal() : null;
+                if(chapter != null){
+                    hide();
+                    new ConfiguredCommunicationDialog(computer, chapter).show();
+                    return;
+                }
                 conversation = QuantumConversation.begin(contact);
                 computer.configure(contact.ordinal());
                 if(conversation.ended){

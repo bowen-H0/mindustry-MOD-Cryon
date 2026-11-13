@@ -1,0 +1,55 @@
+{
+  "title": "克莱恩 · 第一区 · 监听频道",
+  "titleKey": "cryon.radio.story.cryon-sector-1.title",
+  "startDelay": 3,
+  "steps": [
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "这里是 Crux。",
+      "textKey": "cryon.radio.story.cryon-sector-1.01.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.212
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "克莱恩属于我们的控制区域。",
+      "textKey": "cryon.radio.story.cryon-sector-1.01.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.795
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "这是最后一次警告。",
+      "textKey": "cryon.radio.story.cryon-sector-1.02.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.795
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "任何试图进入克莱恩的 Sharded 单位，都将被视为入侵者。",
+      "textKey": "cryon.radio.story.cryon-sector-1.02.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 7.727
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "不要试探我们的底线。",
+      "textKey": "cryon.radio.story.cryon-sector-1.03.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.628
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "我们已经做好了应对准备。",
+      "textKey": "cryon.radio.story.cryon-sector-1.03.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.67
+    }
+  ]
+}

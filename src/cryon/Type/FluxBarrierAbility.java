@@ -135,6 +135,7 @@ public class FluxBarrierAbility extends Ability {
             );
         }
         Units.nearbyEnemies(unit.team, unit.x, unit.y, realRad + 10f, enemy -> {
+            if(enemy.type instanceof OrbitalUnitType) return;
             float overlapDst = (enemy.hitSize / 2f + realRad) - enemy.dst(unit);
             if(overlapDst > 0){
                 if(overlapDst > enemy.hitSize * 1.5f){

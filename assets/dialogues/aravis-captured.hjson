@@ -1,0 +1,302 @@
+{
+  "title": "阿拉维斯占领后 · 量子通讯终端",
+  "steps": [
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们已经确认，阿拉维斯已被你们完全控制。",
+      "textKey": "cryon.radio.story.aravis-captured.01.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.253
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "星际加速器也已成功回收。",
+      "textKey": "cryon.radio.story.aravis-captured.01.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.878
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "……",
+      "textKey": "cryon.radio.story.aravis-captured.02.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 4.795
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "那又怎么样？",
+      "textKey": "cryon.radio.story.aravis-captured.02.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.003
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "你们的失望可以理解，但这不会改变当前的战略局势。",
+      "textKey": "cryon.radio.story.aravis-captured.03.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 8.983
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "对 Norma 的远征已经失败。",
+      "textKey": "cryon.radio.story.aravis-captured.03.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.337
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "舰队损失惨重，现有军事力量不足以再次发起进攻。",
+      "textKey": "cryon.radio.story.aravis-captured.03.03",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 9.273
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "不用提醒我们。",
+      "textKey": "cryon.radio.story.aravis-captured.04.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.878
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "我们知道自己输了。",
+      "textKey": "cryon.radio.story.aravis-captured.04.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.337
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "失败并不意味着计划终止。",
+      "textKey": "cryon.radio.story.aravis-captured.05.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.295
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们已经封锁了远征失败的消息。",
+      "textKey": "cryon.radio.story.aravis-captured.05.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.712
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "Crux 与 Malis 尚不知道你们的真实处境。",
+      "textKey": "cryon.radio.story.aravis-captured.05.03",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.087
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "所以呢？",
+      "textKey": "cryon.radio.story.aravis-captured.06.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 4.837
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "你想让我们继续假装什么都没发生？",
+      "textKey": "cryon.radio.story.aravis-captured.06.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 6.67
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "不。",
+      "textKey": "cryon.radio.story.aravis-captured.07.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 4.795
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们需要改变战略。",
+      "textKey": "cryon.radio.story.aravis-captured.07.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 5.962
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "既然无法依靠现有力量击败 Norma，那么我们就需要更多的盟友。",
+      "textKey": "cryon.radio.story.aravis-captured.07.03",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.545
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "Crux 和 Malis？",
+      "textKey": "cryon.radio.story.aravis-captured.08.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.295
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "他们恨不得把我们拆了。",
+      "textKey": "cryon.radio.story.aravis-captured.08.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 6.045
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "正因如此，他们才具有利用价值。",
+      "textKey": "cryon.radio.story.aravis-captured.09.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.378
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们可以为你们建立一个全新的阵营身份，并对外宣称 Sharded 已经与 Norma 结盟，企图摧毁整个星系。",
+      "textKey": "cryon.radio.story.aravis-captured.09.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 13.333
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "随后，以新阵营的身份向 Crux 和 Malis提出合作。",
+      "textKey": "cryon.radio.story.aravis-captured.09.03",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 9.66
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "……",
+      "textKey": "cryon.radio.story.aravis-captured.10.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 4.795
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "你想让他们和我们一起对付我们自己？",
+      "textKey": "cryon.radio.story.aravis-captured.10.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 6.378
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "准确地说，是让他们相信自己正在对抗 Sharded。",
+      "textKey": "cryon.radio.story.aravis-captured.11.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.42
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "……",
+      "textKey": "cryon.radio.story.aravis-captured.12.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 4.795
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "真够荒唐的。",
+      "textKey": "cryon.radio.story.aravis-captured.12.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.295
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "但这是目前成功概率最高的方案。",
+      "textKey": "cryon.radio.story.aravis-captured.13.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.128
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "……",
+      "textKey": "cryon.radio.story.aravis-captured.14.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 4.795
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "好吧。",
+      "textKey": "cryon.radio.story.aravis-captured.14.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 4.878
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "新阵营叫什么？",
+      "textKey": "cryon.radio.story.aravis-captured.14.03",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.962
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "联盟。",
+      "textKey": "cryon.radio.story.aravis-captured.15.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 5.045
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "随便。",
+      "textKey": "cryon.radio.story.aravis-captured.16.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.045
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "明白。",
+      "textKey": "cryon.radio.story.aravis-captured.17.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 5.128
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "新的身份识别信息正在生成。",
+      "textKey": "cryon.radio.story.aravis-captured.17.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.337
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "希望这次别再失败了。",
+      "textKey": "cryon.radio.story.aravis-captured.18.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 6.295
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们会确保所有可控因素都得到妥善处理。",
+      "textKey": "cryon.radio.story.aravis-captured.19.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 8.113
+    }
+  ],
+  "titleKey": "cryon.radio.story.aravis-captured.title"
+}

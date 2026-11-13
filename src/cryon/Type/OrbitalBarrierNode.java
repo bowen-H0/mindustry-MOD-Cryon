@@ -125,7 +125,8 @@ public class OrbitalBarrierNode extends Block{
     /** Called before native bullet movement, so fast rounds cannot damage behind the curtain. */
     public static boolean intercept(Bullet bullet){
         if(net.client() || bullet.absorbed || bullet.vel.isZero() || beamLength(bullet.type) >= 0f
-                || bullet.type instanceof MissileTruckBullets.HypersonicMissile) return false;
+                || bullet.type instanceof MissileTruckBullets.HypersonicMissile
+                || bullet.type instanceof OrbitalProjectile) return false;
         OrbitalBarrierBuild first = null, second = null;
         float best = 2f, ex = bullet.x + bullet.vel.x * Time.delta, ey = bullet.y + bullet.vel.y * Time.delta;
         for(OrbitalBarrierBuild a : nodes){
@@ -203,6 +204,7 @@ public class OrbitalBarrierNode extends Block{
                 float dx = b.x - a.x, dy = b.y - a.y, len = Mathf.len(dx, dy);
                 if(len < 1f) continue;
                 Groups.unit.each(unit -> {
+                    if(unit.type instanceof OrbitalUnitType) return;
                     if(!a.active() || !b.active() || unit.dead || MapAlliances.allied(a.team, unit.team)) return;
                     float radius = unit.hitSize / 2f + ((OrbitalBarrierNode)a.block).barrierWidth / 2f;
                     float hit = thickCrossing(unit.lastX, unit.lastY, unit.x, unit.y, a.x, a.y, b.x, b.y, radius);

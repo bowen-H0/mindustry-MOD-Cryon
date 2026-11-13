@@ -238,6 +238,7 @@ public class SpaceJumpAbility extends Ability{
         targetX = x; targetY = y; originX = ox; originY = oy; facing = rotation;
         landingCheck = 1f + Math.floorMod(unit.id, 15);
         level = tier; charge = 0f; reconstruction = 0f; active = true; automatic = false;
+        if(unit.type instanceof OrbitalHoverUnitType) OrbitalGroundHoverAI.clearBeam(unit);
         engineTrails = null;
         updateTrails(unit);
     }
@@ -265,6 +266,7 @@ public class SpaceJumpAbility extends Ability{
         unit.set(x, y); unit.rotation = rotation; unit.vel.setZero();
         unit.snapInterpolation(); unit.snapSync();
         cooldown = reloadTime(level);
+        if(unit.type instanceof OrbitalHoverUnitType) OrbitalGroundHoverAI.arrived(unit);
     }
 
     /** Vanilla controllers run after abilities; restore the locked pose once they have finished. */

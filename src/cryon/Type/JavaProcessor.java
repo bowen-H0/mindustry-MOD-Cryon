@@ -37,7 +37,16 @@ public class JavaProcessor extends Block {
 
         // 配置值 = 脚本 id，空字符串表示不运行任何脚本
         config(String.class, (JavaProcessorBuild b, String id) -> {
-            if(b.script instanceof NuclearCleansingScript && id != null && id.startsWith("nuclear-cleansing:")){
+            if(id != null && id.startsWith(RadioDialogueScript.configPrefix)){
+                if(b.scriptLocked()) return;
+                String source = id.substring(RadioDialogueScript.configPrefix.length());
+                try{
+                    cryon.Story.DialogueSequence.parse(source);
+                    if(!(b.script instanceof RadioDialogueScript)) b.setScript("radio-dialogue");
+                    ((RadioDialogueScript)b.script).configure(source);
+                    cryon.UI.RadioDialogue.broadcastDismiss();
+                }catch(RuntimeException ignored){ /* Reject invalid map/network configuration. */ }
+            }else if(b.script instanceof NuclearCleansingScript && id != null && id.startsWith("nuclear-cleansing:")){
                 ((NuclearCleansingScript)b.script).configure(id.substring("nuclear-cleansing:".length()));
             }else{
                 b.setScript(id);
@@ -133,6 +142,7 @@ public class JavaProcessor extends Block {
 
         @Override
         public Object config() {
+            if(script instanceof RadioDialogueScript) return RadioDialogueScript.configPrefix + ((RadioDialogueScript)script).source();
             return scriptId;
         }
 

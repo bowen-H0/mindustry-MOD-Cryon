@@ -1,0 +1,39 @@
+{
+  "title": "克莱恩 · 毁灭禁区 · 监听频道",
+  "titleKey": "cryon.radio.story.exclusion-zone.title",
+  "startDelay": 3,
+  "steps": [
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "所有作战单位已接到命令。",
+      "textKey": "cryon.radio.story.exclusion-zone.01.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.503
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "进攻即将开始。",
+      "textKey": "cryon.radio.story.exclusion-zone.01.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.962
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "我们不会允许你们离开这片区域。",
+      "textKey": "cryon.radio.story.exclusion-zone.02.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.378
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "那就试试看。",
+      "textKey": "cryon.radio.story.exclusion-zone.03.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.503
+    }
+  ]
+}

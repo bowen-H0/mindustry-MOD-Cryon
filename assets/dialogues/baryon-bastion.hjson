@@ -1,0 +1,47 @@
+{
+  "title": "克莱恩 · 重晶要塞 · 监听频道",
+  "titleKey": "cryon.radio.story.baryon-bastion.title",
+  "startDelay": 3,
+  "steps": [
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "立即启动全部防御系统。",
+      "textKey": "cryon.radio.story.baryon-bastion.01.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.462
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "所有部队进入最高战备状态。",
+      "textKey": "cryon.radio.story.baryon-bastion.01.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.503
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "所有预备部队立即进入阵地。",
+      "textKey": "cryon.radio.story.baryon-bastion.02.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.795
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "不得擅自撤离。",
+      "textKey": "cryon.radio.story.baryon-bastion.02.02",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 5.837
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "即使外围防线被突破，也必须继续抵抗。",
+      "textKey": "cryon.radio.story.baryon-bastion.03.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 7.42
+    }
+  ]
+}

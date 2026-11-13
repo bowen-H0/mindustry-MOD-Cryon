@@ -81,7 +81,8 @@ public final class DesolateBattlefieldCheck{
         check(Team.crux.core() == null && Team.crux.rules().infiniteResources && !Vars.state.rules.infiniteResources
             && !Team.sharded.rules().infiniteResources, "enemy coreless construction leaked free resources to player");
         Item cargo = Vars.content.item("cryon-nuclear-explosive");
-        check(cargo != null && cargo.explosiveness >= 10f, "missing strong nuclear cargo item");
+        check(cargo != null && cargo.explosiveness == 2f && cargo.flammability == 0f
+            && cargo.charge == 0f && cargo.radioactivity == 0f, "nuclear cargo must have only 200% explosiveness");
 
         for(int i = 0; i < 150; i++) spawn("flare", Team.crux, 1200 + i % 10, 1200 + i / 10);
         Unit protectedBoss = spawn("flare", Team.crux, 1400, 1400); protectedBoss.flag = 840100d;
@@ -110,17 +111,25 @@ public final class DesolateBattlefieldCheck{
         Building target = (Building)bomberType.getMethod("chooseBuilding").invoke(ai);
         check(target != null && target.team == Team.sharded, "kamikaze failed to prioritize a building over the fighter");
         Building friendly = Vars.world.build(32, 20); float friendlyHealth = friendly.health;
-        Building victim = Vars.world.build(26, 20);
+        Building victim = target;
         bomber.controller().updateUnit();
         check(!bomber.dead && bomber.stack.amount > 0, "kamikaze detonated before reaching a building");
         bomber.set(target.x, target.y);
         bomber.controller().updateUnit();
-        Time.update();
-        check(bomber.dead && bomber.stack.amount == 0, "impact did not consume cargo and sacrifice aircraft: dead="
+        check(bomber.dead && bomber.stack.item == cargo && bomber.stack.amount > 0,
+            "impact did not preserve cargo for the native crash explosion: dead="
             + bomber.dead + " cargo=" + bomber.stack.amount + " health=" + bomber.health + " target=" + target.block.name + " distance=" + bomber.dst(target));
-        check(!victim.isValid() || victim.health < victim.maxHealth, "nuclear impact failed to damage enemy buildings");
+        check(victim.isValid() && victim.health == victim.maxHealth, "impact applied custom explosion damage before native destruction");
+        // Exercise the engine's crash destruction, including its scheduled explosion waves.
+        bomber.destroy();
+        for(int i = 0; i < 90; i++){ Time.delta = 1f; Time.update(); }
+        check(!bomber.isAdded(), "native crash did not remove aircraft");
+        check(!victim.isValid() || victim.health < victim.maxHealth, "native cargo explosion failed to damage enemy buildings");
         check(friendly.health == friendlyHealth, "nuclear impact damaged its own side");
-        check(!(boolean)bomberType.getMethod("detonate", Unit.class).invoke(null, bomber), "nuclear cargo detonated twice");
+        float healthAfterCrash = victim.health;
+        bomber.destroy();
+        for(int i = 0; i < 90; i++){ Time.delta = 1f; Time.update(); }
+        check(victim.health == healthAfterCrash, "native cargo exploded twice");
         clearUnits();
 
         for(int i = 0; i < 8; i++) spawn("dagger", Team.crux, 1050 + i * 3, 1050);
@@ -184,6 +193,30 @@ public final class DesolateBattlefieldCheck{
         for(int i = 0; i < 1850; i++) tickDirector();
         check(Vars.state.rules.tags.getFloat("cryon-desolate-support-time", 0f) >= 1800f,
             "repeat support timer incorrectly reused the first 30-second delay");
-        System.out.println("DESOLATE_BATTLEFIELD_CHECK_PASS: nuclear cargo/probability/impact, building targeting, one detonation, friendly safety, coreless native blueprint construction, Starlight assistance, save recovery, Exotic repair beams, reinforcement caps");
+        // Support must abandon construction/repair when no living combat troops remain.
+        for(Unit unit : Groups.unit.copy()) if(unit.team == Team.crux
+            && !role(unit, 841000d, 3) && !role(unit, 842000d, 6) && !role(unit, 843000d, 6)) unit.remove();
+        Unit wreck = spawn("flare", Team.crux, 1200, 1200); wreck.kill();
+        for(int i = 0; i < 61; i++) tickDirector();
+        check(wreck.dead, "dead combat fixture revived");
+        for(Unit unit : Groups.unit) if(unit.team == Team.crux && !unit.dead){
+            check(unit.controller().getClass().getSimpleName().equals("SupportChargeAI"), "support stayed idle instead of charging: " + unit.type);
+            check(unit.plans.isEmpty() && !unit.updateBuilding, "charging unit retained an active construction job");
+            unit.set(1200, 1200); unit.vel.setZero();
+            unit.controller().updateUnit();
+            check(unit.vel.len() > 0f && unit.vel.x < 0f && unit.vel.y < 0f, "support did not advance toward enemy core");
+        }
+        Fi chargeSave = data.child("support-charge.msav");
+        SaveIO.write(chargeSave); SaveIO.load(chargeSave); locate(); tickDirector();
+        check(Groups.unit.count(u -> u.team == Team.crux && !u.dead
+            && u.controller().getClass().getSimpleName().equals("SupportChargeAI")) == 15, "support charge did not resume after save/load");
+        spawn("dagger", Team.crux, 900, 900);
+        for(int i = 0; i < 61; i++) tickDirector();
+        check(builder().controller().getClass().getSimpleName().equals("StationBuilderAI") && builder().updateBuilding,
+            "new combat wave did not restore construction support");
+        check(Groups.unit.find(u -> role(u, 842000d, 6)).controller().getClass().getSimpleName().equals("StationAssistAI")
+            && Groups.unit.find(u -> role(u, 843000d, 6)).controller().getClass().getSimpleName().equals("RepairEscortAI"),
+            "new combat wave did not restore assistance and repair roles");
+        System.out.println("DESOLATE_BATTLEFIELD_CHECK_PASS: 200% explosive-only cargo, native crash explosion, probability/impact, building targeting, one detonation, friendly safety, coreless native blueprint construction, Starlight assistance, save recovery, Exotic repair beams, reinforcement caps, support-only charge, dead combat exclusion, saved charge recovery, new-wave role restoration");
     }
 }

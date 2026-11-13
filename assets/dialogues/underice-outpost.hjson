@@ -1,0 +1,87 @@
+{
+  "title": "冰下前哨 · 监听频道",
+  "steps": [
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们已经确认了你们的到来。",
+      "textKey": "cryon.radio.story.underice-outpost.01.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 5.962
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "欢迎来到克莱恩地下，Sharded。",
+      "textKey": "cryon.radio.story.underice-outpost.01.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.587
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "看来你们一直在监视我们。",
+      "textKey": "cryon.radio.story.underice-outpost.02.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 6.128
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "监测盟友的行动是必要的。",
+      "textKey": "cryon.radio.story.underice-outpost.03.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 6.587
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们必须确保合作计划能够顺利执行。",
+      "textKey": "cryon.radio.story.underice-outpost.03.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 7.087
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "Crux 在这片区域建立了军事基地，长期占据着重要设施。",
+      "textKey": "cryon.radio.story.underice-outpost.04.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 10.337
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "我们曾多次尝试将其驱逐，但均未取得预期成果。",
+      "textKey": "cryon.radio.story.underice-outpost.04.02",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 9.177
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "别废话了。",
+      "textKey": "cryon.radio.story.underice-outpost.05.01",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.545
+    },
+    {
+      "team": "sharded",
+      "speaker": "Sharded",
+      "text": "我们早就发现了。",
+      "textKey": "cryon.radio.story.underice-outpost.05.02",
+      "speakerKey": "cryon.radio.speaker.sharded",
+      "duration": 5.337
+    },
+    {
+      "team": "pioneer",
+      "speaker": "先驱",
+      "text": "……",
+      "textKey": "cryon.radio.story.underice-outpost.06.01",
+      "speakerKey": "cryon.radio.speaker.pioneer",
+      "duration": 4.795
+    }
+  ],
+  "startDelay": 3,
+  "titleKey": "cryon.radio.story.underice-outpost.title"
+}

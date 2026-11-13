@@ -172,6 +172,7 @@ public class CryonJavaMod extends Mod {
         UnderwaterEditor.load();
         cryon.Content.PlanetEnvironmentStatuses.load();
         cryon.Content.SubmarineContent.load();
+        cryon.Content.OrbitalUnits.load();
         CrystalStatueBlock.loadContent();
         AravisEnvironment.load();
         PorphyraEnvironment.load();
@@ -1996,6 +1997,7 @@ public class CryonJavaMod extends Mod {
         ScriptRegistry.register("nuke_strike", "script.nuke-strike.name", NukeStrikeScript::new);
         ScriptRegistry.register("nuclear_cleansing", "script.nuclear-cleansing.name", NuclearCleansingScript::new);
         ScriptRegistry.register(DesolatePlainScript.id, "script.desolate-plain.name", DesolatePlainScript::new);
+        cryon.Script.RadioDialogueScript.register();
         NuclearCleansingScript.initNetworking();
 
 
@@ -2032,18 +2034,23 @@ public class CryonJavaMod extends Mod {
         NanoLegUnits.install();
         cryon.Story.StoryProgress.install();
         MainMenuTheme.install();
+        CampaignMusic.install();
+        OrbitalSupport.install();
+        OrbitalPhysics.install();
         PorphyraFlyingAI.install();
         PlanetTraits.install();
         UnderwaterEditor.install();
         MapAlliances.install();
         SpaceJump.install();
         cryon.Story.DesolateIntrusion.install();
+        cryon.UI.RadioDialogue.install();
         DesolatePlainScript.install();
         LoadTiming.measure("init / environment", CryonEnvironment::init);
         LoadTiming.measure("init / depths environment", cryon.Content.CryonDepthsEnvironment::init);
         LoadTiming.measure("init / aravis environment", AravisEnvironment::init);
         LoadTiming.measure("init / porphyra environment", PorphyraEnvironment::init);
         PorphyraCampaign.install();
+        cryon.Story.ShardedReceptorRaid.install();
         Events.on(ClientLoadEvent.class, event -> {
             PorphyraFont.install();
             NormaTeam.loadIcon();
@@ -2397,6 +2404,7 @@ public class CryonJavaMod extends Mod {
         // Register before initCapacities so all new plan liquids are accepted.
         cryon.Content.CrawlerProduction.addPlans(t3universalAssembler, t4universalAssembler, t5universalAssembler);
         cryon.Content.MissileTruckUnits.configureProduction(t3universalAssembler, t4universalAssembler, t5universalAssembler);
+        cryon.Content.OrbitalUnits.configureProduction();
         cryon.Content.ShadowMech.configureProduction();
         // 添加生产计划
         if (peak != null) {

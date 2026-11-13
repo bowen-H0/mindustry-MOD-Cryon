@@ -34,6 +34,8 @@ public final class UnitDisplayOrder{
         line("vindex imperator");
         line("particle momentum inertia gravity singularity");
         line("nadir apex exotic libration lagrange");
+        line("startrail transit halo aphelion firmament");
+        line("skywatch");
         line("vain roche threshold hyperion oblivion destroyer eon");
         line("minimus danae pammelas schmidti sloani");
     }

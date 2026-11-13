@@ -1,0 +1,31 @@
+{
+  "title": "克莱恩 · 暮光冰原 · 监听频道",
+  "titleKey": "cryon.radio.story.twilight-icefield.title",
+  "startDelay": 3,
+  "steps": [
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "我们已经没有可以继续后撤的阵地。",
+      "textKey": "cryon.radio.story.twilight-icefield.01.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.42
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "任何防线都不允许主动放弃。",
+      "textKey": "cryon.radio.story.twilight-icefield.02.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.628
+    },
+    {
+      "team": "crux",
+      "speaker": "Crux",
+      "text": "无论付出什么代价，都必须阻止 Sharded。",
+      "textKey": "cryon.radio.story.twilight-icefield.03.01",
+      "speakerKey": "cryon.radio.speaker.crux",
+      "duration": 6.462
+    }
+  ]
+}

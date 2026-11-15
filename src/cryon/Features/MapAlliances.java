@@ -289,12 +289,10 @@ public final class MapAlliances{
         var editor = Vars.ui.editor;
         BaseDialog menu = Reflect.get(MapEditorDialog.class, editor, "menu");
         if(menu.find(buttonName) != null) return;
-        menu.cont.row();
-        menu.cont.button("@cryon.allies.title", Icon.players, () -> {
+        EditorUi.addMenuButton(editor, buttonName, "@cryon.allies.title", Icon.players, () -> {
             menu.hide();
             showEditor();
-        }).size(370f, 60f).padTop(3f).get().name = buttonName;
-        menu.cont.row();
+        });
     }
 
     private static void showEditor(){

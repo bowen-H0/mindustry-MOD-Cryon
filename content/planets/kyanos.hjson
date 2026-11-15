@@ -7,7 +7,7 @@ drawOrbit: false
 tidalLock: true
 accessible: false
 alwaysUnlocked: false
-visible: false
+visible: true
 bloom: true
 hasAtmosphere: false
 orbitSpacing: 8

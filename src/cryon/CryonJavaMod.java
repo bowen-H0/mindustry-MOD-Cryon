@@ -116,6 +116,7 @@ public class CryonJavaMod extends Mod {
     public static ConstructorDrill constructorDrill;
 
     public static PowerTurret abyss;
+    public static PowerTurret themis;
     public static ConstructorTurret kismet;
     public static PowerTurret beacon;
     public static ConstructorTurret aurora;
@@ -370,35 +371,20 @@ public class CryonJavaMod extends Mod {
             size = 5;
 
             var arrayProgress = PartProgress.warmup;
-            Color arrayColor = Color.valueOf("6ea8ff"), heatCol = Color.valueOf("aee3ff");
+            Color arrayColor = Color.valueOf("6ea8ff");
             float arrayY = -18f, arrayRotSpeed = 1.2f;
 
-            shootSound = Sounds.shootArc;
+            shootSound = Sounds.shootSmite;
             loopSound = Sounds.loopSmelter;
             loopSoundVolume = 1.4f;
             shoot = new ShootPattern(){{
                 shots = 1;
-                firstShotDelay = 350f;
+                firstShotDelay = 90f;
             }};
-            shootWarmupSpeed = 0.015f;
-            shootType = new BasicBulletType(4f, 120f){{
-                sprite = "cryon-tesla-orb";
-                width = 40f;
-                height = 40f;
-                lifetime = 65f;
-                hitEffect = despawnEffect = Fx.scatheExplosion;
-                hitSound = Sounds.explosion;
+            shootWarmupSpeed = 0.04f;
+            shootType = new AbyssLightningBulletType();
 
-                hitColor = backColor = trailColor = Color.valueOf("00d8d8");
-                lightning = 6;
-                lightningLength = 28;
-                lightningLengthRand = 20;
-                lightningDamage = 60;
-                lightningColor=Color.valueOf("00d8d8");;
-                despawnShake = 6f;
-            }};
-
-            drawer = new DrawTurret("reinforced-"){{
+            drawer = new DrawTurret("cryon-"){{
                 parts.addAll(
                         new ShapePart(){{
                             progress = arrayProgress;
@@ -477,59 +463,26 @@ public class CryonJavaMod extends Mod {
                             haloRotateSpeed = arrayRotSpeed * 2f;
                             layer = Layer.effect;
                             y = arrayY;
-                        }},
-
-                        new RegionPart("-mouth"){{
-                            heatColor = heatCol;
-                            heatProgress = PartProgress.warmup;
-                            moveY = -10f;
-                        }},
-                        new RegionPart("-end"){{ moveY = 0f; }},
-                        new RegionPart("-front"){{
-                            heatColor = heatCol;
-                            heatProgress = PartProgress.warmup;
-                            mirror = true; moveRot = 30f; moveY = -5f; moveX = 12f;
-                        }},
-                        new RegionPart("-back"){{
-                            heatColor = heatCol;
-                            heatProgress = PartProgress.warmup;
-                            mirror = true; moveRot = 12f; moveX = 3f; moveY = 6f;
-                        }},
-                        new RegionPart("-mid"){{
-                            heatColor = heatCol;
-                            heatProgress = PartProgress.recoil;
-                            moveY = -11f;
                         }}
-                );
 
-                Color heatCol2 = heatCol.cpy().add(0.1f, 0.1f, 0.1f).mul(1.2f);
-                for(int i = 1; i < 4; i++){
-                    int fi = i;
-                    parts.add(new RegionPart("-spine"){{
-                        outline = false;
-                        progress = PartProgress.warmup.delay(fi / 5f);
-                        heatProgress = PartProgress.warmup.add(p -> (Mathf.absin(3f, 0.2f) - 0.2f) * p.warmup);
-                        mirror = true; under = true;
-                        layerOffset = -0.3f;
-                        turretHeatLayer = Layer.turret - 0.2f;
-                        moveY = 10f;
-                        moveX = 1f + fi * 4.5f;
-                        moveRot = fi * 55f - 120f;
-                        color = Color.valueOf("6ea8ff");
-                        heatColor = heatCol2;
-                        moves.add(new PartMove(PartProgress.recoil.delay(fi / 5f), 1f, 0f, 3f));
-                    }});
+                );
+            }
+                @Override
+                public void load(Block block){
+                    super.load(block);
+                    // The user-supplied abyss.png is the complete body and preview.
+                    preview = block.region;
                 }
-            }};
+            };
 
             heatRequirement = 8f;
             maxHeatEfficiency = 1f;
             consumePower(10f);
             unitSort = UnitSorts.strongest;
-            recoil = 0.5f;
+            recoil = 3f;
             shootY = 3f;
             reload = 300f;
-            range = 260;
+            range = 300;
             shootCone = 15f;
             ammoUseEffect = Fx.casing1;
             health = 12500;
@@ -540,6 +493,8 @@ public class CryonJavaMod extends Mod {
 
             limitRange(5f);
         }};
+
+        themis = new ThemisTurret("themis");
 
         kismet = new ConstructorTurret("kismet") {{
             size = 3;
@@ -2041,6 +1996,7 @@ public class CryonJavaMod extends Mod {
         PlanetTraits.install();
         UnderwaterEditor.install();
         MapAlliances.install();
+        EditorUi.install();
         SpaceJump.install();
         cryon.Story.DesolateIntrusion.install();
         cryon.UI.RadioDialogue.install();
@@ -2388,6 +2344,7 @@ public class CryonJavaMod extends Mod {
                 Items.graphite, 600,
                 Items.phaseFabric, 400
         ));
+        if(cryonPlanet != null) themis.shownPlanets.add(cryonPlanet);
 
         constructorNode.requirements(Category.power, BuildVisibility.shown, new ItemStack[]{
                 new ItemStack(Items.phaseFabric,  10),

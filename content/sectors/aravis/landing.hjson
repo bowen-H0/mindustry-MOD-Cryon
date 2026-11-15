@@ -1,5 +1,5 @@
 planet: aravis
 sector: 0
-alwaysUnlocked: true
+alwaysUnlocked: false
 difficulty: 1
 captureWave: 20

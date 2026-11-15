@@ -1,4 +1,4 @@
 planet: porphyra
 sector: 0
-alwaysUnlocked: true
+alwaysUnlocked: false
 difficulty: 1

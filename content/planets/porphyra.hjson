@@ -2,9 +2,9 @@ parent: "kyanos"
 solarSystem: "kyanos"
 orbitRadius: 130
 radius: 1.15
-accessible: false
-alwaysUnlocked: false
-visible: false
+accessible: true
+alwaysUnlocked: true
+visible: true
 startSector: 0
 sectorSize: 2
 mesh: [

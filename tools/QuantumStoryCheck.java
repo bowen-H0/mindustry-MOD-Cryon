@@ -15,7 +15,7 @@ import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.consumers.ConsumePower;
 
-/** Isolated profile test: story switches, planet gates, research, supply and every dialogue branch. */
+/** Isolated profile test: sector prerequisites, visible planets, research, supply and dialogue branches. */
 public class QuantumStoryCheck{
     static ClassLoader loader;
     static Class<?> progress,flag,conversation,contact,choice;
@@ -30,6 +30,32 @@ public class QuantumStoryCheck{
     static Object reconnect(String name)throws Exception{return conversation.getMethod("begin",contact).invoke(null,value(contact,name));}
     static boolean choose(Object session,String name)throws Exception{return (boolean)conversation.getMethod("choose",choice).invoke(session,value(choice,name));}
     static void tick(Building building){Time.delta=1;building.updateConsumption();building.updateTile();}
+    static void entryPrerequisites(Fi data){
+        if(Core.assets==null)Core.assets=new arc.assets.AssetManager();
+        Saves saves=new Saves();
+        for(String[] pair:new String[][]{{"landing","desolate-plain"},{"porphyra-landing","terminus"}}){
+            SectorPreset entry=Vars.content.sector("cryon-"+pair[0]),required=Vars.content.sector("cryon-"+pair[1]);
+            check(!entry.alwaysUnlocked&&entry.locked(),"Entry bypasses research: "+entry.name);
+            check(entry.techNode!=null&&entry.techNode.objectives.size==1,"Entry must have one capture prerequisite: "+entry.name);
+            var objective=entry.techNode.objectives.first();
+            check(objective instanceof Objectives.SectorComplete&&((Objectives.SectorComplete)objective).preset==required,
+                "Wrong entry capture prerequisite: "+entry.name);
+            check(!objective.complete(),"Uncaptured prerequisite is already complete");
+            Sector sector=required.sector;
+            sector.save=saves.new SaveSlot(data.child(pair[1]+".msav"));
+            sector.info.hasCore=true;sector.info.waves=false;sector.info.attack=true;
+            check(!objective.complete(),"Enemy base still present but entry is available");
+            sector.info.attack=false;
+            check(objective.complete(),"Capture does not satisfy entry prerequisite without terminal dialogue");
+            sector.save=null;sector.info.hasCore=false;
+        }
+        SectorPreset aegis=Vars.content.sector("cryon-aravis-aegis"),terminus=Vars.content.sector("cryon-terminus");
+        check(!aegis.isLastSector&&terminus.isLastSector&&terminus.techNode.parent.content==aegis,
+            "Aravis finale order must be Aegis then Terminus");
+        check(terminus.techNode.objectives.contains(o->o instanceof Objectives.SectorComplete
+            &&((Objectives.SectorComplete)o).preset==aegis),"Terminus does not require Aegis capture");
+        System.out.println("CAMPAIGN_ENTRY_PASS: Desolate -> Aravis, Terminus -> Porphyra, capture-only objectives, Aegis before finale");
+    }
     public static void main(String[] args)throws Exception{
         Core.app=new MockApplication();Core.files=new MockFiles();Core.graphics=new MockGraphics();Core.audio=new MockAudio();
         Fi data=new Fi(Files.createTempDirectory("cryon-quantum-story-").toFile());
@@ -42,12 +68,14 @@ public class QuantumStoryCheck{
         progress=loader.loadClass("cryon.Story.StoryProgress");flag=loader.loadClass("cryon.Story.StoryProgress$Flag");
         conversation=loader.loadClass("cryon.Story.QuantumConversation");contact=loader.loadClass("cryon.Story.QuantumConversation$Contact");choice=loader.loadClass("cryon.Story.QuantumConversation$Choice");
         invoke("cryon.Features.CryonCampaignLayers","configure");invoke("cryon.TechTree.CryonTechTree","load");
+        invoke("cryon.TechTree.AravisTechTree","load");invoke("cryon.TechTree.PorphyraTechTree","load");
         // The isolated headless fixture has no graphical loadout cache to refresh.
         Timer.instance().clear();
         invoke("cryon.Features.CryonCampaignLayers","shareResearch");invoke("cryon.Story.StoryProgress","install");
         for(String name:new String[]{"underground","actTwo","aravisMission"})check(!get(name),"Flag does not default to false: "+name);
         Planet porphyra=Vars.content.planet("cryon-porphyra"),star=Vars.content.planet("cryon-kyanos"),depths=Vars.content.planet("cryon-cryon-depths");
-        check(!porphyra.visible&&!porphyra.accessible&&!porphyra.alwaysUnlocked&&!star.visible&&!depths.accessible,"Locked planets exposed");
+        check(porphyra.visible&&porphyra.accessible&&porphyra.alwaysUnlocked&&star.visible&&depths.accessible,"Planets still hidden behind story flags");
+        entryPrerequisites(data);
         check(Vars.content.sector("cryon-depths-outpost").locked(),"First underground mission bypasses story lock");
         check(porphyra.parent==star&&porphyra.solarSystem==star&&porphyra.sectors.size>0,"Planet hierarchy: parent="+porphyra.parent+", system="+porphyra.solarSystem+", sectors="+porphyra.sectors.size);
         int gated=0;
@@ -121,16 +149,18 @@ public class QuantumStoryCheck{
         check(!get("aravisMission"),"Offline terminal completed story chapter");terminal.power.status=1;
         terminal.configured(null,4);
         check(get("aravisMission")&&!get("actTwo")&&progress.getMethod("pendingTerminal").invoke(null)==null,"Desolate completion flags/repeat gate wrong");
+        Events.fire(new mindustry.game.EventType.SectorCaptureEvent(Vars.content.sector("cryon-aravis-aegis").sector,true));
+        check(progress.getMethod("pendingTerminal").invoke(null)==null,"Aegis incorrectly completes the Aravis chapter");
         Events.fire(new mindustry.game.EventType.SectorCaptureEvent(Vars.content.sector("cryon-terminus").sector,true));
         check(progress.getMethod("pendingTerminal").invoke(null).equals("aravis-captured"),"Terminus capture did not expose Aravis dialogue");
         terminal.configured(null,5);
-        check(get("actTwo")&&porphyra.visible&&porphyra.accessible&&porphyra.alwaysUnlocked&&star.visible,"Aravis dialogue did not open Porphyra");
+        check(get("actTwo")&&porphyra.visible&&porphyra.accessible&&porphyra.alwaysUnlocked&&star.visible,"Aravis dialogue changed planet access");
         check(progress.getMethod("pendingTerminal").invoke(null)==null,"Completed terminal chapter repeats");
         Core.settings=new Settings();Core.settings.setDataDirectory(data);Core.settings.load();
         for(String name:new String[]{"underground","actTwo","aravisMission"})check(get(name),"Global flag did not persist: "+name);
         check(call(reconnect("pioneer"),"npc").equals("pioneer.allied-return"),"Alliance greeting lost after settings reload");
         Vars.logic.reset();invoke("cryon.Story.StoryProgress","publish");check(get("underground")&&get("actTwo"),"World reset erased global progress");
-        set("actTwo",false);check(!porphyra.visible&&!porphyra.accessible&&!porphyra.alwaysUnlocked&&!star.visible,"Porphyra fails to relock");
+        set("actTwo",false);check(porphyra.visible&&porphyra.accessible&&porphyra.alwaysUnlocked&&star.visible,"Clearing story flag hides Porphyra");
         for(Locale locale:new Locale[]{Locale.ENGLISH,Locale.SIMPLIFIED_CHINESE}){
             var bundle=I18NBundle.createBundle(new Fi("bundles/bundle"),locale);
             for(String key:new String[]{"malis.reconnect","pioneer.allied-return","pioneer.refused-return"}){
@@ -144,7 +174,7 @@ public class QuantumStoryCheck{
                 }
             }
         }
-        System.out.println("QUANTUM_STORY_PASS: false defaults, persistent global flags, gated underground/Porphyra, Relay 32A research, power/constructor checks, every dialogue choice and EN/ZH text");
+        System.out.println("QUANTUM_STORY_PASS: persistent global flags, visible planets, capture-gated campaign entries, underground research, Relay 32A research, power/constructor checks, every dialogue choice and EN/ZH text");
     }
 
     static void repeatContacts(Building terminal,Fi data)throws Exception{

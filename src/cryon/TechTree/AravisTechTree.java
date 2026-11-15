@@ -134,6 +134,7 @@ public class AravisTechTree extends ModPlanetTechTree {
 
         // ---- SECTOR ----
         addAuto(Kind.SECTOR, "landing", "core-conquest");
+        sectorReq("landing", findSector("desolate-plain"));
         addAuto(Kind.SECTOR, "extension", "landing");
         addAuto(Kind.SECTOR, "ridge", "extension");
         addAuto(Kind.SECTOR, "checkpoint", "ridge");

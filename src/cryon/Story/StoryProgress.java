@@ -6,7 +6,6 @@ import mindustry.Vars;
 import mindustry.content.TechTree;
 import mindustry.game.EventType.*;
 import mindustry.game.Objectives.Objective;
-import mindustry.type.Planet;
 
 /** Profile-wide story switches. Loading another sector never resets global progress. */
 public final class StoryProgress{
@@ -90,7 +89,6 @@ public final class StoryProgress{
     public static void set(Flag flag, boolean value){
         writeValue(flag.key, value);
         if(flag == Flag.underground && value) writeValue("cryon-quantum-pioneer-refused", false);
-        applyPlanetGates();
         if(flag == Flag.underground && value) cryon.Features.CryonCampaignLayers.unlockRoute();
         save();
     }
@@ -109,7 +107,6 @@ public final class StoryProgress{
                     Boolean.toString(value("cryon-dialogue-read-" + chapter)));
             }
         }
-        applyPlanetGates();
     }
 
     public static void install(){
@@ -128,21 +125,6 @@ public final class StoryProgress{
                 }
             }
         });
-        Events.run(Trigger.update, StoryProgress::applyPlanetGates);
-    }
-
-    public static void applyPlanetGates(){
-        boolean actTwo = get(Flag.actTwo), underground = get(Flag.underground);
-        Planet star = Vars.content.planet("cryon-kyanos"), porphyra = Vars.content.planet("cryon-porphyra");
-        Planet depths = Vars.content.planet("cryon-cryon-depths");
-        if(star != null) star.visible = actTwo;
-        if(porphyra != null){
-            porphyra.visible = porphyra.accessible = porphyra.alwaysUnlocked = actTwo;
-        }
-        if(depths != null){
-            depths.accessible = depths.alwaysUnlocked = underground;
-            if(!underground) depths.visible = false;
-        }
     }
 
     public static boolean undergroundTechnology(String name){

@@ -73,6 +73,7 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         // ---- BLOCK ----
         addAuto(Kind.BLOCK, "abyss", "penetrate");
+        addAuto(Kind.BLOCK, "themis", "abyss");
 
 
 

@@ -13,7 +13,7 @@ public class CryonLayerPlanet extends Planet{
     public CryonLayerPlanet(){
         super("cryon-depths", Planets.sun, 1f, 2);
         orbitRadius = 130f;
-        accessible = alwaysUnlocked = false;
+        accessible = alwaysUnlocked = true;
         defaultEnv = mindustry.world.meta.Env.terrestrial | mindustry.world.meta.Env.underwater;
         visible = false;
         startSector = 0;

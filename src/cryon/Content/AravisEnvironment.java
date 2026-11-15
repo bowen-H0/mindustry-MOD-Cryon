@@ -14,11 +14,16 @@ import mindustry.type.Weather;
 import mindustry.type.weather.ParticleWeather;
 import mindustry.world.meta.Attribute;
 import cryon.Type.SandstormWeather;
+import cryon.Type.MalisMetalFloor;
+import mindustry.content.Blocks;
 
 public class AravisEnvironment {
     public static ParticleWeather sandstorm;
 
     public static void load(){
+        new MalisMetalFloor(Blocks.metalTiles6.asFloor());
+        new MalisMetalFloor(Blocks.metalTiles12.asFloor());
+        new MalisMetalFloor(Blocks.metalTiles4.asFloor());
         sandstorm = new SandstormWeather("aravis-sandstorm"){{
             color = Color.valueOf("d5b486");
             noiseColor = Color.valueOf("b79365");

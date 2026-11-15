@@ -19,6 +19,7 @@ public class PorphyraTechTree extends ModPlanetTechTree{
                 "porphyra-neptunium-basin", "porphyra-ashen-arc", "porphyra-heavy-element",
                 "porphyra-final-core"};
         addAuto(Kind.SECTOR, sectors[0], "core-thread");
+        sectorReq(sectors[0], findSector("terminus"));
         for(int i = 1; i < sectors.length; i++) addAuto(Kind.SECTOR, sectors[i], sectors[i - 1]);
 
         addAuto(Kind.BLOCK, "core-process", "core-thread");

@@ -50,14 +50,13 @@ public final class UnderwaterEditor{
     private static void addButton(MapEditorDialog dialog){
         BaseDialog menu = Reflect.get(MapEditorDialog.class, dialog, "menu");
         if(menu.find(buttonName) != null) return;
-        menu.cont.row();
-        menu.cont.button("@cryon.editor.underwater", Icon.waves, () -> {
+        var button = EditorUi.addMenuButton(dialog, buttonName, "@cryon.editor.underwater", Icon.waves, () -> {
             menu.hide();
             convert();
             dialog.resetSaved();
             Vars.ui.showInfoFade(Core.bundle.get("cryon.editor.underwater.done"));
-        }).size(370f, 60f).padTop(3f).tooltip("@cryon.editor.underwater.description").get().name = buttonName;
-        menu.cont.row();
+        });
+        if(button != null) button.tooltip("@cryon.editor.underwater.description");
     }
 
     /** Run only in the map editor; all floor edits and the environment flag share one undo step. */

@@ -26,16 +26,15 @@ public class StoryGateRenderCheck{
     static void test(BaseDialog map)throws Exception{
         Planet surface=Vars.content.planet("cryon-cryon"),porphyra=Vars.content.planet("cryon-porphyra"),depths=Vars.content.planet("cryon-cryon-depths");
         view(map,surface);
-        TextButton below=map.find("cryon-layer-underground");check(below!=null&&below.isDisabled(),"Underground button enabled before agreement");
-        below.fireClick();check(params(map).planet==surface,"Disabled underground control bypassed story gate");
-        check(map.find(actor->actor instanceof TextButton&&((TextButton)actor).getText().toString().equals(porphyra.localizedName))==null,"Old Porphyra base exposes locked system in planet list");
-        view(map,porphyra);check(params(map).planet==surface,"Direct Porphyra view bypassed act two");
-        view(map,depths);check(params(map).planet==surface,"Direct underground view bypassed agreement");
-        flag("actTwo",true);view(map,porphyra);check(params(map).planet==porphyra&&porphyra.visible&&porphyra.accessible,"Act two failed to open Porphyra");
-        flag("actTwo",false);Events.fire(Trigger.uiDrawBegin);check(params(map).planet==surface,"Relocking leaves Porphyra accessible");
-        flag("underground",true);below=map.find("cryon-layer-underground");Core.scene.act();below.fireClick();
-        check(params(map).planet==depths,"Agreement fails to open underground");
-        flag("underground",false);Events.fire(Trigger.uiDrawBegin);check(params(map).planet==surface,"Relocking leaves underground accessible");
+        TextButton below=map.find("cryon-layer-underground");check(below!=null&&!below.isDisabled(),"Underground layer still blocked by story");
+        below.fireClick();check(params(map).planet==depths,"Underground layer cannot be viewed before agreement");
+        check(map.find(actor->actor instanceof TextButton&&((TextButton)actor).getText().toString().equals(porphyra.localizedName))!=null,"Porphyra missing from planet list");
+        view(map,porphyra);check(params(map).planet==porphyra&&porphyra.visible&&porphyra.accessible,"Porphyra still hidden behind act two");
+        flag("actTwo",true);flag("actTwo",false);Events.fire(Trigger.uiDrawBegin);
+        check(params(map).planet==porphyra&&porphyra.visible&&porphyra.accessible,"Story flags redirect Porphyra view");
+        view(map,depths);check(params(map).planet==depths,"Direct underground view rejected");
+        flag("underground",true);flag("underground",false);Events.fire(Trigger.uiDrawBegin);
+        check(params(map).planet==depths,"Story flags redirect underground view");
     }
     public static void main(String[] args){
         dir=new Fi(System.getProperty("mindustry.data.dir"));Fi repo=new Fi(System.getProperty("cryon.repo","."));
@@ -53,7 +52,7 @@ public class StoryGateRenderCheck{
                     var lock=library.getClass().getField("lockPlanetReplace");lock.setBoolean(null,true);
                     Vars.ui.planet.show();test(Vars.ui.planet);Vars.ui.planet.hide(null);lock.setBoolean(null,false);
                 }catch(Exception e){throw new RuntimeException(e);}
-                Log.info("STORY_GATE_RENDER_PASS: native/library maps, old bases, disabled underground, direct-view rejection and live flag changes");Core.app.exit();
+                Log.info("STORY_GATE_RENDER_PASS: native/library maps, old bases, visible planets and layers independent of story flags");Core.app.exit();
             }),1f);
         }),3f));
         mindustry.desktop.DesktopLauncher.main(args);

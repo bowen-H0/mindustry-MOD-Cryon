@@ -5,7 +5,6 @@ import arc.Events;
 import arc.util.Log;
 import arc.scene.event.Touchable;
 import arc.scene.ui.TextButton;
-import arc.scene.ui.Label;
 import arc.scene.ui.layout.Table;
 import arc.struct.ObjectSet;
 import cryon.Content.CryonItems;
@@ -185,7 +184,6 @@ public final class CryonCampaignLayers{
 
     private static void ensureLayerUi(LayerView view){
         if(view == null || !view.dialog.isShown()) return;
-        hideLockedSystemEntries(view);
         // Research and the library may rebuild the map without showing the dialog again.
         if(view.dialog.find("cryon-campaign-layers") == null) buildLayerUi(view);
         syncVisibility(view);
@@ -193,7 +191,6 @@ public final class CryonCampaignLayers{
 
     private static void buildLayerUi(LayerView view){
         BaseDialog dialog = view.dialog;
-        hideLockedSystemEntries(view);
         mergePlanetEntries(view);
         Table overlay = new Table();
         overlay.name = "cryon-campaign-layers";
@@ -206,7 +203,6 @@ public final class CryonCampaignLayers{
             bar.button("@cryon.layer.surface", Styles.togglet, () -> switchLayer(view, false))
                     .checked(button -> view.params.planet == surface).get().name = "cryon-layer-surface";
             bar.button("@cryon.layer.underground", Styles.togglet, () -> switchLayer(view, true))
-                    .disabled(button -> !cryon.Story.StoryProgress.get(cryon.Story.StoryProgress.Flag.underground))
                     .checked(button -> view.params.planet == depths).get().name = "cryon-layer-underground";
         });
         overlay.update(() -> syncVisibility(view));
@@ -264,43 +260,10 @@ public final class CryonCampaignLayers{
     }
 
     private static void showLayer(LayerView view){
-        Planet planet = view.params.planet;
-        boolean lockedSystem = planet != null && planet.solarSystem != null
-                && planet.solarSystem.name.equals("cryon-kyanos")
-                && !cryon.Story.StoryProgress.get(cryon.Story.StoryProgress.Flag.actTwo);
-        if(lockedSystem || (planet == depths && !cryon.Story.StoryProgress.get(cryon.Story.StoryProgress.Flag.underground))){
-            view.invoke(view.viewPlanet, surface, false);
-            view.set(view.selected, null);
-            view.set(view.hovered, null);
-        }
         boolean underground = view.params.planet == depths;
         surface.visible = !underground;
         depths.visible = underground;
         if(view.planetEntry != null) view.planetEntry.setChecked(isCryon(view.params.planet));
-    }
-
-    private static void hideLockedSystemEntries(LayerView view){
-        if(cryon.Story.StoryProgress.get(cryon.Story.StoryProgress.Flag.actTwo)) return;
-        Planet planet = Vars.content.planet("cryon-porphyra");
-        if(planet == null) return;
-        // The library lists planets with old bases regardless of accessible/visible.
-        TextButton entry;
-        while((entry = view.dialog.find(element -> element instanceof TextButton
-                && ((TextButton)element).getText().toString().equals(planet.localizedName))) != null){
-            if(entry.parent instanceof Table){
-                Table parent = (Table)entry.parent;
-                parent.getCell(entry).height(0f).pad(0f).setElement(null);
-            }else entry.remove();
-        }
-        Planet star = Vars.content.planet("cryon-kyanos");
-        if(star == null) return;
-        Label heading;
-        while((heading = view.dialog.find(element -> element instanceof Label
-                && ((Label)element).getText().toString().equals(star.localizedName))) != null){
-            if(heading.parent instanceof Table && ((Table)heading.parent).getCell(heading) != null){
-                ((Table)heading.parent).getCell(heading).height(0f).pad(0f).setElement(null);
-            }else heading.remove();
-        }
     }
 
     public static void switchLayer(boolean underground){
@@ -310,7 +273,6 @@ public final class CryonCampaignLayers{
 
     private static void switchLayer(LayerView view, boolean underground){
         if(!view.looking() || !isCryon(view.params.planet)) return;
-        if(underground && !cryon.Story.StoryProgress.get(cryon.Story.StoryProgress.Flag.underground)) return;
         Planet target = underground ? depths : surface;
         if(view.params.planet == target) return;
         Core.settings.put("cryon-underground-view", underground);

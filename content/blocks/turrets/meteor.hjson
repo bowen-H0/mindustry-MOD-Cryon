@@ -1,6 +1,6 @@
-type: ItemTurret
+type: cryon.Type.OrbitalItemTurret
 name: "陨星"
-description: "专精防空炮塔。连续齐射大量追踪导弹。"
+description: "专精防空炮塔，可攻击空中及轨道单位。连续齐射大量追踪导弹，装填远星合金可提升伤害与追踪能力，并冻结目标。"
 size: 4
 health: 900
 range: 320
@@ -23,7 +23,7 @@ drawer: {
 shootY: 10
 ammoTypes: {
   titanium: {
-    type: MissileBulletType
+    type: cryon.Type.OrbitalMissileBulletType
     speed: 4
     lifetime: 85
     damage: 12
@@ -43,6 +43,32 @@ ammoTypes: {
     trailColor: ffd37f
     trailLength: 8
     trailWidth: 1.5
+    hitEffect: blastExplosion
+    despawnEffect: blastExplosion
+  }
+  farstar-alloy: {
+    type: cryon.Type.OrbitalMissileBulletType
+    speed: 5
+    lifetime: 72
+    damage: 24
+    width: 9
+    height: 9
+    shrinkY: 0
+    homingPower: 0.16
+    homingRange: 160
+    weaveScale: 8
+    weaveMag: 1
+    collidesGround: false
+    splashDamage: 60
+    splashDamageRadius: 36
+    status: freezing
+    statusDuration: 180
+    ammoMultiplier: 4
+    backColor: d0a0ff
+    frontColor: ffffff
+    trailColor: d0a0ff
+    trailLength: 10
+    trailWidth: 1.8
     hitEffect: blastExplosion
     despawnEffect: blastExplosion
   }

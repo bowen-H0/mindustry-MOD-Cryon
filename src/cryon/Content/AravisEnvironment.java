@@ -9,10 +9,12 @@ import mindustry.type.Planet;
 import arc.util.Time;
 import mindustry.content.Weathers;
 import mindustry.game.Rules;
+import mindustry.game.Team;
 import mindustry.gen.Sounds;
 import mindustry.type.Weather;
 import mindustry.type.weather.ParticleWeather;
 import mindustry.world.meta.Attribute;
+import mindustry.world.meta.Env;
 import cryon.Type.SandstormWeather;
 import cryon.Type.MalisMetalFloor;
 import mindustry.content.Blocks;
@@ -70,10 +72,24 @@ public class AravisEnvironment {
         rules.weather.add(entry);
     }
 
+    /** Enemy buildings must obey their normal ammo, liquid and power consumers. */
+    public static void applyResourceRules(Rules rules){
+        for(Team team : Team.all){
+            if(team != rules.defaultTeam && team != Team.derelict){
+                rules.teams.get(team).cheat = false;
+            }
+        }
+    }
+
     public static void refreshLoadedWorld(){
         if(Vars.state == null || !isAravis(Vars.state.rules)
                 || (Vars.net != null && Vars.net.client())) return;
         applyWeather(Vars.state.rules);
+        // Aravis supports combustion; migrate older sectors with only the terrestrial bit.
+        Vars.state.rules.env |= Env.oxygen;
+        applyResourceRules(Vars.state.rules);
+        var core = Vars.state.rules.defaultTeam.core();
+        if(core != null) AravisLiquidResources.ensure(Vars.world.tiles, core.tile);
         // Older saves may also contain an already active vanilla sandstorm.
         Weathers.sandstorm.remove();
     }

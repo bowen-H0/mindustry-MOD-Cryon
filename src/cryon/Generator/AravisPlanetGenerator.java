@@ -7,6 +7,7 @@ import arc.struct.Seq;
 import arc.struct.StringMap;
 import arc.util.noise.Simplex;
 import cryon.Content.AravisEnvironment;
+import cryon.Content.AravisLiquidResources;
 import cryon.Features.CryonContent;
 import mindustry.Vars;
 import mindustry.content.Blocks;
@@ -145,6 +146,7 @@ public class AravisPlanetGenerator extends PlanetGenerator {
         vein(enemyX + 7, enemyY, 3, nickel);
         tiles.get(enemyX, enemyY).setOverlay(Blocks.spawn);
         Schematics.placeLaunchLoadout(spawnX, spawnY);
+        AravisLiquidResources.ensure(tiles, tiles.get(spawnX, spawnY));
 
         Vars.state.rules.attackMode = false;
         Vars.state.rules.waves = true;
@@ -155,6 +157,7 @@ public class AravisPlanetGenerator extends PlanetGenerator {
         addWave("obsidianum", 9, 1, 5, 6);
         addWave("nitrum", 19, 1, 6, 3);
         AravisEnvironment.applyWeather(Vars.state.rules);
+        AravisEnvironment.applyResourceRules(Vars.state.rules);
     }
 
     private void addWave(String name, int begin, int amount, int spacing, int max){

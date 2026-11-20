@@ -19,7 +19,7 @@ public final class DatabaseSections{
     public static Item nanoTab,bossTab;
     private static final ObjectSet<String> bosses=ObjectSet.with(
         "cryon-vain","cryon-roche","cryon-threshold","cryon-hyperion",
-        "cryon-oblivion","cryon-destroyer","cryon-eon");
+        "cryon-oblivion","cryon-destroyer","cryon-eon","cryon-sacred-remains");
     private static final ObjectSet<String> nanoExclusive=ObjectSet.with(
         "cryon-nano-floor","cryon-nano-ore","cryon-nano-terrain-wall","cryon-nano-material",
         "cryon-rogue-nano-drill","cryon-rogue-nano-wall","cryon-rogue-nano-unloader",

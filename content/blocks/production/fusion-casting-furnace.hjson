@@ -1,9 +1,11 @@
 //type: HeatCrafter
-name: "熔合铸造炉"
-description: "消耗石墨、石英与钠，在高温下熔铸出克莱合金。"
+name: "熔合铸造炉（旧版）"
+description: "旧版熔合铸造炉，已有建筑仍可使用石墨、石英和钠生产克莱合金，但无法再新建。"
 size: 2
 health: 240
 category: crafting
+buildVisibility: hidden
+placeablePlayer: false
 hasPower: false
 hasLiquids: true
 hasItems: true

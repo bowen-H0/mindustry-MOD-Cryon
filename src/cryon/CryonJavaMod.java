@@ -166,6 +166,15 @@ public class CryonJavaMod extends Mod {
         SpaceJump.loadCommands();
         cryon.Story.IntrusionContent.load();
         CryonItems.load();
+        cryon.Content.PlasmaDefense.load();
+        cryon.Content.FaultDefense.load();
+        cryon.Content.TerraDefense.load();
+        cryon.Content.EmberglowDefense.load();
+        cryon.Content.PurgeDefense.load();
+        cryon.Content.IncinerationDefense.load();
+        new MagnesiumWaterGenerator("magnesium-water-generator");
+        cryon.Content.SodiumChemistry.load();
+        cryon.Content.CryoAlloyProduction.load();
         cryon.Content.NanoEnvironment.load();
         cryon.Content.NanoColonyContent.load();
         CryonCampaignLayers.load();
@@ -176,12 +185,17 @@ public class CryonJavaMod extends Mod {
         cryon.Content.OrbitalUnits.load();
         CrystalStatueBlock.loadContent();
         AravisEnvironment.load();
+        cryon.Content.AravisRtsUnits.load();
+        cryon.Content.AravisSiegeTanks.load();
         PorphyraEnvironment.load();
         new PorphyraTradeTower("porphyra-trade-tower");
         cryon.Content.BioCrawlerUnits.load();
+        cryon.Content.SacredRemains.load();
         cryon.Content.MissileTruckUnits.load();
         cryon.Content.ShadowMech.load();
         new TeamFlagProjector("team-flag-projector");
+        new TeamFlagProjector("large-team-flag-projector", 4, 2.5f);
+        new cryon.Type.PlanetProjector("planet-projector");
         new NuclearArbiter("disarmament");
         new UnityTurret("unity");
         new cryon.Type.QuantumCommunicationComputer("quantum-communication-computer");
@@ -1649,7 +1663,7 @@ public class CryonJavaMod extends Mod {
         new GenericCrafter("surge-alloy-forge") {{ }};
 
         new GenericCrafter("nano-material-weaver") {{ }};
-        new HeatCrafter("fusion-casting-furnace") {{ }};
+        new LegacyFusionCrafter("fusion-casting-furnace") {{ }};
 
         //cooling
         new GenericCrafter("dry-ice-sublimator") {{ }};
@@ -1888,6 +1902,8 @@ public class CryonJavaMod extends Mod {
             ));
         }};
 
+        new NuclearByproductCollector("nuclear-byproduct-collector");
+
         reactorController = new RBMKReactor.ReactorController("reactor-controller"){{
             requirements(Category.power, with(
                     Items.silicon, 40,
@@ -1953,6 +1969,7 @@ public class CryonJavaMod extends Mod {
         ScriptRegistry.register("nuclear_cleansing", "script.nuclear-cleansing.name", NuclearCleansingScript::new);
         ScriptRegistry.register(DesolatePlainScript.id, "script.desolate-plain.name", DesolatePlainScript::new);
         cryon.Script.RadioDialogueScript.register();
+        ScriptRegistry.register(cryon.Script.AegisSacredRemainsScript.id, "script.aegis-sacred-remains.name", cryon.Script.AegisSacredRemainsScript::new);
         NuclearCleansingScript.initNetworking();
 
 
@@ -1997,6 +2014,8 @@ public class CryonJavaMod extends Mod {
         UnderwaterEditor.install();
         MapAlliances.install();
         EditorUi.install();
+        cryon.Features.PlanetProjectionRenderer.install();
+        cryon.Features.SacredRiftRenderer.install();
         SpaceJump.install();
         cryon.Story.DesolateIntrusion.install();
         cryon.UI.RadioDialogue.install();
@@ -2015,8 +2034,9 @@ public class CryonJavaMod extends Mod {
             TeamEmblems.loadIcon(DisasterFactions.nano);
         });
         Events.on(ClientLoadEvent.class, event -> {
-            Block projector = Vars.content.block("cryon-team-flag-projector");
-            if(projector instanceof TeamFlagProjector flags) flags.loadTeamSymbols();
+            for(Block projector : Vars.content.blocks()){
+                if(projector instanceof TeamFlagProjector flags) flags.loadTeamSymbols();
+            }
         });
         LoadTiming.measure("init / sectors", CryonSectors::load);
         Mods.LoadedMod exist = Vars.mods.locateMod("unitlanuch");
@@ -2268,7 +2288,7 @@ public class CryonJavaMod extends Mod {
             aravisPlanet.updateLighting = false;
             aravisPlanet.clearSectorOnLose = true;
 
-            aravisPlanet.defaultEnv = Env.terrestrial;
+            aravisPlanet.defaultEnv = Env.terrestrial | Env.oxygen;
             aravisPlanet.ruleSetter = r -> {
                 r.lighting = true;
                 r.ambientLight = Color.valueOf("f4bf0032");
@@ -2281,6 +2301,7 @@ public class CryonJavaMod extends Mod {
                 r.fog=true;
                 r.solarMultiplier=1.0f;
                 AravisEnvironment.applyWeather(r);
+                AravisEnvironment.applyResourceRules(r);
 
             };
 

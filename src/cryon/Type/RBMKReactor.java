@@ -77,6 +77,7 @@ public class RBMKReactor {
 
         // 燃料棒
         public Item fuelItem = CryonItems.neutronite;
+        public Item byproductItem = CryonItems.nuclearByproduct;
         public float pSlow = 0.25f, pFast = 0.006f;
         public float nu = 2.2f;
         public float heatPerFission = 3f;
@@ -515,6 +516,7 @@ public class RBMKReactor {
         public TextureRegion rodRegion;
         public boolean hasRod = false;
         public float lastDepth = -1f;
+        public int byproductCapacity = 10;
         public ReactorPart(String name, Kind kind) {
             super(name);
             this.kind = kind;
@@ -560,6 +562,12 @@ public class RBMKReactor {
         public void setBars() {
             super.setBars();
             addBars(this, np);
+            if(kind == Kind.fuel && np.byproductItem != null){
+                addBar("nuclear-byproduct", (ReactorPartBuild b) -> new Bar(
+                        () -> np.byproductItem.localizedName + ": " + b.items.get(np.byproductItem) + "/" + byproductCapacity,
+                        () -> np.byproductItem.color,
+                        () -> (float)b.items.get(np.byproductItem) / byproductCapacity));
+            }
         }
 
         public class ReactorPartBuild extends Building implements NeutronNode, HeatBlock {
@@ -691,7 +699,9 @@ public class RBMKReactor {
                         }
                         break;
                     case fuel: {
-                        if (fuelLeft <= 0f && items.get(np.fuelItem) > 0) {
+                        // Reserve space before loading a fresh fuel item; existing heat/neutrons still update.
+                        if (fuelLeft <= 0f && enabled && items.get(np.fuelItem) > 0
+                                && (np.byproductItem == null || items.get(np.byproductItem) < byproductCapacity)) {
                             items.remove(np.fuelItem, 1);
                             fuelLeft = 1f;
                         }
@@ -702,6 +712,9 @@ public class RBMKReactor {
                             core.fast += f * np.nu;
                             core.heat += f * np.heatPerFission;
                             fuelLeft = Math.max(0f, fuelLeft - f * np.burnPerFission);
+                            if(fuelLeft <= 0f && np.byproductItem != null){
+                                items.add(np.byproductItem, 1);
+                            }
 
                             // k 统计：裂变消耗 f 个中子，产生 f*nu 个
                             core.lossStep += f;

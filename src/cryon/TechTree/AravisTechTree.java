@@ -49,16 +49,23 @@ public class AravisTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "aeolian-drill", "core-conquest");
         addAuto(Kind.BLOCK, "extension-drill", "aeolian-drill");
+        addAuto(Kind.BLOCK, "aravis-impact-drill", "extension-drill");
         addAuto(Kind.BLOCK, "aeolian-pump", "aeolian-drill");
         addAuto(Kind.LIQUID, "water", "aeolian-pump");
+        addAuto(Kind.LIQUID, "oil", "aeolian-pump");
+        addAuto(Kind.LIQUID, "slag", "aeolian-pump");
         addAuto(Kind.BLOCK, "aeolian-conduit", "aeolian-pump");
         addAuto(Kind.BLOCK, "aeolian-liquid-router", "aeolian-conduit");
         addAuto(Kind.BLOCK, "aeolian-liquid-junction", "aeolian-conduit");
         addAuto(Kind.BLOCK, "aeolian-liquid-bridge", "aeolian-conduit");
         addAuto(Kind.BLOCK, "aeolian-node", "aeolian-drill");
+        addAuto(Kind.BLOCK, "large-team-flag-projector", "aeolian-node");
+        addAuto(Kind.BLOCK, "planet-projector", "large-team-flag-projector");
         addAuto(Kind.BLOCK, "wind-turbine", "aeolian-node");
         addAuto(Kind.BLOCK, "coal-burner", "aeolian-node");
         addAuto(Kind.BLOCK, "aeolian-turbine-generator", "coal-burner");
+        addAuto(Kind.BLOCK, "aravis-oil-generator", "aeolian-turbine-generator");
+        addAuto(Kind.BLOCK, "aravis-slag-generator", "aeolian-turbine-generator");
         addAuto(Kind.BLOCK, "aeolian-solar-panel", "wind-turbine");
         addAuto(Kind.BLOCK, "aeolian-large-solar-panel", "aeolian-solar-panel");
 
@@ -71,10 +78,14 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "chisel", "fusillade");
         addAuto(Kind.BLOCK, "saxum", "chisel");
         addAuto(Kind.BLOCK, "afterglow-cannon", "saxum");
+        addAuto(Kind.BLOCK, "purge", "afterglow-cannon");
+        addAuto(Kind.BLOCK, "terra", "saxum");
         addAuto(Kind.BLOCK, "fractura", "chisel");
         addAuto(Kind.BLOCK, "volans", "fusillade");
 
         addAuto(Kind.BLOCK, "arche", "fusillade");
+        addAuto(Kind.BLOCK, "emberglow", "arche");
+        addAuto(Kind.BLOCK, "incineration", "emberglow");
 
 
         addAuto(Kind.BLOCK, "iron-wall", "fusillade");
@@ -85,6 +96,19 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "armor-alloy-wall-large", "armor-alloy-wall");
 
         addAuto(Kind.BLOCK, "mech-unit-factory", "core-conquest");
+        addAuto(Kind.BLOCK, "aravis-army-headquarters", "mech-unit-factory");
+        addAuto(Kind.BLOCK, "aravis-air-headquarters", "aravis-army-headquarters");
+        add(Kind.UNIT, "aravis-abrade", "aravis-army-headquarters", r(CryonItems.ferrum, 180, CryonItems.steel, 100, CryonContent.item("silicon"), 80));
+        add(Kind.UNIT, "aravis-rattle", "aravis-abrade", r(CryonItems.hardSteel, 220, CryonItems.armorAlloy, 160, CryonContent.item("silicon"), 180));
+        add(Kind.UNIT, "aravis-usurp", "aravis-rattle", r(CryonItems.hardSteel, 450, CryonItems.armorAlloy, 320, CryonItems.nickel, 220));
+        add(Kind.UNIT, "aravis-deter", "aravis-usurp", r(CryonItems.armorAlloy, 800, CryonContent.item("tungsten"), 500, CryonContent.item("silicon"), 600));
+        add(Kind.UNIT, "aravis-overbear", "aravis-deter", r(CryonItems.armorAlloy, 1800, CryonContent.item("tungsten"), 1200, CryonContent.item("silicon"), 1400));
+        for(String name : new String[]{"light-tank", "flak-car", "field-artillery", "hover-tank", "shorekeeper"}){
+            addAuto(Kind.UNIT, "aravis-" + name, "aravis-army-headquarters");
+        }
+        for(String name : new String[]{"needlewing", "violet-falcon", "ash-kite"}){
+            addAuto(Kind.UNIT, "aravis-" + name, "aravis-air-headquarters");
+        }
         addAuto(Kind.BLOCK, "aravis-unit-repairer", "mech-unit-factory");
         addAuto(Kind.BLOCK, "mech-unit-reconstructor", "mech-unit-factory");
         addAuto(Kind.BLOCK, "advanced-mech-reconstructor", "mech-unit-reconstructor");
@@ -125,6 +149,7 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.ITEM, "silicon", "coal");
 
         addAuto(Kind.ITEM, "nickel", "manganese");
+        addAuto(Kind.ITEM, "tungsten", "nickel");
 
 
 
@@ -143,6 +168,10 @@ public class AravisTechTree extends ModPlanetTechTree {
         addAuto(Kind.SECTOR, "aravis-aegis", "ashes");
         addAuto(Kind.SECTOR, "terminus", "aravis-aegis");
 
+        sectorGate("ridge", "aravis-army-headquarters", "aravis-air-headquarters",
+                "aravis-light-tank", "aravis-flak-car", "aravis-field-artillery",
+                "aravis-hover-tank", "aravis-shorekeeper", "aravis-needlewing",
+                "aravis-violet-falcon", "aravis-ash-kite");
         sectorGate("checkpoint", "saxum", "fractura");
 
 

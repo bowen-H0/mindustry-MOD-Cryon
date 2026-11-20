@@ -26,6 +26,7 @@ public final class UnitDisplayOrder{
         line("comet bolide umbra sagitta hydra");
         line("subsonic transonic supersonic relativistic superluminal");
         line("jaspis obsidianum nitrum hematites");
+        line("aravis-abrade aravis-rattle aravis-usurp aravis-deter aravis-overbear");
         line("buffer guardian peak blaze eternal");
         line("monomer dimer oligomer polymer macromolecule");
         line("benignitas salus propugno ratio veritas");

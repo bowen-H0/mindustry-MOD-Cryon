@@ -53,7 +53,12 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.ITEM, "nano-material", "phase-fabric");
 
         addAuto(Kind.ITEM, "sodium", "salt");
-        addAuto(Kind.ITEM, "cryo-alloy", "sodium");
+        addAuto(Kind.ITEM, "sodium-hydroxide", "sodium");
+        addAuto(Kind.ITEM, "sodium-carbonate", "sodium-hydroxide");
+        addAuto(Kind.ITEM, "nuclear-byproduct", "neutronite");
+        addAuto(Kind.ITEM, "gamma-crystal", "nuclear-byproduct");
+        addAuto(Kind.ITEM, "perfect-lattice", "nano-material");
+        addAuto(Kind.ITEM, "cryo-alloy", "perfect-lattice");
 
 
 
@@ -64,6 +69,7 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.LIQUID, "ozone", "water");
         addAuto(Kind.LIQUID, "slag", "water");
         addAuto(Kind.LIQUID, "tritium", "deuterium");
+        addAuto(Kind.LIQUID, "superphase-matter", "tritium");
         addAuto(Kind.LIQUID, "water", "dry-ice");
         addAuto(Kind.LIQUID, "cryofluid", "water");
         addAuto(Kind.LIQUID, "chlorine", "water");
@@ -192,6 +198,9 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "surge-alloy-forge", "farstar-forge");
 
 
+        addAuto(Kind.BLOCK, "fault", "spiral");
+        addAuto(Kind.BLOCK, "interfere", "spiral");
+        addAuto(Kind.BLOCK, "plasma-fence", "flux-barrier");
         addAuto(Kind.BLOCK, "flux-barrier", "micro-projector");
         addAuto(Kind.BLOCK, "aegis-barrier", "flux-barrier");
         addAuto(Kind.BLOCK, "orbital-barrier-node", "aegis-barrier");
@@ -202,11 +211,15 @@ public class CryonTechTree extends ModPlanetTechTree {
 
         addAuto(Kind.BLOCK, "heating-furnace", "cryo-electric-heater");
         addAuto(Kind.BLOCK, "hydrothermal-generator", "shattering-drill");
+        addAuto(Kind.BLOCK, "magnesium-water-generator", "hydrothermal-generator");
 
         addAuto(Kind.BLOCK, "isotope-separator", "cryo-electrolyzer");
         addAuto(Kind.BLOCK, "molten-salt-electrolyzer", "cryo-electrolyzer");
-        addAuto(Kind.BLOCK, "fusion-casting-furnace", "molten-salt-electrolyzer");
         addAuto(Kind.BLOCK, "sodium-carbon-fixer", "molten-salt-electrolyzer");
+        addAuto(Kind.BLOCK, "sodium-hydrolyzer", "molten-salt-electrolyzer");
+        addAuto(Kind.BLOCK, "soda-carbonator", "sodium-hydrolyzer");
+        addAuto(Kind.BLOCK, "crystal-sand-furnace", "soda-carbonator");
+        addAuto(Kind.BLOCK, "crystal-sand-sodium-extractor", "silicon-separator");
 
 
 
@@ -229,6 +242,9 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "penetrate", "cavity");
         addAuto(Kind.BLOCK, "phase-constructor", "neutron-activator");
         addAuto(Kind.BLOCK, "nano-material-weaver", "phase-constructor");
+        addAuto(Kind.BLOCK, "perfect-lattice-assembler", "nano-material-weaver");
+        addAuto(Kind.BLOCK, "superphase-synthesizer", "wave-reactor");
+        addAuto(Kind.BLOCK, "cryo-alloy-stabilizer", "perfect-lattice-assembler");
         addAuto(Kind.BLOCK, "nano-reactor", "nano-material-weaver");
         addAuto(Kind.BLOCK, "nano-suppressor", "nano-material-weaver");
         addAuto(Kind.BLOCK, "emp-bomb", "nano-suppressor");
@@ -304,6 +320,8 @@ public class CryonTechTree extends ModPlanetTechTree {
         addAuto(Kind.BLOCK, "reactor-controller", "control-rod");
 
         addAuto(Kind.BLOCK, "reactor-feeder", "fuel-rod");
+        addAuto(Kind.BLOCK, "nuclear-byproduct-collector", "reactor-feeder");
+        addAuto(Kind.BLOCK, "gamma-crystallizer", "nuclear-byproduct-collector");
 
         addAuto(Kind.BLOCK, "heat-pipe", "fuel-rod");
         addAuto(Kind.BLOCK, "heat-pipe-router", "heat-pipe");

@@ -55,7 +55,7 @@ public class FluxBarrierAbility extends Ability {
         paramField.hit = 1f;
 
         float damage = b.type().shieldDamage(b);
-        float heatGenerated = damage * damage * damage * 0.001f;
+        float heatGenerated = FluxBarrierEffects.heat(damage);
         // todo This numerical design needs improvement.
         paramField.shieldHeat += heatGenerated;
         if (paramField.shieldHeat > paramField.maxShieldHeat) {
@@ -64,7 +64,7 @@ public class FluxBarrierAbility extends Ability {
 
         if (paramField.heatCooldownImmune <= 0 &&
                 (paramField.heatCooldownTimer <= 0 || paramField.maxHeatCooldownTime < damage)) {
-            paramField.heatCooldownTimer = damage * 1.5f;
+            paramField.heatCooldownTimer = FluxBarrierEffects.coolingDelay(damage);
             paramField.maxHeatCooldownTime = damage;
         }
     };
@@ -97,8 +97,6 @@ public class FluxBarrierAbility extends Ability {
     public void update(Unit unit) {
         if(FluxSuppressionAbility.suppressed(unit.team, unit.x, unit.y)) return;
         if (shieldHeat >= maxShieldHeat) {
-            Fx.shieldBreak.at(unit.x, unit.y, radius, unit.type.shieldColor(unit));
-            breakSound.at(unit.x, unit.y);
             unit.kill();
             return;
         }
@@ -134,6 +132,8 @@ public class FluxBarrierAbility extends Ability {
                     shieldConsumer
             );
         }
+        FluxBarrierEffects.particles(unit.x, unit.y, realRad, sides, rotation,
+                shieldHeat / maxShieldHeat, unit.type.shieldColor(unit));
         Units.nearbyEnemies(unit.team, unit.x, unit.y, realRad + 10f, enemy -> {
             if(enemy.type instanceof OrbitalUnitType) return;
             float overlapDst = (enemy.hitSize / 2f + realRad) - enemy.dst(unit);
@@ -153,6 +153,7 @@ public class FluxBarrierAbility extends Ability {
 
     @Override
     public void death(Unit unit) {
+        FluxBarrierEffects.explode(unit.team, unit.x, unit.y, unit.type.shieldColor(unit));
         if (radscl > 0.01f) {
             Fx.shieldBreak.at(unit.x, unit.y, radius, unit.type.shieldColor(unit));
             breakSound.at(unit.x, unit.y);

@@ -77,11 +77,11 @@ public class FluxBarrier extends Block{
             paramBlock.absorbEffect.at(bullet);
             paramEntity.hit = 1f;
             float damage = bullet.type.shieldDamage(bullet);
-            float heatGenerated = damage * damage * damage * 0.001f;
+            float heatGenerated = FluxBarrierEffects.heat(damage);
 
             paramEntity.shieldHeat += heatGenerated;
             if (paramEntity.heatCooldownImmune <= 0&&(paramEntity.heatCooldownTimer<=0||paramEntity.MaxheatCooldownTime<damage)){
-                paramEntity.heatCooldownTimer = damage * 1.5f;
+                paramEntity.heatCooldownTimer = FluxBarrierEffects.coolingDelay(damage);
 
                 paramEntity.MaxheatCooldownTime = damage;
             }
@@ -248,6 +248,13 @@ public class FluxBarrier extends Block{
         }
 
         @Override
+        public void onDestroyed(){
+            ambientShieldActive = false;
+            FluxBarrierEffects.explode(team, x, y, team.color);
+            super.onDestroyed();
+        }
+
+        @Override
         public void pickedUp(){
             ambientShieldActive = false;
             super.pickedUp();
@@ -321,6 +328,8 @@ public class FluxBarrier extends Block{
             }
 
             deflectBullets();
+            if(!broken) FluxBarrierEffects.particles(x, y, realRadius(), sides, shieldRotation,
+                    shieldHeat / maxShieldHeat, team.color);
         }
 
         public void deflectBullets() {
@@ -340,7 +349,7 @@ public class FluxBarrier extends Block{
             if(absorb){
                 absorbEffect.at(ex, ey);
                 hit = 1f;
-                shieldHeat += damage * crashDamageMultiplier;
+                shieldHeat += FluxBarrierEffects.heat(damage * crashDamageMultiplier);
                 shieldHeat = Math.min(shieldHeat, maxShieldHeat);
             }
             return absorb;
@@ -414,6 +423,9 @@ public class FluxBarrier extends Block{
         }
 
         @Override
+        public byte version(){ return 1; }
+
+        @Override
         public void write(Writes write){
             super.write(write);
             write.bool(broken);
@@ -421,6 +433,10 @@ public class FluxBarrier extends Block{
             write.f(radscl);
             write.f(warmup);
             write.f(phaseHeat);
+            write.f(shieldHeat);
+            write.f(heatCooldownTimer);
+            write.f(MaxheatCooldownTime);
+            write.f(heatCooldownImmune);
         }
 
         @Override
@@ -431,6 +447,12 @@ public class FluxBarrier extends Block{
             radscl = read.f();
             warmup = read.f();
             phaseHeat = read.f();
+            if(revision >= 1){
+                shieldHeat = read.f();
+                heatCooldownTimer = read.f();
+                MaxheatCooldownTime = read.f();
+                heatCooldownImmune = read.f();
+            }
         }
     }
 }

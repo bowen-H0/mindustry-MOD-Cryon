@@ -130,7 +130,7 @@ public class AravisCampaignMaps {
         r.attackMode=true; r.waves=true; r.winWave=0;
         r.waveSpacing=60f*(finale ? 150 : 100); r.initialWaveSpacing=60f*300;
         r.coreDestroyClear=true; r.placeRangeCheck=false; r.polygonCoreProtection=false;
-        r.teams.get(Team.malis).cheat=true;
+        AravisEnvironment.applyResourceRules(r);
         r.spawns.clear();
         wave("jaspis",0,3,2,18);
         wave("obsidianum",8,1,3,10);

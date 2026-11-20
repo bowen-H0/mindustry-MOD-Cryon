@@ -68,7 +68,7 @@ public class SafeFluxBarrierAbility extends Ability {
         paramField.hit = 1f;
 
         float damage = b.type().shieldDamage(b);
-        float heatGenerated = damage * damage * damage * 0.001f;
+        float heatGenerated = FluxBarrierEffects.heat(damage);
 
         paramField.shieldHeat += heatGenerated;
         if (paramField.shieldHeat > paramField.maxShieldHeat) {
@@ -78,7 +78,7 @@ public class SafeFluxBarrierAbility extends Ability {
         // 触发散热禁用
         if (paramField.heatCooldownImmune <= 0 &&
                 (paramField.heatCooldownTimer <= 0 || paramField.maxHeatCooldownTime < damage)) {
-            paramField.heatCooldownTimer    = damage * 1.5f;
+            paramField.heatCooldownTimer    = FluxBarrierEffects.coolingDelay(damage);
             paramField.maxHeatCooldownTime  = damage;
         }
     };
@@ -163,6 +163,8 @@ public class SafeFluxBarrierAbility extends Ability {
             );
         }
 
+        FluxBarrierEffects.particles(unit.x, unit.y, realRad, sides, rotation,
+                shieldHeat / maxShieldHeat, unit.type.shieldColor(unit));
         Units.nearbyEnemies(unit.team, unit.x, unit.y, realRad + 10f, enemy -> {
             if(enemy.type instanceof OrbitalUnitType) return;
             float overlapDst = (enemy.hitSize / 2f + realRad) - enemy.dst(unit);
@@ -182,6 +184,7 @@ public class SafeFluxBarrierAbility extends Ability {
 
     @Override
     public void death(Unit unit) {
+        FluxBarrierEffects.explode(unit.team, unit.x, unit.y, unit.type.shieldColor(unit));
         if (!broken && radscl > 0.01f) {
             Fx.shieldBreak.at(unit.x, unit.y, radius, unit.type.shieldColor(unit));
             breakSound.at(unit.x, unit.y);
@@ -189,6 +192,7 @@ public class SafeFluxBarrierAbility extends Ability {
     }
 
     protected void breakShield(Unit unit) {
+        FluxBarrierEffects.explode(unit.team, unit.x, unit.y, unit.type.shieldColor(unit));
         broken      = true;
         brokenTimer = brokenCooldown;
         shieldHeat  = 0f;

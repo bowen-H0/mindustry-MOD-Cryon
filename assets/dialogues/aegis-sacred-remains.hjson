@@ -1,0 +1,27 @@
+{
+  title: 神盾 · 第一个核心被摧毁 · 监听频道
+  titleKey: cryon.radio.aegis-sacred-remains.title
+  steps: [
+    {
+      team: malis
+      speaker: Malis
+      text: "看来，我们对你们的容忍已经没有继续存在的必要。"
+      textKey: cryon.radio.aegis-sacred-remains.01
+      duration: 7.5
+    }
+    {
+      team: malis
+      speaker: Malis
+      text: "对于你们这样的野蛮文明，宽容本身就是一种罪恶。"
+      textKey: cryon.radio.aegis-sacred-remains.02
+      duration: 7.5
+    }
+    {
+      team: malis
+      speaker: Malis
+      text: "既然如此，我们将不再限制特别防御措施的使用。"
+      textKey: cryon.radio.aegis-sacred-remains.03
+      duration: 8
+    }
+  ]
+}

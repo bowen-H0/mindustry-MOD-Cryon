@@ -1,12 +1,48 @@
-# Cryon
 
-Alpha test version: contains bugs, mechanics subject to change.
+![Logo](./assets/sprites-override/ui/logo.png)
 
-## AI 开发声明 / AI Development Disclosure
+# Project Farstar
 
-本项目全程使用 AI 智能体进行开发。本人并不掌握或了解项目中的全部技术细节。
+Project Farstar is a Java content expansion mod for [Mindustry](https://github.com/Anuken/Mindustry), featuring new planets, campaigns, units, blocks, and technologies.
 
-This project is developed using AI agents throughout the development process. I do not fully understand every technical detail of the project.
+The project is currently under active development. Some features are still being refined and may change in future updates.
+
+![p](./screenshot/1.png)
+![p](./screenshot/2.png)
+![p](./screenshot/3.png)
+
+
+## Planets
+
+Project Farstar focuses on expanding Mindustry's planetary campaigns, with three distinct planets planned, each offering its own environment, challenges, and gameplay experience.
+
+### Cryon
+
+Cryon is currently playable, with further improvements and refinements underway.
+
+As the starting planet of Project Farstar, Cryon offers a substantial amount of content for players to explore and experience.
+
+![Cryon](./screenshot/cryon.png)
+
+### Aravis
+
+Aravis is currently under development and is not yet available for gameplay.
+
+![Aravis](./screenshot/aravis.png)
+
+### Porphyra
+
+Porphyra is the final planned planet of Project Farstar. Development has not yet been completed.
+
+![Porphyra](./screenshot/porphyra.png)
+
+
+
+
+
+
+
+
 
 ## Overview
 
@@ -17,7 +53,12 @@ This project is developed using AI agents throughout the development process. I 
 ## Contributors
 - LSK133: Map
 - Gary: Map
+- Thank you to all the players who participated in the test.
 
+## AI Development Disclosure
+
+
+This project is developed using AI agents throughout the development process. I do not fully understand every technical detail of the project.
 
 # Build
 

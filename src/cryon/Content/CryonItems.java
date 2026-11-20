@@ -28,7 +28,7 @@ public class CryonItems{
     public static Item aluminum, magnesium, quartz, salt, sodium, crystalSand,
             dryIce, cryoAlloy, farstarAlloy, nickel, neutronite, nanoMaterial, ferrum,steel,hardSteel,redSand, manganese, armorAlloy,ashesAlloy,
             rhenium, technetium, promethium, neptunium, oganesson, gammaCrystal, protocolPoint, laminatedRhenium, phaseCrystal, porphyraAlloy, rheniumPlate,
-            abyssalSediment, nuclearExplosive;
+            abyssalSediment, nuclearExplosive, sodiumHydroxide, sodiumCarbonate, nuclearByproduct, perfectLattice;
 
     // ================== 白名单 ==================
 
@@ -123,6 +123,10 @@ public class CryonItems{
         nuclearExplosive = item("nuclear-explosive", "ff6254", 0, 2f, 0f, 0f, 0f);
         nuclearExplosive.alwaysUnlocked = true;
         nuclearExplosive.cost = 10f;
+        sodiumHydroxide = item("sodium-hydroxide", "d5e9e6", 0);
+        sodiumCarbonate = item("sodium-carbonate", "e4dcca", 0);
+        nuclearByproduct = item("nuclear-byproduct", "a8bc76", 0, 0f, 0f, 0f, 0.7f);
+        perfectLattice = item("perfect-lattice", "96f7d2", 0);
         // ================== 白名单登记 ==================
         planet("aluminum", "cryon-cryon");
         planet("magnesium", "cryon-cryon");
@@ -133,13 +137,18 @@ public class CryonItems{
         planet("quartz", "cryon-cryon");
         planet("salt", "cryon-cryon");
         planet("sodium", "cryon-cryon");
+        planet("sodium-hydroxide", "cryon-cryon");
+        planet("sodium-carbonate", "cryon-cryon");
+        planet("nuclear-byproduct", "cryon-cryon");
         planet("crystal-sand", "cryon-cryon");
         planet("dry-ice", "cryon-cryon");
         planet("abyssal-sediment", "cryon-cryon", "cryon-cryon-depths");
         planet("nuclear-explosive", "cryon-cryon");
         planet("cryo-alloy", "cryon-cryon");
+        planet("perfect-lattice", "cryon-cryon");
         planet("farstar-alloy", "cryon-cryon");
         planet("nickel", "cryon-cryon","cryon-aravis");
+        planet("tungsten", "cryon-aravis");
         planet("neutronite", "cryon-cryon");
         planet("phase-fabric", "cryon-cryon");
         planet("surge-alloy", "cryon-cryon");
@@ -151,7 +160,7 @@ public class CryonItems{
         planet("av-red-sand", "cryon-aravis");
         planet("manganese", "cryon-aravis");
         planet("armor-alloy", "cryon-aravis");
-        planet("gamma-crystal", "cryon-porphyra");
+        planet("gamma-crystal", "cryon-porphyra", "cryon-cryon");
         planet("protocol-point", "cryon-porphyra");
         planet("laminated-rhenium", "cryon-porphyra");
         planet("rhenium-plate", "cryon-porphyra");

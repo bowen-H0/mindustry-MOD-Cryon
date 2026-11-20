@@ -1,0 +1,30 @@
+type: BurstDrill
+size: 4
+health: 1400
+category: production
+tier: 6
+drillTime: 720
+itemCapacity: 48
+liquidCapacity: 60
+hasPower: true
+drawMineItem: false
+blockedItem: thorium
+liquidBoostIntensity: 1
+shake: 4
+fogRadius: 4
+drillEffect: {
+  type: MultiEffect
+  effects: [
+    mineImpact
+    drillSteam
+    {type: WrapEffect, effect: mineImpactWave, color: feb380, rotation: 40}
+  ]
+}
+consumes: {
+  power: 3
+  liquid: {
+    liquid: water
+    amount: 0.16666667
+  }
+}
+requirements: [ferrum/200, hard-steel/120, armor-alloy/120, silicon/160, manganese/80]

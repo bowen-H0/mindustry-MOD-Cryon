@@ -31,23 +31,33 @@ public class TeamFlagProjector extends Block{
     public static float emblemSize = 64f;   // 图标大小
     public static float hoverHeight = 58f;  // 悬浮高度
     public static int strips = 28;          // 扫描条数量
+    public float projectionScale = 1f;
+    public int scanStrips = 28;
 
     public TeamFlagProjector(String name){
+        this(name, 2, 1f);
+    }
+
+    public TeamFlagProjector(String name, int blockSize, float displayScale){
         super(name);
         ProjectorSalutes.init();
-        size = 2;
-        health = 180;
+        size = blockSize;
+        projectionScale = displayScale;
+        scanStrips = displayScale > 1f ? 56 : strips;
+        health = blockSize > 2 ? 1200 : 180;
         solid = true;
         destructible = true;
         update = true;
         hasPower = true;
-        consumePower(1f);
-        clipSize = 256f;
+        consumePower(blockSize > 2 ? 4f : 1f);
+        clipSize = 256f * displayScale;
         alwaysUnlocked = false;
         emitLight = true;
-        lightRadius = 90f;
+        lightRadius = 90f * displayScale;
         requirements(Category.effect, BuildVisibility.shown,
-                ItemStack.with(CryonItems.aluminum, 25, Items.graphite, 10, Items.silicon, 15));
+                blockSize > 2
+                    ? ItemStack.with(CryonItems.ferrum, 180, CryonItems.steel, 100, Items.silicon, 160, CryonItems.nickel, 40)
+                    : ItemStack.with(CryonItems.aluminum, 25, Items.graphite, 10, Items.silicon, 15));
     }
 
     @Override public void load(){
@@ -130,8 +140,8 @@ public class TeamFlagProjector extends Block{
         @Override public void drawLight(){
             if(!enabled || efficiency <= 0.001f) return;
             float pulse = 0.9f + 0.1f * Mathf.sin(Time.time / 18f);
-            Drawf.light(x, y + hoverHeight * 0.6f, 130f * pulse, team.color, 0.28f * efficiency);
-            Drawf.light(x, y, 40f, team.color, 0.34f * efficiency);
+            Drawf.light(x, y + hoverHeight * projectionScale * 0.6f, 130f * pulse * projectionScale, team.color, 0.28f * efficiency);
+            Drawf.light(x, y, 40f * size / 2f, team.color, 0.34f * efficiency);
         }
 
         @Override public void draw(){
@@ -152,16 +162,21 @@ public class TeamFlagProjector extends Block{
         }
 
         private void drawBase(){
+            float pedestal = size / 2f;
             Draw.z(Layer.blockOver + 0.1f);
             Draw.color(Pal.darkestGray);
-            Fill.circle(x, y, 4.2f);
+            Fill.circle(x, y, 4.2f * pedestal);
             Draw.color(team.color, enabled ? efficiency : 0f);
             Lines.stroke(0.8f);
-            Lines.circle(x, y, 3.4f);
-            Fill.circle(x, y, 1.4f);
+            Lines.circle(x, y, 3.4f * pedestal);
+            Fill.circle(x, y, 1.4f * pedestal);
         }
 
         private void drawHologram(){
+            float emblemSize = TeamFlagProjector.emblemSize * projectionScale;
+            float hoverHeight = TeamFlagProjector.hoverHeight * projectionScale;
+            int strips = scanStrips;
+            float pedestal = size / 2f;
             float t = Time.time;
             Color c = team.color;
             float cy = y + hoverHeight + Mathf.sin(t / 40f) * 2.5f;
@@ -174,19 +189,19 @@ public class TeamFlagProjector extends Block{
             Draw.color(c, 0.8f * base);
             Lines.stroke(1.1f);
             for(int i = 0; i < 3; i++){
-                Lines.arc(x, y, 7f + i * 2.5f, 0.28f, t * (i % 2 == 0 ? 2f : -2.5f) + i * 120f);
+                Lines.arc(x, y, (7f + i * 2.5f) * pedestal, 0.28f, t * (i % 2 == 0 ? 2f : -2.5f) + i * 120f);
             }
             Lines.stroke(0.6f);
             Draw.color(c, 0.4f * base);
-            Lines.circle(x, y, 13f + Mathf.absin(t, 20f, 1.5f));
+            Lines.circle(x, y, (13f + Mathf.absin(t, 20f, 1.5f)) * pedestal);
 
             // ---- 渐变光锥 ----
             float cLow = Tmp.c1.set(c).a(0.22f * base).toFloatBits();
             float cTop = Tmp.c2.set(c).a(0.02f * base).toFloatBits();
             float topW = half * 0.85f;
             Fill.quad(
-                    x - 3f, y, cLow,
-                    x + 3f, y, cLow,
+                    x - 3f * pedestal, y, cLow,
+                    x + 3f * pedestal, y, cLow,
                     x + topW, cy - half, cTop,
                     x - topW, cy - half, cTop
             );
